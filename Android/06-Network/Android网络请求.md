@@ -81,7 +81,6 @@ HTTP 的条件验证：通过某种服务端缓存的支持，可以有效地弥
 
 这样做可以带来很好的用户体验，实现期望却更加复杂，可以针对特定的常见做特定的优化。
 
-
 ---
 ## 4 HTTPS
 
@@ -96,7 +95,6 @@ HTTPS 是安全的 HTTP 通信，在应该层和传输层之间添加了一层 S
 - 采用双向认证
 
 业界就发生了很多关于证书验证不严格的问题，具体参考 [Android 证书信任问题与大表哥](http://www.91ri.org/12540.html)。
-
 
 ### TLS 1.2
 
@@ -124,13 +122,12 @@ HttpURLConnection 和 Apache HttpClient
 - [LiteHttp](https://github.com/litesuits/android-lite-http)
 - [Android中HttpURLConnection使用详解](http://blog.csdn.net/iispring/article/details/51474529)
 
-
 网络优化
 
 - [为移动应用提供离线支持](http://www.infoq.com/cn/articles/mobile-apps-offline-support)
 - [Android网络操作和优化相关](http://blog.csdn.net/sdkfjksf/article/details/51645315)
 
-https
+HTTPS
 
 - [Android证书信任问题与大表哥](http://www.91ri.org/12540.html)
 - [Android Https相关完全解析 当OkHttp遇到Https](http://blog.csdn.net/lmj623565791/article/details/48129405)

@@ -18,19 +18,18 @@
 当网络出现问题的时候，OKHttp会依然有效，它将从常见的连接问题当中恢复。如果你的服务端有多个IP地址，当第一个地址连接失败时，OKHttp会尝试连接其他的地址，这对IPV4和IPV6以及寄宿在多个数据中心的服务而言，是非常有必要的。OKHttp利用TLS的特性初始化新的连接，如果握手失败便退回到SSLV3。OKHttp的使用很简单。其2.0API拥有流畅的构建器和稳定性。它支持同步阻塞请求和异步回调请求。你可以试试OKHttp而不重写网络代码。`okhttp-urlconnection` 模块实现了都很熟悉 `java.net.HttpURLConnection` 的API，okhttp-apache 模块实现了 Apache 的 HttpClient 的 API。OKHttp 支持 Android2.3 以上，Java 支持最低版本 1.7。
 
 ---
-
 ## 2 相关资料
 
 ### 官网
 
-- [官方WIKI](https://github.com/square/okhttp/wiki)
+- [官方WIKI](https://square.github.io/okhttp/)
 - [samples](https://github.com/square/okhttp/tree/master/samples)
 - [模拟服务器](https://github.com/square/okhttp/tree/master/mockwebserver)
 
 ### 源码解析
 
-- [ frodoking  OKHttp源码解析 ]( http://frodoking.github.io/2015/03/12/android-okhttp/ )
-- [ OKHttp源码解析，缓存解析 ]( http://blog.csdn.net/chenzujie/article/details/46994073   )
+- [frodoking  OKHttp源码解析](http://frodoking.github.io/2015/03/12/android-okhttp/)
+- [OKHttp源码解析，缓存解析](http://blog.csdn.net/chenzujie/article/details/46994073)
 - [OKHttp是怎样工作的](http://blog.csdn.net/marktheone/article/details/49402077)
 - [OKHttp源码解析](http://frodoking.github.io/2015/03/12/android-okhttp/)
 - [OkHttp3源码分析[Beta]](http://www.jianshu.com/p/aad5aacd79bf)
@@ -58,26 +57,12 @@
 ### 拓展
 
 - [鸿洋博客1](http://blog.csdn.net/lmj623565791/article/details/47911083)
-- [ 鸿洋博客2](http://blog.csdn.net/lmj623565791/article/details/49734867)
-- [上传多文件](http://blog.csdn.net/djk_dong/article/details/47861367   )
-- [ 实现文件上传下载进度监听 ](http://blog.csdn.net/sbsujjbcy/article/details/48194701#comments)
+- [鸿洋博客2](http://blog.csdn.net/lmj623565791/article/details/49734867)
+- [上传多文件](http://blog.csdn.net/djk_dong/article/details/47861367)
+- [实现文件上传下载进度监听](http://blog.csdn.net/sbsujjbcy/article/details/48194701#comments)
 - [PersistentCookieJar](https://github.com/franmontiel/PersistentCookieJar)
 
 ---
 ## 3 与OkHttp配合使用的库
 
 参考：[Works-with-OkHttp](https://github.com/square/okhttp/wiki/Works-with-OkHttp)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
