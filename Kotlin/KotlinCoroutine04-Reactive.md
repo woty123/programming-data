@@ -4,11 +4,11 @@
 
 Module kotlinx-coroutines-reactive 提供的协程构建器 `publish` 返回一个 Publisher。同时为 Publisher 提供了许有有用的扩展方法：
 
-- Publisher.awaitFirst	
+- Publisher.awaitFirst
 - Publisher.awaitFirstOrDefault
 - Publisher.awaitFirstOrElse
-- Publisher.awaitFirstOrNull	
-- Publisher.awaitLast 
+- Publisher.awaitFirstOrNull
+- Publisher.awaitLast
 - Publisher.awaitSingle
 - Publisher.openSubscription，订阅该发布者，返回一个 ReceiveChannel。
 

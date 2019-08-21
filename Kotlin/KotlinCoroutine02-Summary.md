@@ -22,10 +22,10 @@ Kotlin 作为一门编程语言，在其标准库中只提供了最低级别的 
 - `suspendCoroutine()`
 - `suspendCoroutineOrReturn()`
 - 生成器 API
-    - `buildSequence()`
-    - `buildIterator()`
-    - `yield()`
-    - `yieldAll()`
+  - `buildSequence()`
+  - `buildIterator()`
+  - `yield()`
+  - `yieldAll()`
 
 ### 应用层
 
@@ -416,7 +416,7 @@ Job 通过协程构建器 launch 创建并返回，Job 可以被取消，Job 的
 | Completed (最终状态) | `false` | `true` | `false` |
 
 #### async 与 Deferred
- 
+
 创建新的协程并将其未来的结果作为 Deferred 的实现返回。取消 Deferred 时，将取消正在运行的协程。默认 async 启动的协程的上下文继承自一个 CoroutineScope，可以使用 context 参数指定其他上下文元素。如果上下文没有指定任何 dispatcher 且也没有其他的 ContinuationInterceptor，则默认的调度器将会使用 Dispatchers.Default ，父协程的 job 也会从 CoroutineScope 继承，但它也可以用相应的 coroutineContext 元素覆盖。
 
 默认情况下，协程将会立即执行，但是可以通过 start 参数来设置执行策略，对于一个延迟执行的协程，调用 Deferred 的 start 方法或第一次调用 `join\await\awitAll` 方法都会触发延迟执行的协程开始运行。
@@ -424,8 +424,8 @@ Job 通过协程构建器 launch 创建并返回，Job 可以被取消，Job 的
 ```kotlin
 //launch 作为 CoroutineScope 的扩展方法存在。
 fun <T> CoroutineScope.async(
-    context: CoroutineContext = EmptyCoroutineContext, 
-    start: CoroutineStart = CoroutineStart.DEFAULT, 
+    context: CoroutineContext = EmptyCoroutineContext,
+    start: CoroutineStart = CoroutineStart.DEFAULT,
     block: suspend CoroutineScope.() -> T
 ): Deferred<T>
 ```
