@@ -203,15 +203,15 @@ TraceView是Android平台特有的数据采集和分析工具，他主要用于�
 
 将trace文件复制到pc，最后用traceview或者eclipse直接打开文件即可
 
-#### 使用DDMS
+#### 使用 DDMS 提供的 TraceView
 
 使用Android SDK的DDMS工具可以手机某一个正在运行的App的函数调用信息，对于开发者而言，此方法适用于没有目标应用源代码的情况
 
-![](index_files/d367d5f0-1736-492e-b4ee-5aea06524f54.png)
+![](../images/d367d5f0-1736-492e-b4ee-5aea06524f54.png)
 
 如是上图所示，选中一个正在运行的进程，点击红色箭头指想的按钮，开始运行代码，当你觉得收集了足够的信息后再次点击按钮，DDMS就会自动打开trace文件，如下图所示：
 
-![](index_files/514f9070-6225-4805-ae64-86c1d49794d0.png)
+![](../images/514f9070-6225-4805-ae64-86c1d49794d0.png)
 
 trace分析界面分为上下两个面板，分别为Timeline Panel(时间线面板)和 Profile Panel(函数分析面板)。
 
@@ -313,7 +313,7 @@ TraceView的参数较多，其中Incl的全称为(Inclusive)代表包含某函�
 
 使用这个Adapter时界面在滑动时非常的卡顿，因为调用了doSthHeavy函数，该函数的总耗时大概为18毫秒，内部分别调用了，prepareSth1、prepareSth2、prepareSth3三个函数，分别耗时为4、4、10毫秒，运行程序并收集数据如下：
 
-![](index_files/0a902d7d-5d43-4a0c-b85e-18ce4ddbe645.png)
+![](../images/0a902d7d-5d43-4a0c-b85e-18ce4ddbe645.png)
 
 由于是ListView，我们知道出现瓶颈的地方应该在getView函数，所以逐个分析getView函数的参数：
 
@@ -327,7 +327,7 @@ TraceView的参数较多，其中Incl的全称为(Inclusive)代表包含某函�
 
 于是我们继续分析getView调用的子函数，我们看到doSthHeavy函数的Incl Real Time为1624.102，所以锁定deSthHeavy函数：
 
-![](index_files/b1d2fc9b-e58e-4b1f-9dd1-30e29a109fcd.png)
+![](../images/b1d2fc9b-e58e-4b1f-9dd1-30e29a109fcd.png)
 
 ---
 ## 引用

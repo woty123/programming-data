@@ -94,4 +94,10 @@ PC 上保留两个版本，交替升级，以此来保证随时都可以切换�
 
 ### AndroidStudio 3.0 DDMS
 
-3.0 的 DDMS 已经被废弃，如果有需要，可以在 SDK 中打开，`android-sdk/tools/monitor.bat`
+3.0 的 DDMS 已经被废弃：
+
+- DDMS 和 Traceview、Hierarchy Viewer 都不用了。使用 Android Profiler 替代 DDMS 和 Traceview。
+- Layout Inspector 替代 Hierarchy Viewer。
+- 如果有需要，可以在 SDK 中打开，`android-sdk/tools/monitor.bat`。
+
+具体参考 [Android Device Monitor](https://developer.android.com/studio/profile/monitor)。

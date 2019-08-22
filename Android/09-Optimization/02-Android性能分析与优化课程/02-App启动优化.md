@@ -158,7 +158,7 @@ Debug.stopMethodTracing("")
 - API 18 以上适使用，低版本可使用 TraceCompat
 - 具体参考：<https://developer.android.com/studio/profile/systrace>
 
-使用方式：
+使用方式1：
 
 ```java
 //先用代码埋点
@@ -167,6 +167,10 @@ Trace.endSection()
 
 //然后用 python systrace.py -t 10 [options] [categories] 拉取报告
 ```
+
+使用方式1：DDMS
+
+![ddms_systrace.png](../images/ddms_systrace.png)
 
 总结：
 
