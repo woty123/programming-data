@@ -64,12 +64,10 @@ HttpServiceMethod 继承了 ServiceMethod，顾名思义，ServiceMethod 表示�
 - 当调用 HttpServiceMethod 的 invoke 方法时，HttpServiceMethod 会调用内部成员 `CallAdapter.adapt(OkHttpCall)` ，adapt 用于适配原始的 Call
 - OkHttpCall 用于根据 `RequestFactory、方法参数args、CallFactory、ResponseConverter` 包装一个 OkHttp 的 Call
 
-
 ---
 ## 5 RequestFactory
 
 RequestFactory 用于解析我们在 Service 上定义的方法（Method），然后创建一个 OkHttp 的 Request。其内部逻辑相对复杂。
-
 
 ---
 ## 6 CallAdapter 和 CallAdapter.Factory
@@ -155,6 +153,3 @@ public interface Converter<F, T> {
 
 - [Retrofit分析-经典设计模式案例](http://www.jianshu.com/p/fb8d21978e38)
 - [Retrofit分析-漂亮的解耦套路](http://www.jianshu.com/p/45cb536be2f4)
-
-
-

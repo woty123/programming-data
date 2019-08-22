@@ -53,7 +53,7 @@ OkHttpClient okHttpClient = new OkHttpClient();
 
 同步请求处理方法：
 
-```
+```java
  public Response execute() throws IOException {
         synchronized (this) {
             //只能被执行一次
@@ -80,7 +80,7 @@ OkHttpClient okHttpClient = new OkHttpClient();
 
 异步请求处理：
 
-```
+```java
     /*异步执行*/
     void enqueue(Callback responseCallback, boolean forWebSocket) {
         synchronized (this) {
@@ -103,7 +103,7 @@ OkHttpClient okHttpClient = new OkHttpClient();
 
 ### Dispatcher 的队列
 
-```
+```java
  private final Deque<AsyncCall> readyAsyncCalls = new ArrayDeque<>();//等待执行的异步请求队列。
  private final Deque<AsyncCall> runningAsyncCalls = new ArrayDeque<>();//正在执行的异步请求，包括取消了但还没完成Call。
  private final Deque<RealCall> runningSyncCalls = new ArrayDeque<>();//正在执行的同步请求。
@@ -114,19 +114,18 @@ OkHttpClient okHttpClient = new OkHttpClient();
 
 控制最大并发数：
 
-```
+```java
     /*限制最大的请求数量为 64*/
     private int maxRequests = 64;
     /*同一个主机只能同时有 5 个请求*/
     private int maxRequestsPerHost = 5;
 ```
 
-
 ### 执行结果处理
 
 任何一个请求执行完毕后，需要移除出队列，并调整现有任务调度
 
-```
+```java
     synchronized void finished(AsyncCall call) {
         if (!runningAsyncCalls.remove(call)) {
             throw new AssertionError("AsyncCall wasn't running!");
@@ -179,7 +178,7 @@ OkHttpClient okHttpClient = new OkHttpClient();
 
 OkHttp 在执行请求时，由多个拦截器组成的拦截器链处理，参考下面代码:
 
-```
+```java
    //由Call调用，用于获取请求结果
   private Response getResponseWithInterceptorChain() throws IOException {
     // Build a full stack of interceptors.
@@ -210,7 +209,7 @@ OkHttp 在执行请求时，由多个拦截器组成的拦截器链处理，参�
 
 核心在于 Chain 的 processed 方法，有多少个拦截器就会调用多少次 proceed 方法：
 
-```
+```java
 //proceed的核心逻辑
  public Response proceed(Request request, StreamAllocation streamAllocation, HttpStream httpStream,
                             Connection connection) throws IOException {
@@ -251,7 +250,7 @@ RetryAndFollowUpInterceptor 用于进行网络重连和失败重试
 - 重试有一定的数量限制
 - 针对特定的网络异常进行重试
 
-```
+```java
     if (++followUpCount > MAX_FOLLOW_UPS) {
         streamAllocation.release();
         throw new ProtocolException("Too many follow-up requests: " + followUpCount);
@@ -288,7 +287,4 @@ RetryAndFollowUpInterceptor 用于进行网络重连和失败重试
 ---
 ## 6 CallServerInterceptor
 
-
 - HttpCodec 编码与解码
-
-

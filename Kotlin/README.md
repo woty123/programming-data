@@ -27,13 +27,12 @@ kotlin 发展简史：
 ### 1 文档与资料
 
 - [官网](https://kotlinlang.org/)
-- [官方：Kotlin协程](https://github.com/Kotlin/kotlinx.coroutines)
 - [官方：kotlin-examples](https://github.com/JetBrains/kotlin-examples)
 - [Kotlin 中文站](https://www.kotlincn.net/)
 - [Ktor 中文站](https://ktor.kotlincn.net/)
-- [kymjs：Kotlin Primer](https://kymjs.com/code/2017/02/03/01/)
-- [EasyKotlin](https://github.com/JackChan1999/EasyKotlin)
-- [EasyKotlin-All](https://github.com/EasyKotli)
+
+Books：
+
 - [《Kotlin实战》](https://panxl6.gitbooks.io/kotlin-in-action-in-chinese/content/introduction.html)
 - [《Atomic Kotlin》](https://www.atomickotlin.com/atomickotlin/)
 
@@ -43,17 +42,21 @@ Collections：
 
 ### 2 Android
 
-- [kotlin-for-android-developers](https://wangjiegulu.gitbooks.io/kotlin-for-android-developers-zh/guan_yu_ben_shu.html)
 - [Kotlin on Android FAQ](https://developer.android.com/kotlin/faq.html)
-- [官方：anko库](https://github.com/Kotlin/anko)
-- [kovenant](http://kovenant.komponents.nl/)：Kotlin 的简单异步库
+- [kotlin-for-android-developers](https://wangjiegulu.gitbooks.io/kotlin-for-android-developers-zh/guan_yu_ben_shu.html)
 - [Kotlin Android Extensions: Say goodbye to findViewById](https://antonioleiva.com/kotlin-android-extensions/)
 - [kotlin in medium](https://medium.com/androiddevelopers/tagged/kotlin)
+- [码上开学-Kotlin系列](https://kaixue.io/)
+- [EasyKotlin](https://github.com/JackChan1999/EasyKotlin)
+- [EasyKotlin-All](https://github.com/EasyKotli)
+- [Kotlin 实战指南 | 如何在大型应用中添加 Kotlin](https://mp.weixin.qq.com/s?__biz=MzAwODY4OTk2Mg==&mid=2652047413&idx=1&sn=d8b248868406fc641b8a11ccc16807a5&scene=21#wechat_redirect)
 
 ### 3 项目
 
 - [awesome-kotlin](https://github.com/KotlinBy/awesome-kotlin)
 - [awesome-kotlin-cn](https://github.com/kymjs/awesome-kotlin-cn)
+- [anko](https://github.com/Kotlin/anko)
+- [kovenant](http://kovenant.komponents.nl/)：Kotlin 的简单异步库
 - [Kodein](https://github.com/SalomonBrys/Kodein/) Kotlin 依赖注入框架
 - [Fuel](https://github.com/kittinunf/Fuel) Kotlin 网络请求库
 - [kotlinpoet](https://github.com/square/kotlinpoet) 类似 square 的 javapoet，用于生成 kotlin 代码
@@ -63,8 +66,8 @@ Collections：
 
 什么是协程：
 
+- [协程-维基百科](https://zh.wikipedia.org/wiki/%E5%8D%8F%E7%A8%8B)
 - [我理解的协程](https://www.zybuluo.com/kuailezhishang/note/128823)
-- [协程(廖雪峰)](http://www.liaoxuefeng.com/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000/0013868328689835ecd883d910145dfa8227b539725e5ed000)
 - [协程的好处有哪些？](https://www.zhihu.com/question/20511233/answer/24260355)
 
 文档：
@@ -72,29 +75,11 @@ Collections：
 - [kotlinx.coroutines guide en](https://github.com/Kotlin/kotlinx.coroutines)
 - [kotlinx coroutines guide cn](https://www.kotlincn.net/docs/reference/coroutines.html)
 - [kotlinx coroutines api doc](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/)
+
+文档（中文）：
+
 - [kotlinx.coroutines cn](https://github.com/hltj/kotlinx.coroutines-cn)
 - [kotlinx.coroutines cn](https://saplf.gitbooks.io/kotlinx-coroutines/content/)
-
-博客：
-
-- [深入理解 Kotlin Coroutine](https://blog.kotliner.cn/tags/Coroutine/)
-- [Kotlin Coroutines(协程)](https://blog.dreamtobe.cn/kotlin-coroutines/)
-- [深入浅出 Kotlin 协程](https://cloud.tencent.com/developer/article/1334825)
-- [31 天，从浅到深轻松学习 Kotlin](https://mp.weixin.qq.com/s?__biz=MzAwODY4OTk2Mg==&mid=2652046391&idx=1&sn=46efa48076a4533f355af6351b76c012&chksm=808ca472b7fb2d64afc89edf6beba1540e5a6ff49ad6346bd5d72b3957fa5f9323e07b8aab03&mpshare=1&scene=1&srcid=0615eHvcY8XijqYM5CH09baV#rd)
-- [Kotlin 实战指南 | 如何在大型应用中添加 Kotlin](https://mp.weixin.qq.com/s?__biz=MzAwODY4OTk2Mg==&mid=2652047413&idx=1&sn=d8b248868406fc641b8a11ccc16807a5&scene=21#wechat_redirect)
-- [google-codelabs：kotlin-coroutines](https://codelabs.developers.google.com/codelabs/kotlin-coroutines/#0)
-- [RxJava to Kotlin coroutines](https://medium.com/androiddevelopers/rxjava-to-kotlin-coroutines-1204c896a700)
-- [Kotlin coroutines vs RxJava: an initial performance test](https://proandroiddev.com/kotlin-coroutines-vs-rxjava-an-initial-performance-test-68160cfc6723)
-- [Forget RxJava: Kotlin Coroutines are all you need. Part 1/2](https://proandroiddev.com/forget-rxjava-kotlin-coroutines-are-all-you-need-part-1-2-4f62ecc4f99b)
-
-Sample：
-
-- [coroutine-recipes 协程风格代码](https://github.com/dmytrodanylyk/coroutine-recipes)
-
-教程：
-
-- [Kotlin 系统入门到进阶 视频教程](http://coding.imooc.com/class/108.html)
-- [基于 GitHub App 业务深度讲解 Kotlin1.2高级特性与框架设计](https://coding.imooc.com/class/232.html)
 
 破解协程系列：
 
@@ -106,4 +91,25 @@ Sample：
 - [破解 Kotlin 协程(6) - 协程挂起篇](https://mp.weixin.qq.com/s/CKVfG3seCLjQSl_UTaJHCg)
 - [破解 Kotlin 协程(7) - 序列生成器篇](https://juejin.im/post/5cfe19025188252ee72966ee))
 - [破解 Kotlin 协程(8) - Android 篇](https://mp.weixin.qq.com/s/UDVTuuTCHYnujlsaf9r8gA)
+
+Sample：
+
+- [coroutine-recipes 协程风格代码](https://github.com/dmytrodanylyk/coroutine-recipes)
+- [google-codelabs：kotlin-coroutines](https://codelabs.developers.google.com/codelabs/kotlin-coroutines/#0)
+
+教程：
+
+- [Kotlin 系统入门到进阶 视频教程](http://coding.imooc.com/class/108.html)
+- [基于 GitHub App 业务深度讲解 Kotlin1.2高级特性与框架设计](https://coding.imooc.com/class/232.html)
+
+博客：
+
+- [Kotlin Coroutines(协程)](https://blog.dreamtobe.cn/kotlin-coroutines/)
+- [深入浅出 Kotlin 协程](https://cloud.tencent.com/developer/article/1334825)
+
+RxJava VS Coroutines
+
+- [RxJava to Kotlin coroutines](https://medium.com/androiddevelopers/rxjava-to-kotlin-coroutines-1204c896a700)
+- [Kotlin coroutines vs RxJava: an initial performance test](https://proandroiddev.com/kotlin-coroutines-vs-rxjava-an-initial-performance-test-68160cfc6723)
+- [Forget RxJava: Kotlin Coroutines are all you need. Part 1/2](https://proandroiddev.com/forget-rxjava-kotlin-coroutines-are-all-you-need-part-1-2-4f62ecc4f99b)
   

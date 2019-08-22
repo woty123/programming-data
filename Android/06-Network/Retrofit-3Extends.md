@@ -13,7 +13,7 @@ Retrofit 默认只支持返回 Call 类型，通过 CallAdapter 却带来了无�
 ---
 ## 2 让 Retrofit 支持 Kotlin 协程
 
-参考 [kotlin coroutine 部分](../../Kotlin/README.md)
+参考 [kotlin coroutine 部分](../../Kotlin/KotlinCoroutine06-Retrofit.md)
 
 ---
 ## 3 Retrofit + RxJava 如何对网络结果进行统一处理
@@ -21,13 +21,15 @@ Retrofit 默认只支持返回 Call 类型，通过 CallAdapter 却带来了无�
 网络请求结果可能有以下情况：
 
 如果服务器返回的格式是规范的，比如：
-```
+
+```json
 {
     "code":200,
     "msg":"success",
     "data":{}//具体业务数据
 }
 ```
+
 code、msg是必然会返回的，code 的值也是规范的，data 是具体业务需要的数据，或者没有数据时可以不传，对于这种情况可以对网络结果处理进行统一的封装。有三种方式：
 
 - 使用 OkHttp 的拦截器，直接在拦截器中对返回的数据进行预处理，把 data 从源 json 中剥离出来，对 code 进行统一处理，不是 success 的 code 则以异常的形式抛出（异常会传递到RxJava链的下游），这种方式适用于简单的业务场景，对于业务非常复杂的 app，可能存在非常多的业务异常，而且很多异常都是某个业务所特有的，那么这种情况下做统一处理就会让拦截器非常耦合，另外如果发生异常，如何把 msg 传递到具体的调用者那里呢，当然是使用 Exception。
@@ -36,7 +38,7 @@ code、msg是必然会返回的，code 的值也是规范的，data 是具体业
 
 如果服务器返回的格式不是规范的，比如：
 
-```
+```json
 //情况 1，具体业务数据和通用数据分开的
 {
     "code":200,
