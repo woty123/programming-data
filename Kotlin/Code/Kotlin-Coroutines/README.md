@@ -9,6 +9,16 @@ Kotlin协程以包括以下模块
 - integration模块
 
 ---
+## 0 包说明
+
+- analyse [破解 kotlin 协程系列 ](https://juejin.im/post/5ceb423451882533441ece67)
+- core
+- concept
+- reactive
+- retrofit
+- rx2
+
+---
 ## 1 Core 模块主要包括以下内容
 
 ### 协程基础(core.base)

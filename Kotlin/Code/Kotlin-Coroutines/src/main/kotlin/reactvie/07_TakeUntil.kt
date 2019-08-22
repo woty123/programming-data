@@ -1,4 +1,4 @@
-package reactvice
+package reactvie
 
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.consume

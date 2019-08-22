@@ -1,4 +1,4 @@
-package reactvice
+package reactvie
 
 import io.reactivex.Flowable
 import kotlinx.coroutines.Dispatchers

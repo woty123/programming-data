@@ -1,4 +1,4 @@
-package reactvice
+package reactvie
 
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

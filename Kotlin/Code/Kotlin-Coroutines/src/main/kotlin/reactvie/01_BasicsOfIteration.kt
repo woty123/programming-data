@@ -1,4 +1,4 @@
-package reactvice
+package reactvie
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi

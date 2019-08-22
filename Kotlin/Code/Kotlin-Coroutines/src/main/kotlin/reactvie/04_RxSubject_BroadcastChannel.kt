@@ -1,4 +1,4 @@
-package reactvice
+package reactvie
 
 import io.reactivex.subjects.BehaviorSubject
 import kotlinx.coroutines.*
