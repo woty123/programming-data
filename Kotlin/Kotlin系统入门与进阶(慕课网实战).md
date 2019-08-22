@@ -1,6 +1,4 @@
-
-
-[Kotlin系统入门与进阶](https://coding.imooc.com/class/108.html) 学习笔记
+# [Kotlin系统入门与进阶](https://coding.imooc.com/class/108.html) 学习笔记
 
 ## 第2章 数据类型
 
@@ -50,6 +48,7 @@ apply plugin: 'application'
 //类目的 Kt 需要自己补上哦
 mainClassName = "net.println.kotlin.chapter3.CalcKt"
 ```
+
 然后同步之后会发现 gradle 任务中多了一个 distribution 任务中，运行其中的 installDist 任务即可生成可以执行程序，可以在 build/install 中找到。
 
 ## 第4章 面向对象
@@ -69,12 +68,11 @@ mainClassName = "net.println.kotlin.chapter3.CalcKt"
 ### data class
 
 - data class 坑比较多，比如没有为所有参数指定默认值时，data class 将没有无参构造函数。
-    - 使用 noarg 插件，noarg 会在编译器编辑字节码插入无参构造函数，只能通过凡是访问。
-    - 为所有参数指定默认值（推荐）。
+  - 使用 noarg 插件，noarg 会在编译器编辑字节码插入无参构造函数，只能通过凡是访问。
+  - 为所有参数指定默认值（推荐）。
 - 默认 data class 是 final的，使用 allOpen 插件可以让 data class 变为非 final 的。
 - data class 默认实现了一些方法：toString、copy 、equals 等等。
 - data class 支持解构声明，解构声明用于支持多返回值。
-
 
 ## 第5章 高阶函数
 
