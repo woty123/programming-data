@@ -83,14 +83,14 @@ Collections：
 
 破解协程系列：
 
-- [破解 Kotlin 协程(1) - 入门篇](https://mp.weixin.qq.com/s/XAZCzxTDc8XISfWzsjpsng)
-- [破解 Kotlin 协程(2) - 协程启动篇](https://mp.weixin.qq.com/s/nE2fW5ZBkbX2z_JeQmqkrA)
-- [破解 Kotlin 协程(3) - 协程调度篇](https://mp.weixin.qq.com/s/Kn1yhxslRIzwykpf_FsWEA)
-- [破解 Kotlin 协程(4) - 异常处理篇](https://mp.weixin.qq.com/s/WMFQuffyIq00Ai-XM5ISOA)
-- [破解 Kotlin 协程(5) - 协程取消篇](https://mp.weixin.qq.com/s/l17Jc_FvQ44WYopx867xeA)
-- [破解 Kotlin 协程(6) - 协程挂起篇](https://mp.weixin.qq.com/s/CKVfG3seCLjQSl_UTaJHCg)
+- [破解 Kotlin 协程(1) - 入门篇](https://juejin.im/post/5ceb423451882533441ece67)
+- [破解 Kotlin 协程(2) - 协程启动篇](https://juejin.im/post/5ceb464ef265da1b7c60f626)
+- [破解 Kotlin 协程(3) - 协程调度篇](https://juejin.im/post/5ceb4749518825141c356cbe)
+- [破解 Kotlin 协程(4) - 异常处理篇](https://juejin.im/post/5ceb480de51d4556da53d031)
+- [破解 Kotlin 协程(5) - 协程取消篇](https://juejin.im/post/5ceb48d2e51d45109b01b120)
+- [破解 Kotlin 协程(6) - 协程挂起篇](https://juejin.im/post/5ceb494851882532b93019e2)
 - [破解 Kotlin 协程(7) - 序列生成器篇](https://juejin.im/post/5cfe19025188252ee72966ee))
-- [破解 Kotlin 协程(8) - Android 篇](https://mp.weixin.qq.com/s/UDVTuuTCHYnujlsaf9r8gA)
+- [破解 Kotlin 协程(8) - Android 篇](https://juejin.im/post/5cfe1947e51d45105d63a4e3)
 
 Sample：
 

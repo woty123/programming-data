@@ -5,6 +5,7 @@ buildscript {
     repositories {
         jcenter()
         mavenCentral()
+        maven { url "https://kotlin.bintray.com/kotlinx" }
     }
     dependencies {
         //noinspection DifferentKotlinGradleVersion
@@ -20,6 +21,7 @@ apply plugin: 'kotlin'
 repositories {
     jcenter()
     mavenCentral()
+    maven { url "https://kotlin.bintray.com/kotlinx" }
 }
 
 dependencies {
