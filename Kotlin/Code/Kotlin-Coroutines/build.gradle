@@ -35,8 +35,7 @@ dependencies {
     //retrofit with coroutine
     compile 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
     //retrofit
-    def retrofit_version = '2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    def retrofit_version = '2.6.1'
     compile "com.squareup.retrofit2:retrofit:$retrofit_version"
     compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
     compile "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"

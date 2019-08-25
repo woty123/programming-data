@@ -16,23 +16,28 @@ interface GitHub {
     fun contributorsAsync(): Deferred<Map<String, String>>
 }
 
-fun main() = runBlocking {
+
+private val okHttpClient = OkHttpClient.Builder().build()
+
+private val retrofit = Retrofit.Builder().apply {
+    baseUrl("https://api.github.com")
+    client(okHttpClient)
+    addConverterFactory(GsonConverterFactory.create())
+    addCallAdapterFactory(CoroutineCallAdapterFactory())
+}.build()
+
+private val githubApi = retrofit.create(GitHub::class.java)
+
+
+fun main() {
+    sample1()
+}
+
+private fun sample1() = runBlocking {
 
     println("Making GitHub API request")
 
-    val okHttpClient = OkHttpClient
-            .Builder()
-            .build()
-
-    val retrofit = Retrofit.Builder().apply {
-        baseUrl("https://api.github.com")
-        client(okHttpClient)
-        addConverterFactory(GsonConverterFactory.create())
-        addCallAdapterFactory(CoroutineCallAdapterFactory())
-    }.build()
-
-    val github = retrofit.create(GitHub::class.java)
-    val result = github.contributorsAsync()
+    val result = githubApi.contributorsAsync()
 
     launch {
         try {
@@ -45,5 +50,5 @@ fun main() = runBlocking {
 
     println("end...")
     delay(100)
-    result.cancel()
+//    result.cancel()
 }

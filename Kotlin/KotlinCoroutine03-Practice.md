@@ -3,24 +3,14 @@
 ---
 ## 在 Android 上使用协程
 
-因为协程还是实验性功能，需要在 gradle 中开启协程：
+添加相关依赖：
 
 ```kotlin
-//app/build.gradle
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
-}
-```
-
-然后添加相关依赖：
-
-```kotlin
+    def kotlin_version = '1.3.11'
     // coroutines 核心
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.22.5"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
     // coroutines for android
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.22.5"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0'
 ```
 
 coroutines-android 中有些什么东西呢？其实只有四个文件：
@@ -191,11 +181,11 @@ suspend fun <T> FakeNetworkCall<T>.await(): T {
 }
 ```
 
-在 ViewModel 中使用 Repository 
+在 ViewModel 中使用 Repository
 
 ```kotlin
 class MainViewModel(private val repository: TitleRepository) : ViewModel() {
-    
+
     //用于关联生命周期
     private val viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -205,16 +195,16 @@ class MainViewModel(private val repository: TitleRepository) : ViewModel() {
         //取消协程的执行
         viewModelJob.cancel()
     }
-    
+
     //直接暴露 Repository 层的 LiveData 给 UI
     val title = repository.title
-    
+
     fun refreshTitle() {
         launchDataLoad {
             repository.refreshTitle()
         }
     }
-    
+
     private fun launchDataLoad(block: suspend () -> Unit): Job {
         return uiScope.launch {
             try {
@@ -227,7 +217,6 @@ class MainViewModel(private val repository: TitleRepository) : ViewModel() {
             }
         }
     }
-    
+
 }
 ```
-

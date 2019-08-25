@@ -29,7 +29,7 @@ Kotlin 作为一门编程语言，在其标准库中只提供了最低级别的 
 
 ### 应用层
 
-只有与协程相关的核心 API 可以从 Kotlin 标准库获得。这主要包括所有基于协程的库可能使用的核心原语与接口。大多数基于协程的应用程序级 API 都作为单独的库发布，它的实现在 `kotlinx.coroutines` 里面，比如常用的 `launch` 方法, `async` 方法等。
+只有与协程相关的核心 API 可以从 Kotlin 标准库获得。这主要包括所有基于协程的库可能使用的核心原语与接口。其他大多数基于协程的应用程序级 API 都作为单独的库发布，它的实现在 `kotlinx.coroutines` 里面，比如常用的 `launch` 方法, `async` 方法等。
 
 这些库包括：
 
@@ -47,11 +47,11 @@ Kotlin 作为一门编程语言，在其标准库中只提供了最低级别的 
 ## 2 核心概念
 
 ---
-### 2.1 挂起函数
+### 2.1 什么是挂起函数
 
-在 Kotlin 中，suspend 函数表示一个可以被挂起的函数，suspend 函数是协程的核心概念之一。使协程可以像写单线程方法一样来编写各种异步操作。
+在 Kotlin 中，suspend 函数表示一个可以被挂起的函数，suspend 函数是协程的核心概念之一。
 
-```
+```kotlin
 suspend fun doSomething(foo: Foo): Bar { …… }
 ```
 
@@ -59,18 +59,18 @@ suspend fun doSomething(foo: Foo): Bar { …… }
 
 #### 传统异步编程
 
-在传统的异步回调的模型中，我们一般需要需要使用回调或阻塞的方式来获取异步结果，比如：
+在传统的异步编程中，我们需要使用回调或阻塞的方式来获取异步结果，比如：
 
-- 使用异步回调(Callback)
-- 使用阻塞获取(Future.get())
-- RxJava 虽然没有了回调，但还是基于观察者模式在序列流的最末端处理结果
-- Java8 的 CompletableFuture，风格和Rx类似
+- 使用异步回调(Callback)。
+- 使用阻塞获取(`Future.get()`)。
+- RxJava 基于观察者模式在序列流的最末端处理结果，本质上还是回调。
+- Java8 的 CompletableFuture，风格和 Rx 类似。
 
-除此之外，还有没有其他更简单的方式呢？有，那就是协程。
+实际编程中，单个回调还是很好处理的，但是一旦业务变得负责，多重回调各种嵌套也很是常见，此时代码将会变得很复杂且不易于阅读，那么除以上方式之外，还有没有其他更简单的方式来编写异步程序呢？有，那就是协程。
 
 #### 同步风格的异步编程
 
-在协程中，可以实现 **异步返回** (在编写程序无需考虑异步等待，却能直接享受到异步结果)，由于 suspend 函数是可以被挂起的。被挂起的函数在恢复执行后，会回到之前的挂起点继续执行。而且，从任何一个挂起点恢复都可以切换调度线程。看下面代码：
+在协程中，可以实现 **异步返回** (程序无需考虑异步等待，却能直接享受到异步结果)，不过这依赖于 suspend 函数，因为该是可以被挂起的。被挂起的函数在恢复执行后，会回到之前的挂起点继续执行。而且，从任何一个挂起点恢复都可以切换底层的调度线程。看下面代码：
 
 ```kotlin
 private fun asyncReturn(){
@@ -91,14 +91,16 @@ private fun asyncReturn(){
 
 打印结果为：
 
+```log
     10:46:46:232 -1
     10:46:46:255 -2
     10:46:46:256 -3
     10:46:46:261 -4
     10:46:47:298 result = 1
     10:46:47:298 -5
+```
 
-其实这个函数将被编译为多个函数，具体可以分为三个部分：
+那么这到底是怎么实现的呢？其实这依赖于 Kotlin 的编译器实现，上面的这个函数将被编译为多个函数，具体可以分为三个部分：
 
 ```kotlin
     fun p1() {
@@ -129,9 +131,9 @@ private fun asyncReturn(){
     }
 ```
 
-我们写的单个函数，被编译器处理后根据挂起点被编译成了多个函数，这多个函数由内部的一个状态机进行调用，首先在主线程执行 p1，p1 执行完成转而执行 p2，p2 运行在UI上下文指定的线程中，其实还是主线程，p2 中又启动了一个协程进行异步查询，但是我们直接拿到了这个结果(类似Future)，节奏 p2 执行完成后主线程由于没有任务就挂起了，然后当异步协程返回结果后，主线程又有事情做了，要去处理结果了，于是主线程又去调用 p3 了。
+我们写的单个函数，被编译器处理后根据挂起点被编译成了多个函数，这多个函数由内部的一个状态机进行调用，首先在主线程执行 p1，p1 执行完成转而执行 p2，p2 运行在UI上下文指定的线程中，其实还是主线程，p2 中又启动了一个协程进行异步查询，但是我们直接拿到了这个结果(类似Future)，接着 p2 执行完成后主线程由于没有任务就挂起了，然后当异步协程返回结果后，主线程又有事情做了，要去处理结果了，于是主线程又去调用 p3 了。
 
-要理解协程我们必须要明白，我们写的代码将被协程分成多个段执行，而这多个段所运行的线程是由协程上下文指定的，我们启动协程的时候可以指定任意的协程上下文，比如上面的UI就是一个协程上下文，由它启动的协程都运行在主线程，而 async 默认的协程上下文是 Kolint 内置的 CommonPool。
+要理解协程我们必须要明白，我们写的代码将被协程分成多个段执行，而这多个段所运行的线程是由协程上下文指定的，我们启动协程的时候可以指定任意的协程上下文，比如上面的 UI 就是一个协程上下文，由它启动的协程都运行在主线程，而 async 默认的协程上下文是 Kolint 内置的 CommonPool。
 
 ---
 ### 2.2 理解暂停点与 Continuation
@@ -153,7 +155,7 @@ public interface Continuation<in T> {
 协程之间通过 Continuation 协作运行，挂起段由 Continuation 中的 CoroutineContext调度。Continuation 把各个挂起段连接起来。
 
 ---
-### 2.3 分析协程原理
+### 2.3 如何分析协程
 
 分析协程套路：
 
@@ -163,7 +165,7 @@ public interface Continuation<in T> {
 
 协程被编译成状态机（单个函数被编译成多个函数）：
 
-![](images/kotlin_coroutine_01_status.jpg)
+![kotlin_coroutine_01_status](images/kotlin_coroutine_01_status.jpg)
 
 - 协程由编译器编译为状态机，我们编写的代码与实际运行的代码有很多的差别。
 - suspend 函数即状态转移，单个 suspend 函数被编译成多个函数，即把每一个挂牵点编译成一个单独的函数。
@@ -178,12 +180,13 @@ public interface Continuation<in T> {
 
 上下文很常见，比如 Android 里的 Context，可以认为上下文是一个编程环境。具体一点就是 “与现在这个工作相关的周围环境”，这个 Context 里有一些和当前编程相关的方法和变量。参考[如何理解上下文](https://www.zhihu.com/question/26387327)
 
-CoroutineContext 即协程的上下文，协程总是运行在一些以 CoroutineContext 类型为代表的上下文中，它们被定义在了 Kotlin 的标准库里。协程上下文是各种不同元素的集合。其中主元素是协程中的 Job。CoroutineContext 的定义如下：
+CoroutineContext 即协程的上下文，协程总是运行在一些以 CoroutineContext 类型为代表的上下文中，它们被定义在了 Kotlin 的标准库里。协程上下文是各种不同元素（元素本身也是协程上下文）的集合（从 CoroutineContext 提供的 API 也可以看出）。其中主元素是协程中的 Job。CoroutineContext 的定义如下：
 
 ```kotlin
-//CoroutineContext是一个接口
+//CoroutineContext是一个接口，从 API 可以看出，其本身更像是多个 CoroutineContext 的组合。
 public interface CoroutineContext {
-    //[]操作符重载，通过key获取对应的 Element，Element 继承自 CoroutineContext，可以理解为通过 key 获取对应的上下文。
+
+    //[]操作符重载，通过 key 获取对应的 Element，Element 继承自 CoroutineContext，可以理解为通过 key 获取对应的上下文。
     public operator fun <E : Element> get(key: Key<E>): E?
 
     //累加此上下文的实体，operation 的功能是将 Element  转换为 R。
@@ -192,15 +195,16 @@ public interface CoroutineContext {
     //+ 操作符重载，支持上下文之间的组合：协程的上下文可以是多个的组合，组合的上下文可以通过 key 来获取。
     public operator fun plus(context: CoroutineContext): CoroutineContext
 
-    //减去 key，移除一个上下文
+    //移除一个上下文
     public fun minusKey(key: Key<*>): CoroutineContext
+
 }
 
 //Element 的定义如下
-    public interface Element : CoroutineContext {
-        //一个用于获取上下文的key
-        public val key: Key<*>
-    }
+public interface Element : CoroutineContext {
+    //一个用于获取上下文的 key，每一个 CoroutineContext 都有一个 Key，通过 Key 我们就可以找到对应的协程上下文。
+    public val key: Key<*>
+}
 
 // Key的定义如下
 public interface Key<E : Element>
@@ -208,9 +212,40 @@ public interface Key<E : Element>
 
 CoroutineContext 的子类实现
 
-- `AbstractCoroutineContextElement`：CoroutineContext 的基础实现，其构造方法需要一个 Key 参数
 - `EmptyCoroutineContext`：EmptyCoroutineContext 是一个空实现，没有任何功能，如果我们在使用协程时不需要上下文，那么我们就用这个对象作为一个占位即可。
+- `CombinedContext`：组合上下文，上面说到协程上下文其实是各种不同协程上下文的集合，而这个集合功能就是由 CombinedContext 实现的。
+- CoroutineName：用于给协程命名。
 - key 用来标识 Context 身份
+
+自定义一个 CoroutineContext：
+
+```kotlin
+private class DummyCoroutineContext : AbstractCoroutineContextElement(
+        DummyCoroutineContext/*这里的DummyCoroutineContext引用的就是其伴生对象*/
+) {
+
+    companion object Key : CoroutineContext.Key<DummyCoroutineContext> {
+        const val NAME = "DummyCoroutineContext"
+    }
+
+}
+```
+
+key 的作用：
+
+```kotlin
+private suspend fun sample1() {
+    log("1")
+    //启动的时候添加了 CoroutineName，那么在协程体中就可以通过对应的 key 获取
+    val job = GlobalScope.launch(Dispatchers.Default + CoroutineName("你的名字")) {
+        log("2 ${coroutineContext[CoroutineName]?.name}")
+    }
+    log("3")
+    job.join()
+}
+```
+
+关于 CoroutineContext，推荐参考[破解 Kotlin 协程(3) - 协程调度篇](https://juejin.im/post/5ceb4749518825141c356cbe)。
 
 ---
 ### 2 Continuation
@@ -228,7 +263,7 @@ public interface Continuation<in T> {
 }
 ```
 
-协程的基本操作包括`创建、启动、暂停和继续`，`继续`的操作在 Continuation 当中，而其他的方法都在包级函数当中
+协程的基本操作包括`创建、启动、暂停和继续`，`继续` 的操作在 Continuation 当中，而其他的方法都在包级函数当中
 
 ---
 ### 3 ContinuationInterceptor 拦截器
@@ -237,7 +272,9 @@ ContinuationInterceptor 继承了 Element，所以它本身是一个协程上下
 
 ```kotlin
 public interface ContinuationInterceptor : CoroutineContext.Element {
+
     companion object Key : CoroutineContext.Key<ContinuationInterceptor>
+
     //拦截调度，返回新的Continuation
     public fun <T> interceptContinuation(continuation: Continuation<T>): Continuation<T>
 
@@ -246,10 +283,55 @@ public interface ContinuationInterceptor : CoroutineContext.Element {
 }
 ```
 
+自定义一个拦截器，仅用于打印日志：
+
+```kotlin
+class LogContinuationInterceptor : ContinuationInterceptor {
+
+    override val key = ContinuationInterceptor
+
+    override fun <T> interceptContinuation(continuation: Continuation<T>) = LogContinuation(continuation)
+
+    private class LogContinuation<T>(private val original: Continuation<T>) : Continuation<T> {
+
+        override val context = original.context
+
+        override fun resumeWith(result: Result<T>) {
+            log("<LogContinuation> $result")
+            original.resumeWith(result)
+        }
+
+    }
+
+}
+
+private suspend fun sample2() {
+    //第 1 次拦截机会
+    GlobalScope.launch(LogContinuationInterceptor()) {
+        log(1)
+        //第 2 次拦截机会
+        val job = async {
+            log(2)
+            //第 3 次拦截机会
+            delay(1000)
+            log(3)
+            "Hello"
+        }
+        log(4)
+        //第 4 次拦截机会
+        val result = job.await()
+        log("5. $result")
+    }.join()
+    log(6)
+}
+```
+
+关于 ContinuationInterceptor，推荐参考[破解 Kotlin 协程(3) - 协程调度篇](https://juejin.im/post/5ceb4749518825141c356cbe)。
+
 ---
 ### 4 CoroutinesLibrary
 
-`kotlin.coroutines.experimental.CoroutinesLibrary` 是 Kotlin 协程的底层 API，它提供了为数不多的协程底层 API，一般用于构建应用级协程库。
+`kotlin.coroutines.experimental.CoroutinesLibrary` 中定义了 Kotlin 协程的底层 API，这些为数不多的协程底层 API 一般用于构建应用级协程库。
 
 启动一个协程：
 
@@ -295,12 +377,24 @@ public suspend inline fun <T> suspendCancellableCoroutine(
 - `yield()`：转让当前协程转调器的线程(或线程池)的执行权到其他协程
 - `yieldAll()`
 
+### 6 `runSuspend`
+
+用于支持将 main 或一些测试函数定义为 suspend 的函数。
+
+```kotlin
+//Kotlin1.3 后，可以将 main 定义为 suspend 函数了。
+suspend fun main() {
+    //sample1()
+    sample2()
+}
+```
+
 ---
 ## 4 应用层（kotlinx.coroutines）API 简介
 
 `kotlinx.coroutines` 是 Kotlin 官方的协程高级 API，它被作为多个单独的组件发布，其中 `kotlinx-coroutines-core` 是平台无关异步编程，它提供了众多启动协程的 API：
 
-```
+```log
     - kotlinx.coroutines.experimental.Builder：协程构造器
     - kotlinx.coroutines.experimental.Delay：协程的延时实现
     - kotlinx.coroutines.experimental.Yield：协程的转让执行权实现
@@ -308,14 +402,14 @@ public suspend inline fun <T> suspendCancellableCoroutine(
     - kotlinx.coroutines.experimental.Deferred：表示一个有返回结果的协程调度
 ```
 
-### 1 CoroutineDispatcher
+### 1 CoroutineDispatcher 协程的调度器
 
-CoroutineDispatcher 是协程的调度器，由它来调度和处理任务。
+CoroutineDispatcher 是协程的调度器，由它来确定调度协程的线程。
 
 ```kotlin
 public abstract class CoroutineDispatcher :
         AbstractCoroutineContextElement(ContinuationInterceptor), ContinuationInterceptor {
-            
+
             public open fun isDispatchNeeded(context: CoroutineContext): Boolean = true
 
             //分派runnable(块)到给定的上下文的另一个线程的执行。
@@ -332,14 +426,17 @@ CoroutineDispatcher 继承了 ContinuationInterceptor，显然需要处理协程
 
 - `Dispatchers.Unconfined`: 协程运行在调用者的线程，但是当在 coroutine 中挂起之后，后面所在的运行线程将完全取决于调用挂起方法的线程。
 - `Dispatchers.Default`：如果在其上下文中未指定调度程序或任何其他连续拦截器, 则所有标准生成器都使用该生成器。它使用共享后台线程的公共池。 对于占用 cpu 资源的计算密集型资源, 这是一个合适的选择。
-- `Dispatchers.IO`：适用于执行 IO 任务的调度器。
+- `Dispatchers.Main`：在 UI 线程调度协程。
+- `Dispatchers.IO`：适用于执行 IO 任务的调度器（仅在 JVM 上提供支持）。
 
 除此之外，Kotlin 也提供了让开发中自己定义 CoroutineDispatcher 的 API，比如:
 
 - `kotlinx.coroutines.ThreadPoolDispatcher` 中定义的方法：
-    - newSingleThreadContext
-    - newFixedThreadPoolContext。
+  - `newSingleThreadContext`（该API已经被废弃，原因参考下面链接）
+  - `newFixedThreadPoolContext`（该API已经被废弃，原因参考下面链接）
 - `kotlinx.coroutines.Executors` 中定义的 asCoroutineDispatcher 方法：可以使用 `asCoroutineDispatcher` 扩展函数将任意 `java.util.concurrent.Executor/ExecutorService` 转换为协程调度器，其返回值为 ExecutorCoroutineDispatcher，可以说ExecutorCoroutineDispatcher 是 java Executor 与协程调度器之间的桥梁。
+
+关于 CoroutineDispatcher，推荐参考[破解 Kotlin 协程(3) - 协程调度篇](https://juejin.im/post/5ceb4749518825141c356cbe)。
 
 ---
 ### 2 CoroutineScope
@@ -348,7 +445,7 @@ CoroutineScope 定义创建协程的范围。每个协程构建器（比如 laun
 
 CoroutineScope 封装了协程的内部状态：`isActive 和 coroutineContext` 属性，isActive 表示协程是否是活跃的(没有完成也没有被取消)，coroutineContext 表示当前这个协程的上下文。所谓通用的协程构建器 receiver，即协程运行 block 都以 CoroutineScope 为运行环境。
 
-每个 coroutine 生成器 (如launch、async 等) 和每个作用域函数 (如 coroutinscope、 withContext 等) 都将自己的作用域与自己的 Job 实例一起提供到它运行的内部代码块中。按照惯例, 它们全都会等待块内的所有子协程完成后再完成自己，从而强制执行结构化并发的规则。
+每个 coroutine 生成器 (如launch、async 等) 和每个作用域函数 (如 coroutinScope、 withContext、supervisorScope 等) 都将自己的作用域与自己的 Job 实例一起提供到它运行的内部代码块中。按照惯例, 它们全都会等待块内的所有子协程完成后再完成自己，从而强制执行结构化并发的规则。
 
 CoroutineScope 应该在具有明确定义的生命周期的实体上实现，这些实体负责启动子协程。 Android 上的此类实体的示例是 Activity。
 
@@ -370,10 +467,15 @@ CoroutineScope 的子类：
 - ActorScope：actor 协程构建器的 CoroutineScope。
 - ProducerScope： produce 协程构建器的 CoroutineScope。
 
-具体可以参考：[CoroutineScope API 文档](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-coroutine-scope/)
+关于 CoroutineScope 已经协程的移除处理，具体可以参考：
+
+- [CoroutineScope API 文档](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-coroutine-scope/)
+- [破解 Kotlin 协程(4) - 异常处理篇](https://juejin.im/post/5ceb480de51d4556da53d031)
 
 ---
 ### 3 kotlinx.coroutines 中的协程构建器
+
+程构建器用于开启一个协程。
 
 #### runBlocking
 
@@ -400,7 +502,7 @@ public fun launch( context: CoroutineContext,start: CoroutineStart = CoroutineSt
 
 Job 的定义如下：
 
-```
+```kotlin
 public interface Job : CoroutineContext.Element {}
 ```
 
@@ -455,7 +557,7 @@ public interface Deferred<out T> : Job {
 延期的值（Deferred）提供了一种便捷的方法使单个值在多个协程之间进行相互传输。通道提供了一种在流中传输值的方法。 Channel 是和 BlockingQueue 非常相似的概念。但其中不同的是它代替了阻塞的 put 操作并提供了挂起的 send，还替代了阻塞的 take 操作并提供了挂起的 receive。与 BlockingQueue 类似，Channel 也可以指定容量，默认容量为 0。
 
 #### produce
- 
+
  producce 用于启动新的 coroutine, 协程的运行范围是 ProducerScope，可以通过 ProducerScope 提供的 SendChannel 来发送一些系列数据流。coroutine 返回一个 ReceiveChannel，用于接受协程内发送的数据流，当 coroutine 完成时, 通道将自动被关闭。当其接收通道被取消时, 正在运行的 coroutine 也将被取消。
 
 #### actor
@@ -505,8 +607,8 @@ supervisorScope：使用 SupervisorJob 创建新的 CoroutineScope，并使用�
 
 CoroutineStart 是一个枚举类型，它是一个选项值，表示如何启动协程，比如 launch 和 async 协程构建器都需要传递 CoroutineStart 类型参数，但这个参数默认值 CoroutineStart.DEFAULT，CoroutineStart 的值和说明如下：
 
-- `DEFAULT`：表示根据其上下文立即安排协程执行。
-- `LAZY`：表示延迟启动协程。
+- `DEFAULT`：立即安排协程执行。
+- `LAZY`：只有在需要的情况下运行（比如调用了 join 或 start 方法）。
 - `ATOMIC`：原子 (以不可取消的方式) 根据其上下文安排要执行的 coroutine。
 - `UNDISPATCHED`：立即执行 coroutine, 直到其在当前线程中的第一个挂点。
 
@@ -515,7 +617,9 @@ CoroutineStart 是一个枚举类型，它是一个选项值，表示如何启�
 select 表达式可以同时等待多个挂起函数，并选择第一个可用的。（这个有点类似于 NIO 中的 Selector）
 
 ---
-## 5 官方指南概要总结
+## 5 协程指南概要总结
+
+现在 [协程指南](https://www.kotlincn.net/docs/reference/coroutines/coroutines-guide.html) 已经有中文版了。
 
 ### 1 结构化化并发与显式等待
 
@@ -524,15 +628,15 @@ select 表达式可以同时等待多个挂起函数，并选择第一个可用�
 
 ### 2 协程的取消
 
-- 启动的协程是可以被取消的，通过 `Job.cancel` 方法 
+- 启动的协程是可以被取消的，通过 `Job.cancel` 方法
 - 协程的取消是 **协作** 的。一段协程代码必须协作才能被取消。 所有 `kotlinx.coroutines` 中的挂起函数都是可被取消的。它们检查协程的取消，并在取消时抛出 CancellationException。我们可以不处理 CancellationException，程序不会崩溃，但如果需要在异常时做一些额外的操作，则可以使用 `try/catch` 包装协程代码。
 - 在罕见的情况下，需要在取消的协程中挂起，可以使用 `withContext(NonCancellable) {...}`
 
 ### 3 协程错误处理
 
 - 协程构建器有两种风格：自动的传播异常（launch 以及 actor） 或者将它们暴露给用户（async 以及 produce）。
-    - 自动的传播异常：对待异常是不处理的，类似于 Java 的 Thread.uncaughtExceptionHandler。用户可以不处理这些异常，程序不会崩溃。
-    - 暴露给用户：依赖用户来最终消耗异常，比如说，通过 await 或 receive。用户需要处理这些异常，否则程序会奔溃。
+  - 自动的传播异常：对待异常是不处理的，类似于 Java 的 Thread.uncaughtExceptionHandler。用户可以不处理这些异常，程序不会崩溃。
+  - 暴露给用户：依赖用户来最终消耗异常，比如说，通过 await 或 receive。用户需要处理这些异常，否则程序会奔溃。
 - CoroutineExceptionHandler：用于处理协程中的未捕获异常，它和使用 Thread.uncaughtExceptionHandler 很相似。
 
 #### 取消与异常紧密相关
@@ -568,8 +672,3 @@ select 表达式可以同时等待多个挂起函数，并选择第一个可用�
 - 使用一个单线程的调度器来调度所有协程，这样就不会有线程安全问题。
 - 作为 synchronized 或者 ReentrantLock 的替代，协程提供了 Mutex 。它具有 lock 和 unlock 方法， 可以隔离关键的部分。关键的区别在于 Mutex.lock() 是一个挂起函数，它不会阻塞线程。
 - actor 也可以用于解决线程安全问题，在 actor 启动的协程内部，对变量的操作是线程安全的，而外界可以有多个协程同时向 actor 启动的协程发送数据，actor 在高负载下比锁更有效，因为在这种情况下它总是有工作要做，而且根本不需要切换到不同的上下文。
-
----
-## 6 总结
-
-- 如何启动协程？找协程构建器，即 `coroutine builder`，常用的构建器，launch、async
