@@ -278,4 +278,3 @@ override suspend fun refresh(param: Unit) {
 // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-rx2
 compile group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-rx2', version: '1.0.1'
 ```
-
