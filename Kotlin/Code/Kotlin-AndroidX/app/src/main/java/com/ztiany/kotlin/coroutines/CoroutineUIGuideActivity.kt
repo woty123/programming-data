@@ -2,20 +2,19 @@ package com.ztiany.kotlin.coroutines
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.ztiany.kotlin.R
 import kotlinx.android.synthetic.main.activity_coroutine_guide.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.actor
-import org.jetbrains.anko.AnkoLogger
 
 /**  [使用协程进行 UI 编程指南](https://github.com/hltj/kotlinx.coroutines-cn/blob/master/ui/coroutines-guide-ui.md)*/
 @SuppressLint("SetTextI18n")
 @ObsoleteCoroutinesApi
-class CoroutineUIGuideActivity : AppCompatActivity(), AnkoLogger {
+class CoroutineUIGuideActivity : AppCompatActivity() {
 
     companion object {
         @JvmStatic

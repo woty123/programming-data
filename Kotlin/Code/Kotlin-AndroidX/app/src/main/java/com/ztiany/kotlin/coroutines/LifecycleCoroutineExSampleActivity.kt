@@ -1,16 +1,13 @@
 package com.ztiany.kotlin.coroutines
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.ztiany.kotlin.coroutines.ex.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
-import org.jetbrains.anko.button
-import org.jetbrains.anko.scrollView
-import org.jetbrains.anko.verticalLayout
 
 /**
  *@author Ztiany
@@ -21,45 +18,6 @@ class LifecycleCoroutineExSampleActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        scrollView {
-
-            verticalLayout {
-
-                //1
-                button("Async") {
-                    setOnClickListener {
-                        demoAsync()
-                    }
-                }
-                //2
-                button("AwaitOrNull") {
-                    setOnClickListener {
-                        demoAwaitOrNull()
-                    }
-                }
-                //3
-                button("Bind") {
-                    setOnClickListener {
-                        demoBind()
-                    }
-                }
-                //4
-                button("Then") {
-                    setOnClickListener {
-                        demoThen()
-                    }
-                }
-                //5
-                button("ThenAsync") {
-                    setOnClickListener {
-                        demoThenAsync()
-                    }
-                }
-
-            }
-
-        }
     }
 
     private fun demoThenAsync() {

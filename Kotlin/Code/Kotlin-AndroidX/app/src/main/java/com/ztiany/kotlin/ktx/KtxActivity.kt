@@ -1,7 +1,7 @@
 package com.ztiany.kotlin.ktx
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.ztiany.kotlin.R
 import com.ztiany.kotlin.ifNull
 

@@ -1,21 +1,18 @@
 package com.ztiany.kotlin.extension
 
 import android.annotation.SuppressLint
-import android.app.Fragment
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ztiany.kotlin.R
 import kotlinx.android.extensions.CacheImplementation
 import kotlinx.android.extensions.ContainerOptions
 import kotlinx.android.synthetic.main.fragment_extension_sample.*
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 
 /**
  *@author Ztiany
@@ -23,7 +20,7 @@ import org.jetbrains.anko.info
  *      Date : 2017-08-27 17:34
  */
 @ContainerOptions(CacheImplementation.SPARSE_ARRAY) //指定缓存view的实现
-class ExtensionSampleFragment : Fragment(), AnkoLogger {
+class ExtensionSampleFragment : Fragment() {
 
     companion object {
         fun newInstance(user: User): Fragment {
@@ -35,10 +32,9 @@ class ExtensionSampleFragment : Fragment(), AnkoLogger {
         }
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         val user = arguments?.getParcelable<User>("User")
-        info(user)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =

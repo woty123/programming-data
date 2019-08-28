@@ -1,7 +1,7 @@
 package com.ztiany.kotlin.coroutines
 
 import android.annotation.SuppressLint
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.*
 
 /**

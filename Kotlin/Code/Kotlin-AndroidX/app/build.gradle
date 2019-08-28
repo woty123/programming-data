@@ -12,7 +12,7 @@ android {
         minSdkVersion 16
         //noinspection OldTargetApi
         targetSdkVersion 26
-        //multiDexEnabled true
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
@@ -45,18 +45,32 @@ dependencies {
     implementation "androidx.multidex:multidex:2.0.1"
     implementation "androidx.multidex:multidex-instrumentation:2.0.0"
 
+    implementation "androidx.annotation:annotation:1.1.0"
+
+    implementation "androidx.legacy:legacy-support-v4:1.0.0"
+    implementation "androidx.legacy:legacy-support-v13:1.0.0"
     implementation "androidx.appcompat:appcompat:1.1.0-rc01"
-    implementation "androidx.fragment:fragment-ktx:1.2.0-alpha02"
-
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-alpha03"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha03"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-alpha03"
-    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-alpha03"
-
-    implementation "androidx.core:core-ktx:1.0.2"
-
+    implementation "com.google.android.material:material:1.1.0-alpha09"
+    implementation "androidx.dynamicanimation:dynamicanimation:1.0.0"
+    implementation "androidx.percentlayout:percentlayout:1.0.0"
     implementation "androidx.constraintlayout:constraintlayout:2.0.0-beta2"
     implementation "androidx.recyclerview:recyclerview:1.1.0-beta03"
+    implementation "androidx.recyclerview:recyclerview-selection:1.0.0"
+    implementation "androidx.exifinterface:exifinterface:1.0.0"
+
+    implementation "androidx.arch.core:core-runtime:2.1.0-rc01"
+    implementation "androidx.arch.core:core-common:2.1.0-rc01"
+    implementation "androidx.lifecycle:lifecycle-common:2.2.0-alpha03"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0-alpha03"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-alpha03"
+    implementation "androidx.lifecycle:lifecycle-livedata:2.2.0-alpha03"
+    implementation "androidx.lifecycle:lifecycle-livedata-core:2.2.0-alpha03"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0-alpha03"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:2.2.0-alpha03"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha03"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-alpha03"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams:2.2.0-alpha03"
+    implementation 'androidx.core:core-ktx:1.0.2'
 
     implementation "androidx.navigation:navigation-fragment-ktx:2.0.0"
     implementation "androidx.navigation:navigation-ui-ktx:2.0.0"
