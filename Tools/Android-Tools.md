@@ -101,3 +101,7 @@ PC 上保留两个版本，交替升级，以此来保证随时都可以切换�
 - 如果有需要，可以在 SDK 中打开，`android-sdk/tools/monitor.bat`。
 
 具体参考 [Android Device Monitor](https://developer.android.com/studio/profile/monitor)。
+
+### Windows10 优化
+
+参考 [将排除项添加到 Windows 安全中心](https://support.microsoft.com/zh-cn/help/4028485/windows-10-add-an-exclusion-to-windows-security)，可以让 Windows 安全中心不去扫描相关文件夹，我们可以把 AndroidStudio 的配置文件已经代码目录添加到排除项中。
