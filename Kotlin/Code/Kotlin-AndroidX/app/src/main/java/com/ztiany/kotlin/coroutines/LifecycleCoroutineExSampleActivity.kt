@@ -3,7 +3,6 @@ package com.ztiany.kotlin.coroutines
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.ztiany.kotlin.coroutines.ex.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async

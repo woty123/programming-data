@@ -1,4 +1,4 @@
-package com.ztiany.kotlin.coroutines.ex
+package com.ztiany.kotlin.coroutines
 
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.*
