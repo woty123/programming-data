@@ -1,4 +1,4 @@
-package com.ztiany.kotlin.coroutines.ex
+package com.ztiany.kotlin.coroutines
 
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
