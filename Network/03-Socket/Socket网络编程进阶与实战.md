@@ -37,7 +37,7 @@
 
 7 层网络模型（OSI）：
 
-![](index_files/snipaste_20181028_121815.png)
+![socket_in_action01](images/socket_in_action01.png)
 
 总结:
 
@@ -47,11 +47,11 @@
 
 与 TCP 网络模型对应关系：
 
-![](index_files/snipaste_20181028_122359.png)
+![](images/socket_in_action02.png)
 
 ### 2.3 Socket 与 TCP、UDP
 
-#### 什么是 Socket：
+#### 什么是 Socket
 
 - 简单来说是 IP 地址与端口的结合协议（RFC 793）
 - 一种地址与端口的结合描述协议
@@ -76,7 +76,7 @@ Socket的作用与组成：
 
 tcp 的传输是可靠的，每次发送出数据包，接收方收到后都要回复对方已经收到该包，否则发送方在一定时间后没有收到回复后就会认为该包发送失败，需要重新发送，当然操作系统底层是已经实现了的。
 
-![](index_files/snipaste_20181028_125524.png)
+![](images/socket_in_action03.png)
 
 #### UDP
 
@@ -129,7 +129,7 @@ Mac 地址：
 - 49152 到 65535 号端口属于 “动态端口” 范围，没有端口可以被正式地注册。
 - 计算机之间依照互联网传输层协议 TCP/IP 协议的协议通信，不同协议都对应着不同的端口。
 
-![](index_files/snipaste_20181028_140421.png)
+![](images/socket_in_action04.png)
 
 端口总数是 65536，但是并不意味着客户端只能建立 65536 个链接，标识一个链接使用的信息是 `IP + 端口`。
 
@@ -137,28 +137,28 @@ Mac 地址：
 
 层层封装：
 
-![](index_files/snipaste_20181028_141017.png)
+![](images/socket_in_action05.png)
 
 #### 远程服务器
 
 两个局域网设备之间无法直接进行直接通信。必须通过公网（被分配了公务IP）上的服务器进行间接通信。比如说政府的服务器、主干上的服务器上分配的公网 IP 是固定的。
 
-![](index_files/snipaste_20181028_141336.png)
+![](images/socket_in_action06.png)
 
 ---
 ## 3 UDP 入门
 
 ### 3.1 UDP 协议
 
- - User Datagram Protocol，一种用户数据包协议
- - 是一个简单的面向数据报的传输层协议，正式规范为 RFC 768
- 
- UDP 为什么不可靠：
+- User Datagram Protocol，一种用户数据包协议
+- 是一个简单的面向数据报的传输层协议，正式规范为 RFC 768
 
- - 一旦把应用程序发送给网络层的数据发送出去，就不保留备份。
- - UDP 在 ip 协议报的头部仅仅加入了复用和数据校验（字段）。
- - 发送端产生数据，接收端从网络中抓取数据。
- - 结构简单、无校验、速度快、容易丢包、可广播。
+UDP 为什么不可靠：
+
+- 一旦把应用程序发送给网络层的数据发送出去，就不保留备份。
+- UDP 在 ip 协议报的头部仅仅加入了复用和数据校验（字段）。
+- 发送端产生数据，接收端从网络中抓取数据。
+- 结构简单、无校验、速度快、容易丢包、可广播。
 
 UDP 能够做什么
 
@@ -167,7 +167,7 @@ UDP 能够做什么
 
 UDP 报文：
 
-报文头（64位）：![](index_files/snipaste_20181028_142432.png)
+报文头（64位）：![](images/socket_in_action07.png)
 
 UDP 最多能发送多少数据：
 
@@ -183,7 +183,7 @@ UDP 最多能发送多少数据：
 
 ### 3.3 UDP单播、广播、多播（组播）
 
-![](index_files/snipaste_20181028_144053.png)
+![](images/socket_in_action08.png)
 
 现在的路由器一般都有拒绝发送广播的策略，因为无限制的发送广播容易造成网络拥塞。而多播一定是经过了筛选、分组的，性能要优于广播，多播、广播这些都是由路由器完成的，对于我们来讲，只需要发送一次即可。
 
@@ -191,7 +191,7 @@ UDP 最多能发送多少数据：
 
 IP 地址类别：
 
-![](index_files/snipaste_20181028_144922.png)
+![](images/socket_in_action09.png)
 
 在 IP 分类上，D 类地址专门用于多播，这类地址是能被路由器所感知的，这也是多播比广播性能好的原因。
 
@@ -201,7 +201,7 @@ IP 地址类别：
 
 IP 地址构成：
 
-![](index_files/snipaste_20181028_145457.png)
+![](images/socket_in_action10.png)
 
 广播地址运算：
 
@@ -256,14 +256,14 @@ TCP 能做什么
 
 三次握手：
 
-![](index_files/snipaste_20181028_180223.png)
+![](images/socket_in_action11.png)
 
 - 三次握手是确认对方能收到自己发送的信息，自己也能收到对方发送的信息的最少握手次数。
 - 三次握手中存在一个随机值，通过这个随机值确认通信方。
 
 四次挥手：
 
-![](index_files/snipaste_20181028_180608.png)
+![](images/socket_in_action12.png)
 
 >established：已确立的；已获确认的；确定的。
 
@@ -275,7 +275,7 @@ TCP 能做什么
 - 丢弃、超时
 - 重发机制：定时器
 
-![](index_files/snipaste_20181028_181939.png)
+![](images/socket_in_action13.png)
 
 ### 4.5 TCP传输初始化配置
 
@@ -310,11 +310,11 @@ TCP 能做什么
 
 数据传输协议：使用换行符协议（一旦读取到换行符，就认为这是一条完整的消息）。
 
-![](index_files/snipaste_20181104_001105.png)
+![](images/socket_in_action14.png)
 
 服务器客户端模型：服务器作为消息的中转站。
 
-![](index_files/snipaste_20181104_001259.png)
+![](images/socket_in_action15.png)
 
 ### 6.2 代码实现
 
@@ -375,7 +375,7 @@ Channel：
 
 NIO 职责：
 
-![](index_files/snipaste_20181105_234222.png)
+![](images/socket_in_action16.png)
 
 
 Selector 注册事件：
@@ -440,7 +440,7 @@ SelectionKey 扩展：
 - 在物理层面来讲，数据是一定能安全完整地送到另一端，但是另一端可能缓冲区不够或者数据处理上不够完整导致数据只能读取一部分，这种情况称为数据不完整、数据丢包等。 
 - 不完整现象：比如客户端发生一条大消息。被底层 TCP 分解为许多数据小包发送到服务端底层，服务端底层在读取了一部分数据小包后，发送这些小的数据包已经组成组装成一个数据大包，就会对数据小报进行组装，然后 push 到数据上层，这是如果上层代码直接读取，直到返回 0 后就停止读取，将读取的数据当作一个完整的消息进行处理。这时可能服务端业务层读取到的数据只是客户端发送数据的一半。一条大消息被当成了两条消息。（非阻塞式IO存在的问题）
 
-![](index_files/snipaste_20181118_105633.png)
+![](images/socket_in_action17.png)
 
 复现消息传输错误：
 
@@ -456,19 +456,19 @@ SelectionKey 扩展：
 
 起止符方案：
 
-snipaste_20181118_135132.png
+![](images/socket_in_action18.png)
 
 固定头部方案：
 
-![](index_files/snipaste_20181118_135259.png)
+![](images/socket_in_action19.png)
 
 起止标记技术实现（需要逐字节扫描）
 
-snipaste_20181118_135511.png
+![](images/socket_in_action20.png)
 
 固定头部实现（不需要逐字节扫描）
 
-snipaste_20181118_135652.png
+![](images/socket_in_action21.png)
 
 ### 借鉴学习 HTTP 精髓
 
@@ -479,24 +479,23 @@ snipaste_20181118_135652.png
 
 #### HTTP 1.x
 
-![](index_files/snipaste_20181118_140147.png)
+![](images/socket_in_action22.png)
 
 pcap header 是一个固定的长度，用于描述每次请求 header 的长度。
 
 #### HTTP 2.x
 
-snipaste_20181118_140525.png
+![](images/socket_in_action23.png)
 
 HTTP 2.x 中请求分多次发送，比如头部帧，数据帧。
 
 长连接
 
-![](index_files/snipaste_20181118_140804.png)
+![](images/socket_in_action24.png)
 
 HTTP 2 中一个链接可以拿多个地址的数据
 
-![](index_files/snipaste_20181118_140927.png)
-
+![](images/socket_in_action25.png)
 
 #### 总结
 
@@ -527,7 +526,7 @@ HTTP 2 中一个链接可以拿多个地址的数据
 
 分配数据传输流程（帧的概念）：
 
-![](index_files/snipaste_20181125_195155.png)
+![](images/socket_in_action26.png)
 
 - 根据文件大小计算分片，并读取数据到分片。
 - 分片数据固定格式打包发送。
@@ -536,7 +535,7 @@ HTTP 2 中一个链接可以拿多个地址的数据
 
 分片消息规则：
 
-![](index_files/snipaste_20181125_200624.png)
+![](images/socket_in_action27.png)
 
 - 当前帧大小：`(2^16-1) = 65535`。
 - 帧的标志位：用于与存储加密信息等。
@@ -546,8 +545,7 @@ HTTP 2 中一个链接可以拿多个地址的数据
 
 帧 Fragme 数据结构：
 
-![](index_files/snipaste_20181125_201201.png)
-
+![](images/socket_in_action28.png)
 
 ---
 ## 10 聊天室升级版实战
@@ -571,8 +569,7 @@ HTTP 2 中一个链接可以拿多个地址的数据
 
 当 Selector 在执行 select 操作时，其实就是对已经注册的 key 队列的扫描过程。在这个过程中，是不允许其他线程更改其内部队列的(比如调用 Selector 的 register 方法，获取调用 Selector 内部 Key 的 interestOps 方法，对已选则的key集合的 clear() 操作)，如果在扫描过程中其他线程调用方法修改 Selector 内部的队列 ，可能导致线程阻塞导致阻塞，所以应该下先调用 Selector 的 wakeup 方法，让 Selector 立即从 select 方法返回（此时它可能只遍历了队列的一部分）。之后在进行修改修改。
 
-![](index_files/snipaste_20181202_174308.png)
-
+![](images/socket_in_action29.png)
 
 ### 3 心跳包
 
@@ -586,23 +583,23 @@ CS模型中如何相互知晓状态？通过心跳包来实时获取连接状态
 
 NAT 图示，一般的客户端都通过一个公网上的路由器访问服务器（IPV4用尽的原因）：
 
-![](index_files/snipaste_20181209_150428.png)
+![](images/socket_in_action30.png)
 
 客户端通过 ISP 连接服务器：
 
-![](index_files/snipaste_20181209_150748.png)
+![](images/socket_in_action31.png)
 
 映射表：完全锥形 NAT，只要客户端的 ip 和端口不变，那么 NAT 对外公布的 IP 也不会边，这样的好处是传输速度快，但是安全性较低，因为如果客户端的地址不变，那么外部的服务器就可以主动连接到内网的客户端。
 
-![](index_files/snipaste_20181209_151048.png)
+![](images/socket_in_action32.png)
 
 映射表：对此 NAT，客户端连接到通过 NAT 连接到外部的服务器，对每一个服务器的连接，IP 都不是固定的，只能由客户端主动接链接服务器，服务器服务主动连接内外客户端。
 
-![](index_files/snipaste_20181209_151432.png)
+![](images/socket_in_action33.png)
 
 NAT 超时时间，规定时间内没有任何数据收发，那么 NAT 内部维护的地址映射将会被删除：
 
-![](index_files/snipaste_20181209_151825.png)
+![](images/socket_in_action34.png)
 
 #### 心跳包的作用
 
@@ -623,7 +620,7 @@ TCP 自带的心跳策略：
 
 通过自定义数据帧实现心跳数据包：
 
-![](index_files/snipaste_20181209_153435.png)
+![](images/socket_in_action35.png)
 
 #### 心跳包发送与消费
 
@@ -635,4 +632,4 @@ TCP 自带的心跳策略：
 
 #### Netty 心跳实现
 
-![](index_files/snipaste_20181209_155307.png)
+![](images/socket_in_action36.png)

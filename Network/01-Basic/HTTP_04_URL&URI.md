@@ -21,8 +21,7 @@ URI可被视为定位符（URL），名称（URN）或两者兼备。
 
 >用于标识唯一书目的ISBN系统是一个典型的URN使用范例。例如，ISBN 0-486-27557-4( urn:isbn:0-486-27557-4 )无二义性地标识出莎士比亚的戏剧《罗密欧与朱丽叶》的某一特定版本。为获得该资源并阅读该书，人们需要它的位置，也就是一个URL地址。在类Unix操作系统中，一个典型的URL地址可能是一个文件目录，例如`file:///home/username/RomeoAndJuliet.pdf`。该URL标识出存储于本地硬盘中的电子书文件。因此，URL和URN有着互补的作用。
 
-![](index_files/05ebc02a-3fc7-4bcb-b7ba-cb65c956d567.png)
-
+![uri_url](images/uri_url.png)
 
 ### RFC对URI所做的定义
 
