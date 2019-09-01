@@ -11,8 +11,6 @@ dependencies {
 
 jar {
     baseName = "JavaAgent"
-
-
     manifest {
         attributes 'Manifest-Version': '1.0', 'Premain-Class': 'me.ztiany.instrumentation.Greeting', 'Can-Redefine-Classes': true
     }

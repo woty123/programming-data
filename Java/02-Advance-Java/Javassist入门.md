@@ -5,7 +5,6 @@ Javassist 是一个字节码操作库，Javascript（Java编程助手）使Java�
 - source level：如果使用源代码级 API，则可以在不知道 Java 字节码规范的情况下编辑类文件。可以用源文本的形式指定插入的字节码，Javassist 即时编译它。
 - bytecode level：使用这个级别的API，可以直接编辑 class 字节码。
 
-
 文档版本：`3.22.0-GA`
 
 ---
@@ -57,7 +56,7 @@ CtClass cc = pool.makeClass("Point");
 
 通过 `ClassPool.getDefault()` 获取的 ClassPool 使用 JVM 的类搜索路径。不过可以给 ClassPool 添加额外的类路径
 
-```
+```java
 //将 this 指向的类添加到 pool 的类加载路径中
 pool.insertClassPath(new ClassClassPath(this.getClass()));
 
@@ -77,7 +76,7 @@ CtClass cc = cp.get(name);
 
 如果不知道类的完全限定名称，则可以在 ClassPool 中使用 `makeClass()`方法,`makeClass()` 返回从给定输入流构造的 CtClass 对象。 使用 `makeClass()` 将类文件提供给 ClassPool 对象。如果搜索路径包含大的 jar 文件，这可能会提高性能。由于 ClassPool 对象按需读取类文件，它可能会重复搜索整个 jar 文件中的每个类文件。 `makeClass()` 可以用于优化此搜索。由 `makeClass()` 构造的 CtClass 保存在 ClassPool 对象中，从而使得类文件不会再被读取。
 
-```
+```java
 ClassPool cp = ClassPool.getDefault();
 InputStream ins = an input stream for reading a class file;
 CtClass cc = cp.makeClass(ins);
@@ -92,7 +91,7 @@ ClassPool 是 CtClass 对象的容器。因为编译器在编译引用 CtClass �
 
 如果 CtClass 对象的数量变得非常大（这种情况很少发生，因为 Javassist 试图以各种方式减少内存消耗），ClassPool 可能会导致巨大的内存消耗。 为了避免此问题，可以从 ClassPool 中显式删除不必要的 CtClass 对象。 如果对 CtClass 对象调用 `detach()`，那么该 CtClass 对象将被从 ClassPool 中删除。
 
-```
+```java
 CtClass cc = ... ;
 cc.writeFile();
 //在调用 detach() 之后，就不能调用这个 CtClass 对象的任何方法了。但是如果调用 ClassPool 的 get() 方法，
@@ -102,7 +101,7 @@ cc.detach();
 
 另一种方式是：用新的 ClassPool 替换旧的 ClassPool，并将旧的 ClassPool 丢弃。 如果旧的 ClassPool 被垃圾回收掉，那么包含在 ClassPool 中的 CtClass 对象也会被回收。
 
-```
+```java
 ClassPool cp = new ClassPool(true);//true表示附加了系统搜索路径
 //或
 ClassPool cp = new ClassPool();
@@ -114,7 +113,7 @@ cp.appendSystemPath();
 
 就像 ClassLoader 有继承关系和委托机制一样，ClassPools也具有类似的特性，如果程序正在 Web 应用程序服务器上运行，应为每个类加载器（即容器）创建一个ClassPool实例。程序应该通过不调用 `getDefault()` 而是通过ClassPool 的构造函数来创建一个 ClassPool 对象。
 
-```
+```java
 ClassPool parent = ClassPool.getDefault();
 ClassPool child = new ClassPool(parent);
 child.insertClassPath("./classes");
@@ -126,7 +125,7 @@ child.insertClassPath("./classes");
 
 下面程序调用 CtClass 的 `setName()`方法将  CtClass 对象的名称设置为 Pair。在这个调用之后，这个 CtClass 对象所代表的类的名称 Point 被修改为 Pair。类定义的其他部分不会改变。
 
-```
+```java
 ClassPool pool = ClassPool.getDefault();
 CtClass cc = pool.get("Point");
 cc.setName("Pair");
@@ -134,7 +133,7 @@ cc.setName("Pair");
 
 CtClass 中的 setName() 改变了 ClassPool 中的记录。从实现的角度来看，一个 ClassPool 对象是一个 CtClass 对象的哈希表。setName() 更改了与哈希表中的 CtClass 对象相关联的 Key。Key 从原始类名更改为新类名。因此，如果后续在 ClassPool 对象上再次调用 get("Point")，则它不会返回变量 cc 所指的 CtClass 对象。 而是再次读取类文件 Point.class，并为类 Point 构造一个新的 CtClass 对象。 因为与 Point 相关联的 CtClass 对象不再存在。
 
-```
+```java
 ClassPool pool = ClassPool.getDefault();
 CtClass cc = pool.get("Point");
 CtClass cc1 = pool.get("Point");   // cc1与cc相同。
@@ -151,7 +150,7 @@ cc1 和 cc2 指向 CtClass 的同一个实例，而 cc3 不是。 注意，在�
 
 一旦一个 CtClass 对象被 `writeFile()` 或 `toBytecode()` 转换为一个类文件，Javassist 会拒绝对该 CtClass 对象的进一步修改。因此，在表示 Point 类的 CtClass 对象被转换为类文件之后，不能将 Pair 类定义为 Point 的副本，因为在 Point 上执行 `setName()` 会被拒绝。 以下代码段是错误的：
 
-```
+```java
 ClassPool pool = ClassPool.getDefault();
 CtClass cc = pool.get("Point");
 cc.writeFile();
@@ -160,7 +159,7 @@ cc.setName("Pair");    // 错误，因为writeFile（）已被调用。
 
 为了避免这种限制，应该在 ClassPool 中调用 `getAndRename()` 方法。
 
-```
+```java
 ClassPool pool = ClassPool.getDefault();
 CtClass cc = pool.get("Point");
 cc.writeFile();
@@ -183,12 +182,11 @@ CtClass cc2 = pool.getAndRename("Point", "Pair");
 
 ### The toClass method in CtClass
 
-
 CtClass 提供了一个方便的方法 `toClass()`，它请求当前线程的上下文类加载器加载由 CtClass 对象表示的类。要调用此方法，调用者必须具有适当的权限，否则可能会抛出 SecurityException。
 
 如何使用`toClass()`：
 
-```
+```java
 public class Hello {
     public void say() {
         System.out.println("Hello");
@@ -210,12 +208,11 @@ public class Test {
 
 **如果程序在 JBoss 和 Tomcat 等应用服务器上运行**，`toClass()` 使用的默认上下文类加载器可能不合适，在这种情况下会抛出 ClassCastException。为了避免这个异常，你必须明确地给 `toClass()`一个合适的类加载器。例如，如果 bean 是你的会话 bean 对象，那么下面的代码才能正常工作：
 
-```
+```java
 CtClass cc = ...;
 Class c = cc.toClass(bean.getClass().getClassLoader());
 ```
 `toClass()` 是为了方便而提供的。如果需要更复杂的功能，应该编写自己的类加载器。
-
 
 ### Class loading in Java
 
@@ -225,7 +222,7 @@ Class c = cc.toClass(bean.getClass().getClassLoader());
 
 例如，下面的代码片段会引发异常：
 
-```
+```java
 MyClassLoader myLoader = new MyClassLoader();
 Class clazz = myLoader.loadClass("Box");
 Object obj = clazz.newInstance();
@@ -238,7 +235,7 @@ Box b = (Box)obj;    // this always throws ClassCastException.
 
 为了理解这种行为，我们来考虑下面的例子。：
 
-```
+```java
 public class Point {    // loaded by PL
     private int x, y;
     public int getX() { return x; }
@@ -261,7 +258,7 @@ public class Window {    // loaded by a class loader L
 
 接下来，让我们考虑一个稍微修改的例子：
 
-```
+```java
 public class Point {
     private int x, y;
     public int getX() { return x; }
@@ -287,7 +284,7 @@ public class Window {    // loaded by a class loader L
 
 这种行为有些不方便，但是必要的。如果以下声明：`Point p = box.getSize();`。如果没有抛出异常，那么 Window 的程序员可能会破坏 Point 对象的封装。例如，字段 x 在由 PL 加载的 Point 中是私有的。但是，如果 L 使用以下定义加载 Point，那么 Window 类可以直接访问 x 的值：
 
-```
+```java
 public class Point {
     public int x, y;    // not private
     public int getX() { return x; }
@@ -295,11 +292,11 @@ public class Point {
 }
 ```
 
-###  Using javassist.Loader
+### Using javassist.Loader
 
 Javassist 提供了一个类加载器 `javassist.Loader`。这个类加载器使用 `javassist.ClassPool` 对象来读取类文件。例如，javassist.Loader 可用于加载用 Javassist 修改的特定类。
 
-```
+```java
 import javassist.*;
 import test.Rectangle;
 
@@ -320,7 +317,7 @@ public class Main {
 
 如果用户想要在加载时按需修改类，则用户可以将事件监听器添加到 `javassist.Loader`。当类加载器加载一个类时，会通知添加的事件监听器。事件侦听器类必须实现以下接口：
 
-```
+```java
 public interface Translator {
     //当通过javassist.Loader中的addTranslator() 将此事件侦听器添加到javassist.Loader对象时，会调用start()方法。
     public void start(ClassPool pool)
@@ -331,9 +328,10 @@ public interface Translator {
         throws NotFoundException, CannotCompileException;
 }
 ```
+
 比如：以下事件监听器在加载之前将所有类更改为公共类。
 
-```
+```java
 public class MyTranslator implements Translator {
     void start(ClassPool pool)
         throws NotFoundException, CannotCompileException {}
@@ -344,10 +342,11 @@ public class MyTranslator implements Translator {
         cc.setModifiers(Modifier.PUBLIC);
     }
 }
-```
+
+```java
 注意，`onLoad()` 方法不必调用 `toBytecode()` 或 `writeFile()`，因为 javassist.Loader 会调用这些方法来获取类文件。要使用 MyTranslator 对象运行应用程序类 MyApp，请编写一个主类，如下所示：
 
-```
+```java
 import javassist.*;
 
 public class Main2 {
@@ -368,13 +367,11 @@ public class Main2 {
 
 此搜索顺序允许Javassist加载修改后的类，但是，如果由于某种原因无法找到修改的类，它将委托给父类加载器。一旦一个类被父类加载器加载，该类中引用的其他类也将由父类加载器加载，因此它们不会被修改，回想一下，C 类中引用的所有类都由C 的真实 `real loader` 加载，**如果程序无法加载修改的类，则应确保使用该类的所有类已由 `javassist.Loader` 加载。**
 
-
-
 ### Writing a class loader
 
 使用Javassist的简单类加载器如下所示：
 
-```
+```java
 import javassist.*;
 
 public class SampleLoader extends ClassLoader {
@@ -422,7 +419,7 @@ MyApp 类是一个应用程序。要执行这个程序，首先将类文件放�
 
 诸如 `java.lang.String` 之类的系统类不能由系统类加载器以外的类加载器加载，因此，上面显示的`SampleLoader`或`javassist.Loader`无法在加载时修改系统类。如果应用程序需要这样做，则系统类必须进行静态修改：
 
-```
+```java
 ClassPool pool = ClassPool.getDefault();
 CtClass cc = pool.get("java.lang.String");
 CtField f = new CtField(CtClass.intType, "hiddenValue", cc);
@@ -430,9 +427,10 @@ f.setModifiers(Modifier.PUBLIC);
 cc.addField(f);
 cc.writeFile(".");
 ```
+
 这个程序生成一个文件`“./java/lang/String.class”。`要使用此修改的 String 类运行程序 MyApp，应执行如下操作：`java -Xbootclasspath/p:. MyApp arg1 arg2...`，假设MyApp的定义如下：
 
-```
+```java
 public class MyApp {
     public static void main(String[] args) throws Exception {
         System.out.println(String.class.getField("hiddenValue").getName());
@@ -442,11 +440,9 @@ public class MyApp {
 
 如果修改后的 String 类被正确加载，MyApp 将打印 `hiddenValue`。
 
-
 ### Reloading a class at runtime
 
 如果在启用JPDA（Java Platform Debugger Architecture）的情况下启动JVM，则可以动态地重新加载类。在JVM加载一个类之后，可以卸载旧版本的类定义，并且可以重新加载一个新类。也就是说，该类的定义可以在运行时动态修改。但是，新的类定义必须与旧的定义兼容。**JVM 不允许两个版本之间的模式更改。它们必须具有相同的方法和字段。**，Javassist为在运行时重新加载类提供了一个方便的类：`javassist.tools.HotSwapper`。
-
 
 ----
 ## 4 自省和自定制 (Introspection and customization)
@@ -456,7 +452,6 @@ CtClass 提供了内省方法。 Javassist 的自省能力与 Java 反射 API �
 Javassist中，Method 由 CtMethod 对象表示。 CtMethod 提供了几种修改 Method 定义的方法，请注意，如果方法是从超类继承的，那么表示继承方法的相同 CtMethod 对象表示在该超类中声明的方法。CtMethod对象对应于每个方法声明。
 
 例如，如果类Point声明方法 `move()` 并且 Point 的子类 ColorPoint 不覆盖 `move()`，在 Point 中声明并在 ColorPoint 中继承的两个 `move()` 方法由相同的 CtMethod 对象表示。如果修改了此CtMethod 对象表示的方法定义，则修改将反映在两个方法上。如果只想修改 ColorPoint 中的 `move()` 方法，则首先必须向 ColorPoint 添加表示 Point 中的 `move()` 的 CtMethod 对象的副本。 CtMethod 对象的副本可以通过`CtNewMethod.copy()` 获取。
-
 
 Javassist**不允许删除方法或字段**，但它允许更改名称。因此，如果方法不再必要，则应通过调用在 CtMethod 中声明的 `setName()` 和 `setModifiers()`来重命名并更改为私有方法。Javassist不允许向现有方法添加额外的参数，如果需要这样做，那么接收额外参数以及其他参数的新方法应该添加到同一个类中。例如，如果你想添加一个额外的 int 参数newZ 给一个方法：
 
@@ -479,7 +474,7 @@ CtMethod 和 CtConstructor 提供了 `insertBefore()`，`insertAfter()` 和 `add
 
 方法`insertBefore()`，`insertAfter()`，`addCatch()`和`insertAt()` 接收表示语句或块的 String 对象。声明是一个单一的控制结构，如 if 和 while 或以分号`;` 结尾的表达式。块是用大括号`{}`包围的一组语句。因此，以下每行都是有效语句或块的示例：
 
-```
+```java
 System.out.println("Hello");
 { System.out.println("Hello"); }
 if (i < 0) { i = -i; }
@@ -490,7 +485,6 @@ if (i < 0) { i = -i; }
 > 出于优化考虑，java编译会把方法参数名重命名为arg1,arg2之类的参数。javac 的 -g 指令用于生成所有调试信息
 
 传递给方法`insertBefore()`，`insertAfter()`，`addCatch()` 和 `insertAt()` 的 String 对象由Javassist中包含的编译器编译。由于编译器支持语言扩展，因此以 `$` 开头的多个标识符具有特殊含义：
-
 
 符号 | 含义
 --- | ---
@@ -505,14 +499,13 @@ if (i < 0) { i = -i; }
 `$type` | 一个 `java.lang.Class` 对象，表示返回值类型
 `$class` | 一个 `java.lang.Class` 对象，表示当前正在修改的类]
 
-
 ####  `$n` 引用参数
 
 传递给目标方法的参数使用 `$1，$2，...` 访问，而不是原始的参数名称。 `$1` 表示第一个参数，`$2` 表示第二个参数，以此类推。 这些变量的类型与参数类型相同。 `$0` 等价于 `this` 指针。 如果方法是静态的，则 `$0` 不可用。
 
 下面有一些使用这些特殊变量的例子。假设一个类 Point：
 
-```
+```java
 class Point {
     int x, y;
     void move(int dx, int dy) { x += dx; y += dy; }
@@ -521,7 +514,7 @@ class Point {
 
 要在调用方法 `move()` 时打印 dx 和 dy 的值，请执行以下程序：
 
-```
+```java
 ClassPool pool = ClassPool.getDefault();
 CtClass cc = pool.get("Point");
 CtMethod m = cc.getDeclaredMethod("move");
@@ -531,7 +524,7 @@ cc.writeFile();
 
 请注意，传递给 `insertBefore()` 的源文本是用大括号 `{}` 括起来的。`insertBefore()` 只接受单个语句或用大括号括起来的语句块。修改后的类 Point 的定义是这样的：
 
-```
+```java
 class Point {
     int x, y;
     void move(int dx, int dy) {
@@ -543,7 +536,7 @@ class Point {
 
 `$1` 和 `$2` 分别替换为dx和dy。`$1，$2，$3 ...`是可更新的。如果一个新值被分配给其中一个变量，那么该变量所代表的参数值也会被更新。
 
-####  `$args`
+#### `$args`
 
 变量 `$args` 表示所有参数的数组。该变量的类型是类 `Object` 的数组。如果参数类型是像 `int` 这样的基本类型，那么该参数值将被转换为包装对象，如 `java.lang.Integer` 以存储在 `$args`中。因此，`$args[0]`相当于 `$1`，除非第一个参数的类型是基本类型。请注意 `$args[0]`不等于 `$0`; `$0`表示 this 引用。
 
@@ -553,7 +546,7 @@ class Point {
 
 变量 `$$` 是以逗号分隔的所有参数列表的缩写。例如，如果方法 `move()`的参数数量是三个：
 
-```
+```java
 move($$)
 //等价于
 move($1, $2, $3)
@@ -563,11 +556,11 @@ move($1, $2, $3)
 
 请注意，`$$` 允许方法调用的通用符号与参数的数量有关。它通常与 `$proceed`一起使用。
 
-####  `$cflow`
+#### `$cflow`
 
 `$cflow` 表示**控制流**。此只读变量将**递归调用的深度**返回给特定的方法。假设下面显示的方法由 CtMethod 对象 cm 表示：
 
-```
+```java
 int fact(int n) {
     if (n <= 1)
         return n;
@@ -578,14 +571,14 @@ int fact(int n) {
 
 要使用 `$cflow`，首先声明 `$cflow` 用于监视对方法 `fact()` 的调用：
 
-```
+```java
 CtMethod cm = ...;
 cm.useCflow("fact");
 ```
 
 `useCflow()`的参数是声明的 `$cflow`变量的标识符。任何有效的Java名称都可以用作标识符。标识符也可以包含`.` 所以 `my.Test.fact`是一个有效的标识符。然后，`$cflow（fact)`表示对由 `cm.` 指定的方法的递归调用的深度。当方法被第一次调用时，`$cflow(fact)`的值为 0，而在方法中递归调用方法时，它的值为 1。例如：
 
-```
+```java
 //$cflow(fact)用于返回 fact 方法递归调用的深度
 cm.insertBefore("if ($cflow(fact) == 0)"
               + "    System.out.println(\"fact \" + $1);");
@@ -593,12 +586,11 @@ cm.insertBefore("if ($cflow(fact) == 0)"
 
 转换方法 `fact()` 以显示参数。由于检查了 `$cflow(fact)` 的值，因此  `fact()` 方法在  `fact()` 中递归调用时不会显示该参数。`$cflow` 的值是与**当前线程的当前最高堆栈帧**下的指定方法cm相关联的堆栈帧的数量。`$cflow`  也可以在不同于指定方法cm的方法中访问。
 
-
 #### `$r`
 
 `$r` 表示方法的结果类型（返回类型）。它用在 cast 表达式中作 cast 转换类型。 下面是一个典型的用法：
 
-```
+```java
 Object result = ... ;
 $_ = ($r)result;
 ```
@@ -609,18 +601,17 @@ $_ = ($r)result;
 
 cast 运算符 `$r` 在 return 语句中也很有用。 即使结果类型是 void，下面的 return 语句也是有效的：
 
-```
+```java
 return ($r)result;
 ```
 
 这里，result是局部变量。 因为指定了 ($r)，所以结果值被丢弃。此返回语句被等价于:`return;`
 
-
 #### `$w`
 
 `$w` 表示包装类型。它用在 cast 表达式中作 cast 转换类型。`$w` 把基本类型转换为包装类型。 以下代码是一个示例：
 
-```
+```java
 Integer i = ($w)5;
 ```
 
@@ -636,7 +627,6 @@ CtMethod 中的 `insertAfter()` 和 CtConstructor 在方法的末尾插入编译
 
 `$sig` 的值是一个 java.lang.Class 对象的数组，表示声明的形式参数类型。
 
-
 #### `$type`
 
 `$type` 的值是一个 java.lang.Class 对象，表示结果值的类型。 如果这是一个构造函数，此变量返回 Void.class。
@@ -649,12 +639,12 @@ CtMethod 中的 `insertAfter()` 和 CtConstructor 在方法的末尾插入编译
 
 `addCatch()` 插入方法体抛出异常时执行的代码，控制权会返回给调用者。 在插入的源代码中，异常用 `$e` 表示。
 
-```
+```java
 CtMethod m = ...; CtClass etype = ClassPool.getDefault().get("java.io.IOException"); m.addCatch("{ System.out.println($e); throw $e; }", etype);
 ```
 转换成对应的 java 代码如下：
 
-```
+```java
 try {
     // 原来的方法体
 } catch (java.io.IOException e) {
@@ -691,7 +681,7 @@ Javassist 只允许修改方法体中包含的表达式。`javassist.expr.ExprEd
 
 要运行 ExprEditor 对象，用户必须在 CtMethod 或 CtClass 中调用 instrument()。例如：
 
-```
+```java
 CtMethod cm = ... ;
 cm.instrument(
     new ExprEditor() {
@@ -711,7 +701,7 @@ cm.instrument(
 
 调用`edit()` 参数的 `replace()` 方法可以将表达式替换为给定的语句。如果给定的语句是空块，即执行 `replace("{}")`，则将表达式删除。如果要在表达式之前或之后插入语句（或块），则应该将类似以下的代码传递给 `replace()`：
 
-```
+```java
 { *before-statements;*
   $_ = $proceed($$);
   *after-statements;* }
@@ -719,13 +709,13 @@ cm.instrument(
 
 无论表达式是方法调用，字段访问，对象创建还是其他。第二个陈述可能是：
 
-```
+```java
 $_ = $proceed();
 ```
 
 如果表达式是读访问，或者：
 
-```
+```java
 $proceed($$);
 ```
 
@@ -801,7 +791,6 @@ NewExpr 表示使用 new 运算符（不包括数组创建）创建对象的表�
 
 其他标识符如 `$w`，`$args` 和 `$$` 也可用。
 
-
 #### javassist.expr.NewArray
 
 NewArray 表示使用 new 运算符创建数组。如果发现数组创建的操作，ExprEditor 中的 `edit()` 方法一个 NewArray 对象。NewArray 中的 `replace()` 方法可以使用源代码来替换数组创建操作。
@@ -821,7 +810,7 @@ NewArray 表示使用 new 运算符创建数组。如果发现数组创建的操
 
 例如，如果按下面的方式创建数组：
 
-```
+```java
 String[][] s = new String[3][4];
 ```
 
@@ -829,7 +818,7 @@ String[][] s = new String[3][4];
 
 例如，如果按下面的方式创建数组：
 
-```
+```java
 String[][] s = new String[3][];
 ```
 
@@ -850,7 +839,6 @@ String[][] s = new String[3][];
 `$r` | instanceof 运算符右侧的值
 `$type` | 一个 java.lang.Class 对象，表示 instanceof 运算符右侧的类型
 `$proceed` | 执行 instanceof 表达式的虚拟方法的名称。它需要一个参数（类型是 java.lang.Object）。如果参数类型和 instanceof 表达式右侧的类型一致，则返回 true。否则返回 false。
-
 
 其他标识符如 `$w`，`$args` 和 `$$` 也可用。
 
@@ -886,7 +874,6 @@ Handler 对象表示 try-catch 语句的 catch 子句。 如果找到 catch，Ex
 
 如果一个新的异常分配给 `$1`，它将作为捕获的异常传递给原始的 catch 子句。
 
-
 ### 添加一个新的方法或字段
 
 #### 添加新方法
@@ -895,7 +882,7 @@ Javassist 可以创建新的方法和构造函数。CtNewMethod 和 CtNewConstru
 
 例如，这个程序：
 
-```
+```java
 CtClass point = ClassPool.getDefault().get("Point");
 CtMethod m = CtNewMethod.make(
                  "public int xmove(int dx) { x += dx; }",
@@ -907,22 +894,23 @@ point.addMethod(m);
 
 传递给 `make()` 源代码可以包含以 `$` 开始的标识符，除了 `$_`，如 `setBody()` 中所示。It can also include` $proceed` if the target object and the target method name are also given to make(). For example：
 
-```
+```java
 CtClass point = ClassPool.getDefault().get("Point");
 CtMethod m = CtNewMethod.make(
                  "public int ymove(int dy) { $proceed(0, dy); }",
                  point, "this", "move");
 ```
+
 这个程序创建一个方法ymove（）定义如下：
 
-```
+```java
 //请注意，$proceed 已被替换this.move。
 public int ymove(int dy) { this.move(0, dy); }
 ```
 
 Javassist 提供了另一种添加新方法的方法。可以先创建一个抽象方法，然后给它一个方法体：
 
-```
+```java
 CtClass cc = ... ;
 CtMethod m = new CtMethod(CtClass.intType, "move",
                           new CtClass[] { CtClass.intType }, cc);
@@ -937,7 +925,7 @@ cc.setModifiers(cc.getModifiers() & ~Modifier.ABSTRACT);
 
 如果Javassist调用另一个尚未添加到类中的方法，它将无法编译该方法。（Javassist可以编译一个递归调用自己的方法。），要将相互递归方法添加到类中，您需要一个如下所示的技巧。假设你想将方法 `m()`和 `n()`添加到由 cc 表示的类中：
 
-```
+```java
 CtClass cc = ... ;
 CtMethod m = CtNewMethod.make("public abstract int m(int i);", cc);
 CtMethod n = CtNewMethod.make("public abstract int n(int i);", cc);
@@ -954,11 +942,12 @@ cc.setModifiers(cc.getModifiers() & ~Modifier.ABSTRACT);
 
 Javassist也允许用户创建一个新的字段。
 
-```
+```java
 CtClass point = ClassPool.getDefault().get("Point");
 CtField f = new CtField(CtClass.intType, "z", point);
 point.addField(f);
 ````
+
 如果必须指定添加字段的初始值，则上面显示的程序必须修改为：
 
 ```
@@ -969,7 +958,7 @@ point.addField(f, "0");    // 初始值是 0.
 
 `addField()` 方法接收第二个参数，它是表示计算初始值的表达式的源代码。如果表达式的结果类型匹配字段的类型，则此源文本可以是任何 Java 表达式。请注意，表达式不以分号（`;`）结尾。而且，上面的代码可以被重写成下面的简单代码：
 
-```
+```java
 CtClass point = ClassPool.getDefault().get("Point");
 CtField f = CtField.make("public int z = 0;", point);
 point.addField(f);
@@ -985,7 +974,7 @@ CtClass，CtMethod，CtField 和 CtConstructor 提供了一个方便的方法 `g
 
 比如有下面类型的注解：
 
-```
+```java
 public @interface Author {
     String name();
     int year();
@@ -994,7 +983,7 @@ public @interface Author {
 
 这个注解用于下面的类上
 
-```
+```java
 @Author(name="Chiba", year=2005)
 public class Point {
     int x, y;
@@ -1003,7 +992,7 @@ public class Point {
 
 然后，注解的值可以通过 `getAnnotations()`来获得。它返回一个包含注释类型对象的数组。
 
-```
+```java
 CtClass cc = ClassPool.getDefault().get("Point");
 Object[] all = cc.getAnnotations();
 Author a = (Author)all[0];
@@ -1027,12 +1016,13 @@ System.out.println("name: " + name + ", year: " + year);
 
 要告诉编译器在解析类名时搜索其他包，则在 ClassPool 中调用 `importPackage()`。例如：
 
-```
+```java
 pool.importPackage("java.awt");
 CtClass cc = pool.makeClass("Test");
 CtField f = CtField.make("public Point p;", cc);
 cc.addField(f);
 ```
+
 第二行指示编译器导入 `java.awt` 包。因此，第三行不会抛出异常。编译器可以将 Point 识别为 `java.awt.Point`。注意 `importPackage()` 不会影响 ClassPool 中的 `get()` 方法。只有编译器才考虑导入包。 `get()` 的参数必须是完整类名。
 
 ### Limitations(限制)
@@ -1044,7 +1034,7 @@ cc.addField(f);
 - 编译器不能编译包含内部类和匿名类的源代码。 但是，Javassist 可以读取和修改内部/匿名类的类文件。
 - 不支持带标记的 continue 和 break 语句。
 - 编译器没有正确实现 Java 方法调度算法。编译器可能会混淆在类中定义的重载方法（方法名称相同，查参数列表不同）。例如：
-```
+```java
 //如果编译的表达式是 x.foo(new C())，其中 x 是 X 的实例，编译器将产生对 foo(A) 的调用，尽管编译器可以正确地编译 foo((B) new C()) 。
 class A {}
 class B extends A {}
@@ -1056,9 +1046,6 @@ class X {
 ```
 - 建议使用 `#` 作为类名和静态方法或字段名之间的分隔符。 例如，在常规 Java 中，`javassist.CtClass.intType.getName()`，在 javassist.CtClass 中的静态字段 intType 指示的对象上调用一个方法 `getName()`。 在Javassist 中，用户也可以写上面的表达式，但是建议写成这样：`javassist.CtClass#intType.getName()`，这样可以使编译器可以快速解析表达式。
 
-
-
-
 ---
 ## 5 Bytecode level API
 
@@ -1068,7 +1055,7 @@ Javassist 还提供了低级的 API 用于直接编辑类文件，为了使用�
 
 `javassist.bytecode.ClassFile` 对象表示一个类文件。为了获取这个对象，应该调用 CtClass 中的`getClassFile()`方法。另外，还可以直接从类文件构造 `javassist.bytecode.ClassFile`实例。例如：
 
-```
+```java
 BufferedInputStream fin
     = new BufferedInputStream(new FileInputStream("Point.class"));
 ClassFile cf = new ClassFile(new DataInputStream(fin));
@@ -1081,7 +1068,7 @@ ClassFile cf = new ClassFile(new DataInputStream(fin));
 ```java
 ClassFile cf = new ClassFile(false, "test.Foo", null);
 cf.setInterfaces(new String[] { "java.lang.Cloneable" });
- 
+
 FieldInfo f = new FieldInfo(cf.getConstPool(), "width", "I");
 f.setAccessFlags(AccessFlag.PUBLIC);
 cf.addField(f);
@@ -1091,19 +1078,18 @@ cf.write(new DataOutputStream(new FileOutputStream("Foo.class")));
 
 上面代码生成一个包含以下类的实现的类文件 Foo.class：
 
-```
+```java
 package test;
 class Foo implements Cloneable {
     public int width;
 }
 ```
 
-###  添加和删除除成员
+### 添加和删除除成员
 
 ClassFile 提供 `addField()` 和 `addMethod()` 用于添加字段或方法（注意构造函数被认为是字节码级别的一种方法），它还提供了用于向类文件添加属性的`addAttribute()`。注意，FieldInfo，MethodInfo 和 AttributeInfo 对象包含指向 ConstPool（常量池表）对象的链接。ConstPool 对象必须与 ClassFile 对象以及添加到该 ClassFile 对象的 FieldInfo（或MethodInfo等）对象通用，换句话说，FieldInfo（或MethodInfo等）对象不能在不同的ClassFile 对象之间共享。
 
 要从 ClassFile 对象中删除字段或方法，必须首先获取包含该类的所有字段的 `java.util.List` 对象。 `getFields()` 和 `getMethods()` 返回列表。通过在 List 对象上调用 `remove()` 可以删除一个字段或方法。一个属性可以用类似的方式删除。在 FieldInfo 或 MethodInfo 中调用 `getAttributes()` 以获取属性列表，并从列表中删除一个。
-
 
 ### 遍历方法体
 
@@ -1142,7 +1128,7 @@ while (ci.hasNext()) {
 
 一个 Bytecode 对象表示一系列的字节码指令。它是一个可增长的字节码数组。这是一个示例代码片段：
 
-```
+```java
 ConstPool cp = ...;    // constant pool table
 Bytecode b = new Bytecode(cp, 1, 0);
 b.addIconst(3);
@@ -1152,7 +1138,7 @@ CodeAttribute ca = b.toCodeAttribute();
 
 这会产生代表以下序列的代码属性：
 
-```
+```java
 iconst_3
 ireturn
 ```
@@ -1164,7 +1150,7 @@ Bytecode 提供了许多方法来添加特定的指令，例如使用 addOpcode(
 
 字节码可以用来构造一个方法。例如：
 
-```
+```java
 ClassFile cf = ...
 Bytecode code = new Bytecode(cf.getConstPool());
 code.addAload(0);
@@ -1188,7 +1174,7 @@ Javassist 还允许你通过更高级别的 API 访问 Annotation。 如果要�
 
 Javassist 的低级 API 完全支持 Java 5 引入的泛型。另一方面，CtClass 等高级 API 不直接支持泛型。但是，这不是字节码转换的严重问题。Java 的泛型是通过擦除技术实现的。编译完成后，所有类型参数都将被删除。例如，假设你的源代码声明了一个参数化类型 `Vector <String>`：
 
-```
+```java
 Vector<String> v = new Vector<String>();
   :
 String s = v.get(0);
@@ -1196,7 +1182,7 @@ String s = v.get(0);
 
 编译的字节码等同于以下代码：
 
-```
+```java
 Vector v = new Vector();
   :
 String s = (String)v.get(0);
@@ -1206,7 +1192,7 @@ String s = (String)v.get(0);
 
 例如，如果你有一个类：
 
-```
+```java
 public class Wrapper<T> {
   T value;
   public Wrapper(T t) { value = t; }
@@ -1215,7 +1201,7 @@ public class Wrapper<T> {
 
 并想将接口 `Getter<T>` 添加到类  `Wrapper<T>` 中：
 
-```
+```java
 public interface Getter<T> {
   T get();
 }
@@ -1223,33 +1209,31 @@ public interface Getter<T> {
 
 那么你添加的接口是Getter（类型参数`<T>`需要移除），而且 Wrapper 类的方法应该是下面这种形式：
 
-```
+```java
 public Object get() { return value; }
 ```
 
 不需要类型参数。由于 get 返回 Object，因此如果源代码由 Javassist 编译，则需要在调用出添加显式类型转换。比如：
 
-```
+```java
 Wrapper w = ...
 String s = (String)w.get();
 ```
 
 如果源代码由普通 Java 编译器编译，则不需要类型转换，因为它会自动插入类型转换。如果需要在运行时通过反射访问类型参数，则必须将泛型签名添加到类文件，有关更多详细信息，参考 CtClass 的 `setGenericSignature` 方法的API。
 
-
-
 ---
 ## 7 可变参数
 
 Javassist不直接支持可变参数。所以要用可变参数创建一个方法，你必须明确地设置一个方法修饰符。这很容易。假设你现在想要制作以下方法：
 
-```
+```java
 public int length(int... args) { return args.length; }
 ```
 
 下面的代码使用 Javassist 将使上面显示的方法：
 
-```
+```java
 CtClass cc = /* target class */;
 CtMethod m = CtMethod.make("public int length(int[] args) { return args.length; }", cc);
 m.setModifiers(m.getModifiers() | Modifier.VARARGS);
@@ -1257,13 +1241,13 @@ cc.addMethod(m);
 ```
 参数类型`int ...`更改为`int []`，并将`Modifier.VARARGS`添加到方法修饰符中。要在由嵌入在 Javassist 中的编译器编译的源代码中调用此方法，需要按照下面方式：
 
-```
+```java
 length(new int[] { 1, 2, 3 });
 ```
 
 而不是使用可变参数机制调用此方法：
 
-```
+```java
 length(1, 2, 3);
 ```
 
@@ -1283,14 +1267,12 @@ m.getMethodInfo().rebuildStackMapForME(cpool);
 
 Boxing/Unboxing 是 Java 提供的语法糖，在编译器就会被替换为具体的方法调用，所有 Javassist 编译器 不支持 `Boxing/Unboxing`。
 
-
 ---
 ## 10 Debug
 
-
 将 `CtClass.debugDump` 设置为目录名称。然后，所有由Javassist修改和生成的类文件都保存在该目录中。例如下面地代码：
 
-```
+```java
 CtClass.debugDump = "./dump";
 ```
 
@@ -1315,7 +1297,7 @@ Javassist的使用方式：
 
 使用官方 Sample：
 
-```
+```shell
 1 javac -classpath C:\Users\Administrator\Desktop\javassist\javassist.jar  sample/evolve/*.java
 2 javac -classpath C:\Users\Administrator\Desktop\javassist\javassist.jar  sample/evolve/sample/evolve/WebPage.java
 3 java -classpath C:\Users\Administrator\Desktop\javassist\javassist.jar;. sample.evolve.DemoLoader 5003

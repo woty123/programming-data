@@ -148,4 +148,30 @@ Android全埋点 SensorsAnalytics SDK：
 - 无法支持浮动在 Activity 之上的 View 的点击，比如 Dialog、PopupWindow 等。
 - 每一次采集，都需要去遍历整个 View 树找到手势事件对应的 View。效率较低。
 
-至此，静态采集方案介绍完毕。
+至此，动态采集方案介绍完毕。
+
+## 7 `$AppClick` 全埋点方案 5：AspectJ
+
+- 关于 AspectJ 可以参考 [Android-AOP编程](07-Android-AOP编程.md) AspectJ 部分。
+- 在 Android 中使用 AspectJ 需要编写 Gradle 插件。
+
+具体实现可以参考 [AutoTrackAppClick5](https://github.com/wangzhzh/AutoTrackAppClick5)。
+
+## 8 `$AppClick` 全埋点方案 6：ASM
+
+- 关于 ASM 可以参考 [Android-AOP编程](07-Android-AOP编程.md) ASM 部分。
+- 使用 ASM 需要用到 Android Gradle TransformAPI，可以参考 [Gradle TransformAPI](../../Gradle/Android-TransformAPI.md)。
+
+具体实现可以参考 [AutoTrackAppClick6](https://github.com/wangzhzh/AutoTrackAppClick6)。
+
+## 8 `$AppClick` 全埋点方案 7：Javassist
+
+- 关于 Javassist 可以参考 [Android-AOP编程](07-Android-AOP编程.md) Javassist 部分。
+
+具体实现可以参考 [AutoTrackAppClick7](https://github.com/wangzhzh/AutoTrackAppClick7)。
+
+## 9 `$AppClick` 全埋点方案 8：AST
+
+- 关于 AST 可以参考 [Android-AOP编程](07-Android-AOP编程.md) AST 部分。
+
+具体实现可以参考 [AutoTrackAppClick8](https://github.com/wangzhzh/AutoTrackAppClick8)。

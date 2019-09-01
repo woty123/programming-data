@@ -3,7 +3,7 @@ package me.ztiany.asm.agent.visitor;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 
-import static org.objectweb.asm.Opcodes.ASM5;
+import org.objectweb.asm.Opcodes;
 
 /**
  * 给类添加一个字段
@@ -16,7 +16,7 @@ public class AddFieldAdapter extends ClassVisitor {
     private boolean isFieldPresent;
 
     public AddFieldAdapter(ClassVisitor cv, int fAcc, String fName, String fDesc) {
-        super(ASM5, cv);
+        super(Opcodes.ASM5, cv);
         this.fAcc = fAcc;
         this.fName = fName;
         this.fDesc = fDesc;

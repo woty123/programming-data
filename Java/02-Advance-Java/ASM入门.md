@@ -8,14 +8,13 @@ ASM 和 javassist 类似，都是 Java 字节码操作类库，ASM是一个通�
 ASM被用于许多项目，包括：
 
 - OpenJDK
-- Groovy编译器和Kotlin编译器
-- Cobertura和Jacoco
+- Groovy 编译器和Kotlin 编译器
+- Cobertura 和 Jacoco
 - CGLIB，动态生成代理类
-- Mockito和EasyMock
+- Mockito 和 EasyMock
 - Gradle
 
-
-<br><br>在项目中集成 ASM：
+在项目中集成 ASM：
 
 ```groovy
     compile 'org.ow2.asm:asm:5.1'
@@ -57,12 +56,10 @@ ASM被用于许多项目，包括：
 
 ![](index_files/2-3.png)
 
-
 >关于类文件结构可以参考《深入理解Java虚拟机》
 
 ---
 ## 2 ASM 核心 API
-
 
 ### 2.1 核心组件介绍
 
@@ -106,9 +103,9 @@ public abstract class ClassVisitor {
 ```
 
 - ClassVisitor
- - AnnotationVisitor
- - FieldVisitor
- - MethodVisitor
+  - AnnotationVisitor
+  - FieldVisitor
+  - MethodVisitor
 
 **不管是 ClassVisitor 还是其他的 Visitor，最终都以一个 `visitEnd()` 方法结束该部分的访问**
 
@@ -124,7 +121,7 @@ public abstract class ClassVisitor {
 
 ClassVisitor中方法的顺序必须按照顺序调用，Java文档中规定：
 
-```
+```java
 visit visitSource? visitOuterClass? ( visitAnnotation | visitAttribute )* ( visitInnerClass | visitField | visitMethod )* visitEnd
 ```
 
@@ -140,7 +137,6 @@ ASM 基于ClassVisitor API提供了三种核心组件去构造和更改字节码
 - ClassReader 会将字节码转化为一个 byte 数组，它是事件的生产者，可以把使用 push 给 ClassVisitor。
 - ClassWriter 是 ClassVisitor 抽象类的子类，用来编译修改好的字节码。它生产了一个包含了编译好的类的二进制的数组，可以用 toByteArray 方法获取。ClassWriter 是事件的消费者。
 - ClassVisitor 代理了所有来自其它 ClassVisitor 实例的方法调用，ClassVisitor是事件过滤器
-
 
 ### 2.2 示例
 
@@ -206,7 +202,7 @@ public class ClassPrinter extends ClassVisitor {
 
 最终的执行结果为：
 
-```
+```java
 java/lang/Runnable extends java/lang/Object {
  run()V
 }
@@ -273,11 +269,11 @@ public class AsmCreateClass {
 
         //创建结束
         cw.visitEnd();
-    
+
         //返回字节码
         return cw.toByteArray();
     }
-    
+
 }
 ```
 
@@ -414,7 +410,7 @@ TraceClassVisitor cv = new TraceClassVisitor(cca, printWriter);
 
 通过 ASMifier 可以获取一个已存在的类的 ASM 代码。ASMifier类可以使用下面的命令行来调用：
 
-```
+```shell
 java -classpath asm.jar:asm-util.jar \
   org.objectweb.asm.util.ASMifier \
   java.lang.Runnable
@@ -457,7 +453,7 @@ public class RunnableDump implements Opcodes {
 
 ClassVisitor 主要负责访问类成员信息。其中包括（标记在类上的注解，类的构造方法，类的字段，类的方法，静态代码块），ClassVisitor 中每个方法都对应类的一个结构：
 
-```
+```log
   class————ClassVisitor
     |-->Annotation————AnnotationVisitor
     |
@@ -476,25 +472,290 @@ ClassReader 在读取 `.class` 文件内容时会按照顺序进行调用：
 ClassVisitor 方法解析：
 
 ```java
-visit(int , int , String , String , String , String[])：当扫描类时第一个调用的方法，主要访问用于类声明。参数说明列表：类版本、修饰符、类名泛型信息、继承的父类、实现的接口
+//当扫描类时第一个调用的方法，主要访问用于类声明。参数说明列表：类版本、修饰符、类名泛型信息、继承的父类、实现的接口
+public void visit(int version, int access, String name, String signature,String superName, String[] interfaces)
 
-visitAnnotation(String , boolean)：当扫描器扫描到类注解声明时进行调用，参数列表：注解类型、注解是否可以在 JVM 中可见
+//当扫描器扫描到类注解声明时进行调用，参数列表：注解类型、注解是否可以在 JVM 中可见
+public AnnotationVisitor visitAnnotation(String desc, boolean visible)
 
-visitField(int , String , String , String , Object)：当扫描器扫描到类中字段时进行调用，参数列表：修饰符 、 字段名、字段类型、泛型描述、默认值
+//当扫描器扫描到类中字段时进行调用，参数列表：修饰符 、 字段名、字段类型、泛型描述、默认值
+public FieldVisitor visitField(int access, String name, String desc, String signature, Object value)
 
-visitMethod(int , String , String , String , String[])：当扫描器扫描到类的方法时进行调用。参数列表：修饰符 、方法名 、方法签名、泛型信息 、抛出的异常
+//当扫描器扫描到类的方法时进行调用。参数列表：修饰符 、方法名 、方法签名、泛型信息 、抛出的异常
+public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions)
 ```
+
+#### visit 方法
+
+- version 表示 JDK 版本，常量定义在 `Opcodes` 中，比如 `Opcodes.V1_8`。
+- access 表示修饰符，常量定义在 `Opcodes` 中。
 
 ### MethodVisitor
 
 与 ClassVisitor 相比，MethodVisitor 显得比较复杂，MethodVisitor 中每个方法都对应字节码指令，如果需要查看一个类的字节码指令，可以使用 Javap 命令反编译，下面是 MethodVisitor 的方法列表。
 
+```java
+public abstract class MethodVisitor {
+
+    protected final int api;
+
+    protected MethodVisitor mv;
+
+    public MethodVisitor(final int api) {
+        this(api, null);
+    }
+
+    public MethodVisitor(final int api, final MethodVisitor mv) {
+        if (api != Opcodes.ASM4 && api != Opcodes.ASM5) {
+            throw new IllegalArgumentException();
+        }
+        this.api = api;
+        this.mv = mv;
+    }
+
+    public void visitParameter(String name, int access) {
+        if (api < Opcodes.ASM5) {
+            throw new RuntimeException();
+        }
+        if (mv != null) {
+            mv.visitParameter(name, access);
+        }
+    }
+
+    public AnnotationVisitor visitAnnotationDefault() {
+        if (mv != null) {
+            return mv.visitAnnotationDefault();
+        }
+        return null;
+    }
+
+    public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
+        if (mv != null) {
+            return mv.visitAnnotation(desc, visible);
+        }
+        return null;
+    }
+
+    public AnnotationVisitor visitTypeAnnotation(int typeRef,
+            TypePath typePath, String desc, boolean visible) {
+        if (api < Opcodes.ASM5) {
+            throw new RuntimeException();
+        }
+        if (mv != null) {
+            return mv.visitTypeAnnotation(typeRef, typePath, desc, visible);
+        }
+        return null;
+    }
+
+    public AnnotationVisitor visitParameterAnnotation(int parameter,
+            String desc, boolean visible) {
+        if (mv != null) {
+            return mv.visitParameterAnnotation(parameter, desc, visible);
+        }
+        return null;
+    }
+
+    public void visitAttribute(Attribute attr) {
+        if (mv != null) {
+            mv.visitAttribute(attr);
+        }
+    }
+
+    public void visitCode() {
+        if (mv != null) {
+            mv.visitCode();
+        }
+    }
+
+    public void visitFrame(int type, int nLocal, Object[] local, int nStack,
+            Object[] stack) {
+        if (mv != null) {
+            mv.visitFrame(type, nLocal, local, nStack, stack);
+        }
+    }
+
+    public void visitInsn(int opcode) {
+        if (mv != null) {
+            mv.visitInsn(opcode);
+        }
+    }
+
+    public void visitIntInsn(int opcode, int operand) {
+        if (mv != null) {
+            mv.visitIntInsn(opcode, operand);
+        }
+    }
+
+    public void visitVarInsn(int opcode, int var) {
+        if (mv != null) {
+            mv.visitVarInsn(opcode, var);
+        }
+    }
+
+    public void visitTypeInsn(int opcode, String type) {
+        if (mv != null) {
+            mv.visitTypeInsn(opcode, type);
+        }
+    }
+
+    public void visitFieldInsn(int opcode, String owner, String name,
+            String desc) {
+        if (mv != null) {
+            mv.visitFieldInsn(opcode, owner, name, desc);
+        }
+    }
+
+    @Deprecated
+    public void visitMethodInsn(int opcode, String owner, String name,
+            String desc) {
+        if (api >= Opcodes.ASM5) {
+            boolean itf = opcode == Opcodes.INVOKEINTERFACE;
+            visitMethodInsn(opcode, owner, name, desc, itf);
+            return;
+        }
+        if (mv != null) {
+            mv.visitMethodInsn(opcode, owner, name, desc);
+        }
+    }
+
+    public void visitMethodInsn(int opcode, String owner, String name,
+            String desc, boolean itf) {
+        if (api < Opcodes.ASM5) {
+            if (itf != (opcode == Opcodes.INVOKEINTERFACE)) {
+                throw new IllegalArgumentException(
+                        "INVOKESPECIAL/STATIC on interfaces require ASM 5");
+            }
+            visitMethodInsn(opcode, owner, name, desc);
+            return;
+        }
+        if (mv != null) {
+            mv.visitMethodInsn(opcode, owner, name, desc, itf);
+        }
+    }
+
+    public void visitInvokeDynamicInsn(String name, String desc, Handle bsm,
+            Object... bsmArgs) {
+        if (mv != null) {
+            mv.visitInvokeDynamicInsn(name, desc, bsm, bsmArgs);
+        }
+    }
+
+    public void visitJumpInsn(int opcode, Label label) {
+        if (mv != null) {
+            mv.visitJumpInsn(opcode, label);
+        }
+    }
+
+    public void visitLabel(Label label) {
+        if (mv != null) {
+            mv.visitLabel(label);
+        }
+    }
+
+    public void visitLdcInsn(Object cst) {
+        if (mv != null) {
+            mv.visitLdcInsn(cst);
+        }
+    }
+
+    public void visitIincInsn(int var, int increment) {
+        if (mv != null) {
+            mv.visitIincInsn(var, increment);
+        }
+    }
+
+    public void visitTableSwitchInsn(int min, int max, Label dflt,
+            Label... labels) {
+        if (mv != null) {
+            mv.visitTableSwitchInsn(min, max, dflt, labels);
+        }
+    }
+
+    public void visitLookupSwitchInsn(Label dflt, int[] keys, Label[] labels) {
+        if (mv != null) {
+            mv.visitLookupSwitchInsn(dflt, keys, labels);
+        }
+    }
+
+    public void visitMultiANewArrayInsn(String desc, int dims) {
+        if (mv != null) {
+            mv.visitMultiANewArrayInsn(desc, dims);
+        }
+    }
+
+    public AnnotationVisitor visitInsnAnnotation(int typeRef,
+            TypePath typePath, String desc, boolean visible) {
+        if (api < Opcodes.ASM5) {
+            throw new RuntimeException();
+        }
+        if (mv != null) {
+            return mv.visitInsnAnnotation(typeRef, typePath, desc, visible);
+        }
+        return null;
+    }
+
+    public void visitTryCatchBlock(Label start, Label end, Label handler,
+            String type) {
+        if (mv != null) {
+            mv.visitTryCatchBlock(start, end, handler, type);
+        }
+    }
+
+    public AnnotationVisitor visitTryCatchAnnotation(int typeRef,
+            TypePath typePath, String desc, boolean visible) {
+        if (api < Opcodes.ASM5) {
+            throw new RuntimeException();
+        }
+        if (mv != null) {
+            return mv.visitTryCatchAnnotation(typeRef, typePath, desc, visible);
+        }
+        return null;
+    }
+
+    public void visitLocalVariable(String name, String desc, String signature,
+            Label start, Label end, int index) {
+        if (mv != null) {
+            mv.visitLocalVariable(name, desc, signature, start, end, index);
+        }
+    }
+
+    public AnnotationVisitor visitLocalVariableAnnotation(int typeRef,
+            TypePath typePath, Label[] start, Label[] end, int[] index,
+            String desc, boolean visible) {
+        if (api < Opcodes.ASM5) {
+            throw new RuntimeException();
+        }
+        if (mv != null) {
+            return mv.visitLocalVariableAnnotation(typeRef, typePath, start,
+                    end, index, desc, visible);
+        }
+        return null;
+    }
+
+    public void visitLineNumber(int line, Label start) {
+        if (mv != null) {
+            mv.visitLineNumber(line, start);
+        }
+    }
+
+    public void visitMaxs(int maxStack, int maxLocals) {
+        if (mv != null) {
+            mv.visitMaxs(maxStack, maxLocals);
+        }
+    }
+
+    public void visitEnd() {
+        if (mv != null) {
+            mv.visitEnd();
+        }
+    }
+}
+```
 
 ---
 ## 4 Tree API
 
 todo
-
 
 ---
 ## 5 使用插件

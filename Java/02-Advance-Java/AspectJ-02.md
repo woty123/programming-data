@@ -5,19 +5,19 @@
 
 | 名词 |  含义 |
 | --- | --- |
-| 切面（方面，Aspect） | 一个关注点的模块化，这个关注点实现可能横切（crosscutting）多个对象切面的例子包括：事务控制、日志记录、权限控制等在AspectJ中，切面表现为Java类，其源码具有AspectJ的特殊语法增强，使用ajc编译器编译，我们可以针对不同的需求做出不同的切面。|
-| 连接点（JoinPoint） | 程序中可能作为代码注入目标的特定的点和入口。例如方法的调用开始、结束，或者特定的异常被抛出，横切（crosscutting）在连接点发生 |
-| 通知（Advice） | 在特定的连接点，AOP框架执行的操作 |
-| 切入点（Pointcut） | 切入点是这样的一种程序构造：包含**一个连接点的集合、以及收集的连接点的上下文信息**（例如方法参数、被执行方法和对象）。通知在这些切入点被触发。AOP框架允许开发者以多种方式定义切入点，简单理解为切入点告诉AspectJ对那些连接点进行切入。 |
-| 引入（Introduction） | 添加方法、字段、接口、注解等到被通知的类 |
-| 目标对象（Target Object） | 包含连接点的对象，也被称作被通知或被代理对象 |
-| AOP代理（AOP Proxy） | AOP框架创建的对象，以目标对象为基础，织入了通知逻辑代理主要包括动态代理、字节码增强两种类型 |
+| 通知（Advice） | 通知描述和连接点相关的信息，即执行点的方位，包括（Before、After、Around...等），结合执行点方位和和切点信息，我们就可以找到连接点。 |
+| 连接点（JoinPoint） | 程序执行过程中的某个特定的执行点，这些点是代码注入目标的入口。例如方法的调用开始、结束，或者特定的异常被抛出。|
+| 切入点（Pointcut） | 连接点是程序中客观存在的事物，而切入点是**一个连接点的集合、以及收集的连接点的上下文信息**（例如方法参数、被执行方法和对象），AOP 框架通过切入点来定位特定的连接点，通知在这些切入点被触发。AOP框架允许开发者以多种方式定义切入点，简单理解切入点为告诉 AspectJ 对那些连接点进行切入。 |
+| 目标对象（Target Object） | 被增强逻辑织入的目标类 |
+| 织入（Weaving） | 织入是将 Advance 添加到目标类具体连接点的过程。 |
+| 切面（Aspect） | 切面由切点和通知组成，它既包括横切逻辑定义，也包括切入点的定义。 |
+| AOP代理（AOP Proxy） | AOP 框架创建的对象，以目标对象为基础，织入了通知逻辑代理主要包括动态代理、字节码增强两种类型 |
 
 ### Join Points
 
-JointPoint就是程序运行时的一些连接点。在连接点可以插入切面功能代码。**构造方法调用、调用方法、方法执行、异常、设置一个变量，或者读取一个变量等等**，这些都是Join Points
+JointPoint 就是程序运行时的一些连接点。在连接点可以插入切面功能代码。**构造方法调用、调用方法、方法执行、异常、设置一个变量，或者读取一个变量等等**，这些都是 Join Points
 
-AspectJ中具体的连接点表现为：
+AspectJ 中具体的连接点表现为：
 
 Join Points | 说明 | 语法
 ---|---|---
@@ -33,10 +33,26 @@ pre-initialization|对象预初始化，在构造器中的对象初始化之前�
 handler|异常处理|handler(类型签名)
 advice execution|通知的执行：环绕某个通知的整个执行。可以对通知进行通知|adviceexecution()
 
-注意call和execution的区别：
+注意 call 和 execution 的区别：
 
-1. method call是调用某个函数的地方。而execution是某个函数执行的内部。
-2. call捕获的JoinPoint是签名方法的调用点，而execution捕获的则是执行点
+1. method call 是调用某个函数的地方。而 execution 是某个函数执行的内部。
+2. call 捕获的 JoinPoint 是签名方法的调用点，而 execution 捕获的则是执行点
+
+```java
+// call
+call(before)
+Pointcut{
+    pointcut method
+}
+Call(after)
+
+// execution
+Pointcut{
+    execution(before)
+    pointcut method
+    execution(after)
+}
+```
 
 ### Pointcuts(切入点)
 

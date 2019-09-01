@@ -1,12 +1,10 @@
 package me.ztiany.asm.agent.visitor;
 
 import org.objectweb.asm.ClassVisitor;
-import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
 import java.util.Arrays;
-
-import static org.objectweb.asm.Opcodes.ASM5;
 
 /**
  * 移除一个类的字段
@@ -17,7 +15,7 @@ public class RemoveMethodAdapter extends ClassVisitor {
     private String mDesc;
 
     RemoveMethodAdapter(ClassVisitor cv, String mName, String mDesc) {
-        super(ASM5, cv);
+        super(Opcodes.ASM5, cv);
         System.out.println("cv = [" + cv + "], mName = [" + mName + "], mDesc = [" + mDesc + "]");
         this.mName = mName;
         this.mDesc = mDesc;

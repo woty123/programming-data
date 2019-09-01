@@ -5,7 +5,8 @@ import org.objectweb.asm.util.TraceClassVisitor;
 
 import java.io.PrintWriter;
 
-import static jdk.internal.org.objectweb.asm.Opcodes.*;
+import static org.objectweb.asm.Opcodes.*;
+
 
 /**
  * 类的创建：构建一个新的类
@@ -18,9 +19,9 @@ public class AsmCreateClass1 {
 
         Class exampleClass = new ClassLoader() {
             @SuppressWarnings("unchecked")
-            protected Class findClass(String name) {
-                return defineClass(name, aClass, 0, aClass.length);
+            protected Class findClass(String name) { return defineClass(name, aClass, 0, aClass.length);
             }
+
         }.loadClass("pkg.Comparable");
 
         System.out.println(exampleClass);
