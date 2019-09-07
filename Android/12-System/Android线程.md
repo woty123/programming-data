@@ -1,4 +1,4 @@
-# [全面解析Android线程](http://www.itdks.com/dakashuo/detail/15587#)笔记
+# [全面解析Android线程](https://github.com/qiujuer/ThreadGuide)笔记
 
 看[全面解析Android线程](http://www.itdks.com/dakashuo/detail/15587#) 后，对 Android 线程实现有了新的认识。
 
@@ -47,7 +47,7 @@ void Thread::CreateNativeThread(JNIEnv* env, jobject java_peer, size_t stack_siz
     ......
 }
 ```
- 
+
 发现 JVM 并没有实现自己的一套线程机制，最终实现还是调用 Linux 系统的 API `pthread_create` 来创建的线程，在其他平台也是类似，比如 Windows、MacOS。这说明：
 
 - 一般情况，虚拟机的进行和线程与目标机器操作系统的进程和线程一一对应。
@@ -58,7 +58,6 @@ void Thread::CreateNativeThread(JNIEnv* env, jobject java_peer, size_t stack_siz
 
 - 用户线程，指无需内核支持而在用户程序中实现的线程。其不依赖于操作系统核心管理，应用进程利用线程库提供创建、同步、调度和管理线程的函数来控制用户线程。不需要用户态/内核态切换，速度快，操作系统内核不知道多线程的存在，因此用用户级线程阻塞并不会妨碍内核线程调度。
 - 在 Android 中建立的线程属于用户态线程，内部线程阻塞只会影响当前进程，而不会影响其他进程调度（当然不仅仅是因为用户级线程，还有系统的调度）。
-
 
 ---
 ## 4 线程优先级
@@ -88,7 +87,6 @@ void Thread::CreateNativeThread(JNIEnv* env, jobject java_peer, size_t stack_siz
 
 - 理论上我们无需关心线程优先级的问题，因为系统源码已经设定了优先级，比如 HandlerThread、AsyncTask。
 - 然而实际情况往往不是这样的，如果你在 UI 线程直接 `new Thread().start()`，新创建的线程的优先级时继承自父线程的，这样新创建的线程的优先级就与 UI 线程一致了。
-
 
 ---
 ## 5 线程池
