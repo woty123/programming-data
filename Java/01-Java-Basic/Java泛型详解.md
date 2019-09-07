@@ -11,7 +11,6 @@
 
 所谓泛型，就是允许定义**类，接口，方法**时使用类型参数，这个类型参数将在声明变量，创建对象，调用方法时动态的指定(即传入实际的类型参数)
 
-
 ### 泛型中的相关术语
 
 一个泛型类就是具有一个或多个类型变量的类，比如`List<T>`
@@ -135,9 +134,9 @@
 
 可以说Java中的泛型是伪泛型，或者说是编译期泛型，与之相对的C++中的泛型是真的运行时返现。
 
-###  擦除导致的泛型不可变性
+### 擦除导致的泛型不可变性
 
-泛型中没有逻辑上的父子关系，如`List<Object>`并不是` List<String>`的父类。两者擦除之后都是List，所以形如下面的代码，编译器会报错：
+泛型中没有逻辑上的父子关系，如 `List<Object>` 并不是 `List<String>` 的父类。两者擦除之后都是 List，所以形如下面的代码，编译器会报错：
 
 ```java
     //不能同时存在这样的两个方法。
@@ -147,7 +146,7 @@
     }
 ```
 
-或者从另一种情况也可以说明Java为什么要禁用容器的协变性
+或者从下面角度看，也可以说明 Java 为什么要禁用容器的协变性
 
 ```Java
 List<String> strs = new ArrayList<String>();
@@ -155,16 +154,24 @@ List<Object> objs = strs; // ！！！即将来临的问题的原因就在这里
 objs.add(1); // 这里我们把一个整数放入一个字符串列表
 String s = strs.get(0); // ！！！ ClassCastException：无法将整数转换为字符串
 ```
+
 从代码可以看出，如果允许泛型协变性，则会出现类型安全的问题，因此 Java 禁止这样的事情以保证运行时的安全。
 
-**泛型的这种情况称为不可变性，与之对应的概念是协变、逆变**
+### 协变、逆变
 
-- 协变：如果A是B的父类，并且A的容器比如（`List<A>`） 也是 B 的容器（`List<B>`）的父类，则称之为协变的（父子关系保持一致）
-- 逆变：如果A是B的父类，但是A的容器 是B的容器的子类，则称之为逆变（放入容器就篡位了）
-- 不可变：不论AB有什么关系，A的容器和B的容器都没有父子关系，称之为不可变
+上述 Java 泛型的这种情况称为不可变性，与之对应的概念是协变、逆变。
 
-**Java 中数组是协变的，泛型是不可变的。**
+- 协变（Covariance ）：子类的泛型也是泛型的子类，比如 C# 中`IEnumerable<Cat>`是`IEnumerable<Animal>`的子类型。
+- 逆变（Contravariant）：子类的泛型也是泛型的超类，比如 C# 中`Action<Cat>`是`Action<Animal>`的超类型。
+- 不可变：既不是协变也不是逆变。
 
+关于具体可以参考[维基百科：协变与逆变](https://zh.wikipedia.org/wiki/协变与逆变)。
+
+**Java 中泛型是不可变的，但数组是协变的**。
+
+```java
+Object[] objs = new String[]();
+```
 
 ### 翻译泛型表达式
 
@@ -263,6 +270,7 @@ Java 编辑器会将泛型代码中的类型完全擦除，使其变成原始类
 由于数组具有协变性，导致泛型数组的不安全性，不允许创建参数化类型的数组。
 
 >扩展：在用到反射时，使用 `java.lang.reflect.Array` 类来创建数组
+
 ```java
         //演示用Array类来创建数组
         public static <T> T[] newInstance(Class<T> componentType,int length){
@@ -356,7 +364,6 @@ Java泛型系统允许在泛型上加入类型限定：
     }
 ```
 
-
 ---
 ## 5 类型通配符
 
@@ -409,7 +416,6 @@ Java泛型系统允许在泛型上加入类型限定：
 
 **简而言之，带 extends 限定（上界）的通配符类型使得类型是协变的（covariant）。**
 
-
 ### 5.2 通配符下限
 
 通配符还可以指定下限，比如`? super Manager`，这个通配符限制为Manager的所有超类，它与通配符上限刚好相反，可以为方法提供参数，但是不能有返回值。
@@ -440,6 +446,7 @@ Java泛型系统允许在泛型上加入类型限定：
         integers2.add(new A());
         Object object = integers2.get(0);
 ```
+
 现在可以写这样的方法
 
 ```java
@@ -454,7 +461,7 @@ Java泛型系统允许在泛型上加入类型限定：
     }
 ```
 
-#### 2 使得父类型的比较方法可以应用于子类对象。
+#### 2 使得父类型的比较方法可以应用于子类对象
 
 比如TreeSet的一个构造函数`TreeSet(Comparator<? super E> comparator)`这里的E限制comparator的实际类型参数只能是E或E的父类，那么以E的子类为实际类型参数的TreeSet都可以使用实际类型参数为E的比较器。这里可以把comparator看着一个消费者。
 
@@ -526,9 +533,7 @@ Java泛型系统允许在泛型上加入类型限定：
 
 ### 5.4 无限定通配符
 
-为了表示各种泛型List的父类型，可以使用一个类型通配符**`?`**
-
-使用`?`通配符可以引用其他各种参数化的类型，`?`通配符定义的变量主要用于引用
+为了表示各种泛型 List 的父类型，可以使用一个类型通配符 `?`，使用`?`通配符可以引用其他各种参数化的类型，`?`通配符定义的变量主要用于引用
 
 ```java
         public static void printList(List<?> list){
@@ -541,20 +546,20 @@ Java泛型系统允许在泛型上加入类型限定：
 现在这个方法可以接受所有的list子类，方法内部的类型永远s是Object
 
 ```java
-    List<String> listOb=new ArrayList<String>();
-    printList(listOb);
+    List<String> list =new ArrayList<String>();
+    printList(list);
 ```
 
-**可以调用与参数无关的方法，不可以调用与参数有关的方法**，即上面`List<String>`应用在printList中，printList中无法调用与参数String相关的方法，由于Object是所有类的超类，所以可以调用Object拥有的方法。
+对于通配符泛型，**可以调用与参数无关的方法，不可以调用与参数有关的方法**，即上面`List<String>`应用在 printList 中，printList 中无法调用与参数 String 相关的方法，由于 Object 是所有类的超类，所以可以调用 Object 拥有的方法。
 
-带有这种通配符的List仅仅用来表示各种泛型List的父类型，无法把一个对象加入到其中(null除外)，因为？表示的类型无法确定
-
-下面编译错误
+带有这种通配符的 List 仅仅用来表示各种泛型 List 的父类型，无法把一个对象加入到其中(null除外)，因为 `？`表示的类型无法确定，下面编译错误：
 
 ```java
     List<?> genList = new ArrayList<>();
     genList.add(new Object());
 ```
+
+`List<?>` 的特性与 `List<? extends Object>` 一致，可以认为 `List<?>` 其实是 `List<? extends Object>` 的缩写。
 
 ### 5.5 泛型方法与类型通配符的区别
 
@@ -574,7 +579,8 @@ Java泛型系统允许在泛型上加入类型限定：
             }
         }
 ```
-两个方法的即使作用是一样的，显然应该使用第二种通配符，定义泛型T完全是多余的
+
+两个方法的即使作用是一样的，显然应该使用第二种通配符，定义泛型T完全是多余的。
 
 如果有需要可以同时使用通配符和泛型方法
 
@@ -586,6 +592,7 @@ Java泛型系统允许在泛型上加入类型限定：
 
     }
 ```
+
 显然第第一种方式更加简洁。
 
 ---
@@ -634,7 +641,6 @@ Java泛型系统允许在泛型上加入类型限定：
 ```
 
 ### 获取方法上的泛型信息
-
 
 ```java
     public class GenecriDao<T> {
@@ -798,3 +804,4 @@ Java泛型系统允许在泛型上加入类型限定：
 
 - [Java中的逆变与协变](http://www.cnblogs.com/en-heng/p/5041124.html)
 - [Effective Java——泛型](http://72df4c66.fromwiz.com/share/s/1OTQNC2rEQoF2SSa6c0VIC9-2S4Ysi1Uak8T2eXrEU3YKL4C)
+  

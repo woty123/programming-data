@@ -109,7 +109,7 @@ fun main(args: Array<String>) {
 - inline 函数可以在 Java 中使用，但不会被内联
 - 而 reified 类型的参数的 inline 函数不能在 Java 中调用
 - 我们提供的内联只有在一种情况下有性能优势：即函数有函数类型的参数，且对于的实参 lambda 和函数一起被内联的时候
-- 实化类型参数的函数的应用：代替类引用 
+- 实化类型参数的函数的应用：代替类引用
 
 ### 实化类型参数的限制
 
@@ -171,7 +171,6 @@ println(strings.maxBy{ it.length })//这行抛出 ClassCastException：无法将
 
 **变型概念**：一个泛型类，比如`MutableList<T>`，如果对于任意两种类型 A 和 B，`MutableList<A>`既不是`MutableList<B>`的子类型也不是它的超类型，它就被称为在该类型参数上是型变的。Java 中所有的类都是不型变的。
 
-
 ### 协变：保留子类型化关系
 
 一个协变类是一个泛型类，以`Producer<T>`为例，对这种类来说，下面的描述是成立的，如果 A 是 B 的子类型，那么 `Producer<A>` 就是 `Producer<B>` 的子类型，我们说`子类型化被保留了`，例如`Producer<Cat>` 是 `Producer<Animal>` 的子类型，因为 Cat 是 Animal 的子类型。
@@ -183,6 +182,7 @@ interface Producer<out T>{
     fun produce():T
 }
 ```
+
 将一个类型声参数标记为协变的，在该`类型实参没有精确匹配到`函数中定义的类型形参时，可以让该类的值作为这些函数的实参传递，例如：
 
 ```kotlin
@@ -223,7 +223,7 @@ public interface MutableList<E> : List<E>, MutableCollection<E> {
 }
 ```
 
-**一些细节：**
+**一些细节**：
 
 ```kotlin
 private open class Animal {
@@ -275,11 +275,11 @@ private fun testAnyComparator(){
 
 如果 B 是 A 的子类型，那么 `Consumer<A>` 就是 `Consumer<B>` 的子类型，类型参数 A 和 B 换了位置，所以我们说子类型化被反转了。
 
-**in 关键字的意思**
+**in 关键字的意思**：
 
 - 对应类型的值是`传递进来`给这个类的方法的，并且被这个类所消费。
 
-**协变、逆变、不变型类对比**
+**协变、逆变、不变型类对比**：
 
 协变 | 逆变 | 不变型
 ---|---|---
@@ -287,11 +287,10 @@ private fun testAnyComparator(){
 类的子类型化被保留了：`Producer<Cat>`是`Producer<Animal>`的子类型 | 类的子类型化被反转了：`Consumer<Animal>`是`Consumer<Cat>`的子类型 | 没有子类型化
 T 只能在 out 位置 | T 只能在 in 位置 | T 能在任意位置(可读写不变的泛型是不可变的，比如 `a >= 2 又要 a <= 2`，那么 `a = 2`)
 
+**一个类可以在一个类型上协变，同时可以在另一个类型参数上逆变**：
 
+比如 标准库中的 Function1，Function1 消费 P1 类型且只生产 R 类型
 
-**一个类可以在一个类型上协变，同时可以在另一个类型参数上逆变**
-
-- 比如 标准库中的 Function1，Function1 消费 P1 类型且只生产 R 类型
 ```kotlin
 public interface Function1<in P1, out R> : Function<R> {
     public operator fun invoke(p1: P1): R
@@ -303,7 +302,6 @@ public interface Function1<in P1, out R> : Function<R> {
 
 - 在类声明的时候就能够指定变型修饰符是很方便的，因为这些修饰符会应用到所有类被使用的地方，这种被称作 **声明点型变**
 - Java 用完全不同的方式处理型变，通配符类型`? extends 和 super`，Java 中每次使用带类型参数的类型的时候，还可以指定这个类型参数是否可以用它的子类型或者超类型替换，这叫做 **使用点型变**
-
 
 **声明点型变** vs **使用点型变**：声明点型变带来了更加间接的代码，因为只要指定一次变型修饰符，所有这个类的使用者都不需要再考虑这些，Java 中库的作者不得不一直使用通配符`Function<? super T , ? extends R>` 来创建安装用户期望运行的 API：
 
@@ -364,6 +362,7 @@ list.add(42)//无法编译
 ```
 
 带 in 投影类型参数的数据拷贝函数：
+
 ```kotlin
 //与copyData3效果一致
 private fun <T> copyData4(source: MutableList<T>, destination: MutableList<in T>) {
@@ -442,7 +441,6 @@ private fun map3(function: Function<*, *>) {
     })
 ```
 
-
 ---
 ## 4 其他
 
@@ -458,8 +456,10 @@ private class MyCollection<out T> {
     //}
 }
 ```
+
 如果上面add编译通过，考虑下面代码，原本只能存入Int类型的集合现在可以存入浮点类型了
-```
+
+```kotlin
 private fun test() {
     var myList: MyCollection<Number> = MyCollection<Int>()
     //myList.add(3.0)
@@ -467,7 +467,6 @@ private fun test() {
 ```
 
 对于协变的类型，通常我们是不允许将泛型类型作为传入参数的类型的，或者说，对于协变类型，我们通常是不允许其涉及泛型参数的部分被改变的。逆变的情形正好相反，即不可以将泛型参数作为方法的返回值。
-
 
 但实际上有些情况下，我们不得已需要在协变的情况下使用泛型参数类型作为方法参数的类型：
 
@@ -496,3 +495,9 @@ interface IMvpView<out Presenter: IPresenter<IMvpView<Presenter>>>: ILifecycle{
     val presenter: Presenter
 }
 ```
+
+--
+## 引用
+
+- 《Kotlin In Action》
+- [Kotlin 协程官方文档](https://www.kotlincn.net/docs/reference/coroutines-overview.html)
