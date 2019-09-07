@@ -422,7 +422,9 @@ private fun map3(function: Function<*, *>) {
 
 }
 
-     map1(object : Function<Nothing, String> {
+fun main(){
+
+    map1(object : Function<Nothing, String> {
         override fun invoke(t: Nothing): String {
             return ""
         }
@@ -439,6 +441,7 @@ private fun map3(function: Function<*, *>) {
             return 3
         }
     })
+}
 ```
 
 ---
