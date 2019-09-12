@@ -102,9 +102,7 @@ public abstract class DiffRecyclerAdapter<T, VH extends ViewHolder> extends Recy
             if (element == null) {
                 continue;
             }
-            if (newList.contains(element)) {
-                newList.remove(element);
-            }
+            newList.remove(element);
         }
 
         newList.addAll(elements);

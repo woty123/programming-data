@@ -220,7 +220,7 @@ fun <T> composeMultiSource(remote: Observable<Optional<T>>, local: Observable<Op
 Observable<Data> cachedObservable = getFromLocal();
 
 networkApi.getRemoteData()
-    .doOnNext(newData -> 
+    .doOnNext(newData ->
         saveToLocal(newData)
     )
     .startWith(cachedObservable)//先获取缓存

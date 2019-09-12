@@ -1,7 +1,8 @@
-package com.ztiany.wrapcontent;
+package com.ztiany.wrap_content;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,7 +23,7 @@ import java.util.Random;
  *
  * @author Ztiany
  */
-public class WithScrollVIewFragment extends Fragment {
+public class WithScrollViewFragment extends Fragment {
 
     private final Random mRandom = new Random();
 
@@ -33,19 +34,19 @@ public class WithScrollVIewFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         GridLayoutManager linearLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setNestedScrollingEnabled(false);
-        linearLayoutManager.setAutoMeasureEnabled(true);
 
         recyclerView.setAdapter(
                 new RecyclerView.Adapter() {
+                    @NonNull
                     @Override
-                    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                         TextView textView = new TextView(getContext());
                         int padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
                         textView.setPadding(padding, padding, padding, padding);
@@ -56,7 +57,7 @@ public class WithScrollVIewFragment extends Fragment {
                     }
 
                     @Override
-                    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+                    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
                         TextView textView = (TextView) holder.itemView;
                         textView.setText(String.valueOf(position));
                         textView.setBackgroundColor(Color.argb(mRandom.nextInt(255), mRandom.nextInt(255), mRandom.nextInt(255), mRandom.nextInt(255)));

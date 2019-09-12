@@ -22,7 +22,7 @@ import java.util.List;
  * @author Ztiany
  * Date : 2018-08-14 16:32
  */
-public class ListFragment extends BaseListFragment {
+public class ListViewFragment extends BaseListFragment {
 
     private Adapter mAdapter;
 
@@ -36,7 +36,7 @@ public class ListFragment extends BaseListFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ListView listView = view.findViewById(R.id.list_view);
-        mAdapter = new ListFragment.Adapter(getContext());
+        mAdapter = new ListViewFragment.Adapter(getContext());
         mAdapter.replaceAll(DataSource.crateList());
         listView.setAdapter(mAdapter);
     }
@@ -77,7 +77,7 @@ public class ListFragment extends BaseListFragment {
 
     private class Adapter extends BaseListAdapter<Person, SmartViewHolder> {
 
-        public Adapter(Context context) {
+        Adapter(Context context) {
             super(context);
         }
 
@@ -96,6 +96,5 @@ public class ListFragment extends BaseListFragment {
         }
 
     }
-
 
 }

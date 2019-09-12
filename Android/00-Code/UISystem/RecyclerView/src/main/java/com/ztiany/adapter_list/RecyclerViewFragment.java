@@ -26,7 +26,7 @@ import java.util.List;
  * @author Ztiany
  * Date : 2018-08-14 16:31
  */
-public class RecyclerFragment extends BaseListFragment {
+public class RecyclerViewFragment extends BaseListFragment {
 
     private Adapter mAdapter;
 
@@ -41,8 +41,8 @@ public class RecyclerFragment extends BaseListFragment {
         super.onViewCreated(view, savedInstanceState);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        mAdapter = new Adapter(getContext(), itemCallback);
+        recyclerView.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
+        mAdapter = new Adapter(requireContext(), itemCallback);
         mAdapter.replaceAll(DataSource.crateList());
         recyclerView.setAdapter(mAdapter);
     }
@@ -93,10 +93,9 @@ public class RecyclerFragment extends BaseListFragment {
         mAdapter.add(person);
     }
 
-
     private class Adapter extends DiffRecyclerAdapter<Person, SmartViewHolder> {
 
-        public Adapter(@NonNull Context context, @NonNull DiffUtil.ItemCallback<Person> itemCallback) {
+        Adapter(@NonNull Context context, @NonNull DiffUtil.ItemCallback<Person> itemCallback) {
             super(context, itemCallback);
         }
 

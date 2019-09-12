@@ -45,7 +45,6 @@ public class UnitConverter {
         return (int) (px / BaseUtils.getDisplayMetrics().scaledDensity + 0.5f);
     }
 
-
     /**
      * 各种单位转换
      * <p>该方法存在于TypedValue</p>
@@ -72,4 +71,5 @@ public class UnitConverter {
         }
         return 0;
     }
+
 }

@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 
 import com.ztiany.recyclerview.R;
 
@@ -33,18 +32,13 @@ public class ContentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.common_activity_content);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mToolbar.setContentInsetStartWithNavigation(0);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    supportFinishAfterTransition();
-                }
-            });
+            mToolbar.setNavigationOnClickListener(v -> supportFinishAfterTransition());
         }
 
         if (savedInstanceState == null) {
@@ -63,4 +57,5 @@ public class ContentActivity extends AppCompatActivity {
         Log.d("ContentActivity", title);
         mToolbar.setTitle(title);
     }
+
 }

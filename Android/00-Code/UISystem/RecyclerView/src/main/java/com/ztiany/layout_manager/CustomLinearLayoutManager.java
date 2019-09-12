@@ -1,4 +1,4 @@
-package com.ztiany.layoutmanager;
+package com.ztiany.layout_manager;
 
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;

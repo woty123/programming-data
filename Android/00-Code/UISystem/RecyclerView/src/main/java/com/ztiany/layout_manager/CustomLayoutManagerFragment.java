@@ -1,4 +1,4 @@
-package com.ztiany.layoutmanager;
+package com.ztiany.layout_manager;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

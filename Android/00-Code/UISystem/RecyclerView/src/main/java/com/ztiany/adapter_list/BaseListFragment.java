@@ -21,17 +21,15 @@ public abstract class BaseListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.findViewById(R.id.adapterBtnAdd)
-                .setOnClickListener(this::showMenu);
+        view.findViewById(R.id.adapterBtnAdd).setOnClickListener(this::showMenu);
     }
 
     private void showMenu(View v) {
         String[] titles = {"add last", "add first", "add all", "remove first", "modify first"};
 
-        PopupMenu popupMenu = new PopupMenu(getContext(), v);
+        PopupMenu popupMenu = new PopupMenu(requireContext(), v);
         Menu menu = popupMenu.getMenu();
         int length = titles.length;
-
         for (int i = 0; i < length; i++) {
             menu.add(Menu.NONE, i, i, titles[i]);
         }
