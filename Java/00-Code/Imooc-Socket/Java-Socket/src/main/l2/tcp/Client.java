@@ -37,11 +37,9 @@ class Client {
         InputStream in = System.in;
         BufferedReader input = new BufferedReader(new InputStreamReader(in));
 
-
         // 得到Socket输出流，并转换为打印流
         OutputStream outputStream = client.getOutputStream();
         PrintStream socketPrintStream = new PrintStream(outputStream);
-
 
         // 得到Socket输入流，并转换为BufferedReader
         InputStream inputStream = client.getInputStream();
@@ -54,8 +52,6 @@ class Client {
             String str = input.readLine();
             // 发送到服务器
             socketPrintStream.println(str);
-
-
             // 从服务器读取一行
             String echo = socketBufferedReader.readLine();
             if ("bye".equalsIgnoreCase(echo)) {
@@ -70,6 +66,5 @@ class Client {
         socketBufferedReader.close();
 
     }
-
 
 }
