@@ -18,7 +18,10 @@ public class UDPSearcher {
     public static void main(String[] args) throws IOException, InterruptedException {
         System.out.println("UDPSearcher Started.");
 
+        //开始监听
         Listener listener = listen();
+
+        //发送一个广播，用于搜索 UDP  通信端
         sendBroadcast();
 
         // 读取任意键盘信息后可以退出
@@ -53,8 +56,10 @@ public class UDPSearcher {
         // 构建一份请求数据
         String requestData = MessageCreator.buildWithPort(LISTEN_PORT);
         byte[] requestDataBytes = requestData.getBytes();
+
         // 直接构建packet
         DatagramPacket requestPacket = new DatagramPacket(requestDataBytes, requestDataBytes.length);
+
         // 20000端口, 广播地址
         requestPacket.setAddress(InetAddress.getByName("255.255.255.255"));
         requestPacket.setPort(20000);
@@ -156,4 +161,5 @@ public class UDPSearcher {
         }
 
     }
+
 }

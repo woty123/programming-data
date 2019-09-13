@@ -62,19 +62,15 @@ public class UDPProvider {
 
                     // 解析端口号
                     int responsePort = MessageCreator.parsePort(data);
+
                     if (responsePort != -1) {
                         // 构建一份回送数据
                         String responseData = MessageCreator.buildWithSn(sn);
                         byte[] responseDataBytes = responseData.getBytes();
                         // 直接根据发送者构建一份回送信息
-                        DatagramPacket responsePacket = new DatagramPacket(
-                                responseDataBytes,
-                                responseDataBytes.length,
-                                receivePack.getAddress(),
-                                responsePort);
-
-                        ds.send(responsePacket);
+                        ds.send(new DatagramPacket(responseDataBytes, responseDataBytes.length, receivePack.getAddress(), responsePort));
                     }
+
                 }
 
             } catch (Exception ignored) {
