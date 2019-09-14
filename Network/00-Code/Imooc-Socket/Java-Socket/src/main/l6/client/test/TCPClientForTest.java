@@ -1,4 +1,4 @@
-package client;
+package client.test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
+import client.ServerInfo;
 import clink.CloseUtils;
 
 
@@ -55,7 +56,7 @@ class TCPClientForTest {
             System.out.println("客户端信息：" + socket.getLocalAddress() + " P:" + socket.getLocalPort());
             System.out.println("服务器信息：" + socket.getInetAddress() + " P:" + socket.getPort());
 
-            //启动读协程
+            //启动读线程
             readHandler = new ReadHandler(socket);
             readHandler.start();
             return new TCPClientForTest(socket, readHandler);

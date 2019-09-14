@@ -20,11 +20,11 @@ import foo.UDPConstants;
  * Email ztiany3@gmail.com
  * Date 2018/11/1 23:56
  */
-class UDPSearcher {
+public class UDPSearcher {
 
     private static final int LISTEN_PORT = UDPConstants.PORT_CLIENT_RESPONSE;
 
-    static ServerInfo searchServer(int timeout) {
+    public static ServerInfo searchServer(int timeout) {
         //先开启监听
         Listener listener = null;
         CountDownLatch resultCountDownLatch = new CountDownLatch(1);

@@ -9,13 +9,14 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 
-public class NonBlockingTcpNIOServer {
+public class NonBlockingTcpNIOServer1 {
 
     //服务端
     public static void main(String... args) {
         //1. 获取通道
         ServerSocketChannel ssChannel = null;
         Selector selector = null;
+
         try {
             ssChannel = ServerSocketChannel.open();
             //2. 切换非阻塞模式
@@ -33,7 +34,6 @@ public class NonBlockingTcpNIOServer {
         if (ssChannel == null || selector == null) {
             return;
         }
-
 
         //6. 轮询式的获取选择器上已经“准备就绪”的事件
         while (true) {
@@ -80,10 +80,8 @@ public class NonBlockingTcpNIOServer {
                 e.printStackTrace();
             }
 
-        }
+        }//while
 
-    }
-
-
+    }//main
 
 }

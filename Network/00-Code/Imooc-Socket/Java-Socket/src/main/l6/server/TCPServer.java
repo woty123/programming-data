@@ -75,6 +75,8 @@ class TCPServer implements ClientHandler.ClientHandlerCallback {
     public synchronized void onNewMessageArrived(ClientHandler clientHandler, String message) {
         final String senderClient = clientHandler.getClientInfo();
         System.out.println("收到客户端：" + senderClient + " 信息： " + message);
+
+        //转发到其他客户端
         mForwardingThreadPoolExecutor.execute(() -> {
             synchronized (TCPServer.this) {
                 for (ClientHandler handler : mClientHandlers) {
@@ -96,6 +98,7 @@ class TCPServer implements ClientHandler.ClientHandlerCallback {
         private volatile boolean mDone;
 
         ClientListener(int port) throws IOException {
+            setName("Server-ClientListener");
             mServerSocket = new ServerSocket(port);
             System.out.println("服务器信息：" + mServerSocket.getInetAddress() + " P:" + mServerSocket.getLocalPort());
         }
@@ -113,7 +116,7 @@ class TCPServer implements ClientHandler.ClientHandlerCallback {
                 Socket client;
 
                 try {
-                    //等待客户端
+                    //等待客户端，等待时发送异常可以选择继续等待
                     client = mServerSocket.accept();
                 } catch (IOException e) {
                     e.printStackTrace();

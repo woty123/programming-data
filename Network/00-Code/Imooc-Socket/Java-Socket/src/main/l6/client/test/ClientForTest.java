@@ -1,4 +1,4 @@
-package client;
+package client.test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,7 +6,12 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import client.ServerInfo;
+import client.UDPSearcher;
+
 /**
+ * 对服务器进行压力测试
+ *
  * @author Ztiany
  * Email ztiany3@gmail.com
  * Date 2018/11/4 23:52
@@ -15,7 +20,6 @@ public class ClientForTest {
 
     private volatile static boolean done;
 
-    @SuppressWarnings("all")
     public static void main(String... args) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 

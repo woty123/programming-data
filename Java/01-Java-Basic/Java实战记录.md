@@ -1,15 +1,9 @@
-
----
-# 一：如何学习 Java
+# Java 实战记录
 
 - Java 常用API
 - JDK 中的各种工具
 - JDK 版本各种特新：5、6、7、8、9...
 - JCP 接收的 JSR，很多 JSR 都值得研究和学习
-
----
-# 二：经验总结
-
 
 ## 0 基本数据类型计算可能的溢出
 
@@ -38,8 +32,7 @@ String s = in.nextLine();
 ## 2 创建File的相对位置
 
 ```
-        File file = new File("a.txt");
-
+File file = new File("a.txt");
 ```
 
 当构建一个File使用的是相对路径时，文件位于Java虚拟机启动的相对路径，而如果使用命令行的方式启动程序，启动路径就是命名解释器的当前路径，如果使用集成开发环境，那么启动路径由IDE控制，可以使用下面方式获取虚拟机的相对路径：
@@ -88,12 +81,13 @@ class Manager implements Comparable<Manager> {
 - 一致性
 
 一般的做法是：
-- 显示的参数命名：otherObject用于表示需要比较的对象
+
+- 显示的参数命名：otherObject 用于表示需要比较的对象
 - 检查this==otherObject
 - 检查otherObject是否为null
 - 比较this与otherObject是否属于同一个类
-    - 如果equasl语义在每个子类中有所改变，就是用getClass监测
-    - 如果所有子类都用统一的语义：就使用instanceof比较
+  - 如果equasl语义在每个子类中有所改变，就是用getClass监测
+  - 如果所有子类都用统一的语义：就使用instanceof比较
 - 将otherObject转换为this对应的类型
 - 进行内容比较
 
@@ -121,8 +115,6 @@ hashCdoe方法应该返回一个整数，并合理的组合实例域的散列码
 
 当确认不再有元素需要被添加后，可以调用trimToSize方法优化内存
 
-
-
 ## 7 编译器编译后的代码
 
 许多优化来自于编译器，编译器在生成类的字节码时，会插入必须要的方法调用。而虚拟机只是执行这些字节码。
@@ -148,7 +140,6 @@ hashCdoe方法应该返回一个整数，并合理的组合实例域的散列码
 ## 9 回调的意义
 
 回调(callback)是一种常见的程序设计模式，可以指出某个特定的事件发生时应该采取的动作。
-
 
 ## 10 内部类
 
@@ -179,7 +170,7 @@ hashCdoe方法应该返回一个整数，并合理的组合实例域的散列码
 
 可以看到编译器为内部类生成了一个附加的实例域this$0指向它的外部类。
 
-### 局部类只可以引用final的局部遍历。
+### 局部类只可以引用final的局部遍历
 
 ```
     final int val = 3;
@@ -254,4 +245,3 @@ java可以与一些脚本语言很好的进行交互，比如javascript、groovy
 ```
 
 默认情况下只有一个`jdk.nashorn.api.scripting.NashornScriptEngineFactory`，是用于执行javaScript的引擎(JDK1.7)，可通过在类路径中提供必要的jar来添加对额外的语言支持。
-

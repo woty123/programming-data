@@ -22,7 +22,6 @@ class Client {
             }
         }
 
-
     }
 
 }

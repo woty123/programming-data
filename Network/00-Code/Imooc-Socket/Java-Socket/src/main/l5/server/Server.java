@@ -23,7 +23,7 @@ class Server {
             return;
         }
 
-        //启动 UDP 接受，让 TCP 服务可以通过 UDP 广播被搜索到
+        //启动 UDP 接受客户端搜索，让服务端 TCP 服务可以通过 UDP 广播被搜索到
         UDPProvider.start(UDPConstants.PORT_SERVER);
 
         //读取键盘输入，发送给已连接的 tcp 客户端

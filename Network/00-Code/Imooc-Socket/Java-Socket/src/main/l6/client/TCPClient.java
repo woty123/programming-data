@@ -57,7 +57,7 @@ class TCPClient {
             String line;
             while (!(line = bufferedReader.readLine()).equalsIgnoreCase("00bye00")) {
                 System.out.println("TCPClient send: " + line);
-                printStream.println(line);
+                printStream.println(line);/*这里自动加上了换行符*/
                 printStream.flush();
             }
         }

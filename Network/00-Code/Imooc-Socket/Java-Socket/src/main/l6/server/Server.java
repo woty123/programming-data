@@ -4,8 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import constants.TCPConstants;
-import constants.UDPConstants;
+import foo.TCPConstants;
+import foo.UDPConstants;
+
 
 /**
  * @author Ztiany

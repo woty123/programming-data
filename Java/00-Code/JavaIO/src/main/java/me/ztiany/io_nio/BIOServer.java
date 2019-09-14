@@ -8,7 +8,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class DemoServer extends Thread {
+public class BIOServer extends Thread {
 
     private ServerSocket serverSocket;
 
@@ -16,6 +16,7 @@ public class DemoServer extends Thread {
         return serverSocket.getLocalPort();
     }
 
+    @Override
     public void run() {
         try {
             serverSocket = new ServerSocket(0);
@@ -38,7 +39,7 @@ public class DemoServer extends Thread {
     }
 
     public static void main(String[] args) throws IOException {
-        DemoServer server = new DemoServer();
+        BIOServer server = new BIOServer();
         server.start();
         try (Socket client = new Socket(InetAddress.getLocalHost(), server.getPort())) {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(client.getInputStream()));
@@ -56,7 +57,7 @@ public class DemoServer extends Thread {
 
         @Override
         public void run() {
-            try (PrintWriter out = new PrintWriter(socket.getOutputStream());) {
+            try (PrintWriter out = new PrintWriter(socket.getOutputStream())) {
                 out.println("Hello world!");
                 out.flush();
             } catch (Exception e) {

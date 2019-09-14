@@ -33,13 +33,12 @@ import static me.ztiany.nio.Utils.close;
  * 3. 选择器（Selector）：是 SelectableChannel 的多路复用器。用于监控 SelectableChannel 的 IO 状况
  *
  */
-public class BlockingNIO {
+public class BlockingNIO1 {
 
     /*
     1529751188670 server close
     1529751188659 client close
      */
-
     //客户端
     @Test
     public void client() {
@@ -92,7 +91,5 @@ public class BlockingNIO {
         }
         System.out.println(System.currentTimeMillis() + " server close");
     }
-
-
 
 }

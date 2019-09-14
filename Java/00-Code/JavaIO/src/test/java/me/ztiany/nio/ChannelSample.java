@@ -91,7 +91,7 @@ public class ChannelSample {
 
     //通道之间的数据传输(直接缓冲区)
     @Test
-    public void test3() throws IOException {
+    public void testFileTransfer() throws IOException {
         long start = System.currentTimeMillis();
 
         FileChannel inChannel = FileChannel.open(Paths.get(SOURCE), StandardOpenOption.READ);
@@ -167,7 +167,5 @@ public class ChannelSample {
         }
         System.out.println("耗费时间为：" + (System.currentTimeMillis() - start));
     }
-
-
 
 }

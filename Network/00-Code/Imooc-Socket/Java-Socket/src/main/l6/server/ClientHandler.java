@@ -32,9 +32,9 @@ class ClientHandler {
     ClientHandler(Socket client, ClientHandlerCallback clientHandlerCallback) throws IOException {
         mSocket = client;
         mClientHandlerCallback = Objects.requireNonNull(clientHandlerCallback);
+        mClientInfo = "A[" + client.getInetAddress().getHostAddress() + "] P[" + client.getPort() + "]";
         mReadHandler = new ClientReadHandler(client.getInputStream());
         mWriteHandler = new ClientWriteHandler(client.getOutputStream());
-        mClientInfo = "A[" + client.getInetAddress().getHostAddress() + "] P[" + client.getPort() + "]";
         System.out.println("新客户端连接：" + mClientInfo);
     }
 
@@ -75,6 +75,7 @@ class ClientHandler {
         private final InputStream mInputStream;
 
         ClientReadHandler(InputStream inputStream) {
+            setName("Server-ClientHandler-" + mClientInfo);
             mInputStream = inputStream;
         }
 
@@ -94,7 +95,7 @@ class ClientHandler {
                     //客户端拿到数据
                     line = bufferedReader.readLine();
                     if (line == null) {//读取超时、socket异常、EOF时，str可能为null
-                        System.out.println("客户端已无法读取数据！");
+                        System.out.println("服务端已无法从客户端读取数据！");
                         // 退出当前客户端
                         ClientHandler.this.exitBySelf();
                         break;
@@ -130,7 +131,7 @@ class ClientHandler {
 
         ClientWriteHandler(OutputStream outputStream) {
             mPrintStream = new PrintStream(outputStream);
-            mExecutorService = Executors.newSingleThreadExecutor();
+            mExecutorService = Executors.newSingleThreadExecutor(new DefaultThreadFactory(mClientInfo));
         }
 
         public void send(String line) {
@@ -159,6 +160,7 @@ class ClientHandler {
                     return;
                 }
                 try {
+                    /*自动加上了换行符*/
                     mPrintStream.println(mMessage);
                     mPrintStream.flush();
                 } catch (Exception e) {

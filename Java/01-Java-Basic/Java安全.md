@@ -37,7 +37,6 @@ Java语言有以下机制确保安全：
 - 访问AWT事件队列
 - 打开一个顶层窗口
 
-
 比如Runtime类的Exit方法会调用安全管理器的checkExit方法：
 
 ```java
@@ -54,7 +53,6 @@ Java语言有以下机制确保安全：
 
 JAAS(Java Authentication and Authorization Service)
 
-
 ## 4 数据签名
 
 要确定一份代码是否安全，首先要搞清楚两个问题：
@@ -62,14 +60,12 @@ JAAS(Java Authentication and Authorization Service)
 1. 这份代码来自哪里
 2. 这份代码是否被篡改过
 
-
 **消息摘要**
 
 - MD5
 - SHA1
 
 实现类，java.security.MessageDigest
-
 
 **消息签名**
 

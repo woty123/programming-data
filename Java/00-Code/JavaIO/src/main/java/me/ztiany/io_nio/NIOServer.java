@@ -12,11 +12,11 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class NIOServer extends Thread {
+
     public void run() {
         try (Selector selector = Selector.open();
              ServerSocketChannel serverSocket = ServerSocketChannel.open()) {
             // 创建 Selector 和 Channel
-
             serverSocket.bind(new InetSocketAddress(InetAddress.getLocalHost(), 8888));
             serverSocket.configureBlocking(false);
             // 注册到 Selector，并说明关注点
@@ -35,12 +35,14 @@ public class NIOServer extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     private void sayHelloWorld(ServerSocketChannel server) throws IOException {
-        try (SocketChannel client = server.accept();) {
+        try (SocketChannel client = server.accept()) {
             client.write(Charset.defaultCharset().encode("Hello world!"));
         }
     }
     // 省略了与前面类似的 main
+
 }

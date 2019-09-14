@@ -8,7 +8,7 @@ import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.channels.CompletionHandler;
 import java.nio.charset.Charset;
 
-public class NIO2Server {
+public class AIOServer {
 
     public static void main(String... args) throws IOException {
 
@@ -17,6 +17,7 @@ public class NIO2Server {
         AsynchronousServerSocketChannel serverSock = AsynchronousServerSocketChannel.open().bind(sockAddr);
 
         serverSock.accept(serverSock, new CompletionHandler<AsynchronousSocketChannel, AsynchronousServerSocketChannel>() {
+
             // 为异步操作指定 CompletionHandler 回调函数
             @Override
             public void completed(AsynchronousSocketChannel sockChannel, AsynchronousServerSocketChannel serverSock) {

@@ -45,6 +45,7 @@ class UDPProvider {
         private DatagramSocket mDatagramSocket;
 
         Provider(String sn, int portServer) {
+            setName("Server-UDP Provider");
             this.mSn = sn.getBytes();
             this.mPort = portServer;
             mBuffer = new byte[128];
