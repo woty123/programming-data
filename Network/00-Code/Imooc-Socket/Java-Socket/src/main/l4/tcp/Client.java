@@ -1,4 +1,4 @@
-package udp;
+package tcp;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,9 +44,8 @@ public class Client {
         // 无代理模式，等效于空构造函数
         Socket socket = new Socket(Proxy.NO_PROXY);
 
-        // 新建一份具有HTTP代理的套接字，传输数据将通过www.baidu.com:8080端口转发
-        Proxy proxy = new Proxy(Proxy.Type.HTTP,
-                new InetSocketAddress(Inet4Address.getByName("www.baidu.com"), 8800));
+        // 新建一份具有HTTP代理的套接字，传输数据将通过www.baidu.com:8080端口转发（翻墙原理）
+        Proxy proxy = new Proxy(Proxy.Type.HTTP,new InetSocketAddress(Inet4Address.getByName("www.baidu.com"), 8800));
         socket = new Socket(proxy);
 
         // 新建一个套接字，并且直接链接到本地20000的服务器上
@@ -68,7 +67,12 @@ public class Client {
     }
 
     private static void initSocket(Socket socket) throws SocketException {
-        // 设置读取超时时间为2秒
+        /*
+        设置读取超时时间为2秒：
+        启用/禁用带有指定超时值的 SO_TIMEOUT，以毫秒为单位。将此选项设为非零的超时值时，在与此 Socket 关联的 InputStream 上调用 read() 将只阻塞此时间长度。
+        如果超过超时值，将引发 java.net.SocketTimeoutException，虽然 Socket 仍旧有效。选项必须在进入阻塞操作前被启用才能生效。超时值必须是 > 0 的数。
+        超时值为 0 被解释为无穷大超时值。
+         */
         socket.setSoTimeout(2000);
 
         // 是否复用未完全关闭的Socket地址，对于指定bind操作后的套接字有效
@@ -90,7 +94,8 @@ public class Client {
         //启用/禁用 OOBINLINE（TCP 紧急数据的接收者） 默认情况下，此选项是禁用的，即在套接字上接收的 TCP 紧急数据被静默丢弃。
         // 如果用户希望接收到紧急数据，则必须启用此选项。启用时，可以将紧急数据内嵌在普通数据中接收，注意，仅为处理传入紧急数据提供有限支持。
         // 特别要指出的是，不提供传入紧急数据的任何通知并且不存在区分普通数据和紧急数据的功能（除非更高级别的协议提供）。
-        socket.setOOBInline(true);
+        //不建议使用，可能导致常规数据混乱
+        socket.setOOBInline(false);
 
         // 设置接收发送缓冲器大小，默认32k
         //将此 Socket 的 SO_SNDBUF 选项设置为指定的值。平台的网络连接代码将 SO_SNDBUF 选项用作设置底层网络 I/O 缓存的大小的提示。
@@ -136,11 +141,9 @@ public class Client {
         long l = 298789739;
         byteBuffer.putLong(l);
 
-
         // float
         float f = 12.345f;
         byteBuffer.putFloat(f);
-
 
         // double
         double d = 13.31241248782973;
@@ -161,4 +164,5 @@ public class Client {
         outputStream.close();
         inputStream.close();
     }
+
 }

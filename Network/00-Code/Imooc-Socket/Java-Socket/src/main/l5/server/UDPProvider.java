@@ -77,6 +77,7 @@ class UDPProvider {
                     if (!isValid) {
                         continue;
                     }
+
                     //有效则解析
                     int start = UDPConstants.HEADER.length;
                     int cmd = receiveData[start++] << 8//short 高位
@@ -89,6 +90,7 @@ class UDPProvider {
 
                     //1 表示获取端口号，port 是回传的端口号
                     if (cmd == 1 && responsePort > 0) {
+
                         ByteBuffer byteBuffer = ByteBuffer.wrap(mBuffer);
                         byteBuffer.put(UDPConstants.HEADER);//通用头部
                         byteBuffer.putShort((short) 2);//2 表示回传

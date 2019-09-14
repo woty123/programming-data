@@ -24,9 +24,11 @@ class UDPSearcher {
     private static final int LISTEN_PORT = UDPConstants.PORT_CLIENT_RESPONSE;
 
     static ServerInfo searchServer(int timeout) {
+
+        CountDownLatch resultCountDownLatch = new CountDownLatch(1);
+
         //先开启监听
         Listener listener = null;
-        CountDownLatch resultCountDownLatch = new CountDownLatch(1);
         try {
             listener = listen(resultCountDownLatch);
         } catch (InterruptedException e) {
@@ -71,6 +73,7 @@ class UDPSearcher {
         CountDownLatch startCountDownLatch = new CountDownLatch(1);
         Listener listener = new Listener(LISTEN_PORT, startCountDownLatch, receiveLatch);
         listener.start();
+        //等待线程运行
         startCountDownLatch.await();
         return listener;
     }
@@ -83,7 +86,7 @@ class UDPSearcher {
             ByteBuffer byteBuffer = ByteBuffer.allocate(128);
             byteBuffer.put(UDPConstants.HEADER);//公共头部
             byteBuffer.putShort((short) 1);//命令 1 表示搜索服务器
-            byteBuffer.putInt(UDPConstants.PORT_CLIENT_RESPONSE);//对方通过这个端口会送TCP服务器信息
+            byteBuffer.putInt(UDPConstants.PORT_CLIENT_RESPONSE);//对方通过这个端口回送TCP服务器信息
 
             DatagramPacket datagramPacket = new DatagramPacket(byteBuffer.array(), byteBuffer.position() + 1);
             datagramPacket.setAddress(InetAddress.getByName("255.255.255.255"));
@@ -95,7 +98,7 @@ class UDPSearcher {
     }
 
     /**
-     * TCP服务信息接收者
+     * TCP 服务信息接收者
      */
     private static class Listener extends Thread {
 
@@ -138,8 +141,7 @@ class UDPSearcher {
                     int port = receivePack.getPort();
                     byte[] data = receivePack.getData();
 
-                    boolean isValid = receiveLength >= mMinLen/*长度校验*/
-                            && ByteUtils.startsWith(data, UDPConstants.HEADER);/*头部校验*/
+                    boolean isValid = receiveLength >= mMinLen/*长度校验*/ && ByteUtils.startsWith(data, UDPConstants.HEADER);/*头部校验*/
 
                     System.out.println("UDPSearcher receive form ip:" + ip + "\tport:" + port + "\tdataValid:" + isValid);
 

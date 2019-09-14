@@ -1,4 +1,4 @@
-package udp;
+package tcp;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,10 +20,8 @@ public class Server {
         // 绑定到本地端口上
         server.bind(new InetSocketAddress(Inet4Address.getLocalHost(), PORT), 50);
 
-
         System.out.println("服务器准备就绪～");
         System.out.println("服务器信息：" + server.getInetAddress() + " P:" + server.getLocalPort());
-
 
         // 等待客户端连接
         for (; ; ) {
@@ -41,17 +39,17 @@ public class Server {
         // 创建基础的ServerSocket
         ServerSocket serverSocket = new ServerSocket();
 
-        // 绑定到本地端口20000上，并且设置当前可允许等待链接的队列为50个
+        //创建ServerSocket并指定端口号
         //serverSocket = new ServerSocket(PORT);
 
-        // 等效于上面的方案，队列设置为50个
+        // 等效于上面的方案，并且设置当前可允许等待链接的队列为50个。
+        // 这里的 50 指示（对连接的请求）的最大队列长度被设置为 50 。如果队列满时收到连接指示，则拒绝该连接。
+        // 允许等待连接的队列即在创建 ServerSocket 并调用 bind 后，在调用 accept 取获取连接的客户端之前，如果已经有了 50 个客户端在等待，此时第 51 个客户端尝试连接时将会被触发异常。
         //serverSocket = new ServerSocket(PORT, 50);
 
         // 与上面等同
         // serverSocket = new ServerSocket(PORT, 50, Inet4Address.getLocalHost());
 
-        //允许等待链接的队列即在创建 ServerSocket 并调用 bind 后，在调用 accept 取获取连接的客户端之前，
-        // 如果已经有了 50 个客户端在等待，此时第 51 个客户端尝试连接时将会被触发异常。
         return serverSocket;
     }
 
@@ -59,10 +57,10 @@ public class Server {
         // 是否复用未完全关闭的地址端口
         serverSocket.setReuseAddress(true);
 
-        // 等效Socket#setReceiveBufferSize
+        // 等效于拿到客户端后调用 Socket#setReceiveBufferSize
         serverSocket.setReceiveBufferSize(64 * 1024 * 1024);
 
-        // 设置serverSocket#accept超时时间
+        // 设置serverSocket#accept超时时间，如果 accept 超时则会触发异常。
         // serverSocket.setSoTimeout(2000);
 
         // 设置性能参数：短链接，延迟，带宽的相对重要性（服务端需要在ServerSocket上设置）
@@ -82,8 +80,7 @@ public class Server {
         @Override
         public void run() {
             super.run();
-            System.out.println("新客户端连接：" + socket.getInetAddress() +
-                    " P:" + socket.getPort());
+            System.out.println("新客户端连接：" + socket.getInetAddress() + " P:" + socket.getPort());
 
             try {
                 // 得到套接字流
@@ -144,8 +141,7 @@ public class Server {
                 }
             }
 
-            System.out.println("客户端已退出：" + socket.getInetAddress() +
-                    " P:" + socket.getPort());
+            System.out.println("客户端已退出：" + socket.getInetAddress() + " P:" + socket.getPort());
 
         }
     }
