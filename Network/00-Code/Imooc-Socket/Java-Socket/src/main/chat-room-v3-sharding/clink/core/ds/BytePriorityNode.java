@@ -1,7 +1,7 @@
 package clink.core.ds;
 
 /**
- * 带优先级的节点, 可用于构成链表
+ * 带优先级的节点, 可用于构成链表。
  *
  * @author Ztiany
  * Email ztiany3@gmail.com
