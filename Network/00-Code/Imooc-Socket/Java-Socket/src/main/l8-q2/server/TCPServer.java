@@ -23,7 +23,7 @@ import clink.utils.CloseUtils;
  * Email ztiany3@gmail.com
  * Date 2018/11/1 21:17
  */
-class TCPServer implements ClientHandler.ClientHandlerCallback {
+class TCPServer {
 
     private final int mPortServer;
     private final List<ClientHandler> mClientHandlers;
@@ -86,27 +86,31 @@ class TCPServer implements ClientHandler.ClientHandlerCallback {
         CloseUtils.close(mSelector);
     }
 
-    @Override
-    public synchronized void onSelfClosed(ClientHandler clientHandler) {
-        mClientHandlers.remove(clientHandler);
-    }
+    private ClientHandler.ClientHandlerCallback mClientHandlerCallback = new ClientHandler.ClientHandlerCallback() {
 
-    @Override
-    public synchronized void onNewMessageArrived(ClientHandler clientHandler, String message) {
-        System.out.println(message.replace(CharUtils.LINE_BREAK, "\\r\\n"));
-        final String senderClient = clientHandler.getClientInfo();
-        System.out.println("收到客户端：" + senderClient + " 信息： " + message);
-        mForwardingThreadPoolExecutor.execute(() -> {
-            synchronized (TCPServer.this) {
-                for (ClientHandler handler : mClientHandlers) {
-                    if (handler.getClientInfo().equals(senderClient)) {
-                        continue;
+        @Override
+        public synchronized void onSelfClosed(ClientHandler clientHandler) {
+            mClientHandlers.remove(clientHandler);
+        }
+
+        @Override
+        public synchronized void onNewMessageArrived(ClientHandler clientHandler, String message) {
+            System.out.println(message.replace(CharUtils.LINE_BREAK, "\\r\\n"));
+            final String senderClient = clientHandler.getClientInfo();
+            System.out.println("收到客户端：" + senderClient + " 信息： " + message);
+            mForwardingThreadPoolExecutor.execute(() -> {
+                synchronized (TCPServer.this) {
+                    for (ClientHandler handler : mClientHandlers) {
+                        if (handler.getClientInfo().equals(senderClient)) {
+                            continue;
+                        }
+                        handler.send(message);
                     }
-                    handler.send(message);
                 }
-            }
-        });
-    }
+            });
+        }
+
+    };
 
     /**
      * TCP监听
@@ -150,7 +154,7 @@ class TCPServer implements ClientHandler.ClientHandlerCallback {
                             SocketChannel socketChannel = serverSocketChannel.accept();
                             //创建 ClientHandler 处理客户端读写
                             try {
-                                ClientHandler clientHandler = new ClientHandler(socketChannel, TCPServer.this);
+                                ClientHandler clientHandler = new ClientHandler(socketChannel, mClientHandlerCallback);
                                 synchronized (TCPServer.this) {
                                     mClientHandlers.add(clientHandler);
                                 }

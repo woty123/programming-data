@@ -1,5 +1,6 @@
 package clink.impl;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -13,7 +14,7 @@ import clink.utils.CloseUtils;
 /**
  * SocketChannel 对读写的实现。
  */
-public class SocketChannelAdapter implements Sender, Receiver, Cloneable {
+public class SocketChannelAdapter implements Sender, Receiver, Closeable {
 
     private final AtomicBoolean mIsClosed = new AtomicBoolean(false);
     private final SocketChannel mChannel;
@@ -60,7 +61,7 @@ public class SocketChannelAdapter implements Sender, Receiver, Cloneable {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
         if (mIsClosed.compareAndSet(false, true)) {
             // 解除注册回调
             mIoProvider.unRegisterInput(mChannel);
@@ -111,6 +112,7 @@ public class SocketChannelAdapter implements Sender, Receiver, Cloneable {
             mSendIoEventListener.onCompleted(null);
         }
     };
+
 
     public interface OnChannelStatusChangedListener {
         void onChannelClosed(SocketChannel channel);

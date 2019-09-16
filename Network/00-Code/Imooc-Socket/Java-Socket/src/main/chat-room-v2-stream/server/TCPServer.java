@@ -1,5 +1,6 @@
 package server;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.SelectionKey;
@@ -27,13 +28,15 @@ class TCPServer {
     private final int mPortServer;
     private final List<ClientHandler> mClientHandlers;
     private final ExecutorService mForwardingThreadPoolExecutor;
+    private final File mCachePath;//文件缓存路径
     private ClientListener mClientListener;
     private Selector mSelector;
     private ServerSocketChannel mServerSocketChannel;
 
-    TCPServer(int portServer) {
+    TCPServer(int portServer, File cachePath) {
         mPortServer = portServer;
         mClientHandlers = new ArrayList<>();
+        mCachePath = cachePath;
         mForwardingThreadPoolExecutor = Executors.newSingleThreadExecutor();
     }
 
@@ -87,19 +90,18 @@ class TCPServer {
     }
 
     private ClientHandler.ClientHandlerCallback mClientHandlerCallback = new ClientHandler.ClientHandlerCallback() {
+
         @Override
-        public void onSelfClosed(ClientHandler clientHandler) {
+        public synchronized void onSelfClosed(ClientHandler clientHandler) {
             mClientHandlers.remove(clientHandler);
         }
 
         @Override
-        public void onNewMessageArrived(ClientHandler clientHandler, String message) {
-            final String senderClient = clientHandler.getClientInfo();
-            System.out.println("收到客户端：" + senderClient + " 信息： " + message);
+        public synchronized void onNewMessageArrived(ClientHandler clientHandler, String message) {
             mForwardingThreadPoolExecutor.execute(() -> {
                 synchronized (TCPServer.this) {
                     for (ClientHandler handler : mClientHandlers) {
-                        if (handler.getClientInfo().equals(senderClient)) {
+                        if (handler.equals(clientHandler)) {
                             continue;
                         }
                         handler.send(message);
@@ -107,6 +109,7 @@ class TCPServer {
                 }
             });
         }
+
     };
 
     /**
@@ -151,7 +154,7 @@ class TCPServer {
                             SocketChannel socketChannel = serverSocketChannel.accept();
                             //创建 ClientHandler 处理客户端读写
                             try {
-                                ClientHandler clientHandler = new ClientHandler(socketChannel, mClientHandlerCallback);
+                                ClientHandler clientHandler = new ClientHandler(socketChannel, mClientHandlerCallback, mCachePath);
                                 synchronized (TCPServer.this) {
                                     mClientHandlers.add(clientHandler);
                                 }

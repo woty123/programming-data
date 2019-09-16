@@ -55,6 +55,7 @@ class TCPClient {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         try (PrintStream printStream = new PrintStream(client.getOutputStream())) {
             String line;
+
             //todo 制造问题，发送多个消息，服务器会把这四个消息当成一个消息
             while (!(line = bufferedReader.readLine()).equalsIgnoreCase("00bye00")) {
                 System.out.println("TCPClient send: " + line);

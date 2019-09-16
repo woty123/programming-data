@@ -76,7 +76,6 @@ class TCPServer {
                 clientHandler.exit();
             }
         }
-
         mClientHandlers.clear();
         mClientListener.exit();
 
@@ -87,27 +86,31 @@ class TCPServer {
     }
 
     private ClientHandler.ClientHandlerCallback mClientHandlerCallback = new ClientHandler.ClientHandlerCallback() {
+
         @Override
-        public void onSelfClosed(ClientHandler clientHandler) {
+        public synchronized void onSelfClosed(ClientHandler clientHandler) {
             mClientHandlers.remove(clientHandler);
         }
 
         @Override
-        public void onNewMessageArrived(ClientHandler clientHandler, String message) {
-            final String senderClient = clientHandler.getClientInfo();
-            System.out.println("收到客户端：" + senderClient + " 信息： " + message);
+        public synchronized void onNewMessageArrived(ClientHandler clientHandler, String message) {
+            System.out.println("收到客户端：" + clientHandler.getClientInfo() + " 信息： " + message);
             mForwardingThreadPoolExecutor.execute(() -> {
                 synchronized (TCPServer.this) {
                     for (ClientHandler handler : mClientHandlers) {
-                        if (handler.getClientInfo().equals(senderClient)) {
+
+                        if (handler.equals(clientHandler)) {
+                            System.out.println("TCPServer.onNewMessageArrived ignore: " + clientHandler);
                             continue;
                         }
+                        System.out.println("handler " + handler.getClientInfo() + " send" + message);
                         handler.send(message);
                     }
                 }
             });
         }
     };
+
 
     /**
      * TCP监听
@@ -181,5 +184,6 @@ class TCPServer {
         }
 
     }
+
 
 }
