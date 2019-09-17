@@ -76,7 +76,6 @@ class TCPServer {
                 clientHandler.exit();
             }
         }
-
         mClientHandlers.clear();
         mClientListener.exit();
 
@@ -128,7 +127,7 @@ class TCPServer {
 
                 try {
 
-                    //阻塞等待连接
+                    //阻塞等待连接，没有就绪的 channel 就继续等待。
                     if (selector.select() == 0) {
                         if (mDone) {
                             break;
@@ -176,7 +175,7 @@ class TCPServer {
         private void exit() {
             mDone = true;
             // 使尚未返回的第一个选择操作立即返回。
-            //如果另一个线程目前正阻塞在 select() 或 select(long) 方法的调用中，则该调用将立即返回。
+            // 如果另一个线程目前正阻塞在 select() 或 select(long) 方法的调用中，则该调用将立即返回。
             mSelector.wakeup();
         }
 

@@ -136,7 +136,8 @@ class ClientHandler {
                     while (!mDone && mByteBuffer.hasRemaining()) {
                         int write = mClient.write(mByteBuffer);
                         System.out.println("客户端：" + mClientInfo + " write length = " + write);
-                        //len = 0 合法，存在不可写状态
+                        //len = 0 是存在且正常的，因为存在不可写状态
+                        // 如果 len <0 则说明不可写了（但是官方文档上并没有指明存在返回复数的情况）。
                         if (write < 0) {
                             System.out.println("客户端已无法发送数据！");
                             ClientHandler.this.exitBySelf();

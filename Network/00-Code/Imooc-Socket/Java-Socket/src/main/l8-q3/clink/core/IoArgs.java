@@ -15,6 +15,7 @@ import clink.utils.CharUtils;
  */
 public class IoArgs {
 
+    //todo，容量改为 4 个字节，模拟单消息不完整问题
     private byte[] byteBuffer = new byte[4];
     private ByteBuffer buffer = ByteBuffer.wrap(byteBuffer);
 
