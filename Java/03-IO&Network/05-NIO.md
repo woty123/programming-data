@@ -589,6 +589,7 @@ try(需要关闭的资源声明){
 ## 引用
 
 - 尚硅谷 NIO 教程
+- 《Java NIO》
 - [Jenkov Java NIO Tutorials](http://tutorials.jenkov.com/java-nio/index.html)
 - [JAVA NIO之浅谈内存映射文件原理与DirectMemory](https://blog.csdn.net/szwangdf/article/details/10588489)
 - [通俗编程——白话 NIO 之 Channel](https://gold.xitu.io/entry/57a4aac3a633bd00603e83e5)
