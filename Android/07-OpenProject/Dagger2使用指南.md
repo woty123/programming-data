@@ -786,7 +786,6 @@ public abstract class RandomModule{
 
 Producers是Dagger2的拓展，原有的注入方式都是同步的，Producers模块提供了异步注入的方式。具体参考[文档](https://google.github.io/dagger/producers)。
 
-
 ---
 ## 15 泛型支持
 
@@ -807,16 +806,16 @@ public class UserActivity extends BaseActivity<UserPresenter>{
 }
 
 public class UserPresenter implement IPresenter{
-    
+
     @Inject
     public UserPresenter(){
-        
+
     }
 }
 ```
 
 ---
-## 16 Dagge 更新
+## 16 Dagger 更新
 
 ###  2.17
 
@@ -826,7 +825,6 @@ public class UserPresenter implement IPresenter{
 
 - 关于 dagger-android，`@ActivityKey，@ServiceKey，@FragmentKey` 等已经被废弃，推荐使用 `@ClassKey`。
 - Module 中的方法应该同意返回 `AndroidInjector.Factory<?>`，而不再是 `AndroidInjector.Factory<? extends Activity>` 等类型。
-
 
 ---
 ## 引用

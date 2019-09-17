@@ -4,8 +4,12 @@ import android.app.Activity;
 import android.view.View;
 
 import com.ztiany.base.di.HasViewInjector;
+import com.ztiany.base.di.ViewComponentBuilder;
+
+import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
@@ -15,12 +19,13 @@ import dagger.android.DispatchingAndroidInjector;
  *         Email: ztiany3@gmail.com
  *         Date : 2017-09-19 15:33
  */
-public class BAppContext extends AppContext implements HasViewInjector<View> {
+public class BAppContext extends AppContext implements HasViewInjector {
 
     @Inject
     DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
+
     @Inject
-    DispatchingAndroidInjector<View> mViewDispatchingAndroidInjector;
+    Map<Class<? extends View>, Provider<ViewComponentBuilder>> viewBuilders;
 
     @Override
     public void onCreate() {
@@ -29,13 +34,13 @@ public class BAppContext extends AppContext implements HasViewInjector<View> {
     }
 
     @Override
-    public AndroidInjector<View> viewInjector() {
-        return mViewDispatchingAndroidInjector;
+    public AndroidInjector<Activity> activityInjector() {
+        return dispatchingActivityInjector;
     }
 
     @Override
-    public AndroidInjector<Activity> activityInjector() {
-        return dispatchingActivityInjector;
+    public Map<Class<? extends View>, Provider<ViewComponentBuilder>> viewInjectors() {
+        return viewBuilders;
     }
 
 }
