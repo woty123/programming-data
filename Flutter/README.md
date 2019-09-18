@@ -99,6 +99,7 @@ plugin
 - [超完整的Flutter项目，功能丰富，适合学习和日常使用。](https://github.com/CarGuo/GSYGithubAppFlutter)
 - [HistoryOfEverything](https://github.com/2d-inc/HistoryOfEverything)
 - [高仿书旗小说 Flutter版](https://github.com/huanxsd/flutter_shuqi)
+- [Best-Flutter-UI-Templates](https://github.com/mitesh77/Best-Flutter-UI-Templates)
 
 视频教程：
 
