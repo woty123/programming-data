@@ -29,7 +29,7 @@ public class AsyncPacketReader implements Closeable {
     private volatile BytePriorityNode<Frame> mNode;//帧队列
     private volatile int mNodeSize = 0;//节点数量
 
-    //唯一标识从 1 开始，最大为 255，理论上最大支持并发  255 个 packet 同时发送
+    //包唯一标识从 1 开始，最大为 255，理论上最大支持并发  255 个 packet 同时发送
     private short mLastIdentifier = 0;//记录最后一次唯一标识
 
     AsyncPacketReader(PacketProvider packetProvider) {

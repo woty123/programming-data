@@ -42,8 +42,7 @@ public class ReceiveHeaderFrame extends AbsReceiveFrame {
     public byte[] getPacketHeaderInfo() {
         if (body.length > SendHeaderFrame.PACKET_HEADER_FRAME_MIN_LENGTH) {
             byte[] headerInfo = new byte[body.length - SendHeaderFrame.PACKET_HEADER_FRAME_MIN_LENGTH];
-            System.arraycopy(body, SendHeaderFrame.PACKET_HEADER_FRAME_MIN_LENGTH,
-                    headerInfo, 0, headerInfo.length);
+            System.arraycopy(body, SendHeaderFrame.PACKET_HEADER_FRAME_MIN_LENGTH, headerInfo, 0, headerInfo.length);
             return headerInfo;
         }
         return null;

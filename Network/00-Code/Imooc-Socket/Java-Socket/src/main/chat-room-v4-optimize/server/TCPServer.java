@@ -32,7 +32,7 @@ import foo.handler.ConnectorStringPacketChain;
  * Email ztiany3@gmail.com
  * Date 2018/11/1 21:17
  */
-class TCPServer implements ServerAcceptor.AcceptListener, Group.GroupMessageAdapter {
+class TCPServer {
 
     private final int mPortServer;
     private final List<ConnectorHandler> mConnectorHandlers = new ArrayList<>();
@@ -44,18 +44,54 @@ class TCPServer implements ServerAcceptor.AcceptListener, Group.GroupMessageAdap
 
     private final ServerStatistics mStatistics = new ServerStatistics();
 
+    private Group.GroupMessageAdapter mGroupMessageAdapter = (handler, msg) -> {
+        handler.send(msg);
+        mStatistics.sendSize++;
+    };
+
+    private ServerAcceptor.AcceptListener mAcceptListener = new ServerAcceptor.AcceptListener() {
+        @Override
+        public void onNewSocketArrived(SocketChannel channel) {
+            try {
+                ConnectorHandler connectorHandler = new ConnectorHandler(channel, mCachePath);
+                System.out.println(connectorHandler.getClientInfo() + ":Connected!");
+
+                // 添加收到消息的处理责任链
+                connectorHandler.getStringPacketChain()
+                        .appendLast(mStatistics.statisticsChain())
+                        .appendLast(new ParseCommandConnectorStringPacketChain());
+
+                // 添加关闭链接时的责任链
+                connectorHandler.getCloseChain()
+                        .appendLast(new RemoveQueueOnConnectorClosedChain());
+
+                /*客户端和服务器，谁的超时时间短谁就能发送心跳*/
+                ScheduleJob scheduleJob = new IdleTimeoutScheduleJob(10, TimeUnit.SECONDS, connectorHandler);
+                connectorHandler.schedule(scheduleJob);
+
+                synchronized (mConnectorHandlers) {
+                    mConnectorHandlers.add(connectorHandler);
+                    System.out.println("当前客户端数量：" + mConnectorHandlers.size());
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("客户端链接异常：" + e.getMessage());
+            }
+        }
+    };
+
     TCPServer(int portServer, File cachePath) {
         mPortServer = portServer;
         mCachePath = cachePath;
         mDeliveryPool = Executors.newSingleThreadExecutor();
         //创建一个群
-        this.groups.put(Foo.DEFAULT_GROUP_NAME, new Group(Foo.DEFAULT_GROUP_NAME, this));
+        this.groups.put(Foo.DEFAULT_GROUP_NAME, new Group(Foo.DEFAULT_GROUP_NAME, mGroupMessageAdapter));
     }
 
     /*启动服务器*/
     boolean start() {
         try {
-            ServerAcceptor clientListener = new ServerAcceptor(this);
+            ServerAcceptor clientListener = new ServerAcceptor(mAcceptListener);
 
             mServerSocketChannel = ServerSocketChannel.open();
             mServerSocketChannel.configureBlocking(false);//配置非阻塞
@@ -126,41 +162,6 @@ class TCPServer implements ServerAcceptor.AcceptListener, Group.GroupMessageAdap
         };
     }
 
-    @Override
-    public void onNewSocketArrived(SocketChannel channel) {
-        try {
-            ConnectorHandler connectorHandler = new ConnectorHandler(channel, mCachePath);
-            System.out.println(connectorHandler.getClientInfo() + ":Connected!");
-
-            // 添加收到消息的处理责任链
-            connectorHandler.getStringPacketChain()
-                    .appendLast(mStatistics.statisticsChain())
-                    .appendLast(new ParseCommandConnectorStringPacketChain());
-
-            // 添加关闭链接时的责任链
-            connectorHandler.getCloseChain()
-                    .appendLast(new RemoveQueueOnConnectorClosedChain());
-
-            /*客户端和服务器，谁的超时时间短谁就能发送心跳*/
-            ScheduleJob scheduleJob = new IdleTimeoutScheduleJob(10, TimeUnit.SECONDS, connectorHandler);
-            connectorHandler.schedule(scheduleJob);
-
-            synchronized (mConnectorHandlers) {
-                mConnectorHandlers.add(connectorHandler);
-                System.out.println("当前客户端数量：" + mConnectorHandlers.size());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("客户端链接异常：" + e.getMessage());
-        }
-    }
-
-    @Override
-    public void sendMessageToClient(ConnectorHandler handler, String msg) {
-        handler.send(msg);
-        mStatistics.sendSize++;
-    }
-
     /*用于处理连接关闭*/
     private class RemoveQueueOnConnectorClosedChain extends ConnectorCloseChain {
 
@@ -187,14 +188,14 @@ class TCPServer implements ServerAcceptor.AcceptListener, Group.GroupMessageAdap
                 case Foo.COMMAND_GROUP_JOIN: {
                     Group group = groups.get(Foo.DEFAULT_GROUP_NAME);
                     if (group.addMember(handler)) {
-                        sendMessageToClient(handler, "Join Group:" + group.getName());
+                        mGroupMessageAdapter.sendMessageToClient(handler, "Join Group:" + group.getName());
                     }
                     return true;
                 }
                 case Foo.COMMAND_GROUP_LEAVE: {
                     Group group = groups.get(Foo.DEFAULT_GROUP_NAME);
                     if (group.removeMember(handler)) {
-                        sendMessageToClient(handler, "Leave Group:" + group.getName());
+                        mGroupMessageAdapter.sendMessageToClient(handler, "Leave Group:" + group.getName());
                     }
                     return true;
                 }
@@ -206,11 +207,10 @@ class TCPServer implements ServerAcceptor.AcceptListener, Group.GroupMessageAdap
         protected boolean consumeAgain(ConnectorHandler handler, StringReceivePacket stringReceivePacket) {
             // 捡漏的模式，当我们第一遍未消费，然后又没有加入到群，自然没有后续的节点消费
             // 此时我们进行二次消费，返回发送过来的消息
-            sendMessageToClient(handler, stringReceivePacket.getEntity());
+            mGroupMessageAdapter.sendMessageToClient(handler, stringReceivePacket.getEntity());
             return true;
         }
 
     }
-
 
 }

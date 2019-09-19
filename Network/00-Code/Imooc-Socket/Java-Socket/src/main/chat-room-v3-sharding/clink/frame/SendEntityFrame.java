@@ -15,8 +15,9 @@ import clink.core.SendPacket;
 public class SendEntityFrame extends AbsSendPacketFrame {
 
     private final ReadableByteChannel mChannel;
-    private final long mUnConsumeEntityLength;
 
+    /**总的未消费长度（Packet 实体长度）*/
+    private final long mUnConsumeEntityLength;
 
     SendEntityFrame(short identifier, long entityLength, ReadableByteChannel channel, SendPacket<?> packet) {
         super(

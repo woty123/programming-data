@@ -49,3 +49,5 @@ cmake-build*/
 out
 target/
 *.iml
+*.tmp
+cache

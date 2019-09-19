@@ -64,7 +64,8 @@ class AsyncPacketWriter implements Closeable {
             do {
                 // 还有未消费数据，则重复构建帧，即不断使用帧把IoArgs中是数据消费掉
                 temp = buildNewFrame(args);//根据数据类型创建对应的帧
-            } while (temp != null && args.remained());
+            } while (temp == null && args.remained());
+
             //情况1：遇到一个取消帧
             //情况2：args被消费完，正好构造了一个正常的帧
             //情况3：args没有被消费完，构造了一个正常的帧

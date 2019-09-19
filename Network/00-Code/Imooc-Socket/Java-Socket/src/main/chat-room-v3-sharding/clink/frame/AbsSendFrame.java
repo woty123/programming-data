@@ -6,13 +6,16 @@ import clink.core.Frame;
 import clink.core.IoArgs;
 
 /**
+ * 基础发送帧
+ *
  * @author Ztiany
  * Email ztiany3@gmail.com
  * Date 2018/11/26 23:17
  */
 public abstract class AbsSendFrame extends Frame {
 
-    //多个线程并发地发送帧，需要保证可见性
+    /*多个线程并发地发送帧，需要保证可见性。*/
+
     // 帧头可读写区域大小
     volatile byte mHeaderRemaining = Frame.FRAME_HEADER_LENGTH;
     // 帧体可读写区域大小

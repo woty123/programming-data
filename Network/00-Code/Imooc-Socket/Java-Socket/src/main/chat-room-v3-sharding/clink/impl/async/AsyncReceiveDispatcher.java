@@ -100,5 +100,4 @@ public class AsyncReceiveDispatcher implements ReceiveDispatcher, IoArgs.IoArgsE
         mReceivePacketCallback.onReceivePacketCompleted(packet);
     }
 
-
 }

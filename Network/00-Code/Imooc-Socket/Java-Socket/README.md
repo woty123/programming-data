@@ -149,3 +149,6 @@ IoArgs 中的 IoArgsEventListener 调整为 IoArgsEventProcessor，调整之后�
 
 - 可以处理消费 IoArgs 失败的情况。
 - 延迟了 IoArgs 对数据的读取（只在可写的情况下才去填充 IoArgs）。
+
+## 6、chat-room-v3-sharding & chat-room-v4-optimize：基于 frame 的数据传输
+

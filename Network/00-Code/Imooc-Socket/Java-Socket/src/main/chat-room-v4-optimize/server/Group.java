@@ -40,8 +40,7 @@ class Group {
             if (!members.contains(handler)) {
                 members.add(handler);
                 //添加一个成员之后，需要把该群消息转发链添加到该成员的消息处理链中
-                handler.getStringPacketChain()
-                        .appendLast(new ForwardConnectorStringPacketChain());
+                handler.getStringPacketChain().appendLast(new ForwardConnectorStringPacketChain());
                 System.out.println("Group[" + name + "] add new member:" + handler.getClientInfo());
                 return true;
             }

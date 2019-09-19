@@ -32,14 +32,14 @@ public class SendHeaderFrame extends AbsSendPacketFrame {
                 sendPacket);
 
         // 头部对应的数据信息长度
-        mBody = new byte[mBodyRemaining];
+        mBody = new byte[mBodyRemaining];/*这里 mBodyRemaining = 6*/
 
         //提取包的信息
         final long packetLength = sendPacket.getLength();
         final byte packetType = sendPacket.getType();
         final byte[] packetHeaderInfo = sendPacket.headerInfo();
 
-        // 头5字节存储长度信息低5字节（40位）数据
+        // 头5字节存储长度信息，低5字节（40位）数据
         mBody[0] = (byte) (packetLength >> 32);
         mBody[1] = (byte) (packetLength >> 24);
         mBody[2] = (byte) (packetLength >> 16);
@@ -48,7 +48,7 @@ public class SendHeaderFrame extends AbsSendPacketFrame {
         //包类型
         mBody[5] = packetType;
 
-        //额外的头部信息，现在没有用
+        //额外的头部信息，放在这里其实是没有用的，body 已经满了。
         if (packetHeaderInfo != null) {
             System.arraycopy(packetHeaderInfo, 0, mBody, PACKET_HEADER_FRAME_MIN_LENGTH, packetHeaderInfo.length);
         }
@@ -68,6 +68,5 @@ public class SendHeaderFrame extends AbsSendPacketFrame {
         int offset = mBody.length - count;
         return args.readFrom(mBody, offset, count);
     }
-
 
 }

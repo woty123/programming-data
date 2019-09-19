@@ -9,9 +9,20 @@ package clink.core.ds;
  */
 public class BytePriorityNode<Item> {
 
+    /**
+     * 优先级
+     */
     public byte priority;
+
+    /**
+     * 数据
+     */
     public Item item;
-    public BytePriorityNode<Item> next;//下一跳
+
+    /**
+     * 下一跳
+     */
+    public BytePriorityNode<Item> next;
 
     public BytePriorityNode(Item item) {
         this.item = item;

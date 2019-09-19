@@ -81,4 +81,5 @@ public class FooGui extends JFrame {
     public interface Callback {
         Object[] takeText();
     }
+
 }

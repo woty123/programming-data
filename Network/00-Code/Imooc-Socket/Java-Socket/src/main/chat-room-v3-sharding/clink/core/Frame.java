@@ -18,7 +18,7 @@ public abstract class Frame {
         帧标志信息：一个字节，扩展用
         对应包唯一标识：一个字节
         预留空间：一个字节
-        数据区：可用空间为出去以上数据的剩余空间
+        数据区：可用空间为除去以上数据的剩余空间
      */
 
     // 帧头长度
@@ -78,7 +78,7 @@ public abstract class Frame {
      * @return 当前帧Body总长度[0~MAX_CAPACITY]
      */
     public int getBodyLength() {
-        //& 0xFF 的原因，复数是采用反码存储的。
+        //& 0xFF 的原因，负数是采用反码存储的。
         //如果存在负数，则 (int)byte 会导致高位全部转换为 1111。比如
         //byte 类型的 -1 强转为 int，二进制为 11111111 11111111 11111111 11111111，因此要去掉高位的 1 则应该 &FF。
         return (((int) header[0] & 0xFF) << 8) | (((int) header[1] & 0xFF));

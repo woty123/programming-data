@@ -13,6 +13,13 @@ public abstract class AbsSendPacketFrame extends AbsSendFrame {
      */
     protected volatile SendPacket<?> mPacket;
 
+    /**
+     * @param length     包长度
+     * @param type       包类型
+     * @param flag       扩展标识
+     * @param identifier 包唯一标识
+     * @param packet     包
+     */
     public AbsSendPacketFrame(int length, byte type, byte flag, short identifier, SendPacket packet) {
         super(length, type, flag, identifier);
         mPacket = packet;
@@ -35,8 +42,7 @@ public abstract class AbsSendPacketFrame extends AbsSendFrame {
     }
 
     /**
-     * 构建下一帧时做一次判断，如果已经终止，则没有下一帧；
-     * 如果没有则尝试进行构建操作
+     * 构建下一帧时做一次判断，如果已经终止，则没有下一帧，如果没有则尝试进行构建操作。
      *
      * @return 下一帧
      */
@@ -46,8 +52,7 @@ public abstract class AbsSendPacketFrame extends AbsSendFrame {
     }
 
     /**
-     * 终止当前帧，需要在当前方法中做一些操作，以及状态的维护，
-     * 后续可以扩展{@link #fillDirtyDataOnAbort()}方法对数据进行填充操作
+     * 终止当前帧，需要在当前方法中做一些操作，以及状态的维护，后续可以扩展{@link #fillDirtyDataOnAbort()}方法对数据进行填充操作
      *
      * @return True：完美终止，可以顺利的移除当前帧；False：已发送部分数据
      */
@@ -72,6 +77,5 @@ public abstract class AbsSendPacketFrame extends AbsSendFrame {
      * @return NULL：没有下一帧
      */
     protected abstract Frame buildNextFrame();
-
 
 }
