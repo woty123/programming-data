@@ -150,5 +150,80 @@ IoArgs 中的 IoArgsEventListener 调整为 IoArgsEventProcessor，调整之后�
 - 可以处理消费 IoArgs 失败的情况。
 - 延迟了 IoArgs 对数据的读取（只在可写的情况下才去填充 IoArgs）。
 
-## 6、chat-room-v3-sharding & chat-room-v4-optimize：基于 frame 的数据传输
+## 6、chat-room-v3-sharding ：基于 frame 的数据传输
+
+### 包的分片
+
+为什么要对包进行分片：
+
+- 不能一次性将文件加载到内存。
+- 同一个 Socket 连接中：
+  - 要保证文大件传输中途取消而不影响后续其他的 packet 发送。
+  - 传输大文件的时候，可以同时进行文本传输。
+- 数据安全性：文件传输校验，保证数据准确性。
+
+Frame 的继承体系：
+
+```log
+Frame (clink.core)
+    |--AbsSendFrame (clink.frame)
+    |       |--AbsSendPacketFrame (clink.frame)
+    |       |       |--SendEntityFrame (clink.frame)
+    |       |       |--SendHeaderFrame (clink.frame)
+    |       |--CancelSendFrame (clink.frame)
+    |--AbsReceiveFrame (clink.frame)
+    |       |--ReceiveHeaderFrame (clink.frame)
+    |       |--ReceiveEntityFrame (clink.frame)
+    |       |--CancelReceiveFrame (clink.frame)
+```
+
+- `Frame(clink.core)`：定义 Frame 的基本信息，类型，协议等等。
+- `AbsSendFrame (clink.frame)`：定义发送的基本行为。
+- `AbsSendPacketFrame (clink.frame)`：基于 AbsSendFrame，支持中断传输。
+- `SendHeaderFrame (clink.frame)`：
+- `SendEntityFrame (clink.frame)`：
+- `CancelSendFrame (clink.frame)`：用于取消发送
+- `AbsReceiveFrame (clink.frame)`：
+- `ReceiveEntityFrame (clink.frame)`：
+- `CancelReceiveFrame (clink.frame)`：
+- `ReceiveHeaderFrame (clink.frame)`：
+
+###  分片的接收、发送、组装
+
+- AsyncPacketReader 负责 Frame 的发送
+- AsyncPacketWriter 负责 Frame 的接收
+
+### 发送数据的优先级
+
+BytePriorityNode 链表结构用于支持分片的优先级传输，所有要发送的分片都先加入到 BytePriorityNode 中。
+
+###  三层传输架构
+
+![](images/chat-room-v3-3layer_data_transfer.png)
+
+## 7、chat-room-v4-optimize：基于 chat-room-v3-sharding  的并发优化、心跳包、聊天室开发
+
+###  解决 Java NIO 中并发环境下的 Selector 可能存在的并发问题
+
+在 JAVA NIO 中，当某个线程调用 `Selector.select()` 时，`select()` 方法内部实现其实就是对已经注册的 Channel 队列的进行反复地扫描，如果扫描完一遍没有发现就绪的 channel 则继续进行扫描，如果有则从 `select()` 函数返回。在扫描的这个过程中，是不允许其他线程更改其内部队列的，比如：
+
+- 比如调用 Selector 的 `register()` 方法
+- 获取 Selector 内部 SelectionKey 然后调用其的 `interestOps()` 方法
+- 对 Selector 已选择的 SelectionKey 集合进行 `clear()` 操作
+
+如果在扫描过程中其他线程调用方法修改 Selector 内部的队列，可能导致线程阻塞，所以如果想要调用以上方法，应该下先调用 Selector 的 `wakeup()` 方法，让 Selector 立即从 `select()` 方法返回，从而避免这个可能的并发 bug。
+
+对此问题，stackoverflow 上也有讨论，具体参考 [java-non-blocking-io-selector-causing-channel-register-to-block](https://stackoverflow.com/questions/3189153/java-non-blocking-io-selector-causing-channel-register-to-block) 。
+![](images/chat-room-v3-thread-block.png)
+
+### 聊天室开发
+
+server.Group
+
+### 心跳包
+
+- clink.core.frame.HeartbeatSendFrame
+- clink.core.frame.HeartbeatReceiveFrame
+
+## 8、chat-room-v5-bridge：基于 chat-room-v4-optimize  支持语音通信
 

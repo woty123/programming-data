@@ -68,6 +68,9 @@ public abstract class Frame {
         header[5] = 0;//预留空间
     }
 
+    /**
+     * 用于支持构建接收帧
+     */
     public Frame(byte[] header) {
         System.arraycopy(header, 0, this.header, 0, FRAME_HEADER_LENGTH);
     }

@@ -66,7 +66,6 @@ class UDPSearcher {
         return null;
     }
 
-
     private static Listener listen(CountDownLatch receiveLatch) throws InterruptedException {
         System.out.println("UDPSearcher start listen.");
         CountDownLatch startCountDownLatch = new CountDownLatch(1);

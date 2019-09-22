@@ -64,10 +64,14 @@ Collections：
 
 ### 4 协程
 
+码上开学：
+
+- [Kotlin 的协程用力瞥一眼 - 学不会协程？很可能因为你看过的教程都是错的](https://kaixue.io/kotlin-coroutines-1/)
+- [Kotlin 协程的挂起好神奇好难懂？今天我把它的皮给扒了](https://kaixue.io/kotlin-coroutines-2/)
+
 什么是协程：
 
 - [协程-维基百科](https://zh.wikipedia.org/wiki/%E5%8D%8F%E7%A8%8B)
-- [我理解的协程](https://www.zybuluo.com/kuailezhishang/note/128823)
 - [协程的好处有哪些？](https://www.zhihu.com/question/20511233/answer/24260355)
 
 文档：
@@ -91,6 +95,7 @@ Collections：
 - [破解 Kotlin 协程(6) - 协程挂起篇](https://juejin.im/post/5ceb494851882532b93019e2)
 - [破解 Kotlin 协程(7) - 序列生成器篇](https://juejin.im/post/5cfe19025188252ee72966ee))
 - [破解 Kotlin 协程(8) - Android 篇](https://juejin.im/post/5cfe1947e51d45105d63a4e3)
+- [破解 Kotlin 协程(9) - Channel 篇](https://mp.weixin.qq.com/s/8j74bn9x0-gFmZxa6k6GwA)
 
 Sample：
 
@@ -99,7 +104,7 @@ Sample：
 
 教程：
 
-- [Kotlin 系统入门到进阶 视频教程](http://coding.imooc.com/class/108.html)
+- [Kotlin 系统入门到进阶视频教程](http://coding.imooc.com/class/108.html)
 - [基于 GitHub App 业务深度讲解 Kotlin1.2高级特性与框架设计](https://coding.imooc.com/class/232.html)
 
 博客：
@@ -113,4 +118,3 @@ RxJava VS Coroutines
 - [RxJava to Kotlin coroutines](https://medium.com/androiddevelopers/rxjava-to-kotlin-coroutines-1204c896a700)
 - [Kotlin coroutines vs RxJava: an initial performance test](https://proandroiddev.com/kotlin-coroutines-vs-rxjava-an-initial-performance-test-68160cfc6723)
 - [Forget RxJava: Kotlin Coroutines are all you need. Part 1/2](https://proandroiddev.com/forget-rxjava-kotlin-coroutines-are-all-you-need-part-1-2-4f62ecc4f99b)
-  

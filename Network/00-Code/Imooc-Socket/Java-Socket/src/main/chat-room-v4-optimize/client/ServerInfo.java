@@ -44,4 +44,5 @@ class ServerInfo {
                 ", address='" + address + '\'' +
                 '}';
     }
+
 }

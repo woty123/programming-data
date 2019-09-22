@@ -1,4 +1,4 @@
-package client;
+package client.test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
+import client.ServerInfo;
 import clink.CloseUtils;
 
 

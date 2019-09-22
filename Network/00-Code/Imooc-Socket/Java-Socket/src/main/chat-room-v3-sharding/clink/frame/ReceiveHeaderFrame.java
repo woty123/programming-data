@@ -4,6 +4,7 @@ import clink.core.IoArgs;
 
 public class ReceiveHeaderFrame extends AbsReceiveFrame {
 
+    /**body中的数据协议在 SendHeaderFrame 中有规范*/
     private final byte[] body;
 
     public ReceiveHeaderFrame(byte[] header) {
