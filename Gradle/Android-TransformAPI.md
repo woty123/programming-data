@@ -247,3 +247,4 @@ public enum Status {
 - [gradle_plugin_android_aspectjx](https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx)
 - [metis](https://github.com/yangxlei/metis)
 - [sa-sdk-android-plugin2](https://github.com/sensorsdata/sa-sdk-android-plugin2)
+- [click-debounce](https://github.com/SmartDengg/click-debounce)
