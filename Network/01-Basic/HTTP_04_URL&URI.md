@@ -50,10 +50,10 @@ RFC3986规定URI的通用语法示例如下：
 
 URI是个纯粹的语法解构，包含用来指定Web资源的各种组成成分，URL是URI的一个特例，其包含了用于定位一个资源需要的足够的信息，比如URI:`mailto:cay@horstmann.com`就不是URL，无法通过它定位一个资源。
 
-
 ### URI格式
 
 URI的绝对格式如下：
+
 ```
  [scheme:]scheme-specific-part[#fragment]
  http://user:pass@www.example.jp:80/dir/index.html?uid=1#ch1
@@ -66,6 +66,7 @@ URI的绝对格式如下：
  uid=1表示查询的字符串
  ch1片段标识符
 ```
+
 - 登陆信息(认证)：用户名和密码作为服务器端获取资源时必要的登陆信息(身份认证)，可选项
 - 服务器地址：使用绝对URI必须指定待访问的服务器地址，地址可以是DNS可解析的域名也可以是ip地址
 - 服务器端口号：指定服务器连接的网络端口号，可选项，没有指定则使用默认的端口号
@@ -116,7 +117,6 @@ uri.getRawSchemeSpecificPart() = //user:pass@zh.wikipedia.org:80/zh/%E7%BB%9F%E4
 ```
 
 由打印的信息可以清晰的看出Uri中的各个定义所表示的部分。
-
 
 ---
 ## 3 URL
@@ -179,4 +179,3 @@ url.getContent() = sun.net.www.protocol.http.HttpURLConnection$HttpInputStream@1
 
 - [关于URL编码](http://www.ruanyifeng.com/blog/2010/02/url_encoding.html)
 - [维基百科：统一资源标识符](https://zh.wikipedia.org/wiki/%E7%BB%9F%E4%B8%80%E8%B5%84%E6%BA%90%E6%A0%87%E5%BF%97%E7%AC%A6)
-

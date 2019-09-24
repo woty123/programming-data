@@ -35,6 +35,7 @@ Books：
 
 - [《Kotlin实战》](https://panxl6.gitbooks.io/kotlin-in-action-in-chinese/content/introduction.html)
 - [《Atomic Kotlin》](https://www.atomickotlin.com/atomickotlin/)
+- 《Kotlin 核心编程》
 
 Collections：
 

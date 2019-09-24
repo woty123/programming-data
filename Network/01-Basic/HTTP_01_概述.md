@@ -129,10 +129,11 @@ Http1.1是基于http1.0改进的协议，有如下特点：
 - `Connection: Keep -Alive` 表示是否需要持久连接（HTTP 1.1默认进行持久连接）
 - `Cookie: xxx` 这是最重要的请求头信息之一，用于在客户端保存一些重要的用户信息
 - `Date：Date: Mon, 22 Aug 2011 01:55:39 GMT` 请求时间GMT
+- `Range: bytes=0-1023` 表示请求部分数据，这里请求 0-1023 部分字节的数据
 
 ### 3.3 Http请求体
 
-Http请求体是可选的，请求体用于向服务器传输具体的数据。一般情况想有一下几种形式：
+Http请求体是可选的，请求体用于向服务器传输具体的数据。一般情况下有以下几种形式：
 
 #### form表单
 
@@ -170,7 +171,10 @@ Content-Type: text/plain
 
 #### 其他类型的请求体
 
-比如在请求时，直接上传二进制、json等，在请求体头使用ContextType表示请求体的媒体类型。
+在请求时，直接上传二进制、json等，在请求体头使用ContextType表示请求体的媒体类型，比如
+
+- `application/json`：提交 json 数据
+- `image/jpeg` 或 `application/zip`：单文件，用于 Web Api 响应或 POST / PUT 请求（所以不使用 multipart 也是可以传文件的）
 
 ---
 ## 4 Http协议：响应
@@ -185,16 +189,18 @@ Content-Type: text/plain
 
 示例：
 
+```
     HTTP/1.1 200 OK                      -----> 响应行（Http协议版本，状态码，状态码描述）
     Server: Microsoft-IIS/5.0            |
     Date: Thu, 13 Jul 2000 05:46:53 GMT  |
     Content-Length: 2291                 |-----> 用于描述服务器的基本信息，服务器通过这些信息告知客户端如何处理服务器将要发送的数据
     Content-Type: text/html              |
     Cache-control: private               |
-                      一个空行
+                      这里是一个空行
     <HTML>
     <BODY>                               |----->响应正文
     ……
+```
 
 ### 4.2 Http状态行
 
@@ -232,8 +238,11 @@ Content-Type: text/plain
 - `Date: Tue, 11 Jul 2000 18:23:51 GMT` 响应时间
 - `Content-Disposition: attachment;filename=22.jpg` 告知客户端，用下载的方式访问。
 - `Refresh: 1` 每隔一秒刷新一次
+- `Transfer-Encoding: chunked` 表示 Body 长度无法确定，会阶段告知客户端数据有多长，最后以一个 0 长度和换行表示数据结束，此时 Content-Length 不能使用。
+- `Authorization` 授权信息
+- `Accept-Ranges: bytes` 表示支持范围请求，`Accept-Ranges: none` 表示不支持范围请求。如果站点未发送 `Accept-Ranges` 首部，那么它们有可能不支持范围请求。一些站点会明确将其值设置为 "none"，以此来表明不支持。
 
-----
+---
 ## 5 Http请求与响应的共性
 
 - 使用消息头，可以实现HTTP客户机与服务器之间的条件请求和应答，消息头相当于服务器和浏览器之间的一些暗号指令。
@@ -256,33 +265,33 @@ Content-Type: text/plain
 
 type有下面的形式。
 
-*   Text：用于标准化地表示的文本信息，文本消息可以是多种字符集和或者多种格式的；
-*   Multipart：用于连接消息体的多个部分构成一个消息，这些部分可以是不同类型的数据；
-*   Application：用于传输应用程序数据或者二进制数据；
-*   Message：用于包装一个E-mail消息；
-*   Image：用于传输静态图片数据；
-*   Audio：用于传输音频或者音声数据；
-*   Video：用于传输动态影像数据，可以是与音频编辑在一起的视频数据格式。
+- Text：用于标准化地表示的文本信息，文本消息可以是多种字符集和或者多种格式的；
+- Multipart：用于连接消息体的多个部分构成一个消息，这些部分可以是不同类型的数据；
+- Application：用于传输应用程序数据或者二进制数据；
+- Message：用于包装一个E-mail消息；
+- Image：用于传输静态图片数据；
+- Audio：用于传输音频或者音声数据；
+- Video：用于传输动态影像数据，可以是与音频编辑在一起的视频数据格式。
 
 subtype用于指定type的详细形式。content-type/subtype配对的集合和与此相关的参数，将随着时间而增长。为了确保这些值在一个有序而且公开的状态下开发，MIME使用Internet Assigned Numbers Authority (IANA)作为中心的注册机制来管理这些值。常用的subtype值如下所示：
 
-*   `text/plain`（纯文本）
-*   `text/html`（HTML文档）
-*   `application/xhtml+xml`（XHTML文档）
-*   `image/gif`（GIF图像）
-*   `image/jpeg`（JPEG图像）【PHP中为：image/pjpeg】
-*   `image/png`（PNG图像）【PHP中为：image/x-png】
-*   `video/mpeg`（MPEG动画）
-*   `application/octet-stream`（任意的二进制数据）
-*   `application/pdf`（PDF文档）
-*   `application/json`（json文件）
-*   `application/msword`（Microsoft Word文件）
-*   `application/vnd.wap.xhtml+xml` (wap1.0+)
-*   `application/xhtml+xml` (wap2.0+)
-*   `message/rfc822`（RFC 822形式）
-*   `multipart/alternative`（HTML邮件的HTML形式和纯文本形式，相同内容使用不同形式表示）
-*   `application/x-www-form-urlencoded`（使用HTTP的POST方法提交的表单）
-*   `multipart/form-data`（同上，但主要用于表单提交时伴随文件上传的场合）
+- `text/plain`（纯文本）
+- `text/html`（HTML文档）
+- `application/xhtml+xml`（XHTML文档）
+- `image/gif`（GIF图像）
+- `image/jpeg`（JPEG图像）【PHP中为：image/pjpeg】
+- `image/png`（PNG图像）【PHP中为：image/x-png】
+- `video/mpeg`（MPEG动画）
+- `application/octet-stream`（任意的二进制数据）
+- `application/pdf`（PDF文档）
+- `application/json`（json文件）
+- `application/msword`（Microsoft Word文件）
+- `application/vnd.wap.xhtml+xml` (wap1.0+)
+- `application/xhtml+xml` (wap2.0+)
+- `message/rfc822`（RFC 822形式）
+- `multipart/alternative`（HTML邮件的HTML形式和纯文本形式，相同内容使用不同形式表示）
+- `application/x-www-form-urlencoded`（使用HTTP的POST方法提交的表单）
+- `multipart/form-data`（同上，但主要用于表单提交时伴随文件上传的场合）
 
 ---
 ## 7 Http Java 编程
@@ -294,7 +303,30 @@ Http 客户端 API 底层实现都是对 Socket 的封装，常用的 API 有以
 - Square-OkHttp（适用于 Android）
 
 ---
-## 8  附录：Http 响应码对照
+## 8 REST HTTP
+
+什么是 REST：an architectural style that defines a set of constraints and properties based on HTTP.
+
+- 一种架构风格
+- 为 HTTP 加入一些限制
+
+哪些规范呢？
+
+- Server-Client architecture：CS架构
+- Statelessness：无状态
+- Cacheability：可缓存
+- Layered system：服务器对客户端的透明，客户端不关心服务器的实现细节
+- Code on demand：服务器返回的信息允许包括可执行代码
+- Uniform interface
+  - Resource identification in requests
+  - Resource manipulation through representations
+  - Self-descriptive messages
+  - Hypermedia as the engine of application state (HATEOAS)
+
+RESTful HTTP 表示**正确地使用HTTP**。
+
+---
+## 9  附录：Http 响应码对照
 
 |响应码 | msg | 详细说明|
 | --- | --- |---|

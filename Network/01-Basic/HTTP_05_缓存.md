@@ -381,7 +381,7 @@ Web浏览器都有 Refresh（刷新）或 Reload（重载）按钮，可以强�
 ---
 ## 学习资料
 
-- 《HTTP 权威指南》第七章
+- 《HTTP 权威指南》——第七章：缓存
 - [IMWeb-缓存策略](http://imweb.io/topic/55c6f9bac222e3af6ce235b9)
 - [IMWeb-HTTP缓存控制小结](http://imweb.io/topic/5795dcb6fb312541492eda8c)
 - [MDN-HTTP 缓存](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching_FAQ)

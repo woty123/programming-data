@@ -14,6 +14,7 @@
 - [实用 HTTP 专题](https://www.cnblogs.com/plokmju/tag/http/)
 - [MDN-HTTP 专题](https://developer.mozilla.org/zh-CN/docs/Web/HTTP)
 - [简单聊聊 GZIP 的压缩原理与日常应用](https://juejin.im/post/5b793126f265da43351d5125)
+- [MDN-HTTP](https://developer.mozilla.org/zh-CN/docs/Web/HTTP)
 
 ### DNS
 
