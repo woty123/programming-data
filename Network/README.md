@@ -62,11 +62,12 @@
 ### HTTP 基础
 
 - [HTTP 概述](01-Basic/HTTP_01_概述.md)
-- [HTTP Content encoding 和 Transfer Encoding](01-Basic/HTTP_02_Content_encoding_Transfer_Encoding.md)
+- [HTTP Content encoding](01-Basic/HTTP_02_Content_encoding_Transfer_Encoding.md)
 - [HTTP 范围请求](01-Basic/HTTP_03_范围请求.md)
 - [HTTP URL&URI](01-Basic/HTTP_04_URL&URI.md)
 - [HTTP 缓存](01-Basic/HTTP_05_缓存.md)
 - [HTTP 客户端识别与 Cookie](01-Basic/HTTP_06_客户端识别与Cookie.md)
+- [HTTP Transfer Encoding](01-Basic/HTTP_07_Transfer_Encoding.md)
 
 ### HTTPS
 
