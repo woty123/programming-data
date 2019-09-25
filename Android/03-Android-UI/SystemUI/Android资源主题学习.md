@@ -167,8 +167,7 @@ typedArray.recycle();
 
 
 
-可以看出只要布局文件中使用了属性，在被解析成对象时，都会这些属性封装到构造函数AttributeSet中，而通过
-typedArray可以更加方便的获取指定的属性。因为有时候属性可能是引用类型，直接从AttributeSet中获取的话会比较麻烦。
+可以看出只要布局文件中使用了属性，在被解析成对象时，都会这些属性封装到构造函数AttributeSet中，而通过typedArray可以更加方便的获取指定的属性。因为有时候属性可能是引用类型，直接从AttributeSet中获取的话会比较麻烦。
 
 ### 复用系统的属性
 
@@ -246,10 +245,13 @@ context直接调用了getTheme的obtainStyledAttributes方法，可以看到这�
                         android:text="@string/app_name"/>
 ```
 在构造函数中获取属性，在第四个参数传入声明的DefCustomAttr：
+
 ```java
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomView,0,R.style.DefCustomAttr);
 ```
+
 最后获取结果：
+
 ```java
     typedArray.getInteger(R.styleable.CustomView_custom_attr_a): 22
     typedArray.getInteger(R.styleable.CustomView_custom_attr_c): 33
@@ -269,7 +271,9 @@ context直接调用了getTheme的obtainStyledAttributes方法，可以看到这�
             <attr name="CustomStyleRef" format="reference"/><!--引用属性-->
         </declare-styleable>
 ```
+
 定义一个style：
+
 ```xml
      <style name="DefCustomAttr">
             <item name="custom_attr_a">22</item>
@@ -277,7 +281,9 @@ context直接调用了getTheme的obtainStyledAttributes方法，可以看到这�
             <item name="custom_attr_d">44</item>
      </style>
 ```
+
 在theme中指定CustomStyleRef引用DefCustomAttr
+
 ```xml
         <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
             <!-- Customize your theme here. -->
@@ -287,7 +293,9 @@ context直接调用了getTheme的obtainStyledAttributes方法，可以看到这�
             <item name="CustomStyleRef">@style/DefCustomAttr</item>
         </style>
 ```
+
  在构造函数获取属性时传入引用：
+
 ```java
     TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomView,R.attr.CustomStyleRef,0);
     //一样可以获取属性：
@@ -327,6 +335,7 @@ context直接调用了getTheme的obtainStyledAttributes方法，可以看到这�
             <item name="hyphenationFrequency">normal</item>
         </style>
 ```
+
 如是继承系统已有的一些控件时，需要注意构造函数的写法，一般我们会这样写:
 
 ```java
@@ -343,6 +352,7 @@ context直接调用了getTheme的obtainStyledAttributes方法，可以看到这�
             super(context, attrs, defStyleAttr);
         }
 ```
+
 但是如是Button就要注意了，这样写存在一定问题，因为`com.android.internal.R.attr.textViewStyle`将不会被使用到，就会照成一些默认属性的丢失。
 
 >注意：只有defStyleAttr设置为0或者在当前的theme中没有找到相关属性时，才会去defStyleRes中读取，defStyleAttr的优先级比defStyleRes高。
@@ -423,14 +433,11 @@ Android系统提供了多套主题，查看Android的[frameworks/base/core/res/r
         </style>
 ```
 
-
 ### 优先级
 
 View某一个属性优先于View指定的Style，而View中的Style会优先于Activity中的Theme，Activity中的Theme会优先于Application中的Theme，所以说你可以定义整个应用的总体风格，但局部风格你也可以做出自己的调整。
 
 ### 使用 theme 中的属性值
-
-
 
 有些情况下，可能需要使用theme中的属性值，比如让一个TextView直接显示我们在theme中定义的一个属性的内容，并且使用系统字体的颜色，则可以如下做：
 
@@ -461,24 +468,28 @@ View某一个属性优先于View指定的Style，而View中的Style会优先于A
 ?[*<package_name>*:][*<resource_type>*/]*<resource_name>*
 ```
 
-上面`android:text="?com.loopeer.springheader.sample:attr/DefaultText"`可以简写成`android:text="?attr/DefaultText"`,因为是使用本应用中的attr，可以省去`<package_name>`部分。
-
+上面`android:text="?com.loopeer.springheader.sample:attr/DefaultText"`可以简写成`android:text="?attr/DefaultText"`，因为是使用本应用中的attr，可以省去`<package_name>`部分。
 
 ---
 ## 引用
 
-### Document
+### Questions
 
 - [Defining custom attrs](http://stackoverflow.com/questions/3441396/defining-custom-attrs)
+- [android themes - defining colours in custom themes](https://stackoverflow.com/questions/12703757/android-themes-defining-colours-in-custom-themes)
+- [How to get a value of color attribute programmatically](https://stackoverflow.com/questions/49361702/how-to-get-a-value-of-color-attribute-programmatically)
+
+### Document
+
 - [访问资源](https://developer.android.com/guide/topics/resources/accessing-resources.html)
 - [Resource Types](https://developer.android.com/guide/topics/resources/available-resources.html?hl=zh-cn)
 - [提供资源](https://developer.android.com/guide/topics/resources/providing-resources.html?hl=zh-cn)
 - [Styles and Themes](https://developer.android.com/guide/topics/ui/themes.html?hl=zh-cn#PlatformStyles)
 - [面向开发者的材料设计](https://developer.android.com/training/material/get-started.html)
-- [Android 深入理解Android中的自定义属性](http://blog.csdn.net/lmj623565791/article/details/45022631)
 
 ### Blog
 
+- [Android 深入理解Android中的自定义属性](http://blog.csdn.net/lmj623565791/article/details/45022631)
 - [Android样式的开发:shape篇](http://keeganlee.me/post/android/20150830)
 - [Android样式的开发:selector篇](http://keeganlee.me/post/android/20150905)
 - [Android样式的开发:layer-list篇](http://keeganlee.me/post/android/20150909)
