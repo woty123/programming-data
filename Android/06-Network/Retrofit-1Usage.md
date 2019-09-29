@@ -399,7 +399,7 @@ RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json;
 ```java
         @Multipart
         @POST("http://10.2.20.13:8080/day21FileUpload/servlet/RegistServlet")
-        Call<String> upDateMeiZiUserData( @Part("photo\"; filename=\"123.jpg\" ") RequestBody file , @Part("username") String name);
+        Call<String> upDateMeiZiUserData( @Part("photo\"; filename=\"123.jpg\"") RequestBody file , @Part("username") String name);
 
             File file = new File(Environment.getExternalStorageDirectory(), "123.jpg");
             RequestBody fileBody =  RequestBody.create(MediaType.parse("multipart/form-data"), file);
