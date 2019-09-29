@@ -2,38 +2,51 @@ apply plugin: 'com.android.application'
 
 buildscript {
     repositories {
-        jcenter()
-        maven { url 'https://dl.bintray.com/umsdk/release' }
+        maven { url 'http://maven.aliyun.com/nexus/content/repositories/central/' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url "https://maven.aliyun.com/repository/google" }
         maven { url 'https://dl.google.com/dl/android/maven2/' }
-        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
         maven { url 'https://jitpack.io' }
-        maven { url uri('repo') }
+        maven { url "https://kotlin.bintray.com/kotlinx" }
+        jcenter()
         google()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.5.0'
     }
 }
 
 repositories {
+    maven { url 'http://maven.aliyun.com/nexus/content/repositories/central/' }
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    maven { url 'https://maven.aliyun.com/repository/central' }
+    maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+    maven { url 'https://maven.aliyun.com/repository/public' }
+    maven { url 'https://maven.aliyun.com/repository/jcenter' }
+    maven { url "https://maven.aliyun.com/repository/google" }
+    maven { url 'https://dl.google.com/dl/android/maven2/' }
+    maven { url 'https://jitpack.io' }
+    maven { url "https://kotlin.bintray.com/kotlinx" }
     jcenter()
-    maven {
-        url 'https://maven.google.com/'
-        name 'Google'
-    }
+    google()
+        mavenCentral()
 }
-
 
 android {
 
-    compileSdkVersion 25
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.ztiany.view"
         minSdkVersion 16
         //noinspection OldTargetApi
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary true
@@ -50,11 +63,12 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.android.support:support-dynamic-animation:25.3.1'//minsdk 16
-    compile 'com.android.support.constraint:constraint-layout:1.1.0'
-    compile 'com.android.support:design:25.3.1'
+
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support:support-dynamic-animation:27.1.1'//minsdk 16
     //https://github.com/Almeros/android-gesture-detectors
     compile project(':android-gesture-detectors')
     testCompile 'junit:junit:4.12'

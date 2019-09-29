@@ -34,7 +34,7 @@ TLS 的主规格说明书定义了四个核心子协议：
 2. 恢复之前的会话采用的简短握手。
 3. 对客户端和服务器都进行身份验证。即双向认证。
 
-### 完整的握手（单向验证）
+### 完整的握手过程（单向验证）
 
 每一个 TLS 连接都会以握手开始，如果客户端此前并未与服务器建立会话，那么双方执行一次完整的握手流程来协商 TLS 会话。握手过程中，客户端和服务器进行以下四个主要步骤：
 
@@ -67,66 +67,66 @@ TLS 的主规格说明书定义了四个核心子协议：
 #### (1) ClientHello
 
 - 在一次新的握手流程中，ClientHello 消息总是第一条消息。这条消息将客户端的功能和首选项传送给服务器。
-- 客户端会在新建连接后，希望重新协商或者响应服务器发起的重新协商请求 （由HelloRequest消息指示）时，发送这条消息。 
+- 客户端会在新建连接后，希望重新协商或者响应服务器发起的重新协商请求 （由HelloRequest消息指示）时，发送这条消息。
 
 一条被简化的 ClientHello 消息内容如下：
 
 ```
-Handshake protocol: ClientHello     
-    Version: TLS 1.2     
-    Random      
-        Client time: May 22, 2030 02:43:46 GMT         
-        Random bytes: b76b0e61829557eb4c611adfd2d36eb232dc1332fe29802e321ee871     
-    Session ID: (empty)     
-    Cipher Suites         
-        Suite: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256         
-        Suite: TLS_DHE_RSA_WITH_AES_128_GCM_SHA256         
-        Suite: TLS_RSA_WITH_AES_128_GCM_SHA256         
-        Suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA         
-        Suite: TLS_DHE_RSA_WITH_AES_128_CBC_SHA         
-        Suite: TLS_RSA_WITH_AES_128_CBC_SHA         
-        Suite: TLS_RSA_WITH_3DES_EDE_CBC_SHA         
-        Suite: TLS_RSA_WITH_RC4_128_SHA     
-    Compression methods         
-        Method: null     
-    Extensions         
-        Extension: server_name             
-            Hostname: www.feistyduck.com         
-        Extension: renegotiation_info         
-        Extension: elliptic_curves             
-            Named curve: secp256r1             
-            Named curve: secp384r1         
-        Extension: signature_algorithms             
-            Algorithm: sha1/rsa             
-            Algorithm: sha256/rsa             
-            Algorithm: sha1/ecdsa             
-            Algorithm: sha256/ecdsa 
+Handshake protocol: ClientHello
+    Version: TLS 1.2
+    Random
+        Client time: May 22, 2030 02:43:46 GMT
+        Random bytes: b76b0e61829557eb4c611adfd2d36eb232dc1332fe29802e321ee871
+    Session ID: (empty)
+    Cipher Suites
+        Suite: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        Suite: TLS_DHE_RSA_WITH_AES_128_GCM_SHA256
+        Suite: TLS_RSA_WITH_AES_128_GCM_SHA256
+        Suite: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+        Suite: TLS_DHE_RSA_WITH_AES_128_CBC_SHA
+        Suite: TLS_RSA_WITH_AES_128_CBC_SHA
+        Suite: TLS_RSA_WITH_3DES_EDE_CBC_SHA
+        Suite: TLS_RSA_WITH_RC4_128_SHA
+    Compression methods
+        Method: null
+    Extensions
+        Extension: server_name
+            Hostname: www.feistyduck.com
+        Extension: renegotiation_info
+        Extension: elliptic_curves
+            Named curve: secp256r1
+            Named curve: secp384r1
+        Extension: signature_algorithms
+            Algorithm: sha1/rsa
+            Algorithm: sha256/rsa
+            Algorithm: sha1/ecdsa
+            Algorithm: sha256/ecdsa
 ```
 
 字段描述：
 
 - Version：协议版本（protocol version）指示客户端支持的佳协议版本。
-- Random：随机数（random）字段包含32字节的数据（只有28字节是随机生成的；剩余的4字 节包含额外的信息，受客户端时钟的影响）。在握手时，`客户端和服务器都会提供随机数`。这种随机性对每次握手都是独一无二的，在身份验证中起着举足轻重的作用。它可以防止重放攻击，并确认初始数据交换的完整性。同时随机数也是生成后续摘要密钥和加密密钥的重要参数。 
+- Random：随机数（random）字段包含32字节的数据（只有28字节是随机生成的；剩余的4字 节包含额外的信息，受客户端时钟的影响）。在握手时，`客户端和服务器都会提供随机数`。这种随机性对每次握手都是独一无二的，在身份验证中起着举足轻重的作用。它可以防止重放攻击，并确认初始数据交换的完整性。同时随机数也是生成后续摘要密钥和加密密钥的重要参数。
 - Session ID ：在第一次连接时，会话ID（session ID）字段是空的，这表示客户端并不希望恢复某个已存在的会话。在后续的连接中，这个字段可以保存会话的唯一标识。服务器可以借助会话ID在自己的缓存中找到对应的会话状态。
 - Cipher Suites ：密码套件（cipher suite）块是由客户端支持的所有密码套件组成的列表，该列表是按优先 级顺序排列的。
-- Compression ：客户端可以提交一个或多个支持压缩的方法。默认的压缩方法是null，代表没有压缩。 
+- Compression ：客户端可以提交一个或多个支持压缩的方法。默认的压缩方法是null，代表没有压缩。
 - Extensions 扩展（extension）块由任意数量的扩展组成。这些扩展会携带额外数据。
 
 #### (2) ServerHello
 
-ServerHello 消息的意义是将服务器选择的连接参数传送回客户端。这个消息的结构与 ClientHello 类似，只是每个字段只包含一个选项（即选中的可选参数）。服务器无需支持客户端支持的佳版本。如果服务器不支持与客户端相同的版本，可以提供 某个其他版本以期待客户端能够接受。 
+ServerHello 消息的意义是将服务器选择的连接参数传送回客户端。这个消息的结构与 ClientHello 类似，只是每个字段只包含一个选项（即选中的可选参数）。服务器无需支持客户端支持的佳版本。如果服务器不支持与客户端相同的版本，可以提供 某个其他版本以期待客户端能够接受。
 
 ```
-Handshake protocol: ServerHello     
-    Version: TLS 1.2     
-    Random         
-        Server time: Mar 10, 2059 02:35:57 GMT         
-        Random bytes: 8469b09b480c1978182ce1b59290487609f41132312ca22aacaf5012     
-    Session ID: 4cae75c91cf5adf55f93c9fb5dd36d19903b1182029af3d527b7a42ef1c32c80     
-    Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256     
-    Compression method: null     
+Handshake protocol: ServerHello
+    Version: TLS 1.2
+    Random
+        Server time: Mar 10, 2059 02:35:57 GMT
+        Random bytes: 8469b09b480c1978182ce1b59290487609f41132312ca22aacaf5012
+    Session ID: 4cae75c91cf5adf55f93c9fb5dd36d19903b1182029af3d527b7a42ef1c32c80
+    Cipher Suite: TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+    Compression method: null
     Extensions
-        Extension: server_name         
+        Extension: server_name
         Extension: renegotiation_info
 ```
 
@@ -134,7 +134,18 @@ Handshake protocol: ServerHello
 
 典型的Certificate消息用于携带服务器 `X.509` 证书链。证书链是以 ASN.1 DER 编码的一系列证书，一个接着一个组合而成。主证书必须第一个发送，中间证书按照正确的顺序跟在主证书之后。服务器必须保证它发送的证书与选择的算法套件一致。
 
->Certificate 消息是可选的，因为并非所有套件都使用身份验证，也并非所有身份验证方法都需要证书。更进一步说，虽然消息默认使用 X.509 证书，但是也可以携带其他形式的标志；一些套件就依赖PGP密钥。 
+>Certificate 消息是可选的，因为并非所有套件都使用身份验证，也并非所有身份验证方法都需要证书。更进一步说，虽然消息默认使用 `X.509` 证书，但是也可以携带其他形式的标志；一些套件就依赖PGP密钥。
+
+证书的验证过程：
+
+1. 浏览器收到服务器发送的证书，该证书一般由权威机构颁发，当然也可以自己伪造。
+   1. 证书中包含服务器地址、证书公钥等信息，还包含证书签名。
+   2. 证书签名是由权威机构使用私钥对证书上的其他信息（服务器地址、证书公钥等）加密得到的。
+2. 浏览器使用操作系统自带的权威机构公布的公钥对服务器证书进行验证。
+   1. 使用权威机构的公钥对服务器证书签名进行校验（即解密过程），得到证书信息。
+   2. 对比证书上的信息和验证后的信息，如果一致，则验证通过，该服务器证书证书确实由权威机构颁发的。
+
+>系统自带的权威机构的证书是随着操作系统打包一起发布的，是由操作系统生产商内置的，只要操作系统来自官方，必然是可以信任的。
 
 #### (4) ServerKeyExchange
 
@@ -146,11 +157,11 @@ ServerHelloDone 消息表明服务器已经将所有预计的握手消息发送�
 
 #### (6) ClientKeyExchange
 
-ClientKeyExchange 消息携带客户端为密钥交换提供的所有信息。这个消息受协商的密码套件的影响，内容随着不同的协商密码套件而不同。 
+ClientKeyExchange 消息携带客户端为密钥交换提供的所有信息。这个消息受协商的密码套件的影响，内容随着不同的协商密码套件而不同。
 
 #### (7) ChangeCipherSpec
 
-ChangeCipherSpec 消息表明发送端已取得用以生成连接参数的足够信息，已生成加密密钥， 并且将切换到加密模式。客户端和服务器在条件成熟时都会发送这个消息。 
+ChangeCipherSpec 消息表明发送端已取得用以生成连接参数的足够信息，已生成加密密钥， 并且将切换到加密模式。客户端和服务器在条件成熟时都会发送这个消息。
 
 #### (8) Finished
 
@@ -164,9 +175,9 @@ Finished 消息意味着握手已经完成。消息内容将加密，以便双�
 
 ![tls_client_handshake](images/tls_client_handshake.png)
 
-### 会话回复
+### 会话恢复
 
-会话回复可以重新恢复之前建立的 TLS 连接，这个机制减少了 TLS 握手过程的通信次数。
+会话恢复可以重新恢复之前建立的 TLS 连接，这个机制减少了 TLS 握手过程的通信次数。
 
 ---
 ## 3 密钥交换
@@ -238,7 +249,7 @@ TLS 可以使用各种加密算法，比如使用 3DES、AES、ARIA、CAMELLIA�
 
 - 客户端证书：它可以提供双因素身份验证，部署客户端证书有两种方法。
     1. 要求连接到网站的所有连接都需要客户端证书，但是这种方式对那些（还）没有证书的使用者并不友好；在连接成功以前，服务器无法向它们发送任何信息和说明。处理错误的情况同样不可能。
-    2. 允许连接到网站根路径的连接不携带证书，设计一个需要提供客户端证书的子区域。当用户打算浏览子区域时，服务器发起重新协商请求，要求客户端提供证书。 
+    2. 允许连接到网站根路径的连接不携带证书，设计一个需要提供客户端证书的子区域。当用户打算浏览子区域时，服务器发起重新协商请求，要求客户端提供证书。
 - 隐藏消息：第二次握手时加密的。
 - 改变加密长度。
 

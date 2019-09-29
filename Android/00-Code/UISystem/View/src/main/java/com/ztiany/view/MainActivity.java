@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import com.ztiany.view.animation.circular_reveal.CircularRevealActivity;
 import com.ztiany.view.animation.reversal.ReversalActivity;
 import com.ztiany.view.animation.spring.SpringScrollViewFragment;
+import com.ztiany.view.animation.square.SquareAnimationFragment;
 import com.ztiany.view.constraint_layout.ConstraintLayoutActivity;
 import com.ztiany.view.custom.CustomViewFragment;
 import com.ztiany.view.custom.flow_layout.FlowLayoutFragment;
@@ -51,11 +52,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setContentInsetStartWithNavigation(0);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.activity_main);
+        mRecyclerView = findViewById(R.id.activity_main);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         setAdapter();
     }
@@ -98,5 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
         LIST.add(new Item("ConstraintLayout示例", ConstraintLayoutActivity.class));
         LIST.add(new Item("ViewPager", ViewPagerFragment.class));
+        LIST.add(new Item("方块动画", SquareAnimationFragment.class));
     }
+
 }
