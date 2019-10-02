@@ -29,6 +29,7 @@
 25. GenerateAllSetter
 26. JDT AST：查看 Java 代码生成的抽象语法
 27. **[AndroidSourceViewer](https://github.com/pengwei1024/AndroidSourceViewer)**：在AndroidStudi中查看各版本系统源码
+28. 智能代码补全 [Codota](https://www.codota.com/)
 
 ## WebStrom 插件
 
