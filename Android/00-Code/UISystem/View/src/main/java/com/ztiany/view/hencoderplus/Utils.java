@@ -16,11 +16,11 @@ public class Utils {
     public static Bitmap getAvatar(Resources res, int width) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(res, R.drawable.img5, options);
+        BitmapFactory.decodeResource(res, R.drawable.avatar_rengwuxian, options);
         options.inJustDecodeBounds = false;
         options.inDensity = options.outWidth;
         options.inTargetDensity = width;
-        return BitmapFactory.decodeResource(res, R.drawable.img5, options);
+        return BitmapFactory.decodeResource(res, R.drawable.avatar_rengwuxian, options);
     }
 
     public static int getZForCamera() {

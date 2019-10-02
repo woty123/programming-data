@@ -1,4 +1,4 @@
-package com.ztiany.view.hencoderplus.text;
+package com.ztiany.view.hencoderplus.camera;
 
 import android.content.Context;
 import android.graphics.Bitmap;

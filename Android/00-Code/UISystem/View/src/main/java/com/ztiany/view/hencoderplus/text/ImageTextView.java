@@ -47,12 +47,14 @@ public class ImageTextView extends View {
         for (int start = 0, count; start < length; start += count, yOffset += paint.getFontSpacing()) {
             float textTop = yOffset + metrics.ascent;
             float textBottom = yOffset + metrics.descent;
+
             if (textTop > IMAGE_PADDING && textTop < IMAGE_PADDING + IMAGE_WIDTH ||
                     textBottom > IMAGE_PADDING && textBottom < IMAGE_PADDING + IMAGE_WIDTH) {
                 usableWidth = getWidth() - IMAGE_WIDTH;
             } else {
                 usableWidth = getWidth();
             }
+
             count = paint.breakText(text, start, length, true, usableWidth, measuredWidth);
             canvas.drawText(text, start, start + count, 0, yOffset, paint);
         }

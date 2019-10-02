@@ -20,7 +20,7 @@ public class HenCoderPlusFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.hencoderplus_fragment_views, container, false);
+        return inflater.inflate(R.layout.hencoderplus_fragment_camera, container, false);
     }
 
 }
