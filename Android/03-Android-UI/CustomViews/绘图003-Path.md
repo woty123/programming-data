@@ -8,29 +8,27 @@ Path类表示路径，封装了直线，曲线，图形等等，利用Path类可
 ---
 ## 2 Path常用方法说明
 
-
 | 方法名  | 说明  |
 | ------------ | ------------ |
 | moveTo(float x, float y) |  移动下一次操作的起点位置 |
 | setLastPoint(float x, float y)  | 重新设置当前path的最后一个点位置，如果在绘制之后调用，对之气的操作有影响，如果在绘制之前调用则效果和moveTo相同  |
 | lineTo(float x, float y) |  在最后点和当前点间添加一条直线 |
-| close()  | 闭合路径，连接第一个点连接到最后一个点，形成一个闭合区域  |
-| addXXX系类方法  |  添加一个路径或图形到当前路径 |
-| isEmpty()  | 判断Path是否包含内容空  |
-| isRect()  |  判断path是不是一个矩形 |
+| `addXXX()`系类方法，比如 `addArc(RectF oval, float startAngle, float sweepAngle)`  |  添加一个路径或图形到当前路径 |
+| `rXxxTo()`类方法，比如 `rLineTo(float dx, float dy)`  |  不带r的方法是基于当前canvas的坐标系，rXxx方法是基于以当前点作为坐标原点的坐标系 |
 | set(Path path)  | 新的路径替换到当前路径的内容  |
 | offset((float x, float y))  | 对当前路径之前的操作进行偏移,不影响之后的操作  |
 | quadTo(float x1, float y1,float x2, float y2)  | 二阶贝塞尔曲线  |
-|  cubicTo(float x1, float y1,float x2, float y2，float x3, float y3) | 三阶贝塞尔曲线  |
-| rXxxTo类方法  |  不带r的方法是基于当前canvas的坐标系，rXxx方法是基于以当前点作为坐标原点的坐标系 |
-|incReserve(int extraPtCount)|提示Path还有多少个点等待加入，让Path优化存储结构)|
-|op(Path path, Op op)|对两个Path进行布尔运算(即取交集、并集等操作)|
-|computeBounds(RectF bounds, boolean exact)|计算Path的边界|
-|transform(Matrix matrix)|对Path做矩阵操作|
-|setFillType, getFillType, isInverseFillType, toggleInverseFillType|填充模式相关|
-|reset()|清除Path中的内容，reset不保留内部数据结构，但会保留FillType|
-|rewind()|清除Path中的内容，|
-·
+| cubicTo(float x1, float y1,float x2, float y2，float x3, float y3) | 三阶贝塞尔曲线  |
+| incReserve(int extraPtCount) |提示Path还有多少个点等待加入，让Path优化存储结构) |
+| op(Path path, Op op) |对两个Path进行布尔运算(即取交集、并集等操作) |
+| computeBounds(RectF bounds, boolean exact) | 计算Path的边界 |
+| transform(Matrix matrix)|对Path做矩阵操作 |
+| setFillType, getFillType, isInverseFillType, toggleInverseFillType |填充模式相关 |
+| close()  | 闭合路径，连接第一个点连接到最后一个点，形成一个闭合区域  |
+| isEmpty()  | 判断Path是否包含内容空  |
+| isRect()  |  判断path是不是一个矩形 |
+| reset() | 清除Path中的内容，reset不保留内部数据结构，但会保留FillType |
+| rewind() | 清除Path中的内容，|
 
 ---
 ## 3 Path的点、直线、图形与主要方法说明
@@ -82,7 +80,6 @@ add类方法如下：
 
 ![](index_files/0189100b-835c-45b6-9f0d-6e90b1bd3443.png)
 
-
 但是这些方法的最后一个参数都是Direction，Direction表示方向，有两个可选值：
 
 | 类型 | 解释 |
@@ -122,7 +119,7 @@ Path是对直线，曲线的封装，而矩形其实就是由线段组成的，�
 
 由此可以看出，当Direction为CW时，绘制循序是**ABCD**，而当Direction为CCW时，点的顺序是**ADCB**
 
-##### Direction对绘制文字的影响：
+##### Direction对绘制文字的影响
 
 CW:
 
@@ -171,7 +168,6 @@ Path的操作比较简单，如：
 ```
 
 ![](index_files/715d966c-bac0-47c0-a0bc-60652678a059.png)
-
 
 #### 第三类
 
@@ -228,7 +224,6 @@ Arc相关操作，这里的Arc操作都是弧形而不是扇形：
 ```
 
 ![](index_files/af9e9c49-2957-4532-8a82-3dc8dc6bab25.jpg)
-
 
 ### isEmpty
 
@@ -362,8 +357,7 @@ P0、P1、P2、P3四个点在平面或在三维空间中定义了三次方贝塞
 
 效果如下：
 
-![](index_files/ber.gif)
-
+![](index_files/ber1.gif)
 
 #### 使用贝塞尔曲线
 
@@ -382,7 +376,7 @@ Path类提供了quadTo和cubicTo方法来分别模拟二阶和三阶贝塞尔曲
 
 效果如下：
 
-![](index_files/ber.gif.gif)
+![](index_files/ber2.gif)
 
 **cubicTo**
 
@@ -403,3 +397,34 @@ cubicTo可以绘制出三阶段贝塞尔曲线，一般用于绘制图表。
 ## 6 setFillType
 
 `Path.setFillType(fillType)` 是用来设置图形自相交时的填充算法的，`Path.setFillType(fillType)`的效果与绘制图形的方向与传入的填充类型有关系，具体算法可以参考[HenCoder_UI_1](http://hencoder.com/ui-1-1/)
+
+### 根据 setFillType、图形方向判断图形的内部外部
+
+什么是图形的内部和外部：比如两个相交的圆，它们的相交部分是算整个图形的内部还是外部呢？canvas 在绘制 path 时，是不会绘制图形的外部的。
+
+![](index_files/shape_direction_01.png)
+
+那么怎么确定图形的外部和内部呢？有两点：
+
+- 图形的方向
+- Path 的填充类型
+
+Path 中图形的方向有：
+
+- CW(顺时针)
+- CCW(逆时针)
+
+FillType 的取值有
+
+- WINDING：Specifies that "inside" is computed by a non-zero sum of signed edge crossings.
+- EVEN_ODD：Specifies that "inside" is computed by an odd number of edge crossings.
+- INVERSE_WINDING：Same as WINDING, but draws outside of the path, rather than inside.
+- INVERSE_EVEN_ODD：Same as EVEN_ODD, but draws outside of the path, rather than inside.
+
+WINDING 规定某个点向图形外部引一条直线，如果该线穿过图形边缘的总计算不等于 0，则为图形的内部。这个计算方式跟图形的方向有关，不同方向的穿插数是会被抵消的，参考下图：
+
+![](index_files/shape_direction_02.png)
+
+EVEN_ODD：不考虑图形方向。某点向图形外部引线，穿插为奇数次则为内部，偶数次则为外部。
+
+还有一点需要注意，某点向图形外部引线计算穿插数时，该线必定是要与该图形相交而不是相切。否则不计算穿插数。

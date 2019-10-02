@@ -22,7 +22,7 @@ canvas有很多draw方法，可以画出不同图形，接下来就对这一系�
 
 用来对整个Canvas以某种统一的颜色整体绘制，四个参数分别是Alpha、Red、Green、Blue，取值f范围是[0-255]。
 
-###  drawText
+### drawText
 
 用于绘制文本
 
@@ -59,11 +59,12 @@ drawRect(float left, float top, float right, float bottom,  Paint paint)
 drawRect(RectF rect, Paint paint)
 drawRect(Rect rect, Paint paint)
 ```
+
 Rect表示一个矩形，Rect的的上下左右是相对于canvas的绘图坐标的。
 
 ### drawRoundRect
 
-```
+```java
         drawRoundRect(@NonNull RectF rect, float rx, float ry, @NonNull Paint paint)
 ```
 
@@ -80,35 +81,36 @@ drawRoundRect用于绘制圆角矩形，使用rx和ry控制圆角的大小，如
 ```java
 drawCircle(float cx, float cy, float radius, Paint paint) 
 ```
+
 如果使用的是用STROKE模式，轮廓线是以实际圆的边界为分界线分别向内向外扩充1/2的线宽的距离，比如圆的半径是200，线宽是20，那么在STROKE模式下绘制出的圆环效果相当于半径为210的大圆和半径为190的小圆形成的效果。
 
 ### drawOval
 
 画椭圆，接收一个矩形，用于表示椭圆的上下左右四个定点
-```
+
+```java
 drawOval(RectF oval, Paint paint)
 ```
+
 RectF表示一个精度的矩形，rectF的区域用来控制椭圆的四个点。
 
 ![](index_files/4766c32c-9a97-4ad0-9699-51624494c79c.png)
-
 
 ### drawArc
 
 用于绘制弧，这里的弧指两种：**弧面和弧线**，弧面即用弧围成的填充面，弧线即为弧面的轮廓线。
 
-```
+```java
 drawArc(RectF oval, float startAngle, float sweepAngle, boolean useCenter, Paint paint)
-
 ```
 
 绘制弧面还是弧线取决于`useCenter`
 
-*   用drawArc画的弧指的是椭圆弧，即椭圆的一部分。当然，如果椭圆的长轴和和短轴相等，这时候我们就可以用drawArc方法绘制圆弧。
-*   oval是RecF类型的对象，其定义了椭圆的形状。
-*   startAngle指的是绘制的起始角度，钟表的3点位置对应着0度，如果传入的startAngle小于0或者大于等于360，那么用startAngle对360进行取模后作为起始绘制角度。
-*   sweepAngle指的是从startAngle开始沿着钟表的顺时针方向旋转扫过的角度。如果sweepAngle大于等于360，那么会绘制完整的椭圆弧。如果sweepAngle小于0，那么会用sweepAngle对360进行取模后作为扫过的角度。
-*   useCenter是个boolean值，如果为true，表示在绘制完弧之后，用椭圆的中心点连接弧上的起点和终点以闭合弧；如果值为false，表示在绘制完弧之后，弧的起点和终点直接连接，不经过椭圆的中心点。
+- 用drawArc画的弧指的是椭圆弧，即椭圆的一部分。当然，如果椭圆的长轴和和短轴相等，这时候我们就可以用drawArc方法绘制圆弧。
+- oval是RecF类型的对象，其定义了椭圆的形状。
+- startAngle指的是绘制的起始角度，钟表的3点位置对应着0度，如果传入的startAngle小于0或者大于等于360，那么用startAngle对360进行取模后作为起始绘制角度。
+- sweepAngle指的是从startAngle开始沿着钟表的顺时针方向旋转扫过的角度。如果sweepAngle大于等于360，那么会绘制完整的椭圆弧。如果sweepAngle小于0，那么会用sweepAngle对360进行取模后作为扫过的角度。
+- useCenter是个boolean值，如果为true，表示在绘制完弧之后，用椭圆的中心点连接弧上的起点和终点以闭合弧；如果值为false，表示在绘制完弧之后，弧的起点和终点直接连接，不经过椭圆的中心点。
 
 下面从左到右分别是:
 
@@ -127,7 +129,7 @@ drawArc(RectF oval, float startAngle, float sweepAngle, boolean useCenter, Paint
 
 用于绘制位图：
 
-```
+```java
     drawBitmap(Bitmap bitmap, float left, float top, Paint paint)
     drawBitmap(Bitmap bitmap, Rect src, Rect dst, Paint paint)
     drawBitmap( Bitmap bitmap,  Matrix matrix, Paint paint)
@@ -141,11 +143,11 @@ top和left表示从canvas的哪个地方开始绘制位图。
 
 该方法有两个功能：
 
-1. 只绘制原有bitmap对象的一部分
+- 1.只绘制原有bitmap对象的一部分
 
  srcRect表示需要绘制bitmap的区域，**需要注意的是，drawBitmap方法中的srcRect中left、top、right、bottom的值都是以Bitmap本身的宽高的，原点在bitmap的左上角。**，如果不关心bitmap绘制到的区域的话dst可以为null。
 
-2. 将要绘制的bitmap缩放到指定的区域。
+- 2.将要绘制的bitmap缩放到指定的区域。
 
 dst表示bitmap绘制到的区域，这里的dst的坐标是相对于canvas的坐标而已的，尽量保证了dstRecF的长宽比与srcRect中的长宽比相同，否则绘制的bitmap会变形。
 
@@ -157,7 +159,7 @@ dst表示bitmap绘制到的区域，这里的dst的坐标是相对于canvas的�
 
 drawPaint一般用于清空画布
 
-```
+```java
      mXfermode = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
      mPaint.setXfermode(mXfermode);
      canvas.drawPaint(mPaint);
@@ -176,60 +178,76 @@ canvas的变换是基于矩阵的，canvas变换包括translate、rotate、scale
 - rotate(float degrees) 旋转画布，默认原点在左上角
 - scale(float sx,float sy) 缩放画布，**注意当缩放值为负数时，可以反转坐标轴**
 - skew(float sx,float sy) 对画布进行错切操作
- - float sx:将画布在x方向上倾斜相应的角度，sx为倾斜角度的tan值；
- - float sy:将画布在y轴方向上倾斜相应的角度，sy为倾斜角度的tan值；
+  - float sx:将画布在x方向上倾斜相应的角度，sx为倾斜角度的tan值；
+  - float sy:将画布在y轴方向上倾斜相应的角度，sy为倾斜角度的tan值；
 
 使用scale可以画出这样的效果：
 
 ![](index_files/eaec195a-7295-4cc8-849f-aa79e14cd5c5.png)
 
-```
-       for (float scale = 1F; scale > 0; scale -= 0.05F) {
-                canvas.save();
-                canvas.translate(  ( (1 - scale) * mWidth)/2    ,   ((1 - scale) * mHeight)/2 );
-                canvas.scale(scale, scale);
-                canvas.drawRect(mRect, mPaint);
-                canvas.restore();
-            }
+```java
+    for (float scale = 1F; scale > 0; scale -= 0.05F) {
+        canvas.save();
+        canvas.translate(  ( (1 - scale) * mWidth)/2    ,   ((1 - scale) * mHeight)/2 );
+        canvas.scale(scale, scale);
+        canvas.drawRect(mRect, mPaint);
+        canvas.restore();
+    }
 ```
 
 错切效果
 
 ![](index_files/snipaste_20170811_151128.png)
 
-```
-            canvas.drawColor(Color.GREEN);
-            canvas.drawRect(new Rect(0, 0, 400, 400), mPaint);
-            //canvas.traslate(0, 400);
-            // x 方向上倾斜45 度
-            canvas.skew(1F, 0);
-            mPaint.setColor(0x88FF0000);//透明色
-            canvas.drawRect(new Rect(0, 0, 400, 400), mPaint);
+```java
+        canvas.drawColor(Color.GREEN);
+        canvas.drawRect(new Rect(0, 0, 400, 400), mPaint);
+        //canvas.traslate(0, 400);
+        // x 方向上倾斜45 度
+        canvas.skew(1F, 0);
+        mPaint.setColor(0x88FF0000);//透明色
+        canvas.drawRect(new Rect(0, 0, 400, 400), mPaint);
 ```
 
 利用画布的旋转画钟表刻度
 
-```
-            canvas.translate(mWidth / 2, mHeight / 2);
-            int angle = 360 / 60;
-            int halfWidth = mWidth / 2;
-            int temp;
-            for (int i = 0; i < 60; i++) {
-                temp = i % 5;
-                if (temp == 0) {
-                    mPaint.setStrokeWidth(UnitConverter.dpToPx(2));
-                    canvas.drawLine(0, -halfWidth / 2 + mLongAixs, 0, -halfWidth / 2, mPaint);
-                } else {
-                    mPaint.setStrokeWidth(UnitConverter.dpToPx(1));
-                    canvas.drawLine(0, -halfWidth / 2 + mShortAixs, 0, -halfWidth / 2, mPaint);
-                }
-                canvas.rotate(angle);
+```java
+        canvas.translate(mWidth / 2, mHeight / 2);
+        int angle = 360 / 60;
+        int halfWidth = mWidth / 2;
+        int temp;
+        for (int i = 0; i < 60; i++) {
+            temp = i % 5;
+            if (temp == 0) {
+                mPaint.setStrokeWidth(UnitConverter.dpToPx(2));
+                canvas.drawLine(0, -halfWidth / 2 + mLongAixs, 0, -halfWidth / 2, mPaint);
+            } else {
+                mPaint.setStrokeWidth(UnitConverter.dpToPx(1));
+                canvas.drawLine(0, -halfWidth / 2 + mShortAixs, 0, -halfWidth / 2, mPaint);
             }
-            canvas.drawCircle(0, 0, halfWidth/2, mPaint);
+            canvas.rotate(angle);
+        }
+        canvas.drawCircle(0, 0, halfWidth/2, mPaint);
 ```
 
 ![](index_files/88438fdb-e9c4-429f-8d5e-7ffc9fc72cb6.jpg)
 
+对于 Canvas 的变换操作需要注意的是：
+
+- **对 Canvas 进行变换的参考永远是 View 的坐标系，这个是不变的**。
+- 在 Canvas 上进行绘制参数的是绘图坐标系，默认是和 View 的坐标系重合的，但是经过可以通过上述方法进行变换。
+
+如果绘制的时候涉及到 Canvas 的变换，脑海中要维护两个坐标系可能导致思考问题变得复杂，一种取巧的方式是采用倒序的思考方式（原理涉及到复杂的数学知识），比如下面代码可以理解为：
+
+```java
+canvas.rotate(-45, -imageWidth/2, -imageHeight/2);
+canvas.translate(200,200);
+canvas.drawBitmap(bitmap, 0, 0, paint);
+```
+
+1. 原点画一个图片。
+2. 将图片移动到 200,200 的位置。
+3. 将图片以图片为中心逆时针转 45°。
 
 ---
 ## 4 Canvas的剪切操作
@@ -244,45 +262,46 @@ canvas的clipXXX方法如下：
 
 利用canva的clip也可以实现绘制圆形图片或者圆角图片
 
-```
-        @Override
-        protected void onDraw(Canvas canvas) {
-            super.onDraw(canvas);
-    
-            int measuredWidth = getMeasuredWidth();
-            int measuredHeight = getMeasuredHeight();
-            int width = mBitmap.getWidth();
-            int height = mBitmap.getHeight();
-            canvas.translate(measuredWidth / 2, measuredHeight / 2);
-            //这里添加roundRect即可实现绘制圆角图片
-            mPath.addCircle(0, 0, measuredHeight / 4, Path.Direction.CW);
-            canvas.clipPath(mPath);
-            canvas.drawBitmap(mBitmap, -width / 2, -height / 2, null);
+```java
+@Override
+protected void onDraw(Canvas canvas) {
+    super.onDraw(canvas);
 
-        }
+    int measuredWidth = getMeasuredWidth();
+    int measuredHeight = getMeasuredHeight();
+    int width = mBitmap.getWidth();
+    int height = mBitmap.getHeight();
+    canvas.translate(measuredWidth / 2, measuredHeight / 2);
+    //这里添加roundRect即可实现绘制圆角图片
+    mPath.addCircle(0, 0, measuredHeight / 4, Path.Direction.CW);
+    canvas.clipPath(mPath);
+    canvas.drawBitmap(mBitmap, -width / 2, -height / 2, null);
+
+}
 ```
 
 ![](index_files/a2a2d409-c8cb-4e98-add4-e9083d115fb5.jpg)
 
 关于Region.Op前面已经说明，使用示例如下：
 
-```
-            int measuredWidth = getMeasuredWidth();
-            int measuredHeight = getMeasuredHeight();
-            int width = mBitmap.getWidth();
-            int height = mBitmap.getHeight();
-            canvas.translate(measuredWidth / 2, measuredHeight / 2);
-            mPath.addCircle(0, 0, measuredHeight / 4, Path.Direction.CW);
-            canvas.clipPath(mPath);
-            mRect.set(-width / 2, 0, width / 2, height / 2);
-            canvas.clipRect(mRect, Region.Op.UNION);
-            canvas.drawBitmap(mBitmap, -width / 2, -height / 2, null);
+```java
+    int measuredWidth = getMeasuredWidth();
+    int measuredHeight = getMeasuredHeight();
+    int width = mBitmap.getWidth();
+    int height = mBitmap.getHeight();
+    canvas.translate(measuredWidth / 2, measuredHeight / 2);
+    mPath.addCircle(0, 0, measuredHeight / 4, Path.Direction.CW);
+    canvas.clipPath(mPath);
+    mRect.set(-width / 2, 0, width / 2, height / 2);
+    canvas.clipRect(mRect, Region.Op.UNION);
+    canvas.drawBitmap(mBitmap, -width / 2, -height / 2, null);
 ```
 
 效果：
 
 ![](index_files/ef13c949-188e-477b-a4df-f35908d16eaf.jpg)
 
+**需要注意的是，Canvas的剪切操作会失去抗锯齿效果，而且无法解决，这跟抗锯齿的原理有关系**。
 
 ---
 ## 5 Canvas的图层操作
@@ -304,28 +323,26 @@ save表示基于栈顶图层状态创建一个新的图层，方法对于这些�
 - getSaveCount 表示获取图层栈中的图层数量
 - restoreToCount(int count) count表示在使用save方法时返回的图层栈id，指定id以及指定id之上的图层都将被还原。
 
-
 ![](index_files/0257a957-27fa-4b7f-9a62-546d95e80362.png)
-
 
 示例：
 
-```
-       @Override
-        protected void onDraw(Canvas canvas) {
-            super.onDraw(canvas);
-            canvas.save();
-            Log.d(TAG, "canvas.getSaveCount():" + canvas.getSaveCount());
-            canvas.restore();
-            mRect.set(200, 200, 400, 400);
-            canvas.clipRect(mRect);
-            canvas.drawColor(Color.RED);
-            canvas.drawArc(mRect,0,270,false,mPaint);
-            canvas.save();
-            mRect.set(200,200,300,300);
-            canvas.clipRect(mRect);
-            canvas.drawColor(Color.GREEN);
-        }
+```java
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        canvas.save();
+        Log.d(TAG, "canvas.getSaveCount():" + canvas.getSaveCount());
+        canvas.restore();
+        mRect.set(200, 200, 400, 400);
+        canvas.clipRect(mRect);
+        canvas.drawColor(Color.RED);
+        canvas.drawArc(mRect,0,270,false,mPaint);
+        canvas.save();
+        mRect.set(200,200,300,300);
+        canvas.clipRect(mRect);
+        canvas.drawColor(Color.GREEN);
+    }
 ```
 
 打印结果为canvas.getSaveCount():2
@@ -334,7 +351,7 @@ save表示基于栈顶图层状态创建一个新的图层，方法对于这些�
 
 ![](index_files/4228e577-2c82-4753-a49a-207f973285ec.png)
 
-```
+```java
             canvas.save();
             canvas.save();
             canvas.save();
@@ -346,14 +363,14 @@ save表示基于栈顶图层状态创建一个新的图层，方法对于这些�
 
 打印结果为：
 
-```
+```java
     canvas.getSaveCount():5
     canvas.getSaveCount():4
 ```
 
 把上面restoreToCount(4)改为restoreToCount(3)；则结果为：
 
-```
+```java
     canvas.getSaveCount():5
     canvas.getSaveCount():3
 ```
@@ -362,10 +379,9 @@ save表示基于栈顶图层状态创建一个新的图层，方法对于这些�
 
 与save()方法不同的是，saveLayerXXX方法会将所有的操作存到一个新的Bitmap中而不影响当前Canvas的Bitmap，而save()方法则是在当前的Bitmap中进行操作，并且只能针对Bitmap的形变和裁剪进行操作，layer退栈时会把本层绘制的图像“绘制”到上层或是Canvas上。
 
-
 savelayer方法有很多重载，排除掉相同的行为就剩下下面两个了：
 
-```
+```java
     saveLayer(RectF bounds, Paint paint, @Saveflags int saveFlags)
     saveLayerAlpha(RectF bounds, int alpha, @Saveflags int saveFlags)
 ```
@@ -376,7 +392,7 @@ saveLayer可以让我们自行设定需要保存的区域（似于clipRect的效
 
 示例：
 
-```
+```java
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
@@ -409,7 +425,7 @@ saveLayer可以让我们自行设定需要保存的区域（似于clipRect的效
 
 该方法可以在我们保存画布时设置画布的透明度，看下面示例：
 
-```
+```java
     protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
     
@@ -444,7 +460,7 @@ saveLayer可以让我们自行设定需要保存的区域（似于clipRect的效
 
 在使用canvas的save方法时，可以设置不同的参数，默认情况下都是`Canvas.ALL_SAVE_FLAG`，但是我们可以自己指定，可选的参数为：
 
-```
+```java
     MATRIX_SAVE_FLAG 
        Restore the current matrix when restore() is called.
     CLIP_SAVE_FLAG 
@@ -467,10 +483,3 @@ saveLayer可以让我们自行设定需要保存的区域（似于clipRect的效
 - HAS_ALPHA_LAYER_SAVE_FLAG 表示在当前图层中将需要使用逐像素Alpha混合模式
 
 六个标识常量中，只有`CLIP_SAVE_FLAG`、`MATRIX_SAVE_FLAG`和`ALL_SAVE_FLAG`才能在save方法中使用。
-
-
-
-
-
-
-

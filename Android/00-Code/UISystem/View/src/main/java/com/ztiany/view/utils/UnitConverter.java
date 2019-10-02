@@ -9,7 +9,6 @@ import android.util.TypedValue;
  */
 public class UnitConverter {
 
-
     private UnitConverter(){
         throw new UnsupportedOperationException("no need instantiation");
     }
