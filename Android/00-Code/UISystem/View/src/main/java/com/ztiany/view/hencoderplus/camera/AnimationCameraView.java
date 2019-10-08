@@ -7,8 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.Camera;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.support.annotation.Nullable;
-import android.util.AttributeSet;
 import android.view.View;
 
 import com.ztiany.view.hencoderplus.Utils;
@@ -17,7 +15,7 @@ import com.ztiany.view.utils.UnitConverter;
 public class AnimationCameraView extends View {
 
     private static final int IMAGE_WIDTH = UnitConverter.dpToPx(200);
-    private static final int IMAGE_PADDING = UnitConverter.dpToPx(100);
+    private static final int IMAGE_PADDING = UnitConverter.dpToPx(20);
 
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     Bitmap image;
@@ -27,8 +25,8 @@ public class AnimationCameraView extends View {
     private float bottomFlip = 0;
     private float topFlip = 0;
 
-    public AnimationCameraView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+    public AnimationCameraView(Context context) {
+        super(context);
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

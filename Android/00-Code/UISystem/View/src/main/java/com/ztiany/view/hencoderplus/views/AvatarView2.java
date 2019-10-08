@@ -16,8 +16,8 @@ import android.view.View;
 import com.ztiany.view.R;
 import com.ztiany.view.utils.UnitConverter;
 
-public class AvatarView extends View {
-    
+public class AvatarView2 extends View {
+
     private static final float WIDTH = UnitConverter.dpToPx(300);
     private static final float PADDING = UnitConverter.dpToPx(40);
     private static final float BORDER_WIDTH = UnitConverter.dpToPx(10);
@@ -28,12 +28,13 @@ public class AvatarView extends View {
     RectF cut = new RectF();
     RectF border = new RectF();
 
-    public AvatarView(Context context) {
+    public AvatarView2(Context context) {
         super(context);
     }
 
     {
         avatar = getAvatar((int) WIDTH);
+        setLayerType(LAYER_TYPE_HARDWARE, null);
     }
 
     @Override
@@ -54,16 +55,10 @@ public class AvatarView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.drawOval(border, paint);
-        //这里为什么要 saveLayer，因为我们的这个View 是在一个根View上的，根View已经在 canvas 上画了一层，如果不使用 saveLayer 的话，
-        //那么 setXfermode 将没有效果，因为此时 SRC_IN 中，将使用整个 canvas 作为蒙版。
-        int saved = canvas.saveLayer(cut, paint);
-
         canvas.drawOval(cut, paint);
         paint.setXfermode(xfermode);
         canvas.drawBitmap(avatar, PADDING, PADDING, paint);
         paint.setXfermode(null);
-        canvas.restoreToCount(saved);
     }
 
     Bitmap getAvatar(int width) {

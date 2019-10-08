@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Camera;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.support.annotation.Nullable;
-import android.util.AttributeSet;
 import android.view.View;
 
 import com.ztiany.view.hencoderplus.Utils;
@@ -21,8 +19,8 @@ public class CameraView extends View {
     Bitmap image;
     Camera camera = new Camera();
 
-    public CameraView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+    public CameraView(Context context) {
+        super(context);
     }
 
     {
