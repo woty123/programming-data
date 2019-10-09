@@ -3,7 +3,9 @@
 ---
 ## 1 Bitmap
 
-Android中使用Bitmap表示一张图片，常用的图片格式如下：
+Android中使用 Bitmap 表示一张图片，Bitmap 是位图信息的存储，即一个矩形图像每个像素的颜色信息的存器器。
+
+常用的图片格式如下：
 
 - png格式：高质量的图片，用于计算机和网络(文件的体积比较小)，采用无损的图形压缩算法
 - JPG格式：良好质量的图片，用于计算机和网络(文件体积也比较小)，图形压缩算法类似于rar算法，眼睛的精度有限，比较深的红色和稍微淡点的红色 人眼分辨不出，就把相邻空间，类似的颜色统一用同一种颜色表示，降低了图片的精度。所以jpg采用的是又算压缩算法。
@@ -15,7 +17,7 @@ Android中使用Bitmap表示一张图片，常用的图片格式如下：
 
 ### BitmapConfig说明
 
-```
+```java
     android图片压缩质量参数 Bitmap.Config.RGB_565 或 ARGB_8888
 
     android中的大图片一般都要经过压缩才显示，不然容易发生oom，一般我们压缩的时候都只关注其尺寸方面的大小，其实除了尺寸之外，影响一个图片占用空间的还有其色彩细节。
@@ -70,15 +72,18 @@ Android中使用Bitmap表示一张图片，常用的图片格式如下：
 Android提供了一下BitmapFactory来加载一种图片：
 
 注意有以下方法：
-```
+
+```java
      public static Bitmap decodeByteArray(byte[] data, int offset, int length, Options opts) 
      public static Bitmap decodeFile(String pathName, Options opts)
      public static Bitmap decodeStream(InputStream is, Rect outPadding, Options opts)
      public static Bitmap decodeResource(Resources res, int id, Options opts)
 ```
+
 分别对应于**字节数组**，**文件体统**，**字节流**，**资源文件**
 
 如果高效的加载一张图片呢？其实就是使用BitmapFactory.Options，主要的流程如下：
+
 - 由于bitmap需要一个控件来显示，而这个控件是有宽高的，所以先获取这个控件的宽高
 - 然后通过Options对Bitmap进行抽样，把BitmapFactory.Options的inJustDecodeBuounds设置为true，这样BitmapFactory分析图片的宽高信息，而不会真的把图片加载到内存中去，
 - 根据抽样获取的bitmap宽高信息和空间的宽高信息，计算出一个合适的缩放值。
@@ -101,7 +106,7 @@ Android提供了一下BitmapFactory来加载一种图片：
             BitmapFactory.decodeResource(getResources(), R.drawable.welcome, options);
             Log.d(TAG, "options.outHeight:" + options.outHeight);
             Log.d(TAG, "options.outWidth:" + options.outWidth);
-    
+
             int sampleSize = 1;
             int heightSampleSize = 1;
             int widthSampleSize = 1;
@@ -113,7 +118,7 @@ Android提供了一下BitmapFactory来加载一种图片：
             }
             sampleSize = Math.min(heightSampleSize, widthSampleSize);
             Log.d(TAG, "sampleSize:" + sampleSize);
-    
+
             options.inJustDecodeBounds = false;
             options.inSampleSize = sampleSize;
             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.welcome, options);
@@ -132,12 +137,13 @@ Android提供了一下BitmapFactory来加载一种图片：
 
 对于缓存的操作主要包括-(添加，删除，获取），添加与获取比较好理解，对于删除，是因为无论是磁盘缓存和内存缓存，大小都是有限制的。我们不可能无限制的使用磁盘空间和内存空间，所以需要当缓存的大小达到一定程度时，需要优先删除使用率不高或者占用控件较大的缓存。这涉及到一些缓存算法了
 
-
 ### LRU(lease recently used)
 
 LRU是缓存算法的一种，也叫最近最少使用算法，核心思想是当缓存满时，优先淘汰哪些近期最少使用的缓存对象，采用LRU算法的缓存有两种：
+
 - LruCache 用于实现内存缓存
 - DiskLruCache 用于实现磁盘缓存
+
 通过上面的两个lru的实现，我们就可以写出一个不错的图片缓存工具了。
 
 #### LruCache的使用
@@ -147,7 +153,8 @@ LruCache是Android3.1提供的一个缓存工具类，通过v4包可以兼容到
 LruCache是一个泛型类，它内部采用一个LinkedHashMap以强引用的方式存储外界的缓存对象，其提供的get和put方法用于完成缓存的添加与获取，当缓存满是，LruCache会移除较早使用的缓存对象。
 
 LruCache的使用笔记简单，代码如下：
-```
+
+```java
       LruCache<String, Bitmap> bitmapLruCache = new LruCache<String, Bitmap>(size) {
                 @Override
                 protected int sizeOf(String key, Bitmap value) {
@@ -156,16 +163,16 @@ LruCache的使用笔记简单，代码如下：
             };
         }
 ```
+
 我们只需要指定泛型，然后重写sizeOf方法即可
 
-####  DiskLruCache的使用
+#### DiskLruCache的使用
 
 DiskLruCache得到了官方的推荐，但是并不是sdk源码的一部分，通过google我们可以快速的搜到源码。下面从DiskLruCache的创建，缓存查找，和添加提供三个方面来解释DiskLruCache的使用方式。
 
-
 DiskLruCache的创建：
 
-```
+```java
       public static DiskLruCache open(File directory, int appVersion, int valueCount, long maxSize)
           throws IOException {......}
 ```
@@ -194,7 +201,7 @@ DiskLruCache的缓存添加的操作是用过Editor完成的，Editor表示对�
             }
             return null;
         }
-    
+
         private static String bytesToHexString(byte[] digest) {
             StringBuilder stringBuilder = new StringBuilder();
             for (byte b : digest) {
@@ -271,7 +278,8 @@ DiskLruCache的缓存添加的操作是用过Editor完成的，Editor表示对�
 #### 关于DiskLruCache的其他API
 
 缓存的移除：移除缓存主要是借助DiskLruCache的remove()方法实现的，接口如下所示：
-```
+
+```java
     public synchronized boolean remove(String key) throws IOException
 ```
 
@@ -279,14 +287,10 @@ DiskLruCache的缓存添加的操作是用过Editor完成的，Editor表示对�
 
 其他API：
 
-- size()
-这个方法会返回当前缓存路径下所有缓存数据的总字节数，以byte为单位，如果应用程序中需要在界面上显示当前缓存数据的总大小，就可以通过调用这个方法计算出来。
+- size()：这个方法会返回当前缓存路径下所有缓存数据的总字节数，以byte为单位，如果应用程序中需要在界面上显示当前缓存数据的总大小，就可以通过调用这个方法计算出来。
 
-- flush()
-这个方法用于将内存中的操作记录同步到日志文件（也就是journal文件）当中。这个方法非常重要，因为DiskLruCache能够正常工作的前提就是要依赖于journal文件中的内容。前面在讲解写入缓存操作的时候我有调用过一次这个方法，但其实并不是每次写入缓存都要调用一次flush()方法的，频繁地调用并不会带来任何好处，只会额外增加同步journal文件的时间。比较标准的做法就是在Activity的onPause()方法中去调用一次flush()方法就可以了。
+- flush()：这个方法用于将内存中的操作记录同步到日志文件（也就是journal文件）当中。这个方法非常重要，因为DiskLruCache能够正常工作的前提就是要依赖于journal文件中的内容。前面在讲解写入缓存操作的时候我有调用过一次这个方法，但其实并不是每次写入缓存都要调用一次flush()方法的，频繁地调用并不会带来任何好处，只会额外增加同步journal文件的时间。比较标准的做法就是在Activity的onPause()方法中去调用一次flush()方法就可以了。
 
-- close()
-这个方法用于将DiskLruCache关闭掉，是和open()方法对应的一个方法。关闭掉了之后就不能再调用DiskLruCache中任何操作缓存数据的方法，通常只应该在Activity的onDestroy()方法中去调用close()方法。
+- close()：这个方法用于将DiskLruCache关闭掉，是和open()方法对应的一个方法。关闭掉了之后就不能再调用DiskLruCache中任何操作缓存数据的方法，通常只应该在Activity的onDestroy()方法中去调用close()方法。
 
-- delete()
-这个方法用于将所有的缓存数据全部删除，比如说网易新闻中的那个手动清理缓存功能，其实只需要调用一下DiskLruCache的delete()方法就可以实现了。
+- delete()：这个方法用于将所有的缓存数据全部删除，比如说网易新闻中的那个手动清理缓存功能，其实只需要调用一下DiskLruCache的delete()方法就可以实现了。

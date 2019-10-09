@@ -1,6 +1,6 @@
 ## Libraries
 
--  [自定义上下左右是否显示圆角的一个库，可以看作 CardView 的灵活实现](https://github.com/mthli/Slice)
+- [自定义上下左右是否显示圆角的一个库，可以看作 CardView 的灵活实现](https://github.com/mthli/Slice)
 - [android-gif-drawable](https://github.com/koral--/android-gif-drawable)
 - [LoadingDrawable](https://github.com/dinuscxj/LoadingDrawable)
 - [BadgeDrawable](https://github.com/nekocode/Badge)
@@ -17,5 +17,4 @@
 
 ## 实用技巧
 
-- [Android how to create triangle and rectangle shape programmatically?
-](https://stackoverflow.com/questions/22042603/android-how-to-create-triangle-and-rectangle-shape-programmatically/41094377)
+- [Android how to create triangle and rectangle shape programmatically?](https://stackoverflow.com/questions/22042603/android-how-to-create-triangle-and-rectangle-shape-programmatically/41094377)

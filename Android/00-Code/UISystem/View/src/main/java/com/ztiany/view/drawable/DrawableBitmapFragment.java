@@ -22,4 +22,5 @@ public class DrawableBitmapFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.drawable_fragment_bitmap, container, false);
     }
+
 }

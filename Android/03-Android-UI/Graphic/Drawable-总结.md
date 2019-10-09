@@ -1,28 +1,38 @@
-#  Drawable学习
+# Drawable学习
 
 ## 1 Drawable简介
 
-Drawable表示的是一种可以在canvas上进行绘制的抽象概念，在安卓中Drawable有很多种：
+### Drawable是什么
 
- - BitmapDrawable 位图
- - NimePatchDrawable .9图
- - ShapeDrawable 形状drawable
- - LayerDrawable 层级drawable容器
- - StateListrawable 状态drawable容器
- - AnimatedStateListDrawable 带动画的StateListrawable(Api21)
- - LevelListDrawable 等级drawable容器
- - TransitionDrawable 过度
- - InsetDrawable 内嵌
- - ScaleDrawable 缩放
- - ClipDrawable 裁剪
- - RotateDrawable 旋转
- - AnimationDrawable 动画
- - AnimatedRotateDrawable 旋转动画
- - RippleDrawable(Api21)
+Drawable表示的是一种可以在canvas上进行绘制的抽象概念。从代码来看，Drawable 是一个可以调用 Canvas 来进行绘制的上层⼯具。调用 `Drawable.draw(Canvas)` 可以把 Drawable 设置的绘制内容绘制到 Canvas 中。
+
+Drawable 内部存储的是绘制规则，这个规则可以是一个具体的 Bitmap，也可以是⼀个纯粹的颜色，甚⾄可以是一个抽象的、灵活的描述。Drawable 可以不含有具体的像素信息，只要它含有的信息⾜以在 `draw(Canvas)` 方法被调用时进行绘制就够了。
+
+由于 Drawable 存储的只是绘制规则，因此在它的 `draw()` 方法被调用前，需要先调用 `Drawable.setBounds()` 来为它设置绘制边界。
+
+### Android 中的 Drawable
+
+在安卓中 Drawable 有很多种：
+
+- BitmapDrawable 位图
+- NimePatchDrawable .9图
+- ShapeDrawable 形状drawable
+- LayerDrawable 层级drawable容器
+- StateListrawable 状态drawable容器
+- AnimatedStateListDrawable 带动画的StateListrawable(Api21)
+- LevelListDrawable 等级drawable容器
+- TransitionDrawable 过度
+- InsetDrawable 内嵌
+- ScaleDrawable 缩放
+- ClipDrawable 裁剪
+- RotateDrawable 旋转
+- AnimationDrawable 动画
+- AnimatedRotateDrawable 旋转动画
+- RippleDrawable(Api21)
 
 Drawable表示一种图像的概念，但他们又不全是图片，通过颜色也可以构造出各式各样的图形效果，Drawable一般通过xml来定义，但是自定义的Drawable除外，在xml中定义的Drawable都会有一个Java类对应，在解析这个xml时，Android会创建对应的Drawable对象。
 
-#### Drawable的内部宽高
+## 2 Drawable的内部宽高
 
 Drawable的内部宽高这两个参数比较重要，通过getIntrinsicWidth和getIntrinsicHeight来获取(intrinsic译作固有的)，但不是所有的Drawable都有宽高，这个得分类讨论
 
@@ -32,20 +42,21 @@ Drawable的内部宽高这两个参数比较重要，通过getIntrinsicWidth和g
 一般来说，Drawable没有大小的概念，当用作view的背景时，Drawable会被拉伸到view 的同等大小
 
 ---
-## 2 Drawable的分类详解
+## 3 Drawable的分类详解
 
 ### RippleDrawable
 
 ripple用于表示一个涟漪，语法如下：
 
+```xml
     <?xml version="1.0" encoding="utf-8"?>
     <ripple xmlns:android="http://schemas.android.com/apk/res/android"  
             android:color="@color/colorAccent" android:radius="3dp">
         <item android:drawable="@color/colorPrimary"/>
     </ripple>
+```
 
 其中color是必须的，其次当没有定义item时，涟漪是圆形并且超出控件范围的涟漪，如果定义了item，那么涟漪范围在控件的范围内
-
 
 ### vector/animated-vector
 
@@ -55,7 +66,7 @@ ripple用于表示一个涟漪，语法如下：
 
 表示一张图片，在实际开发中直接引用原图片即可，但是也可以通过xml方式来描述它，且可以设置更多的效果，如下代码：
 
-```
+```xml
     <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
             android:src="@com.ztiany:mipmap/ic_launcher"
             android:antialias="true"
@@ -67,16 +78,17 @@ ripple用于表示一个涟漪，语法如下：
         >
     </bitmap>
 ```
+
 - src 指定引用的图片，格式为@[packageName:]drawable/drawable_src,**必须属性**
 - antialias 是否开启抗锯齿功能，开启后图片变得平滑，在一定程度上降低图片的清晰度(忽略不计)，一般应该开启
 - dither 是否开启抖动效果，防止图片失真，一般应该开启
 - filter 是否开启过滤效果，当图片被拉伸或者压缩时，开启过滤效果可以保证较好的显示效果。
 - mipMap 一种图形相关的处理技术，纹理技术，默认为false
 - tileMode 平铺模式，默认关闭，当开启屏幕模式之后gravity失效，这个选项有如下几个值：
- - disabled 关闭屏幕模式，默认值
- - clamp 图片四周的像素会被拉伸到周围区域
- - repeat 简单的水平方向和垂直方向上的平铺效果
- - mirror 水平方向和垂直方向上的镜像投影效果
+  - disabled 关闭屏幕模式，默认值
+  - clamp 图片四周的像素会被拉伸到周围区域
+  - repeat 简单的水平方向和垂直方向上的平铺效果
+  - mirror 水平方向和垂直方向上的镜像投影效果
 - gravity 当图片的尺寸小于容器的大小时，可以使用此属性来对图片进行定位，多个属性可以用"|"来组合，下面用一个表格来说明各个属性的效果
 
 |  可选值 | 含义  |
@@ -94,12 +106,11 @@ ripple用于表示一个涟漪，语法如下：
 | clip_vertical  | 附加项，表示垂直方向的裁剪，较少使用  |
 | clip_horizontal  |  附加项，表示水平方向的裁剪，较少使用  |
 
-
 ### NimePatchDrawable
 
 表示一张.9图片，也可以直接引用，属性与BitmapDrawable差不多
 
-```
+```xml
     <nine-patch xmlns:android="http://schemas.android.com/apk/res/android"
                 android:src="@drawable/zoom_plate"
                 android:tint="@color/colorAccent"//api21才有效果
@@ -108,13 +119,13 @@ ripple用于表示一个涟漪，语法如下：
     </nine-patch>
 ```
 
-
 ### GradientDrawable
 
 GradientDrawable对应的xml标签是shape
 
 可以理解为通过颜色来构造图形，它既可以表示纯色图形，也可以是具有渐变效果的图形，语法如下：
-```
+
+```xml
     <?xml version="1.0" encoding="utf-8"?>
     <shape
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -165,7 +176,8 @@ GradientDrawable对应的xml标签是shape
 ```
 
 shape表示形状，上面分别是矩形，椭圆，线，圆环，另外ring还有一些特殊
-```
+
+```java
     android:innerRadius 圆环内半径，优先级高于innerRadiusRatio
     android:innerRadiusRatio 内半径占整个高度的比例，默认是9，如果是n，那么内半径=宽度/n
     android:thickness 圆环厚度，外半径-内半径，优先级高于thicknessRatio
@@ -177,7 +189,7 @@ shape表示形状，上面分别是矩形，椭圆，线，圆环，另外ring�
 
 表示一种层次化的drawable，是一种叠加后的效果，他的语法如下
 
-```
+```xml
     <?xml version="1.0" encoding="utf-8"?>
     <layer-list
         xmlns:android="http://schemas.android.com/apk/res/android" >
@@ -197,7 +209,7 @@ layer-list语法很简单，可以包含多个item，每个item表示一个drawa
 
 对应于selector标签，表示的是一drawable的集合，每个drawable都对应一种状态，语法如下：
 
-```
+```xml
     <?xml version="1.0" encoding="utf-8"?>
     <selector xmlns:android="http://schemas.android.com/apk/res/android"
         android:constantSize=["true" | "false"]
@@ -225,6 +237,7 @@ layer-list语法很简单，可以包含多个item，每个item表示一个drawa
 
 对应level-list标签，同样表示一个drawable集合，内部每个drawable都对应一个level，根据不同的等级，不同的等级显示不同drawable
 
+```xml
     <?xml version="1.0" encoding="utf-8"?>
     <level-list
         xmlns:android="http://schemas.android.com/apk/res/android" >
@@ -233,14 +246,15 @@ layer-list语法很简单，可以包含多个item，每个item表示一个drawa
             android:maxLevel="integer"
             android:minLevel="integer" />
     </level-list>
+```
 
 LevelListDrawable的等级范围是0-10000，默认是0
-
 
 ### TransitionDrawable
 
 对应于transition标签，用于实现两个drawable之间的淡入淡出效果，语法如下：
 
+```xml
     <?xml version="1.0" encoding="utf-8"?>
     <transition
     xmlns:android="http://schemas.android.com/apk/res/android" >
@@ -252,16 +266,20 @@ LevelListDrawable的等级范围是0-10000，默认是0
             android:bottom="dimension"
             android:left="dimension" />
     </transition>
+```
 
 通过代码调用：
 
+```java
      TransitionDrawable background = (TransitionDrawable) transitoinIv.getBackground();
      background.startTransition(1000);
-
+```
 
 ### InsetDrawable
+
 InsetDrawable 对应于inset标签，可以将其他drawable内嵌到自己当中，并可以在四周流出一定的间距，当一个view希望自己的背景比自己的实际区域小的时候，可以采用insetDrawable实现，同时也可以用LayerDrawable实现，语法
 
+```xml
     <?xml version="1.0" encoding="utf-8"?>
     <inset
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -270,6 +288,7 @@ InsetDrawable 对应于inset标签，可以将其他drawable内嵌到自己当�
         android:insetRight="dimension"
         android:insetBottom="dimension"
         android:insetLeft="dimension" />
+```
 
 insetTop等表示个方向上的内凹大小
 
@@ -277,6 +296,7 @@ insetTop等表示个方向上的内凹大小
 
 ScaleDrawable对应于scale标签，它可以根据自己等级，将指定的drawable缩放到一定的大小比例，语法如下：
 
+```xml
     <?xml version="1.0" encoding="utf-8"?>
     <scale
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -286,7 +306,7 @@ ScaleDrawable对应于scale标签，它可以根据自己等级，将指定的dr
                               "center" | "fill" | "clip_vertical" | "clip_horizontal"]
         android:scaleHeight="percentage"
         android:scaleWidth="percentage" />
-
+```
 
 - scaleGravity 表示对其方向
 - scaleHeight和scaleWidth 分别表示对drawable的缩放比例
@@ -297,6 +317,7 @@ ScaleDrawable内部通过等级0表示缩放比例， 表示ScaleDrawable不可�
 
 对应于clip标签，可以根据自己的等级level来裁剪一个drawable，裁剪方向通过clipOrientation和gravity这两个属性共同决定，语法如下：
 
+```xml
     <?xml version="1.0" encoding="utf-8"?>
     <bitmap
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -309,7 +330,7 @@ ScaleDrawable内部通过等级0表示缩放比例， 表示ScaleDrawable不可�
                           "center" | "fill" | "clip_vertical" | "clip_horizontal"]
         android:mipMap=["true" | "false"]
         android:tileMode=["disabled" | "clamp" | "repeat" | "mirror"] />
-
+```
 
 | Value | Description |
 |-------|-----------|
@@ -326,11 +347,11 @@ ScaleDrawable内部通过等级0表示缩放比例， 表示ScaleDrawable不可�
 | `clip_vertical` |附加选项，表示垂直方向的裁剪，较少使用 |
 | `clip_horizontal` | 附加选项，表示水平方向的裁剪，较少使用 |
 
-
 ### RotateDrawable
 
 表示旋转一个bitmap
 
+```xml
     <rotate xmlns:android="http://schemas.android.com/apk/res/android"
             android:drawable="@drawable/avatar_1"
             android:fromDegrees="90"
@@ -338,7 +359,7 @@ ScaleDrawable内部通过等级0表示缩放比例， 表示ScaleDrawable不可�
             android:pivotY="50%"
             android:visible="true">
     </rotate>
-
+```
 
 ### AnimationDrawable
 
@@ -347,7 +368,6 @@ AnimationDrawable用于实现帧动画，不推荐使用
 ### AnimatedRotateDrawable
 
 对应`animated_rotate`标签，用于实现一个旋转动画
-
 
 ---
 ## 3 WebP

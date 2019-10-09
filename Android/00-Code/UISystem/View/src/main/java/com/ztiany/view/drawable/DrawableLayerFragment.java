@@ -26,5 +26,6 @@ public class DrawableLayerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.drawable_fragment_layer_sample, container, false);
     }
+
 }
 

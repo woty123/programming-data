@@ -31,4 +31,5 @@ public class DrawableRotateFragment extends Fragment {
         Animatable rotateDrawable = (Animatable) view2.getBackground();
         rotateDrawable.start();
     }
+
 }

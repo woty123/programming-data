@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import com.ztiany.view.draw.canvas.DashView;
 import com.ztiany.view.hencoderplus.camera.AnimationCameraView;
 import com.ztiany.view.hencoderplus.camera.CameraView;
+import com.ztiany.view.hencoderplus.drawable.DrawableView;
 import com.ztiany.view.hencoderplus.text.ImageTextView;
 import com.ztiany.view.hencoderplus.text.SportView;
 import com.ztiany.view.hencoderplus.views.AvatarView;
@@ -50,6 +51,8 @@ public class HenCoderPlusFragment extends Fragment {
         items.add(new Pair<>("AvatarView2", new AvatarView2(requireContext())));
         items.add(new Pair<>("DashView", new DashView(requireContext())));
         items.add(new Pair<>("PieChart", new PieChart(requireContext(), null)));
+
+        items.add(new Pair<>("PieChart", new DrawableView(requireContext())));
     }
 
     @Nullable
