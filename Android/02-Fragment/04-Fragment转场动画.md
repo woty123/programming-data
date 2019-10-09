@@ -3,18 +3,17 @@
 ---
 ##  1 Fragment的转场动画使用
 
-在Fragment的切换过程中添加动人的动画，可以让界面跳转更加自然，当然Fragment是支持动画的，而且方式还有很多，但是这些方式中很多是事有问题的。
+在Fragment的切换过程中添加动人的动画，可以让界面跳转更加自然，当然Fragment是支持动画的，而且方式还有很多。
 
 ---
 ### 1.1 setCustomAnimations(int enter, int exit)
 
-两个参数 `setCustomAnimations(int enter, int exit)` 方法，参数为动画的 xml，支持View动画和属性动画。此方法给 Fragment 的添加和切换设置动画，enter 表示进入的动画，exit 表示退出界面的动画。比如当一个 Fragment 被添加到容器中，它的 View 会执行 enter 动画，当它被 replace 时它的 view 执行 exit 动画。但是直接 remove 一个 Fragment 是不会执行 exit 动画的。
+两个参数 `setCustomAnimations(int enter, int exit)` 方法，参数为动画的 xml，支持 View 动画和属性动画。此方法给 Fragment 的添加和切换设置动画，enter 表示进入的动画，exit 表示退出界面的动画。比如当一个 Fragment 被添加到容器中，它的 View 会执行 enter 动画，当它被 replace 时它的 view 执行 exit 动画。但是直接 remove 一个 Fragment 是不会执行 exit 动画的。
 
 ---
 ### 1.2 setCustomAnimations(int enter, int exit, int popEnter, int popExit)
 
-这个方法多次两个参数，从参数名就可以看出，多了的两个参数用于给 backStack 操作设置动画。popEnter 表示栈顶的 Fragment 出栈后，重新回到栈顶的 Fragment 所执行的动画
-popExit 表示栈顶的 Fragment 的出栈动画。
+这个方法多次两个参数，从参数名就可以看出，多了的两个参数用于给 backStack 操作设置动画。popEnter 表示栈顶的 Fragment 出栈后，重新回到栈顶的 Fragment 所执行的动画 popExit 表示栈顶的 Fragment 的出栈动画。
 
 ---
 ### 1.3 setCustomAnimations 的 Bug
@@ -24,7 +23,7 @@ setCustomAnimations 方法有一个很大的 bug，就是在 **内存重启** �
 ---
 ### 1.4 setTranseion 和 onCreateAnimation
 
-setTranseion 是 FragmentTransaction 的方法，而 onCreateAnimation 是 Fragment 的方法，一般两个方法需要配合使用。而且它们不会像`setCustomAnimations`一样，即使是 **内存重启** 也不会失效，因为它们是动态调用的。
+setTranseion 是 FragmentTransaction 的方法，而 onCreateAnimation 是 Fragment 的方法，一般两个方法需要配合使用。而且它们不会像 `setCustomAnimations` 一样，即使是 **内存重启** 也不会失效，因为它们是动态调用的。
 
 先来看一下 `setTranseion` 方法：
 
@@ -36,7 +35,7 @@ setTranseion 是 FragmentTransaction 的方法，而 onCreateAnimation 是 Fragm
         private @interface Transit {}
 ```
 
-很明显，要实现动画，我们只能传 `TRANSIT_FRAGMENT_OPEN` 和 `TRANSIT_FRAGMENT_CLOSE`，它们分别表示进场和退场，首先使用FragmentTransaction 设置 Transeion：
+很明显，要实现动画，我们只能传 `TRANSIT_FRAGMENT_OPEN` 和 `TRANSIT_FRAGMENT_CLOSE`，它们分别表示进场和退场，首先使用 FragmentTransaction 设置 Transeion：
 
 ```java
      mFragmentManager.beginTransaction()
@@ -82,7 +81,7 @@ setTranseion 是 FragmentTransaction 的方法，而 onCreateAnimation 是 Fragm
             }
 
 
-//setTranseion 和 Fragment 的 onCreateAnimation 配合使用：
+        //setTranseion 和 Fragment 的 onCreateAnimation 配合使用：
 
         public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
             if (transit == FragmentTransaction.TRANSIT_FRAGMENT_OPEN) {//表示是一个进入动作，比如add.show等
@@ -102,7 +101,7 @@ setTranseion 是 FragmentTransaction 的方法，而 onCreateAnimation 是 Fragm
         }
 ```
 
-transit 对应 FragmentTransaction 设置的动作，`onCreateAnimation` 在 Fragment 的每个操作动作中都会被回调，最好是配合 FragmentTransaction的 `setTranseion` 方法使用，才能更加灵活的实现各种动画，不然 `onCreateAnimation` 方法的 transit 参数永远是 0，`nextAnim` 与 `setCustomAnimations` 有关。
+transit 对应 FragmentTransaction 设置的动作，`onCreateAnimation` 在 Fragment 的每个操作动作中都会被回调，最好是配合 FragmentTransaction 的 `setTranseion` 方法使用，才能更加灵活的实现各种动画，不然 `onCreateAnimation` 方法的 transit 参数永远是 0，`nextAnim` 与 `setCustomAnimations` 有关。
 
 ---
 ### 1.5 setTransitionStyle
@@ -146,13 +145,13 @@ GridFragment中的关键代码：
 在列表中给ItemView设置transitionName：
 
 ```java
-                public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-                    ImageView iv = (ImageView) holder.itemView.findViewById(R.id.item_grid_iv);
-                    iv.setImageResource(mImages[position]);
-                    iv.setTag(position);
-                    iv.setOnClickListener(mOnClickListener);
-                    ViewCompat.setTransitionName(iv, String.valueOf(position) + "_image");
-                }
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            ImageView iv = (ImageView) holder.itemView.findViewById(R.id.item_grid_iv);
+            iv.setImageResource(mImages[position]);
+            iv.setTag(position);
+            iv.setOnClickListener(mOnClickListener);
+            ViewCompat.setTransitionName(iv, String.valueOf(position) + "_image");
+        }
 ```
 
 当需要打开新的Fragment时，回调Activity打开新的界面：
