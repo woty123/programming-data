@@ -29,6 +29,7 @@ import com.ztiany.view.drawable.DrawableLayerFragment;
 import com.ztiany.view.drawable.DrawableRotateFragment;
 import com.ztiany.view.drawable.DrawableSelectorFragment;
 import com.ztiany.view.drawable.DrawableVectorFragment;
+import com.ztiany.view.hencoderplus.HenCoderPlusFragment;
 import com.ztiany.view.layout_inflater.LayoutInflaterActivity;
 import com.ztiany.view.scroll.ScrollFragment;
 import com.ztiany.view.scroll.sticky.StickyNavigationFragment;
@@ -41,7 +42,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView mRecyclerView;
     private static final List<Item> LIST = new ArrayList<>();
 
     @Override
@@ -56,14 +56,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setContentInsetStartWithNavigation(0);
 
-        mRecyclerView = findViewById(R.id.activity_main);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        setAdapter();
+        RecyclerView recyclerView = findViewById(R.id.activity_main);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerView.setAdapter(new ItemAdapter(this, LIST));
     }
 
-    private void setAdapter() {
-        mRecyclerView.setAdapter(new ItemAdapter(this, LIST));
-    }
 
     static {
         LIST.add(new Item("事件&滑动", ScrollFragment.class));
@@ -100,6 +97,8 @@ public class MainActivity extends AppCompatActivity {
         LIST.add(new Item("ConstraintLayout示例", ConstraintLayoutActivity.class));
         LIST.add(new Item("ViewPager", ViewPagerFragment.class));
         LIST.add(new Item("方块动画", SquareAnimationFragment.class));
+
+        LIST.add(new Item("HenCoderPlus练习", HenCoderPlusFragment.class));
     }
 
 }

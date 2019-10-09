@@ -9,12 +9,12 @@
 看来只有自动重试才是唯一的选择，但是怎么实现自动重试呢？
 
 ## 1 使用RxJava实现自动重试
- 
+
 使用RxJaa的retryWhen操作符：
 
 ```java
     public class AutoRetry<T> implements Observable.Transformer<T, T> {
-    
+
         @Override
         public Observable<T> call(final Observable<T> tObservable) {
             return tObservable.retryWhen(new Func1<Observable<? extends Throwable>, Observable<?>>() {
@@ -22,9 +22,9 @@
                 public Observable<?> call(Observable<? extends Throwable> observable) {
                     return observable
                             .flatMap(new Func1<Throwable, Observable<?>>() {
-    
+
                                 private AtomicInteger mAtomicInteger = new AtomicInteger(0);
-    
+
                                 @Override
                                 public Observable<?> call(Throwable throwable) {
                                     int count = mAtomicInteger.incrementAndGet();
@@ -62,6 +62,6 @@ return response.newBuilder()
 
 详细可以看：[retrofit/issues/1072](https://github.com/square/retrofit/issues/1072#issuecomment-139097973)
 
-## 方式4：authenticator验证
+## 方式4：authenticator 验证
 
-这种方式需要服务器配合，详细可以看okhttp wiki
+这种方式是按照 HTTP 协议在 header 中添加 authentication 信息，需要服务器配合，详细可以看 okhttp wiki。

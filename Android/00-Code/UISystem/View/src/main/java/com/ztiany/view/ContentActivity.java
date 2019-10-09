@@ -31,7 +31,7 @@ public class ContentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.common_activity_content);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mToolbar.setContentInsetStartWithNavigation(0);
         if (getSupportActionBar() != null) {
@@ -60,4 +60,5 @@ public class ContentActivity extends AppCompatActivity {
         Log.d("ContentActivity", title);
         mToolbar.setTitle(title);
     }
+
 }

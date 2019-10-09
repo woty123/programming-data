@@ -3,12 +3,25 @@
 ---
 ## 1 okhttp 核心类介绍
 
-- OkHttpClient 客户端类
-- Dispatcher 核心调度类
-- InterceptorChain 核心拦截器链
-- Builder 构建者模式
-- Requeest 类
-- Response 类
+OkHttpClient 客户端类，相当于配置中⼼心，所有的请求都会共享这些配置（例如出错是否重试、共享的连接池）。OkHttpClient中的配置主要有：
+
+- `Dispatcher dispatcher`：度器器，⽤于调度后台发起的网络请求，有后台总请求数和单主机总请求数的控制。
+- `List<Protocol> protocols`：支持的应用层协议，即 HTTP/1.1、HTTP/2 等。
+- `List<ConnectionSpec> connectionSpecs`：连接规格，应⽤层⽀持的 Socket 设置，即使用明⽂文传输（⽤于 HTTP）还是某个版本的 TLS（用于 HTTPS）。
+- `List<Interceptor> interceptors`：配置的拦截器，⼤多数时候使⽤的 Interceptor 都应该配置到这。
+- `List<Interceptor> networkInterceptors`：直接和⽹络请求交互的 Interceptor 配置到这里，例如果你想查看返回的 301 报⽂文或者未解压的 Response Body，需要在这里看。interceptors 和 networkInterceptors 的本质区别就是在拦截器链中的位置不一致。
+- `CookieJar cookieJar`：管理 Cookie 的控制器。OkHttp 提供了 Cookie 存取的判断支持（即什么时候需要存 Cookie，什么时候需要读取 Cookie，但没有给出具体的存取实现。如果需要存取 Cookie，我们需要⾃⼰写实现。
+- `Cache cache`：Cache 存储的配置。默认是没有，如果需要用，需要⾃己配置出 Cache 存储的文件位置以及存储空间上限。
+- `HostnameVerifier hostnameVerifier`：⽤于验证 HTTPS 握手过程中下载到的证书所属者是否和⾃己要访问的主机名一致。
+- `CertificatePinner certificatePinner`：翻译为证书固定者，⽤于设置 HTTPS 握手过程中针对某个 Host 的 Certificate Public Key Pinner，即把⽹网站证书链中的每一个证书公钥直接拿来提前配置进 OkHttpClient ⾥去，以跳过本地根证书，直接从代码里进行认证。这种⽤法⽐较少见，⼀般⽤用于防止网站证书被⼈仿制。
+- `Authenticator authenticator`：⽤于⾃动重新认证。配置之后，在请求收到 401 状态码的响应时，会直接调用 authenticator，⼿动加入Authorization header 之后自动重新发起请求。
+- `boolean followRedirects`：遇到重定向的要求时，是否自动 follow。
+- `boolean followSslRedirects`：在重定向时，如果原先请求的是 http ⽽重定向的目标是 https，或者原先请求的是 https 而重定向的目标是 http，是否依然⾃动 follow。
+- `boolean retryOnConnectionFailure`：在请求失败的时候是否⾃动重试。注意，⼤多数的请求失败并不属于 OkHttp 所定义的「需要重试」，这种重试只适⽤于「同一个域名的多个 IP 切换重试」「Socket 失效重试」等情况。
+- `int connectTimeout`：建立连接（TCP 或 TLS）的超时时间。
+- `int readTimeout`：发起请求到读到响应数据的超时时间。
+- `int writeTimeout`：发起请求并被目标服务器接受的超时时间。（为什什么？因为有时候对方服务器可能由于某种原因而不读取你的 Request）
+- `ConnectionPool connectionPool`：连接池复用、回收算法
 
 ---
 ## 2 okhttp 同步与异步请求方法流程分析
@@ -187,7 +200,7 @@ OkHttp 在执行请求时，由多个拦截器组成的拦截器链处理，参�
     interceptors.addAll(client.interceptors());
     //重试和重定向
     interceptors.add(retryAndFollowUpInterceptor);
-    
+
     interceptors.add(new BridgeInterceptor(client.cookieJar()));
     //缓存拦截器
     interceptors.add(new CacheInterceptor(client.internalCache()));
@@ -237,54 +250,11 @@ OkHttp 在执行请求时，由多个拦截器组成的拦截器链处理，参�
 
 ### 内置的核心拦截器
 
-- RetryAndFollowUpInterceptor
-- BridgeInterceptor
-- CacheInterceptor
-- ConnectInterceptor
-- CallServerInterceptor
-
-#### RetryAndFollowUpInterceptor
-
-RetryAndFollowUpInterceptor 用于进行网络重连和失败重试
-
-- 重试有一定的数量限制
-- 针对特定的网络异常进行重试
-
-```java
-    if (++followUpCount > MAX_FOLLOW_UPS) {
-        streamAllocation.release();
-        throw new ProtocolException("Too many follow-up requests: " + followUpCount);
-    }
-```
-
-#### BridgeInterceptor
-
-用于补充 Http 请求必要的头部信息
-
-- 负责将用户构建的一个 Request 请求转化为能够进行网络访问的请求
-- 将这个符合网络请求的 Request 进行网络请求
-- 将网络请求回来的响应 Response 转化为用户可用的 Responnse
-
-#### CacheInterceptor
-
-- Cache类
-- Cache只处理 Get 缓存
-- DiskLRUCache
-- CacheStrategy
-
-#### ConnectInterceptor
-
-- 连接池概念
-- 打开与服务器之间的连接
-- 标准连接、隧道连接
-
-## 5 连接池
-
-- ConnectionPool
-- put、get方法
-- 连接池复用、回收算法
-
----
-## 6 CallServerInterceptor
-
-- HttpCodec 编码与解码
+- `RetryAndFollowUpInterceptor`：用于进行网络重连和失败重试，还有重定向处理。
+- `BridgeInterceptor`：它负责⼀一些不不影响开发者开发，但影响 HTTP 交互的⼀一些额外预处理理。
+  - 补充 Http 请求必要的头部信息，将用户构建的一个 Request 请求转化为能够进行网络访问的请求。
+  - 将网络请求回来的响应 Response 转化为用户可用的 Responnse。
+  - 自动 gzip 压缩解压缩处理。
+- `CacheInterceptor`：它负责 Cache 的处理。把它放在后面的网络交互相关 Interceptor 的前面的好处是，如果本地有了可用的 Cache，⼀个请求可以在没有发⽣实质网络交互的情况下就返回缓存结果，⽽完全不需要开发者做出任何的额外工作，让 Cache 更加无感知。
+- `ConnectInterceptor`：负责建⽴连接。在这里，OkHttp 会创建出网络请求所需要的TCP 连接（如果是 HTTP），或者是建立在 TCP 连接之上的 TLS 连接（如果是 HTTPS），并且会创建出对应的HttpCodec对象（用于编码解码 HTTP 请求）；
+- `CallServerInterceptor`：它负责实质的请求与响应的 I/O 操作，按照 HTTP 协议规范往 Socket ⾥写⼊请求数据，和从 Socket ⾥读取响应数据。
