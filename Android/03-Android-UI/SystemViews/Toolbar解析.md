@@ -79,9 +79,9 @@ Theme.AppCompat.Light.NoActionBar`
           <item name="actionOverflowButtonStyle">@style/OverFlowIcon</item>
             <!-- 设置 toolbar 溢出菜单的文字的颜色 -->
           <item name="android:textColor">@android:color/holo_red_dark</item>
-            <!-- 设置 显示在 toolbar上菜单文字的颜色 -->
+            <!-- 设置显示在 toolbar上菜单文字的颜色 -->
           <item name="actionMenuTextColor">@android:color/white</item>
-            <!-- 设置toolbar 弹出菜单的字体大小和溢出菜单文字大小-->
+            <!-- 设置 toolbar 弹出菜单的字体大小和溢出菜单文字大小-->
           <item name="android:textSize">15sp</item>
         </style>
     
