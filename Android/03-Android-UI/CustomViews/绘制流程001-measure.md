@@ -7,9 +7,9 @@
 
 `measure（测量） -> layout（布局） --> draw（绘制）`
 
-*   测量 确定一个View的大小
-*   布局 确定view在父容器上的位置
-*   绘制 绘制view 的内容
+- 测量 确定一个View的大小
+- 布局 确定view在父容器上的位置
+- 绘制 绘制view 的内容
 
 这个过程的启动时一个叫ViewRoot.java类中 `performTraversals()` 函数发起的，子view也可以通过一些方法来请求重新遍历view树，但是在遍历过程view树时并不是所有的view都需要重新测量，布局和绘制，在view树的遍历过程中，系统会问view是否需要重新绘制，如果需要才会真的去绘制view。
 >View有一个内部标识 mPrivateFlags，用来记录view是否需要进行某些操作
@@ -54,7 +54,6 @@
 
 由此可见一般情况下(非浮动的窗口)，初始值都是窗口的大小。
 
-
 接下来分析measure方法：
 
 ```java
@@ -97,6 +96,7 @@
 ```
 
 看一下获取建议的最小宽度逻辑：
+
 ```java
         protected int getSuggestedMinimumWidth() {
         //mMinWidth默认是0
@@ -115,7 +115,7 @@
         }
 ```
 
-**因此如果View没有背景那么getSuggestedMinimumWidth返回0，有背景根据设置背景的不同而不同。**
+**因此如果View没有背景那么getSuggestedMinimumWidth返回0，有背景根据设置背景的不同而不同**。
 
 然后是getDefaultSize的逻辑
 
@@ -206,7 +206,6 @@
 
 这里我们要明白一个概念，屏幕是有大小的，而View可以说是没有大小限制的，View可以很大很大(比如地图view中的MapView),只是view通过屏幕展示出来收到屏幕大小的限制而已。
 
-
 ---
 ## 4 LayoutParams
 
@@ -214,9 +213,7 @@ LayoutParams描述了View的大小，对其方式等信息，而每个ViewGroup�
 
 ![](index_files/aa989c8e-94e1-4087-a896-f6c0f992984c.png)
 
-可以看到确实是这样的，系统中的各中ViewGroup都有自己的LayoutParams实现，大部分都集成MarginLayoutParams。
-ViewGroup.LayoutParams是其他所有LayoutParams的父类，而MarginLayoutParams多了margin的特性，如果要考虑margin，就得继承MarginLayoutParams。
-
+可以看到确实是这样的，系统中的各中ViewGroup都有自己的LayoutParams实现，大部分都集成MarginLayoutParams。ViewGroup.LayoutParams是其他所有LayoutParams的父类，而MarginLayoutParams多了margin的特性，如果要考虑margin，就得继承MarginLayoutParams。
 
 每个处于ViewGroup的View必然有自己的LayoutParams对象，不管是从xml布局中layout的，还是用代码add进ViewGroup的，看一下LayoutParams的生成方式：
 
@@ -239,6 +236,7 @@ ViewGroup.LayoutParams是其他所有LayoutParams的父类，而MarginLayoutPara
 ```
 
 在代码addView中：
+
 ```java
     public void addView(View child, int index) {
             if (child == null) {
@@ -254,6 +252,7 @@ ViewGroup.LayoutParams是其他所有LayoutParams的父类，而MarginLayoutPara
             addView(child, index, params);
         }
 ```
+
 可以看到，View的LayoutParams可能在inflate中根据xml指定的属性被构建并指定，然后即使没有，只要一个View被添加到ViewGroup中，那么必然调用添加它的ViewGroup的相关方法来生成它的LayoutParams，所以说View的LayoutParams取决于它的父容器，而且如果在把一个View添加到ViewGroup前指定了LayoutParams参数，而这个LayoutParams与它的父容器不匹配就会报错，因为ViewGroup会检查被添加View的LayoutParams：
 
 这个方法是`checkLayoutParams`比如LinearLayout的checkLayoutParams方法：
@@ -266,30 +265,26 @@ ViewGroup.LayoutParams是其他所有LayoutParams的父类，而MarginLayoutPara
 
 所以在自定义ViewGroup的时候，如果我们需要实现自己的LayoutParams，那么最好重写相关的关于LayoutParams方法，而且在自定义ViewGroup时，如果我们需要考虑margin，可能会调用到下面一个方法`measureChildWithMargins`，有这么一段逻辑`final MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();`，如果我们用到measureChildWithMargins这个方法，又没有重写相关方法，必然会报错。因为ViewGroup默认的现实是构造ViewGroup.LayoutParams.
 
-
 如果自定义LayoutParams一般需要重写的方法有：
 
 ```java
     //1：生成默认的布局参数
-
-    generateDefaultLayoutParams()
+    android.view.ViewGroup.LayoutParams generateDefaultLayoutParams()
 
 
     //2：生成布局参数 ，从属性配置中生成我们的布局参数
-
     android.view.ViewGroup.LayoutParams generateLayoutParams(android.view.ViewGroup.LayoutParams p){
                                  return new CustomLayoutParams(p);
-                 }
+    }
 
     android.view.ViewGroup.LayoutParams generateLayoutParams(AttributeSet attrs){
                                    return new CustomLayoutParams(getContext() , attrs);
-                  }
+    }
 
     //3：检查当前布局参数是否是我们定义的类型这在code声明布局参数时常常用到
-
     protected boolean checkLayoutParams(android.view.ViewGroup.LayoutParams p) {
                         return p instanceof CustomLayoutParams;
-                     }
+    }
 ```
 
 ### 4.1 LayoutParams中指定的宽高与测量的关系
@@ -305,6 +300,7 @@ LayoutParams.width可以取值为：
 这些值都可以通过xml属性指定，或者在代码中指定
 
 而在ViewGroup方法中提供了根据这些值来获取测量规格的方法：
+
 ```java
      public static int getChildMeasureSpec(int spec, int padding, int childDimension) {
             //测量规格中指定的模式和尺寸
@@ -315,7 +311,7 @@ LayoutParams.width可以取值为：
             //用于保存结果的临时变量
             int resultSize = 0;
             int resultMode = 0;
-    //这里对父容器自身的模式进行分类处理
+            //这里对父容器自身的模式进行分类处理
             switch (specMode) {
             //父容器的mode是精确的
             case MeasureSpec.EXACTLY:
@@ -339,7 +335,7 @@ LayoutParams.width可以取值为：
                     resultMode = MeasureSpec.AT_MOST;
                 }
                 break;
-    
+
             //父容器的mode是AT_MOST
             case MeasureSpec.AT_MOST:
             //只要子view指定它要精确的数据，他的尺寸就是他要的尺寸，模式就是EXACTLY
@@ -393,17 +389,15 @@ LayoutParams.width可以取值为：
         }
 ```
 
-经过上面的分析，我们可以得出结论：**View的测量规格由父容器和自身指定的宽高属性共同决定。**
+经过上面的分析，我们可以得出结论：**View的测量规格由父容器和自身指定的宽高属性共同决定**。
 
 如下图所示：
 
 ![](index_files/7c299f54-edfc-442f-9e2b-cbddfc89351a.png)
 
-
 ### 4.2 ViewGroup的测量职责
 
-ViewGroup并没有重写onMeasure方法，但是分析系统的Layout，发现他们的ViewGroup方法中都有对子view进行测量，所以ViewGroup作为view的容器，不仅仅是来测量自己，还需要对子view进行测量
-
+ViewGroup并没有重写onMeasure方法，但是分析系统的Layout，发现他们的ViewGroup方法中都有对子view进行测量，所以ViewGroup作为view的容器，不仅仅是来测量自己，还需要对子view进行测量。
 
 接下来分析一下ViewGroup提供给我们的测量方法：
 
@@ -453,7 +447,7 @@ measureChild方法用来测量单个子view，但是不考虑子view的margin
                 int parentWidthMeasureSpec, int widthUsed,
                 int parentHeightMeasureSpec, int heightUsed) {
             final MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
-    
+
             final int childWidthMeasureSpec = getChildMeasureSpec(parentWidthMeasureSpec,
                     mPaddingLeft + mPaddingRight + lp.leftMargin + lp.rightMargin
                             + widthUsed, lp.width);
@@ -506,7 +500,7 @@ resolveSize是View内部的方法，resolveSizeAndState在API11添加
         }
 ```
 
-**关于childMeasuredState**：childMeasuredState是View.getMeasuredState()的返回值，在测量时使用View.combineMeasuredStates（）来组合它的子View测量的状态，比如：
+**关于childMeasuredState**：childMeasuredState是 `View.getMeasuredState()` 的返回值，在测量时使用 `View.combineMeasuredStates()`来组合它的子View测量的状态，比如：
 
 ```java
 int childState = 0;
@@ -519,11 +513,11 @@ for (int i = 0; i < count; i++) {
     }
 }
 ```
+
 在大多数情况下，可以简单地传递0。子View的状态目前仅用于判断一个视图是否以比期望的size更小的值来测量，在需要需要时候，这个信息被用来调整对话框的大小，所以一般不需要关心这个值。具体参考[whats-the-utility-of-the-third-argument-of-view-resolvesizeandstate](https://stackoverflow.com/questions/13650903/whats-the-utility-of-the-third-argument-of-view-resolvesizeandstate)
 
-
 ---
-## 5 总结：
+## 5 总结
 
 关于measure的相关方法都已经理了一遍，我们大概可以理清View树的测量流程了：
 
@@ -532,20 +526,14 @@ for (int i = 0; i < count; i++) {
 - View作为单个的控制，只需要对自身进行测量，自身的职责就是在各种测量模式下合理的设置自身的宽高，对于自定义view而言，需要处理好wrap_content模式下的测量，因为系统只支持match_parent模式。
 - ViewGroup作为一个View，但是同时它也是View的容器，不仅仅需要对自身进行测量，还需要对它内部的子view进行测量，当测量模式是EXACTLY它的尺寸是固定的，但是当它的测量模式是AT_MOST时，他需要根据子view的大小和自身的测量规格共同来决定自身的大小。
 
-
 ### View测量常用方法
 
-```
-    - onMeasure
-    - getSuggestedMinimumWidth
-    - getDefaultSize
-    - resolveSize、resolveSizeAndState
-    - getChildMeasureSpec
-    - measureChildren
-    - measureChild
-    - measureChildWithMargins
-    - setMeasuredDimension
-```
-
-
-
+- onMeasure
+- getSuggestedMinimumWidth
+- getDefaultSize
+- resolveSize、resolveSizeAndState
+- getChildMeasureSpec
+- measureChildren
+- measureChild
+- measureChildWithMargins
+- setMeasuredDimension
