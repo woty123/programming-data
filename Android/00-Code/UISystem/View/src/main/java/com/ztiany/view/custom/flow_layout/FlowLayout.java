@@ -1,5 +1,6 @@
 package com.ztiany.view.custom.flow_layout;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -24,19 +25,13 @@ public class FlowLayout extends ViewGroup {
 
     public FlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
     }
 
-    private void init() {
-        mChildrenList = new ArrayList<>();
-    }
-
-
-    private List<Line> mChildrenList;
+    private List<Line> mChildrenList = new ArrayList<>();
 
     @Override
-
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
@@ -55,6 +50,7 @@ public class FlowLayout extends ViewGroup {
         for (int i = 0; i < childCount; i++) {
 
             child = getChildAt(i);
+
             if (child.getVisibility() == View.GONE) {
                 continue;
             }
@@ -126,7 +122,7 @@ public class FlowLayout extends ViewGroup {
 
         View child;
         MarginLayoutParams mlp;
-        Line line = new Line();
+        @SuppressLint("DrawAllocation") Line line = new Line();
 
         for (int i = 0; i < childCount; i++) {
             child = getChildAt(i);
@@ -164,6 +160,7 @@ public class FlowLayout extends ViewGroup {
 
         int left = getPaddingLeft();
         int top = getPaddingTop();
+
         for (Line theLine : mChildrenList) {
 
             for (View view : theLine.mViews) {
@@ -182,8 +179,8 @@ public class FlowLayout extends ViewGroup {
             left = getPaddingLeft();
             top += theLine.lineHeight;
         }
-    }
 
+    }
 
     @Override
     protected LayoutParams generateDefaultLayoutParams() {
@@ -214,4 +211,5 @@ public class FlowLayout extends ViewGroup {
             mViews.add(view);
         }
     }
+
 }
