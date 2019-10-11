@@ -59,12 +59,14 @@
     </declare-styleable>
 
 
-
-
     <declare-styleable name="SquareEnhanceLayout">
         <attr name="sel_orientation" format="integer"/>
         <attr name="sel_column" format="integer"/>
         <attr name="sel_row" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="MaterialEditText" >
+        <attr name="useFloatingLabel" format="boolean" />
     </declare-styleable>
 
 </resources>

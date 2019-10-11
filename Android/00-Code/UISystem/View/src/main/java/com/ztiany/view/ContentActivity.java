@@ -34,6 +34,7 @@ public class ContentActivity extends AppCompatActivity {
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mToolbar.setContentInsetStartWithNavigation(0);
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {

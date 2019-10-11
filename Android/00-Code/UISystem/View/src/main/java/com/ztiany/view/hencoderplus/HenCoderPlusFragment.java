@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.ztiany.view.R;
 import com.ztiany.view.draw.canvas.DashView;
 import com.ztiany.view.hencoderplus.camera.AnimationCameraView;
 import com.ztiany.view.hencoderplus.camera.CameraView;
@@ -53,6 +54,8 @@ public class HenCoderPlusFragment extends Fragment {
         items.add(new Pair<>("PieChart", new PieChart(requireContext(), null)));
 
         items.add(new Pair<>("PieChart", new DrawableView(requireContext())));
+
+        items.add(new Pair<>("MaterialEditText", View.inflate(requireContext(), R.layout.hencoder_layout_material_edittext, null)));
     }
 
     @Nullable

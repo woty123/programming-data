@@ -2,6 +2,7 @@ package com.ztiany.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.RecyclerView;
@@ -22,8 +23,9 @@ class ItemAdapter extends RecyclerView.Adapter {
         mItems = items;
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Button button = new AppCompatButton(mContext);
         button.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         return new RecyclerView.ViewHolder(button) {
@@ -31,7 +33,6 @@ class ItemAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final Item item = mItems.get(position);
         Button button = (Button) holder.itemView;
@@ -52,4 +53,5 @@ class ItemAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return mItems == null ? 0 : mItems.size();
     }
+
 }

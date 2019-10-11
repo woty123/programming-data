@@ -1,6 +1,7 @@
 package com.ztiany.view;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -24,10 +25,10 @@ public abstract class BaseViewPagerFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TabLayout tableLayout = (TabLayout) view.findViewById(R.id.tab);
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.view_pager);
+        TabLayout tableLayout = view.findViewById(R.id.tab);
+        ViewPager viewPager = view.findViewById(R.id.view_pager);
         viewPager.setAdapter(getAdapter());
         tableLayout.setupWithViewPager(viewPager, true);
     }
@@ -53,17 +54,18 @@ public abstract class BaseViewPagerFragment extends Fragment {
         }
 
         @Override
-        public boolean isViewFromObject(View view, Object object) {
+        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
             return view == object;
         }
 
         @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
+        public void destroyItem(ViewGroup container, int position, @NonNull Object object) {
             container.removeView((View) object);
         }
 
+        @NonNull
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(@NonNull ViewGroup container, int position) {
             View itemView = getItemView(container, position);
             container.addView(itemView);
             return itemView;
@@ -71,4 +73,5 @@ public abstract class BaseViewPagerFragment extends Fragment {
 
         protected abstract View getItemView(ViewGroup container, int position);
     }
+
 }

@@ -19,4 +19,5 @@ public class AppContext extends Application{
         super.onCreate();
         BaseUtils.init(this);
     }
+
 }
