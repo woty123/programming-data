@@ -43,7 +43,6 @@ public class LockPatternView extends View {
         initPoints();
     }
 
-
     private int mWidth, mHeight;//宽高必须一致
     private int mOffsetX, mOffsetY;//偏移值
     private float mCircleRadius = 0.07f;
@@ -232,7 +231,7 @@ public class LockPatternView extends View {
                 } else if (!mModeInEdit) {//输入密码验证模式
                     if (checkSelected()) {
                         if (mLockPatternListener != null) {
-                            mLockPatternListener.onSurress();
+                            mLockPatternListener.onSuccess();
                         }
                     } else {
                         errorPotions();
@@ -346,7 +345,7 @@ public class LockPatternView extends View {
 
         void onLittle();
 
-        void onSurress();
+        void onSuccess();
     }
 
     public void reset() {
@@ -360,27 +359,26 @@ public class LockPatternView extends View {
 
     }
 
-    class Point {
+    static class Point {
 
-
-        public static final int STATE_NORMAL = 1;
-        public static final int STATE_ERROR = 2;
-        public static final int STATE_COMPLETE = 3;
+        static final int STATE_NORMAL = 1;
+        static final int STATE_ERROR = 2;
+        static final int STATE_COMPLETE = 3;
         private int mState, mX, mY, index;
 
-        public int getState() {
+        int getState() {
             return mState;
         }
 
-        public void setState(@PointState int state) {
+        void setState(@PointState int state) {
             mState = state;
         }
 
-        public int getIndex() {
+        int getIndex() {
             return index;
         }
 
-        public void setIndex(int index) {
+        void setIndex(int index) {
             this.index = index;
         }
 
@@ -403,21 +401,17 @@ public class LockPatternView extends View {
         public Point() {
         }
 
-        public Point(int x, int y) {
+        Point(int x, int y) {
             mX = x;
             mY = y;
-
             mState = STATE_NORMAL;
         }
 
-        public void setXY(int x, int y) {
+        void setXY(int x, int y) {
             mX = x;
             mY = y;
         }
-
 
     }
 
 }
-
-

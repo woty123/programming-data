@@ -69,4 +69,5 @@ public class ExtendViewUsefulMethodView extends View {
     public ExtendViewUsefulMethodView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
+
 }

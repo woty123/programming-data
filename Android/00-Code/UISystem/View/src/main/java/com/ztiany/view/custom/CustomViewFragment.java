@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.ztiany.view.R;
 import com.ztiany.view.custom.ruler.RulerView;
 
 import java.util.ArrayList;
@@ -49,7 +50,9 @@ public class CustomViewFragment extends Fragment {
         mViewList.add(new Ring(getContext(), null));
         mViewList.add(new RulerView(getContext()));
         mViewList.add(new SquareEnhanceLayout(getContext()));
-        mViewList.add(new ZoomImageView(getContext()));
+        ZoomImageView imageView = new ZoomImageView(getContext());
+        imageView.setImageResource(R.drawable.img_girl_01);
+        mViewList.add(imageView);
         mViewList.add(new SurfaceViewSinFun(getContext()));
         setHasOptionsMenu(true);
     }

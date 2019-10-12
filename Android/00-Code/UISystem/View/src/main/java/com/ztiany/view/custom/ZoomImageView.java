@@ -36,10 +36,10 @@ public class ZoomImageView extends AppCompatImageView implements ViewTreeObserve
         mMatrix = new Matrix();
         setScaleType(ScaleType.MATRIX);
         mScaleGestureDetector = new ScaleGestureDetector(getContext(), this);
+
         mGestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onDoubleTap(MotionEvent e) {
-
                 float x = e.getX();
                 float y = e.getY();
 
@@ -49,7 +49,6 @@ public class ZoomImageView extends AppCompatImageView implements ViewTreeObserve
                     post(new AutoScaleRunnable(mInitScale, x, y));
                 }
                 return super.onDoubleTap(e);
-
             }
         });
         setOnTouchListener(this);
@@ -58,6 +57,7 @@ public class ZoomImageView extends AppCompatImageView implements ViewTreeObserve
 
     private int mWidth;
     private int mHeight;
+
     private boolean mOnce;
     private Matrix mMatrix;
     private ScaleGestureDetector mScaleGestureDetector;
@@ -67,7 +67,6 @@ public class ZoomImageView extends AppCompatImageView implements ViewTreeObserve
     private float mTouchSlop;
     private float mMaxScale;
 
-
     private int mLastPointerCount;//上一个多点触控的位置
     private float mLastY, mLastX;
     private boolean isCheckLeftAndRight;
@@ -76,16 +75,16 @@ public class ZoomImageView extends AppCompatImageView implements ViewTreeObserve
     private GestureDetector mGestureDetector;
 
     private class AutoScaleRunnable implements Runnable {
+
         private float targetScale;
         private float x;
         private float y;
         private float temp;
 
-        public static final float BIG_OFFSET = 1.07F;
-        public static final float SMALL_OFFSET = 0.97F;
+        static final float BIG_OFFSET = 1.07F;
+        static final float SMALL_OFFSET = 0.97F;
 
-
-        public AutoScaleRunnable(float targetScale, float x, float y) {
+        AutoScaleRunnable(float targetScale, float x, float y) {
             this.targetScale = targetScale;
             this.x = x;
             this.y = y;
@@ -98,7 +97,6 @@ public class ZoomImageView extends AppCompatImageView implements ViewTreeObserve
 
         @Override
         public void run() {
-
             mMatrix.postScale(temp, temp, x, y);
             checkBorderAndCenter();
             setImageMatrix(mMatrix);
@@ -110,10 +108,8 @@ public class ZoomImageView extends AppCompatImageView implements ViewTreeObserve
                 checkBorderAndCenter();
                 setImageMatrix(mMatrix);
             }
-
         }
     }
-
 
     @Override
     protected void onAttachedToWindow() {
@@ -198,7 +194,6 @@ public class ZoomImageView extends AppCompatImageView implements ViewTreeObserve
                     scaleFactor = mInitScale / scale;
                 }
 
-
                 mMatrix.postScale(scaleFactor, scaleFactor, detector.getFocusX(), detector.getFocusY());
                 checkBorderAndCenter();
                 setImageMatrix(mMatrix);
@@ -211,7 +206,7 @@ public class ZoomImageView extends AppCompatImageView implements ViewTreeObserve
         RectF matrixRectF = getMatrixRectF();//获取的是图片在控件内的坐标
         Log.d("ZoomImageView", "matrixRectF:" + matrixRectF);
         float deltaX = 0;
-        float delteY = 0;
+        float deltaY = 0;
         int width = getWidth();
         int height = getHeight();
         Log.d("ZoomImageView", "width():" + (matrixRectF.width() > width));
@@ -223,16 +218,14 @@ public class ZoomImageView extends AppCompatImageView implements ViewTreeObserve
             if (matrixRectF.right < width) {
                 deltaX = width - matrixRectF.right;
             }
-
         }
-
 
         if (matrixRectF.height() > height) {
             if (matrixRectF.top > 0) {
-                delteY = -matrixRectF.top;
+                deltaY = -matrixRectF.top;
             }
             if (matrixRectF.bottom < height) {
-                delteY = height - matrixRectF.bottom;
+                deltaY = height - matrixRectF.bottom;
             }
         }
 
@@ -241,10 +234,10 @@ public class ZoomImageView extends AppCompatImageView implements ViewTreeObserve
             deltaX = width / 2 - matrixRectF.right + matrixRectF.width() / 2;
         }
         if (matrixRectF.height() < height) {
-            delteY = height / 2 - matrixRectF.bottom + matrixRectF.height() / 2;
+            deltaY = height / 2 - matrixRectF.bottom + matrixRectF.height() / 2;
         }
 
-        mMatrix.postTranslate(deltaX, delteY);
+        mMatrix.postTranslate(deltaX, deltaY);
     }
 
     @Override
@@ -256,7 +249,6 @@ public class ZoomImageView extends AppCompatImageView implements ViewTreeObserve
     public void onScaleEnd(ScaleGestureDetector detector) {
 
     }
-
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -271,6 +263,7 @@ public class ZoomImageView extends AppCompatImageView implements ViewTreeObserve
             x += event.getX(i);
             y += event.getY(i);
         }
+
         x = x / pointerCount;
         y = y / pointerCount;
 
@@ -320,10 +313,8 @@ public class ZoomImageView extends AppCompatImageView implements ViewTreeObserve
                 break;
         }
 
-
         return true;
     }
-
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
@@ -333,10 +324,8 @@ public class ZoomImageView extends AppCompatImageView implements ViewTreeObserve
                 getParent().requestDisallowInterceptTouchEvent(true);
             } else {
                 getParent().requestDisallowInterceptTouchEvent(false);
-
             }
         }
-
         return super.dispatchTouchEvent(event);
     }
 
@@ -366,8 +355,6 @@ public class ZoomImageView extends AppCompatImageView implements ViewTreeObserve
         }
 
         mMatrix.postTranslate(deltaX, deltaY);
-
-
     }
 
     private boolean isMove(float dx, float dy) {
@@ -380,14 +367,12 @@ public class ZoomImageView extends AppCompatImageView implements ViewTreeObserve
         if (mMatrix != null) {
             mMatrix.getValues(value);
         }
-
-        return value[Matrix.MSCALE_X];//这里x。一样的
+        //这里x。一样的
+        return value[Matrix.MSCALE_X];
     }
 
     /**
      * 获取图片缩小后的 宽高，l t r b
-     *
-     * @return
      */
     public RectF getMatrixRectF() {
         RectF f = new RectF();

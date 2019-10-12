@@ -49,7 +49,7 @@ scrollTo/scrollBy方法虽然导致view的内容区域移动，但是一般不�
 调用 scrollTo/scrollBy 滑动的是View的content，影响的是View的 **mScrollX** 与 **mScrollY**。这时将触发 **onScrollChanged**，在ViewGroup中调用scrollTo/scrollBy，不会对子view的各种参数如：`top,left,x,y` 等造成影响。mScrollX、mScrollY就是 **视图的内容的偏移量，而不是视图相对于其他容器或者视图的偏移量** 。mScrollX的值总是等于View的左边缘与View的内容左边缘的水平方向距离。mScrollY类似。
 
 ---
-## 2offsetTopAndBottom和offsetLeftAndRight
+## 2 offsetTopAndBottom 和 offsetLeftAndRight
 
 offsetTopAndBottom 和o ffsetLeftAndRight 是实实在在的改变View在ViewGroup中的位置。
 
@@ -86,7 +86,6 @@ offsetTopAndBottom 和o ffsetLeftAndRight 是实实在在的改变View在ViewGro
 ### 对View内部变量的影响
 
 view自身调用了offsetTopAndBottom和offsetLeftAndRight方法时，内部其实是改变View的**top，bottom，left，right**的值，所以包括其x，y都会发生改变
-
 
 ---
 ## 3，LayoutParams
@@ -184,10 +183,12 @@ OverScroller是对Scroller的功能增强，其是它们只是一个辅助计算
 `invalidate()-->onDraw()-->computeScroll()`
 
 ![](index_files/1ada0a79-077d-457d-b771-58b24bf26b78.jpg)
+
 具体实现的方式就不贴了
 
 ---
 ## 6 ViewDragHelper
+
 ViewDragHelper位于support v4包中，DrawerLayoou和SlidingPaneLayout就是用ViewDrawHelper实现的，ViewDragHelper的功能非常强大，会在另外的笔记中详细学习，其内部也是使用的offsetTopAndBottom和offsetLeftAndRight方法。
 
 ---

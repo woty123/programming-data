@@ -11,7 +11,9 @@ import android.view.MotionEvent;
 
 import com.ztiany.view.utils.UnitConverter;
 
-
+/**
+ * 自定义控件其实很简单1/3：https://blog.csdn.net/aigestudio/article/details/41799811
+ */
 public class MatrixView extends AppCompatImageView {
 
     private Matrix mSaveMatrix;//保存操作之后的矩阵
@@ -127,4 +129,5 @@ public class MatrixView extends AppCompatImageView {
     private boolean hasDrawable() {
         return getDrawable() instanceof BitmapDrawable;
     }
+
 }

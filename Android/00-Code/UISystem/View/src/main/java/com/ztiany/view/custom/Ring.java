@@ -16,9 +16,8 @@ import java.util.Random;
 
 public class Ring extends View {
 
-    private float storkeWidht;// 线条宽度
-    private int[] colors = {Color.BLACK, Color.CYAN, Color.DKGRAY,
-            Color.GREEN, Color.RED, Color.MAGENTA, Color.YELLOW, Color.LTGRAY};
+    private int[] colors = {Color.BLACK, Color.CYAN, Color.DKGRAY, Color.GREEN, Color.RED, Color.MAGENTA, Color.YELLOW, Color.LTGRAY};
+
     private List<Circle> cs;
     private boolean isDrawing;// 是否还在画
     private Random random;
@@ -30,7 +29,6 @@ public class Ring extends View {
         random = new Random();
         cs = new ArrayList<>();
     }
-
 
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
@@ -62,12 +60,9 @@ public class Ring extends View {
         }
     }
 
-    private Circle circle;
-
     private void addCircleToList(int cx, int cy) {
-        circle = new Circle();
+        Circle circle = new Circle();
         paint = new Paint();
-        paint.setStrokeWidth(storkeWidht);
         paint.setColor(colors[random.nextInt(8)]);
         paint.setAntiAlias(true);// 抗锯齿
         paint.setStyle(Style.STROKE);// 空心圆圈;
@@ -106,12 +101,10 @@ public class Ring extends View {
                 isDrawing = false;
             }
         }
-
     }
 
     // 开始测量
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
@@ -124,10 +117,11 @@ public class Ring extends View {
         super.onDraw(canvas);
     }
 
-    private class Circle {
+    private static class Circle {
         Paint p;// 画笔
         int cx;// 圆心坐标
         int cy;//
         float radius;// 半径
     }
+
 }

@@ -21,6 +21,7 @@ import com.ztiany.view.hencoderplus.camera.CameraView;
 import com.ztiany.view.hencoderplus.drawable.DrawableView;
 import com.ztiany.view.hencoderplus.text.ImageTextView;
 import com.ztiany.view.hencoderplus.text.SportView;
+import com.ztiany.view.hencoderplus.touch.ScalableImageView;
 import com.ztiany.view.hencoderplus.views.AvatarView;
 import com.ztiany.view.hencoderplus.views.AvatarView2;
 import com.ztiany.view.hencoderplus.views.PieChart;
@@ -56,6 +57,8 @@ public class HenCoderPlusFragment extends Fragment {
         items.add(new Pair<>("PieChart", new DrawableView(requireContext())));
 
         items.add(new Pair<>("MaterialEditText", View.inflate(requireContext(), R.layout.hencoder_layout_material_edittext, null)));
+
+        items.add(new Pair<>("ScalableImageView", new ScalableImageView(getContext(), null)));
     }
 
     @Nullable
