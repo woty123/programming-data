@@ -7,7 +7,7 @@
 - VelocityTracker 速率跟踪器
 
 ---
-## 1 Scroller与VelocityTracker
+## 1 Scroller 与 VelocityTracker
 
 Scroller用于实现滑动和fling效果，但是其本身并没有滑动的功能，它只是帮助对需要实现的滑动效果进行计算。下面学习怎么使用Scroller。
 
@@ -83,10 +83,9 @@ Scroller用于实现滑动和fling效果，但是其本身并没有滑动的功�
 
 invalidate会导致View的重绘，而在重绘过程中computeScroll会被调用，默认它是一个空实现，主要的作用就是用来实现滑动，具体是如何调用的，可以看看源码。
 
-
 ### Fling
 
- 当手指快速划过屏幕，然后快速立刻屏幕时，系统会判定用户执行了一个Fling手势。这个Fling的手势应用非常广泛，比如实现类似ScrollView的快速拖动后还会惯性滑动一段距离，还有ViewPager的Fling翻页等，而实现Fling需要借助一个类`VelocityTracker`来计算用户手指滑过屏幕的速度。下面通过一个例子来学习如何实现Fling
+当手指快速划过屏幕，然后快速立刻屏幕时，系统会判定用户执行了一个Fling手势。这个Fling的手势应用非常广泛，比如实现类似ScrollView的快速拖动后还会惯性滑动一段距离，还有ViewPager的Fling翻页等，而实现Fling需要借助一个类`VelocityTracker`来计算用户手指滑过屏幕的速度。下面通过一个例子来学习如何实现Fling
 
 比如下面效果：
 
@@ -95,6 +94,7 @@ invalidate会导致View的重绘，而在重绘过程中computeScroll会被调�
 可能效果不是很明显，但是我的手指只是快速的划了一个屏幕就松开了，剩下的惯性滑动都是依靠Scroller的fing完成的，
 
 主要的代码如下：
+
 ```java
       private VelocityTracker mVelocityTracker;
       private int mScaledMinimumFlingVelocity;
@@ -180,12 +180,11 @@ invalidate会导致View的重绘，而在重绘过程中computeScroll会被调�
 
 ### VelocityTracker说明
 
-用VelocityTracker的静态方法`obtion`可以得到一个VelocityTracker实例，然后在一系列事件分发中不断的吧MotionEvent传递给VelocityTracker进行分析，最后通过computeCurrentVelocity方法计算x和y方向上的速率，当计算完一次速率后应该调用其clear方法清除之前的状态，而不再需要时应该调用VelocityTracker的recycler把实例放入回收池中。
+用 VelocityTracker 的静态方法`obtion`可以得到一个VelocityTracker实例，然后在一系列事件分发中不断的吧MotionEvent传递给VelocityTracker进行分析，最后通过computeCurrentVelocity方法计算x和y方向上的速率，当计算完一次速率后应该调用其clear方法清除之前的状态，而不再需要时应该调用VelocityTracker的recycler把实例放入回收池中。
 
-computeCurrentVelocity(int units)说明：其中units是单位表示， 1代表px/毫秒, 1000代表1000px/秒。
+`computeCurrentVelocity(int units)`说明：其中units是单位表示， 1 代表`px/毫秒`, 1000 代表 `1000px/秒`。
 
-
-在使用VelocityTracker获取到速率后，应该使用ViewConfiguration的getScaledMinimumFlingVelocity方法的返回值做对比，当数据大于这个值时才应该算作是一个fling动作。
+在使用VelocityTracker获取到速率后，应该使用 ViewConfiguration 的 getScaledMinimumFlingVelocity 方法的返回值做对比，当数据大于这个值时才应该算作是一个 fling 动作。
 
 ---
 ## 2 OverScroll
@@ -193,6 +192,7 @@ computeCurrentVelocity(int units)说明：其中units是单位表示， 1代表p
 OverScroll用于实现类似ios的滑动，在滑到边缘时依然可以滑动，松开手后自动回到开始的位置，在Android中实现这个也是比较容易的，主要涉及到的方法如下：
 
 ### View的overScrollBy方法
+
 ```java
     protected boolean overScrollBy(int deltaX, int deltaY,
                 int scrollX, int scrollY,
@@ -200,6 +200,7 @@ OverScroll用于实现类似ios的滑动，在滑到边缘时依然可以滑动�
                 int maxOverScrollX, int maxOverScrollY,
                 boolean isTouchEvent)
 ```
+
 参数说明：
 
 - deltaX和deltaY 分别是需要滑动的距离
@@ -210,19 +211,22 @@ OverScroll用于实现类似ios的滑动，在滑到边缘时依然可以滑动�
 
 ![](index_files/9c7a7fff-60d8-47be-a00f-9f1200204df2.png)
 
-
-###  View的onOverScrolled方法
+### View的onOverScrolled方法
 
 当调用overScrollBy时，overScrollBy内部会进行一些计算然后调用onOverScrolled，而我们需要在onOverScrolled中完成内容的滑动。
 
+```java
     onOverScrolled(int scrollX, int scrollY, boolean clampedX, boolean clampedY) {}
+```
 
 - scrollX/scrollY表示需要scrollTo的x/y位置
 - clampedX/clampedY表示是否已经OverScroll到最大值，如果已经OverScroll到最大值应该调用OverScroll的springBack方法回弹到原来的位置。
 
 ### OverScroll的springBack方法
 
+```java
      public boolean springBack(int startX, int startY, int minX, int maxX, int minY, int maxY)
+```
 
 参数说明：
 
@@ -234,13 +238,14 @@ OverScroll用于实现类似ios的滑动，在滑到边缘时依然可以滑动�
 
 ![](index_files/844d8022-5769-48da-8500-532102fb154a.png)
 
-
 ### OverScroll的fling方法
 
 OverScroll的fling方法中有一个八个参数的重载方法，用于实现OverScroll:
 
+```java
     public void fling(int startX, int startY, int velocityX, int velocityY,
                 int minX, int maxX, int minY, int maxY, int overX, int overY) {
+```
 
 只是最后添加了两个参数overX和overY，这两个参数和overScrollBy方法的overScroll参数是一样的意思，就不再多说了。
 
@@ -598,15 +603,3 @@ EdgeEffect用于实现边缘拖动的发光效果，具体可以参考系统的S
 - [Android Scroll详解(一)：基础知识](http://www.jianshu.com/p/e6d858b4bcb4) 
 - [Android Scroll详解(二)：OverScroller实战](http://www.jianshu.com/p/293d0c2f56cb)
 - [Android Scroll详解(三)：Android 绘制过程详解](http://ztelur.github.io/2016/04/21/Android-Scroll%E8%AF%A6%E8%A7%A3-%E4%B8%89-%EF%BC%9AAndroid-%E7%BB%98%E5%88%B6%E8%BF%87%E7%A8%8B%E8%AF%A6%E8%A7%A3/)
-
-
-
-
-
-
-
-
-
-
-
-
