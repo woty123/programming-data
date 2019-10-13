@@ -71,7 +71,7 @@
 - [事件分发005-View滑动冲突常用解决方案](03-Android-UI/CustomViews/事件分发005-View滑动冲突常用解决方案.md)
 - [事件分发006-GestureDetector学习](03-Android-UI/CustomViews/事件分发006-GestureDetector学习.md)
 - [事件分发007-ScaleGestureDetector](03-Android-UI/CustomViews/事件分发007-ScaleGestureDetector.md) **TODO**
-- [事件分发008-MotionEvent详解与多指滑动](03-Android-UI/CustomViews/事件分发008-MotionEvent详解与多指滑动.md)
+- [事件分发008-MotionEvent与多指滑动](03-Android-UI/CustomViews/事件分发008-MotionEvent与多指滑动.md)
 - [事件分发009-嵌套滑动研究](03-Android-UI/CustomViews/事件分发009-嵌套滑动研究.md)
 - [事件分发010-KeyEvent事件分发流程](03-Android-UI/CustomViews/事件分发010-KeyEvent事件分发流程.md)
 - [事件分发011-系统输入事件](03-Android-UI/CustomViews/事件分发011-系统输入事件.md)

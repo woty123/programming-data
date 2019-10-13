@@ -265,13 +265,11 @@
             }
         }
     
-    
         private void onSecondaryPointerDown(MotionEvent ev) {
             final int index = MotionEventCompat.getActionIndex(ev);
             mLastY = MotionEventCompat.getY(ev, index);
             mActivePointerId = MotionEventCompat.getPointerId(ev, index);
         }
-    
     
         @Override
         public boolean onTouchEvent(MotionEvent ev) {
@@ -336,7 +334,7 @@
                     Log.d(TAG + "his", "ev.getPointerId(p):" + ev.getPointerId(p));
                     Log.d(TAG + "his", "ev.getPointerId(p):" + ev.getHistoricalX(p, h));
                     Log.d(TAG + "his", "ev.getPointerId(p):" + ev.getHistoricalY(p, h));
-    
+
                 }
             }
             Log.d(TAG, "ev.getEventTime():" + ev.getEventTime());
@@ -347,3 +345,26 @@
         }
     }
 ```
+
+## 3 多点触控总结
+
+### 使用 `MotionEvent.getActionMasked()` 获取各种触摸事件类型
+
+- ACTION_DOWN 第一个⼿指按下（之前没有任何手指触摸到 View）。
+- ACTION_UP 最后⼀个⼿指抬起（抬起之后没有任何手指触摸到 View，这个⼿指不一定是触发 ACTION_DOWN 的那个手指）。
+- ACTION_MOVE 有手指发生移动。
+- ACTION_POINTER_DOWN 额外⼿指按下（按下之前已经有别的⼿指触摸到 View）。
+- ACTION_POINTER_UP 有⼿指抬起，但不是最后⼀个（抬起之后，仍然还有别的手指在触摸着 View）。
+
+### 多点触控处理的三种类型
+
+- **接力型**：同⼀时刻只有一个 pointer 起作用，即最新的 pointer。
+  - 比如：ListView、RecyclerView，以及上面示例。
+  - 实现⽅式：在 ACTION_POINTER_DOWN 和 ACTION_POINTER_UP 时记录下最新的 pointer，在之后的 ACTION_MOVE 事件中使用这个 pointer 来判断位置。
+- **配合型 / 协作型**：所有触摸到 View 的 pointer 共同起作用。
+  - 比如：ScaleGestureDetector，以及 GestureDetector 的 onScroll() 方法判断。
+  - 实现方式：在每个 DOWN、POINTER_DOWN、POINTER_UP、UP 事件中使用所有 pointer 的坐标来共同更新焦点坐标，并在 MOVE 事件中使用所有 pointer 的坐标来判断位置。
+- **独立处理型**：各个 pointer 做不同的事，互不影响。
+  - 比如：支持多画笔的画板应⽤。
+  - 实现方式：在每个 DOWN、POINTER_DOWN 事件中记录下每个 pointer 的 id，在 MOVE 事件中使⽤ id 对它们进行跟踪。
+  

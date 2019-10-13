@@ -313,7 +313,7 @@ mTransitioningViews 官方解释如下：
 ---
 ## 28 postOnAnimation
 
-常用于 View 动画，比如配合在 Scroller 使用，表示在下一帧执行。
+常用于 View 动画，比如配合在 Scroller 使用，表示在下一帧刷新。
 
 ---
 ## 29 TOOLTIP
