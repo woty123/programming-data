@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.ztiany.MainActivity"
+            android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -19,9 +19,8 @@
         </activity>
 
         <activity
-            android:name="com.ztiany.ContentActivity"
+            android:name=".ContentActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-
 
     </application>
 

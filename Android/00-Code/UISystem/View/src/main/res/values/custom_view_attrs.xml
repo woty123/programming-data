@@ -58,7 +58,6 @@
         </attr>
     </declare-styleable>
 
-
     <declare-styleable name="SquareEnhanceLayout">
         <attr name="sel_orientation" format="integer"/>
         <attr name="sel_column" format="integer"/>

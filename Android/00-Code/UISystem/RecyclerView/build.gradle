@@ -1,49 +1,12 @@
 apply plugin: 'com.android.application'
 
-buildscript {
-    repositories {
-        maven { url 'http://maven.aliyun.com/nexus/content/repositories/central/' }
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-        maven { url 'https://maven.aliyun.com/repository/central' }
-        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
-        maven { url 'https://maven.aliyun.com/repository/public' }
-        maven { url 'https://maven.aliyun.com/repository/jcenter' }
-        maven { url "https://maven.aliyun.com/repository/google" }
-        maven { url 'https://dl.google.com/dl/android/maven2/' }
-        maven { url 'https://jitpack.io' }
-        maven { url "https://kotlin.bintray.com/kotlinx" }
-        jcenter()
-        google()
-        mavenCentral()
-    }
-    dependencies {
-      classpath 'com.android.tools.build:gradle:3.5.0'
-    }
-}
-
-repositories {
-    maven { url 'http://maven.aliyun.com/nexus/content/repositories/central/' }
-    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-    maven { url 'https://maven.aliyun.com/repository/central' }
-    maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
-    maven { url 'https://maven.aliyun.com/repository/public' }
-    maven { url 'https://maven.aliyun.com/repository/jcenter' }
-    maven { url "https://maven.aliyun.com/repository/google" }
-    maven { url 'https://dl.google.com/dl/android/maven2/' }
-    maven { url 'https://jitpack.io' }
-    maven { url "https://kotlin.bintray.com/kotlinx" }
-    jcenter()
-    google()
-    mavenCentral()
-}
-
 android {
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.ztiany.recyclerview"
-        minSdkVersion 15
+        minSdkVersion 16
         //noinspection OldTargetApi
         targetSdkVersion 27
         versionCode 1
@@ -65,9 +28,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation 'me.drakeet.multitype:multitype:3.4.4'
-    testImplementation 'junit:junit:4.12'
+    implementation libraries.androidCompat
+    implementation libraries.androidDesign
+    implementation libraries.androidRecyclerView
+    implementation libraries.multitype
 }
