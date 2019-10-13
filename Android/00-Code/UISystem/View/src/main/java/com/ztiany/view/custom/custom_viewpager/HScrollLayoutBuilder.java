@@ -1,4 +1,4 @@
-package com.ztiany.view.custom;
+package com.ztiany.view.custom.custom_viewpager;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,9 +13,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
-class HScrollLayoutBuilder {
+public class HScrollLayoutBuilder {
 
-    static HScrollLayout buildHScrollLayout(Context context) {
+    public static HScrollLayout buildHScrollLayout(Context context) {
         HScrollLayout scrollLayout = new HScrollLayout(context);
         LinearLayout.LayoutParams lp;
         ListView listView;
@@ -76,7 +76,6 @@ class HScrollLayoutBuilder {
             return convertView;
         }
     }
-
 
 }
     

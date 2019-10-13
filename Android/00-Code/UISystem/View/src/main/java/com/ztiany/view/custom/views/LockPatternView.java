@@ -1,4 +1,4 @@
-package com.ztiany.view.custom;
+package com.ztiany.view.custom.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -14,9 +14,9 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ztiany.view.custom.LockPatternView.Point.STATE_COMPLETE;
-import static com.ztiany.view.custom.LockPatternView.Point.STATE_ERROR;
-import static com.ztiany.view.custom.LockPatternView.Point.STATE_NORMAL;
+import static com.ztiany.view.custom.views.LockPatternView.Point.STATE_COMPLETE;
+import static com.ztiany.view.custom.views.LockPatternView.Point.STATE_ERROR;
+import static com.ztiany.view.custom.views.LockPatternView.Point.STATE_NORMAL;
 
 /**
  * 手势锁

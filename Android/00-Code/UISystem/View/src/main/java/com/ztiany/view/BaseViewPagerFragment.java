@@ -35,7 +35,7 @@ public abstract class BaseViewPagerFragment extends Fragment {
 
     protected abstract PagerAdapter getAdapter();
 
-    public abstract class BasePagerAdapter extends PagerAdapter {
+    public abstract static class BasePagerAdapter extends PagerAdapter {
 
         private final String[] titles;
 

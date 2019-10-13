@@ -1,4 +1,4 @@
-package com.ztiany.view.custom;
+package com.ztiany.view.custom.custom_viewgroup;
 
 import android.content.Context;
 import android.content.res.TypedArray;

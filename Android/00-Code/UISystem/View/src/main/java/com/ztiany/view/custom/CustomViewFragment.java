@@ -12,7 +12,15 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.ztiany.view.R;
+import com.ztiany.view.custom.custom_viewgroup.SquareEnhanceLayout;
+import com.ztiany.view.custom.custom_viewpager.HScrollLayoutBuilder;
+import com.ztiany.view.custom.image.LargeImageView;
+import com.ztiany.view.custom.image.ZoomImageView;
 import com.ztiany.view.custom.ruler.RulerView;
+import com.ztiany.view.custom.surfaceview.LoadingView;
+import com.ztiany.view.custom.views.LockPatternView;
+import com.ztiany.view.custom.views.Ring;
+import com.ztiany.view.custom.views.SurfaceViewSinFun;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,4 +95,5 @@ public class CustomViewFragment extends Fragment {
             menu.add(Menu.NONE, i, i, titles[i]).setOnMenuItemClickListener(onMenuItemClickListener);
         }
     }
+
 }

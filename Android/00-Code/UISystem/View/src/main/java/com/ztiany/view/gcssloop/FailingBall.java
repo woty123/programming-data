@@ -20,7 +20,7 @@
  * WebSite: http://www.gcssloop.com
  */
 
-package com.ztiany.view.custom;
+package com.ztiany.view.gcssloop;
 
 import android.content.Context;
 import android.graphics.Bitmap;

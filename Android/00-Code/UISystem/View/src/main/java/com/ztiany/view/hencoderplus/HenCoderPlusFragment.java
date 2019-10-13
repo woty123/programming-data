@@ -21,6 +21,9 @@ import com.ztiany.view.hencoderplus.camera.CameraView;
 import com.ztiany.view.hencoderplus.drawable.DrawableView;
 import com.ztiany.view.hencoderplus.text.ImageTextView;
 import com.ztiany.view.hencoderplus.text.SportView;
+import com.ztiany.view.hencoderplus.touch.MultiTouchView1;
+import com.ztiany.view.hencoderplus.touch.MultiTouchView2;
+import com.ztiany.view.hencoderplus.touch.MultiTouchView3;
 import com.ztiany.view.hencoderplus.touch.ScalableImageView;
 import com.ztiany.view.hencoderplus.views.AvatarView;
 import com.ztiany.view.hencoderplus.views.AvatarView2;
@@ -43,6 +46,10 @@ public class HenCoderPlusFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         setHasOptionsMenu(true);
+        initViews();
+    }
+
+    private void initViews() {
         items.add(new Pair<>("CameraView", new CameraView(requireContext())));
         items.add(new Pair<>("AnimationCameraView", new AnimationCameraView(requireContext())));
 
@@ -59,6 +66,11 @@ public class HenCoderPlusFragment extends Fragment {
         items.add(new Pair<>("MaterialEditText", View.inflate(requireContext(), R.layout.hencoder_layout_material_edittext, null)));
 
         items.add(new Pair<>("ScalableImageView", new ScalableImageView(getContext(), null)));
+        items.add(new Pair<>("MultiTouchView1", new MultiTouchView1(getContext(), null)));
+        items.add(new Pair<>("MultiTouchView2", new MultiTouchView2(getContext(), null)));
+        items.add(new Pair<>("MultiTouchView3", new MultiTouchView3(getContext(), null)));
+        items.add(new Pair<>("TwoPager", View.inflate(requireContext(), R.layout.hencoder_layout_two_pager, null)));
+
     }
 
     @Nullable
@@ -70,16 +82,19 @@ public class HenCoderPlusFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
         for (final Pair<String, ? extends View> pair : items) {
             menu.add(pair.first).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     mFrameLayout.removeAllViews();
-                    mFrameLayout.addView(pair.second);
+                    int matchParent = ViewGroup.LayoutParams.MATCH_PARENT;
+                    mFrameLayout.addView(pair.second, new FrameLayout.LayoutParams(matchParent, matchParent));
                     return true;
                 }
             });
         }
+
     }
 
 }

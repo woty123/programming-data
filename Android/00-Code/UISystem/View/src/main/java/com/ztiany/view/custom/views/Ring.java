@@ -1,4 +1,4 @@
-package com.ztiany.view.custom;
+package com.ztiany.view.custom.views;
 
 import android.content.Context;
 import android.graphics.Canvas;

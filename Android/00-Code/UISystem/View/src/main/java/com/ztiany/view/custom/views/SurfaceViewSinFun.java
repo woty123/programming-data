@@ -1,4 +1,4 @@
-package com.ztiany.view.custom;
+package com.ztiany.view.custom.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -67,7 +67,7 @@ public class SurfaceViewSinFun extends SurfaceView implements SurfaceHolder.Call
         while (mIsDrawing) {
             drawSomething();
             x += 1;
-            y = (int) (100 * Math.sin(2 * x * Math.PI / 180) );
+            y = (int) (100 * Math.sin(2 * x * Math.PI / 180));
             mPath.lineTo(x, y);
         }
     }
@@ -101,4 +101,5 @@ public class SurfaceViewSinFun extends SurfaceView implements SurfaceHolder.Call
         setKeepScreenOn(true);
         setFocusableInTouchMode(true);
     }
+
 } 
