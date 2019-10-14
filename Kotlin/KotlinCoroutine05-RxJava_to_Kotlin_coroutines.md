@@ -2,7 +2,7 @@
 
 原文链接：[RxJava to Kotlin coroutines](https://medium.com/androiddevelopers/rxjava-to-kotlin-coroutines-1204c896a700)
 
-这篇文章总结了我如何重构一个使用 RxJava 的应用程序，具体来说，我将讨论将 Single/Maybe/Completable 源切换到协同程序。
+这篇文章总结了我如何重构一个使用 RxJava 的应用程序，具体来说，我将讨论将 `Single/Maybe/Completable` 切换到协同程序。
 
 ## The app
 

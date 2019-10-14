@@ -6,28 +6,51 @@ Google 在 AndroidX 中，针对 Kotlin Coroutine 提供了很多有用扩展，
 
 ## 1 [Use Kotlin coroutines with Architecture components](https://developer.android.com/topic/libraries/architecture/coroutines)
 
-todo
+[Use Kotlin coroutines with Architecture components](https://developer.android.com/topic/libraries/architecture/coroutines) 中主要介绍了 Google 在 Architecture components 中针对 Coroutines 提供的各种扩展，以便开发者更高效地使用 Kotlin Coroutines，主要包括：
 
-## 2 CoroutineScope 的选择
+- ViewModelScope
+- LifecycleScope
+- LiveData 与 Coroutines
 
-### 在 Activity 中
+## 2 [Improve app performance with Kotlin coroutines](https://developer.android.com/kotlin/coroutines)
 
-- 协程随着 Activity 的销毁而取消。
-  - MainScope 即可满足此需求。
-- 协程可以响应 Activity 的各个声明周期
+## 3 CoroutineScope 的选择
 
-### 在 Fragment 中
+### 需求：协程随着 Activity/Fragment 的销毁而取消
 
-需求：
+[MainScope](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-main-scope.html) 即可满足此需求。
 
-1. 协程随着 Fragment 的 OnDestory 而取消。
+### 需求：协程可以与 Activity/Fragment 的各个生命周期联动
 
-方案：
+AndroidX 针对 Lifecycle 提供了各种扩展：
 
-- MainScope 即可满足此需求。
+```kotlin
+suspend fun <T> LifecycleOwner.whenCreated(block: suspend CoroutineScope.() -> T): T =
+    lifecycle.whenCreated(block)
+
+suspend fun <T> Lifecycle.whenCreated(block: suspend CoroutineScope.() -> T): T {
+    return whenStateAtLeast(Lifecycle.State.CREATED, block)
+}
+
+suspend fun <T> LifecycleOwner.whenStarted(block: suspend CoroutineScope.() -> T): T =
+    lifecycle.whenStarted(block)
+
+suspend fun <T> Lifecycle.whenStarted(block: suspend CoroutineScope.() -> T): T {
+    return whenStateAtLeast(Lifecycle.State.STARTED, block)
+}
+
+...
+
+```
 
 ### 在 ViewModel 中
 
+AndroidX 针对 ViewModel 提供了 CoroutineScope 支持。
+
+### 开源库：[kotlin-coroutines-android](https://github.com/enbandari/kotlin-coroutines-android)
+
+[enbandari](https://github.com/enbandari) 开源的 [kotlin-coroutines-android](https://github.com/enbandari/kotlin-coroutines-android) 是针对 kotlin-coroutines 扩展，提供了 Activity/Fragment/View 级别的 coroutineScope，而且这些 Scope 都是与 Activity/Fragment/View 生命周期相关联的，相对于 MainScope，使用起来更加优雅和方便。
+
 ## 引用
 
-- [如何正确的在 Android 上使用协程 ？](https://juejin.im/post/5d5d5aac51882549be53b75b#heading-6)
+- [如何正确的在 Android 上使用协程 ？](https://juejin.im/post/5d5d5aac51882549be53b75b)

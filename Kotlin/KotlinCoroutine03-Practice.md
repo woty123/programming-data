@@ -1,25 +1,24 @@
-# Kotlin 实践
+# Kotlin Coroutines 实践
 
 ---
 ## 在 Android 上使用协程
 
 添加相关依赖：
 
-```kotlin
-    def kotlin_version = '1.3.11'
-    // coroutines 核心
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+```groovy
+    def coroutinesVersion = "1.3.0-M2"
+    // coroutines core
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}"
     // coroutines for android
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutinesVersion}"
 ```
 
-coroutines-android 中有些什么东西呢？其实只有四个文件：
+coroutines-android 中有些什么东西呢？，其实内容很少：
 
-- HandlerContext
+- HandlerContext：HandlerContext 为 Kotlin 协程提供了 Android平台的 Hander上下文， `UI` 是 HandlerContext 的一个全局实例，让协程运行在 Android 的 UI线程。
 - AndroidExceptionPreHandler
 - AndroidExceptionPreHandlerKt.class
 - HandlerContextKt.class
-- HandlerContext 为 Kotlin 协程提供了 Android平台的 Hander上下文， `UI` 是 HandlerContext 的一个全局实例，让协程运行在 Android 的 UI线程。
 
 ---
 ## 传统的异步编程如何重构为协程风格

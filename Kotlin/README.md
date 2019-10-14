@@ -28,6 +28,7 @@ kotlin 发展简史：
 
 - [官网](https://kotlinlang.org/)
 - [官方：kotlin-examples](https://github.com/JetBrains/kotlin-examples)
+- [Kotlin Evolution and Enhancement Process](https://github.com/Kotlin/KEEP)
 - [Kotlin 中文站](https://www.kotlincn.net/)
 - [Ktor 中文站](https://ktor.kotlincn.net/)
 
@@ -70,7 +71,7 @@ Collections：
 - [Kotlin 的协程用力瞥一眼 - 学不会协程？很可能因为你看过的教程都是错的](https://kaixue.io/kotlin-coroutines-1/)
 - [Kotlin 协程的挂起好神奇好难懂？今天我把它的皮给扒了](https://kaixue.io/kotlin-coroutines-2/)
 
-什么是协程：
+什么是协程（参考即可）：
 
 - [协程-维基百科](https://zh.wikipedia.org/wiki/%E5%8D%8F%E7%A8%8B)
 - [协程的好处有哪些？](https://www.zhihu.com/question/20511233/answer/24260355)
@@ -108,7 +109,7 @@ Sample：
 - [Kotlin 系统入门到进阶视频教程](http://coding.imooc.com/class/108.html)
 - [基于 GitHub App 业务深度讲解 Kotlin1.2高级特性与框架设计](https://coding.imooc.com/class/232.html)
 
-博客：
+深入Kotlin 协程：
 
 - [Kotlin Coroutines(协程)](https://blog.dreamtobe.cn/kotlin-coroutines/)
 - [深入浅出 Kotlin 协程](https://cloud.tencent.com/developer/article/1334825)

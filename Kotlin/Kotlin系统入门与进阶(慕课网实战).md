@@ -41,7 +41,7 @@ infix 中缀表达式，一般用于 DSL。
 
 ### 导出可执行程序
 
-基本中添加
+在脚本中添加
 
 ```groovy
 apply plugin: 'application'
@@ -157,4 +157,4 @@ infix fun <P1,P2, R> Function1<P2, R>.compose(function: Function1<P1, P2>): Func
 
 ## 第6章 领域特定语言 DSL
 
-领域特定语言，用于针对某一个领域而构建的语言，比如 SQL 和 正则表达式。DSL 可以分为`外部 DSL` 和 `内部 DSL`。
+领域特定语言，用于针对某一个领域而构建的语言，比如 SQL 和 正则表达式。DSL 可以分为`外部 DSL` 和 `内部 DSL`。内部 DSL 是与宿主语言结合紧密，实际上可以认为是宿主语言的特殊形式。
