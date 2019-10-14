@@ -4,17 +4,13 @@
 
 Google 在 AndroidX 中，针对 Kotlin Coroutine 提供了很多有用扩展，所以推荐先将项目迁移至 AndroidX，具体可以参考 [AndroidX](../Android/08-Architecture/Jetpack-AndroidX.md)
 
-## 1 [Use Kotlin coroutines with Architecture components](https://developer.android.com/topic/libraries/architecture/coroutines)
-
-[Use Kotlin coroutines with Architecture components](https://developer.android.com/topic/libraries/architecture/coroutines) 中主要介绍了 Google 在 Architecture components 中针对 Coroutines 提供的各种扩展，以便开发者更高效地使用 Kotlin Coroutines，主要包括：
+官方文档 [Use Kotlin coroutines with Architecture components](https://developer.android.com/topic/libraries/architecture/coroutines) 中主要介绍了 Google 在 Architecture components 中针对 Coroutines 提供的各种扩展，以便开发者更高效地使用 Kotlin Coroutines，主要包括：
 
 - ViewModelScope
 - LifecycleScope
 - LiveData 与 Coroutines
 
-## 2 [Improve app performance with Kotlin coroutines](https://developer.android.com/kotlin/coroutines)
-
-## 3 CoroutineScope 的选择
+## 2 CoroutineScope 的选择
 
 ### 需求：协程随着 Activity/Fragment 的销毁而取消
 
@@ -54,3 +50,9 @@ AndroidX 针对 ViewModel 提供了 CoroutineScope 支持。
 ## 引用
 
 - [如何正确的在 Android 上使用协程 ？](https://juejin.im/post/5d5d5aac51882549be53b75b)
+- [Android Coroutine Recipes](https://speakerdeck.com/dmytrodanylyk/android-coroutine-recipes)
+- [Use Kotlin coroutines with Architecture components](https://developer.android.com/topic/libraries/architecture/coroutines)
+- [Improve app performance with Kotlin coroutines](https://developer.android.com/kotlin/coroutines)
+- [Coroutines on Android (part I): Getting the background](https://medium.com/androiddevelopers/coroutines-on-android-part-i-getting-the-background-3e0e54d20bb)
+- [Coroutines on Android (part II): Getting started](https://medium.com/androiddevelopers/coroutines-on-android-part-ii-getting-started-3bff117176dd)
+- [Coroutines On Android (part III): Real work](https://medium.com/androiddevelopers/coroutines-on-android-part-iii-real-work-2ba8a2ec2f45)
