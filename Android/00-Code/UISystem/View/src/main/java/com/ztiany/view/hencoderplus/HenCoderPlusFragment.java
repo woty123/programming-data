@@ -71,6 +71,13 @@ public class HenCoderPlusFragment extends Fragment {
         items.add(new Pair<>("MultiTouchView3", new MultiTouchView3(getContext(), null)));
         items.add(new Pair<>("TwoPager", View.inflate(requireContext(), R.layout.hencoder_layout_two_pager, null)));
 
+        items.add(new Pair<>("drag_helper_grid_view", View.inflate(requireContext(), R.layout.hencoder_layout_drag_helper_grid_view, null)));
+        items.add(new Pair<>("listener_grid_view", View.inflate(requireContext(), R.layout.hencoder_drag_listener_grid_view, null)));
+        items.add(new Pair<>("drag_to_collect", View.inflate(requireContext(), R.layout.hencoder_drag_to_collect, null)));
+        items.add(new Pair<>("drag_up_down", View.inflate(requireContext(), R.layout.hencoder_drag_up_down, null)));
+
+        items.add(new Pair<>("nested_scroll", View.inflate(requireContext(), R.layout.hencoder_nested_scroll, null)));
+        items.add(new Pair<>("nested_scroll_view", View.inflate(requireContext(), R.layout.hencoder_layout_nested_scroll_view, null)));
     }
 
     @Nullable

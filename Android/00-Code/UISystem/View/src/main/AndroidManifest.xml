@@ -36,7 +36,7 @@
             android:label="DialogActivity"
             android:theme="@style/AppTheme.Dialog"/>
 
-        <activity android:name=".constraint_layout.ConstraintLayoutActivity"/>
+        <activity android:name=".constraint.ConstraintLayoutActivity"/>
 
     </application>
 

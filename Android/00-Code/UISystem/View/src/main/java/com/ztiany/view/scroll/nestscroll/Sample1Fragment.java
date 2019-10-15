@@ -25,4 +25,5 @@ public class Sample1Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.scroll_nested_sample, container, false);
     }
+
 }

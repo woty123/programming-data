@@ -1,4 +1,4 @@
-package com.ztiany.view.constraint_layout;
+package com.ztiany.view.constraint;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

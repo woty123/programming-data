@@ -1,4 +1,4 @@
-package com.ztiany.view.layout_inflater;
+package com.ztiany.view.inflater;
 
 import android.content.Context;
 import android.os.Bundle;

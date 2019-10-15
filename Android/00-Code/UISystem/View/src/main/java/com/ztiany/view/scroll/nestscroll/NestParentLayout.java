@@ -1,6 +1,7 @@
 package com.ztiany.view.scroll.nestscroll;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.view.NestedScrollingParent;
 import android.support.v4.view.NestedScrollingParentHelper;
 import android.util.AttributeSet;
@@ -29,18 +30,17 @@ public class NestParentLayout extends FrameLayout implements NestedScrollingPare
         mScrollingParentHelper = new NestedScrollingParentHelper(this);
     }
 
-
     /*
     子类开始请求滑动
      */
     @Override
-    public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
+    public boolean onStartNestedScroll(@NonNull View child, @NonNull View target, int nestedScrollAxes) {
         Log.d(TAG, "onStartNestedScroll() called with: " + "child = [" + child + "], target = [" + target + "], nestedScrollAxes = [" + nestedScrollAxes + "]");
         return true;
     }
 
     @Override
-    public void onNestedScrollAccepted(View child, View target, int axes) {
+    public void onNestedScrollAccepted(@NonNull View child, @NonNull View target, int axes) {
         mScrollingParentHelper.onNestedScrollAccepted(child, target, axes);
     }
 
@@ -50,12 +50,12 @@ public class NestParentLayout extends FrameLayout implements NestedScrollingPare
     }
 
     @Override
-    public void onStopNestedScroll(View child) {
+    public void onStopNestedScroll(@NonNull View child) {
         mScrollingParentHelper.onStopNestedScroll(child);
     }
 
     @Override
-    public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
+    public void onNestedPreScroll(@NonNull View target, int dx, int dy, @NonNull int[] consumed) {
         Log.d(TAG, "onNestedPreScroll() called with: " + "dx = [" + dx + "], dy = [" + dy + "], consumed = [" + Arrays.toString(consumed) + "]");
         if (dx > 0) {
             if (target.getRight() + dx > getWidth()) {
@@ -87,4 +87,5 @@ public class NestParentLayout extends FrameLayout implements NestedScrollingPare
             }
         }
     }
+
 }
