@@ -78,8 +78,8 @@ Prefetch 功能在版本 25 之后自带的，且默认是开启的，里面有�
 
 四级缓存定义在 Recycler.java  中：
 
-- `mAttachedScrap/mChangedScrap`：用来保存被 RecyclerView 移除掉但最近又马上要使用的缓存，比如说 RecyclerView 中自带 item 的动画效果，本质上就是计算item的偏移量然后执行属性动画的过程，这中间可能就涉及到需要将动画之前的item保存下位置信息，动画后的item再保存下位置信息，然后利用这些位置数据生成相应的属性动画。
-- mCachedViews：被划出屏幕的 ViewHolder，不会被立即置为无效，暂时放在 mCachedViews 中，如果往回滑动，可以立即使用其中的 View Holder。
+- `mAttachedScrap/mChangedScrap`：用来保存被 RecyclerView 移除掉但最近又马上要使用的屏幕内的 View。
+- mCachedViews：被划出屏幕的 ViewHolder，不会被立即置为无效，暂时放在 mCachedViews 中，如果往回滑动，可以立即使用其中的 ViewHolder。
 - mViewCacheExtension：用于实现自定义缓存。
 - mRecyclerPool：被划出屏幕的且被立即置为无效 ViewHolder。多个 RecyclerView 可以共享一个 RecyclerPool。
 
