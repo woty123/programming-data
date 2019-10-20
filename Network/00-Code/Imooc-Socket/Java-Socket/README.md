@@ -225,5 +225,3 @@ server.Group
 - clink.core.frame.HeartbeatSendFrame
 - clink.core.frame.HeartbeatReceiveFrame
 
-## 8、chat-room-v5-bridge：基于 chat-room-v4-optimize  支持语音通信
-

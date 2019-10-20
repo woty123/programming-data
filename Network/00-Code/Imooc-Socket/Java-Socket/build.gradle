@@ -14,7 +14,7 @@ repositories {
 sourceSets {
     main{
         java {
-            srcDir("src/main/chat-room-v5-bridge")
+            srcDir("src/main/chat-room-v4-optimize")
         }
     }
 }

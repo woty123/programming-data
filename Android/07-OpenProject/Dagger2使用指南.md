@@ -648,6 +648,11 @@ Lazy 和 Provider 注解同样适用于 multibinding。下面两种方式都是�
 
 **Dagger Android** 是基于 Dagger2 对 Android 平台的提供的扩展。提供了非常简单的方式来对安卓组件（Android 四大组件以及 Fragmengt）进行注入。可以让我们减少很多模板代码的编写。其内部原理是使用的 `Map multibindings`，并且还提供了`ContributesAndroidInjector`注解， 这是一个非常强大的注解，可以为注入目标自动生成 Component 实现， 不过只能用于 Android 中的组件(比如Activity、Service、Fragment等)。
 
+具体如何使用？
+
+1. 参考[官方文档](https://dagger.dev/android)
+2. 参考我的[示例代码](../00-Code/Dagger2AndroidInjection-v2.24/README.md)
+
 ---
 ## 11 注入 Nullable 对象
 
@@ -817,7 +822,7 @@ public class UserPresenter implement IPresenter{
 ---
 ## 16 Dagger 更新
 
-###  2.17
+### 2.17
 
 - Dagger 2.17 的更新可能会引发一些编译错误，官方解释原文为：If you start seeing missing binding errors in this release, check out [this wiki page](https://github.com/google/dagger/wiki/Dagger-2.17-@Binds-bugs) for information on how to debug the issues。
 

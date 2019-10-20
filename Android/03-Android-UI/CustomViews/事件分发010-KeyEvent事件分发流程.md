@@ -7,7 +7,6 @@
 - `ViewGroup.dispatchKeyEvent方法`
 - `View.dispatchKeyEvent方法`
 
-
 ## ViewRootImpl中的dispatchInputEvent方法
 
 WMS中接受到消息后，会调用ViewRootImpl中的dispatchInputEvent方法，最终会把KeyEvent转发到ViewHierarchy中去。调用的是View的dispatchKeyEvent()方法。
@@ -47,10 +46,7 @@ ViewRootImpl中的View是PhoneWindow中的DecorView。然后查看DecorView中�
     }
 ```
 
-发现最后KeyEvent会传递到ViewHierarchy中取
-
-
-ViewGroup.dispatchKeyEvent方法
+发现最后KeyEvent会传递到ViewHierarchy中去，ViewGroup.dispatchKeyEvent方法
 
 ```java
     @Override
@@ -78,9 +74,8 @@ ViewGroup.dispatchKeyEvent方法
         return false;
     }
 ```
+
 ViewGroup中的处理逻辑为：ViewGroup重写了View的dispatchKeyEvent，如果有带有焦点的子view时，分发按键消息到该子view中去。没有，直接由父view分发。
-
-
 
 ## View.dispatchKeyEvent方法
 
@@ -123,3 +118,7 @@ ViewGroup中的处理逻辑为：ViewGroup重写了View的dispatchKeyEvent，如
 6. DecorView的onKeyDown
 
 Activity的dispatchKeyEvent，是用于处理KeyEvent相关，子类可以重写拦截所有的key event消息在分发到window这一层去的时候。
+
+## 资料
+
+- [按键事件&焦点事件攻略](https://juejin.im/post/5d5d35e3e51d4561ae4da62c)
