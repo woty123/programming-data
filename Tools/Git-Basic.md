@@ -118,8 +118,9 @@ git init
 `git checkout -b <branch-name> <origin>/<branch-name>`  |   在本地创建和远程分支对应的分支，前提是远程仓库有这个分支
 `git remote rm paul`    |   删除远程paul仓库
 `git push -f`   |   强制推送
+`git revert`   |  删除已经 push 到原创仓库的 commit
 
-关于`git pull --rebase`:发者A将push修改到Repo时，开发者B已经push了自己的修改，这时候A需要先pull最新的修改，但这样会在Git历史中留下一个Merge History，使用`git pull --rebase`指令拉取最新的修改，该指令的作用是拉取本地代码后，将本地代未提交的代码作用到最新的版本中，从而避免多余的Merge History。
+关于`git pull --rebase`:发者A将修改push到Remote时，开发者B已经push了自己的修改，这时候A需要先pull最新的修改，但这样会在Git历史中留下一个Merge History，使用`git pull --rebase`指令拉取最新的修改，该指令的作用是拉取本地代码后，将本地代未提交的代码作用到最新的版本中，从而避免多余的Merge History。
 
 ## 分支
 
@@ -222,7 +223,7 @@ rebase就是变基的意思，假设master是主分支，dev是某个测试分�
     git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
     # 解决log中文文件名乱码问题
-    git config --global core.quotepath false 
+    git config --global core.quotepath false
     git config --global i18n.commitencoding utf-8
     git config --global i18n.logoutputencoding utf-8
 
