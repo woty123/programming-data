@@ -79,6 +79,12 @@ sudo apt install aptitude
 
 参考[Installing Visual Studio Code on Ubuntu](https://linuxize.com/post/how-to-install-visual-studio-code-on-ubuntu-18-04/)
 
+更新 VSCode
+
+```shell
+sudo apt upgrade code
+```
+
 ### install jdk
 
 ```shell
@@ -94,6 +100,8 @@ sudo apt-get install openjdk-8-jdk
 ```shell
 sudo apt-get install zsh
 ```
+
+具体参考[oh-my-zsh,让你的终端从未这么爽过](https://www.jianshu.com/p/d194d29e488c)
 
 ### vim 配置
 
@@ -194,9 +202,9 @@ iptables -I INPUT -ptcp --dport  端口号 -j ACCEPT
 iptables-save
 
 #关闭/打开防火墙（需要重启系统）
-  #开启： 
+  #开启：
   chkconfig iptables on
-  #关闭： 
+  #关闭：
   chkconfig iptables off
 ```
 

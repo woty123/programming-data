@@ -147,19 +147,16 @@ sudo service nginx restart
 
 RTMP 拉流测试地址
 
-```log
-韩国GoodTV,rtmp://mobliestream.c3tv.com:554/live/goodtv.sdp
+1. 韩国GoodTV：rtmp://mobliestream.c3tv.com:554/live/goodtv.sdp
+2. 韩国朝鲜日报：rtmp://live.chosun.gscdn.com/live/tvchosun1.stream
+3. 美国1：rtmp://ns8.indexforce.com/home/mystream
+4. 美国2：rtmp://media3.scctv.net/live/scctv_800
+5. 美国中文电视：rtmp://media3.sinovision.net:1935/live/livestream
+6. 湖南卫视：rtmp://58.200.131.2:1935/livetv/hunantv
 
-韩国朝鲜日报,rtmp://live.chosun.gscdn.com/live/tvchosun1.stream
+在线拉流地址
 
-美国1,rtmp://ns8.indexforce.com/home/mystream
-
-美国2,rtmp://media3.scctv.net/live/scctv_800
-
-美国中文电视,rtmp://media3.sinovision.net:1935/live/livestream
-
-湖南卫视,rtmp://58.200.131.2:1935/livetv/hunantv
-```
+- <http://bbs.chinaffmpeg.com/1.swf>
 
 ## 其他参考
 
