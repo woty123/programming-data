@@ -1,5 +1,6 @@
 package com.ztiany.view.scroll.nestscroll;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v4.view.NestedScrollingChild;
 import android.support.v4.view.NestedScrollingChildHelper;
@@ -41,6 +42,7 @@ public class NestChildView extends View implements NestedScrollingChild {
         setNestedScrollingEnabled(true);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         float x = ev.getX();
@@ -117,7 +119,6 @@ public class NestChildView extends View implements NestedScrollingChild {
      * @param dx       水平滑动距离
      * @param dy       垂直滑动距离
      * @param consumed 父类消耗掉的距离
-     * @return
      */
     @Override
     public boolean dispatchNestedPreScroll(int dx, int dy, int[] consumed, int[] offsetInWindow) {

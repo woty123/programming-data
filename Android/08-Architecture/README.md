@@ -1,3 +1,4 @@
+# Android Archtitecture References
 
 ---
 ## 值得研究的项目
@@ -48,10 +49,10 @@ Flux
 ---
 ## 软件 UI 框架模式
 
-UI 架构历：
+UI 架构史：
 
 - [MVC溯源](http://www.jianshu.com/p/add73330d106)
-- [UI 架构小史1（GUI Architectures）](http://www.jianshu.com/p/d52e662db75c)
+- [UI架构小史1（GUI Architectures）](http://www.jianshu.com/p/d52e662db75c)
 - [UI架构小史2（Interactive Application Architecture Patterns）](http://www.jianshu.com/p/c20449ce1a30)
 - [UI架构小史3（MVC/MVP/MVVM）](http://www.jianshu.com/p/96e26ceb2fef)
 - [GUI 应用程序架构的十年变迁：MVC、MVP、MVVM、Unidirectional、Clean](https://zhuanlan.zhihu.com/p/26799645)
@@ -95,7 +96,7 @@ MVX：
  [关于烂代码的那些事（下）](http://blog.2baxb.me/archives/1499)
 
 ---
-## Keegan小钢架构系列文章
+## Keegan 架构系列文章
 
 ### App架构设计经验谈
 

@@ -40,7 +40,7 @@
     findContainingItemView(View view)
     //根据位置找到对应的ViewHolder
     findViewHolderForAdapterPosition(int position)
-    //https://stackoverflow.com/questions/28709220/understanding-recyclerview-sethasfixedsize
+    //https://stackoverflow.com/questions/28709220/understanding-recyclerview-sethasfixedsize，如果Adapter的数据集的改变不会导致RecyclerView的size变换，可以设置此方法，优化性能。
     setHasFixedSize(true)
     //https://stackoverflow.com/questions/32050210/what-is-the-difference-between-swapadapter-method-and-notifydatasetchanged-metho
     swapAdapter(Adapter adapter, boolean removeAndRecycleExistingViews)
@@ -78,14 +78,25 @@ Prefetch 功能在版本 25 之后自带的，且默认是开启的，里面有�
 
 四级缓存定义在 Recycler.java  中：
 
-- `mAttachedScrap/mChangedScrap`：用来保存被 RecyclerView 移除掉但最近又马上要使用的缓存，比如说 RecyclerView 中自带 item 的动画效果，本质上就是计算item的偏移量然后执行属性动画的过程，这中间可能就涉及到需要将动画之前的item保存下位置信息，动画后的item再保存下位置信息，然后利用这些位置数据生成相应的属性动画。
-- mCachedViews：被划出屏幕的 ViewHolder，不会被立即置为无效，暂时放在 mCachedViews 中，如果往回滑动，可以立即使用其中的 View Holder。
+- `mAttachedScrap/mChangedScrap`：用来保存被 RecyclerView 移除掉但最近又马上要使用的屏幕内的 View。
+- mCachedViews：被划出屏幕的 ViewHolder，不会被立即置为无效，暂时放在 mCachedViews 中，如果往回滑动，可以立即使用其中的 ViewHolder。
 - mViewCacheExtension：用于实现自定义缓存。
 - mRecyclerPool：被划出屏幕的且被立即置为无效 ViewHolder。多个 RecyclerView 可以共享一个 RecyclerPool。
 
 ### 1.6 保存嵌套 RecyclerView 的滑动状态
 
 一个竖着滑动的 RecyclerView 内部的 Item 可以是横向滑动的 RecyclerView，当横向滑动的 RecyclerView 被划出屏幕然后又滑回来，如何保存这个被嵌套 RecyclerView 的滑动状态呢？当 RecyclerView 被移除屏幕调用其 `onSaveInstanceState`，移回来时调用其 `onRestoreInstanceState` 即可。
+
+### 1.7 优化相关
+
+1. `setInitialPrefetchItemCount()`：
+   - 这个 LinearLayoutManager 独有的 API，默认的数值是2。
+   - 适用场景为 RecyclerView 内部嵌套 RecyclerView 的场景，例如一个竖向滑动的 RecyclerView 有一个横向滑动的 RecyclerView Item，该横向滑动的 RecyclerView 上有 `3.5` 个 item 需要显示，可以调用 `LinearLayoutManager.setInitialPrefetchItemCount(4)`进行预加载，以防止滑动时再采集 ViewHolder 可能造成的卡顿。
+2. `setHasFixedSize`
+3. 多个具有相同 Item 的 RecyclerView 共享 RecyclerPoll。
+4. DiffUtil
+5. `RecyclerView.setItemViewCacheSize(size);` 设置预加载itemview数目。
+6. `Adapter.notifyItemRangeChanged(int positionStart, int itemCount,Object payload)`，增量刷新 Item。
 
 ## 2 相关资源
 

@@ -1,5 +1,7 @@
 # [Socket网络编程进阶与实战](https://coding.imooc.com/learn/list/286.html) 笔记
 
+[讲师完整开源实现](https://github.com/qiujuer/Blink)
+
 ---
 ## 1 导学
 
@@ -657,10 +659,6 @@ RTMP：
 
 ![](images/socket_in_action39.png)
 
-桥接：Client 与 Client 之间通过服务器建立一个私有管道，数据在管道消费传输，不上升到业务层，服务器起到桥接的作用。
+桥接：Client 与 Client 之间通过服务器建立一个私有管道，数据在管道消费传输，不上升到业务层，服务器仅不对数据进行消费，仅起到桥接的作用。
 
 ![](images/socket_in_action40.png)
-
-### 11-2 语音数据直流传输扩展
-
-todo `11-2.1`

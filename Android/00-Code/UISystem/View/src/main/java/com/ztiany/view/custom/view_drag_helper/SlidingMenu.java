@@ -2,6 +2,7 @@ package com.ztiany.view.custom.view_drag_helper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
@@ -67,6 +68,7 @@ public class SlidingMenu extends ViewGroup {
         return viewDragHelper.shouldInterceptTouchEvent(ev);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {//事件交给VIewDragHelper处理
         viewDragHelper.processTouchEvent(event);
@@ -77,7 +79,7 @@ public class SlidingMenu extends ViewGroup {
     private class SlidingCallBack extends ViewDragHelper.Callback {
 
         @Override
-        public boolean tryCaptureView(View arg0, int arg1) {
+        public boolean tryCaptureView(@NonNull View arg0, int arg1) {
             if (arg0 == menuView) {//如果是菜单
                 return isMenuOpened;//菜单打开了
             } else {
@@ -85,14 +87,16 @@ public class SlidingMenu extends ViewGroup {
             }
         }
 
+        //当发生边界事件
         @Override
-        public void onEdgeDragStarted(int edgeFlags, int pointerId) {//当发生边界事件
-            viewDragHelper.captureChildView(menuView, pointerId);//此时直接调用captureChildView方法，捕获menuView进入拖动状态
+        public void onEdgeDragStarted(int edgeFlags, int pointerId) {
+            //此时直接调用captureChildView方法，捕获menuView进入拖动状态
+            viewDragHelper.captureChildView(menuView, pointerId);
         }
 
         /**
          * child 当前拖动的View
-         * left 建议 拖动到的距离
+         * left 建议拖动到的距离
          * dx 偏移量
          * left + dx = child.getLeft();
          */
@@ -101,11 +105,9 @@ public class SlidingMenu extends ViewGroup {
             return Math.max(-child.getWidth(), Math.min(left, 0));
         }
 
-        /**
-         * 返回拖动view的触摸位置范围
-         */
+        //返回拖动view的触摸位置范围，返回1也可以。
         @Override
-        public int getViewHorizontalDragRange(View child) {
+        public int getViewHorizontalDragRange(@NonNull View child) {
             if (child == menuView) {
                 return getMeasuredWidth() - child.getMeasuredWidth();
             } else {
@@ -114,7 +116,7 @@ public class SlidingMenu extends ViewGroup {
         }
 
         @Override
-        public int clampViewPositionVertical(View child, int top, int dy) {
+        public int clampViewPositionVertical(@NonNull View child, int top, int dy) {
             return 0;
         }
 
@@ -124,13 +126,13 @@ public class SlidingMenu extends ViewGroup {
         }
 
         @Override
-        public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
+        public void onViewPositionChanged(@NonNull View changedView, int left, int top, int dx, int dy) {
 
         }
 
         // 当拖动的view 被释放
         @Override
-        public void onViewReleased(View releasedChild, float xvel, float yvel) {//释放
+        public void onViewReleased(@NonNull View releasedChild, float xvel, float yvel) {//释放
             if (releasedChild == menuView) {
                 int absLeft = Math.abs(menuView.getLeft());
                 if (absLeft >= menuView.getMeasuredWidth() / 2) {// 往左
@@ -159,7 +161,6 @@ public class SlidingMenu extends ViewGroup {
         contentView = getChildAt(0);
         menuView = getChildAt(1);
     }
-
 
     private void performMenu(boolean isOpen) {
         int targetX;
