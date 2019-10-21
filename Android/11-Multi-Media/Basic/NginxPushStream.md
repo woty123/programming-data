@@ -134,7 +134,8 @@ sudo service nginx restart
     ffmpeg -re -i out.mp4 -c copy -f flv rtmp://39.108.56.76:1935/live/test
     #转发，拉取流后转发给另外一个地址
     ffmpeg -i pull_stream_address -c:a copy -c:v copy -f flv push_strem_rtmp_address
-
+    # 示例
+    ffmpeg -i rtmp://58.200.131.2:1935/livetv/hunantv -c:a copy -c:v copy -f flv rtmp://127.0.0.1:1935/test/room
 
 #播放客户端->使用ffplay播放视频流：
 
