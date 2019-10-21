@@ -7,7 +7,7 @@ DialogFragment 继承于 Fragemnt，比普通的 Dialog 多了很多好处，比
 
 使用 AppCompatDialogFragement 需要实现以下方法
 
-```
+```java
       public class Dialog extends AppCompatDialogFragment {
     
         private EditText mNameEt;
@@ -65,7 +65,7 @@ onCreateDialog用于返回一个Dialog，默认已经实现，而onCreateView中
 ---
 ## 2 常用属性
 
-```
+```java
              /* 
              * 获取的窗口对象及参数对象以修改对话框的布局设置,
              * 可以直接调用getWindow(),表示获得这个Activity的Window
@@ -111,7 +111,7 @@ onCreateDialog用于返回一个Dialog，默认已经实现，而onCreateView中
 
 案例：一个Fragment启动一个DialogFragment，在 DialogFragment操作一些数据，然后返回给 Fragment；在Fragment中我们这样写，
 
-```
+```java
     EvaluateDialog dialog = new EvaluateDialog();  
     //注意setTargetFragment  
     dialog.setTargetFragment(ContentFragment.this, REQUEST_EVALUATE);  
@@ -138,7 +138,7 @@ onCreateDialog用于返回一个Dialog，默认已经实现，而onCreateView中
 
 在 DialogFragment 中可以直接setResult，直接调用原来Fragment的onActivityResult的方法
 
-```
+```java
     // 设置返回数据  
     protected void setResult(int which){  
         // 判断是否设置了targetFragment  
@@ -147,8 +147,7 @@ onCreateDialog用于返回一个Dialog，默认已经实现，而onCreateView中
         
         Intent intent = new Intent();  
         intent.putExtra(RESPONSE_EVALUATE, mEvaluteVals[which]);  
-        getTargetFragment().onActivityResult(ContentFragment.REQUEST_EVALUATE,  
-                Activity.RESULT_OK, intent);  
+        getTargetFragment().onActivityResult(ContentFragment.REQUEST_EVALUATE, Activity.RESULT_OK, intent);  
         }  
     }  
 ```
