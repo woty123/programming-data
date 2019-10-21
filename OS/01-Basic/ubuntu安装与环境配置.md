@@ -178,51 +178,26 @@ sql授权说明
 
 >privileges 即特权的意思。
 
-### Nginx
-
-```shell
-# 先下载安装  nginx 和 nginx-rtmp 编译依赖工具
-sudo apt-get install build-essential libpcre3 libpcre3-dev libssl-dev
-
-# 下载 nginx 和 nginx-rtmp源码（wget是一个从网络上自动下载文件的自由工具）
-wget http://nginx.org/download/nginx-1.7.5.tar.gz
-
-# 解压 nginx
-tar -zxvf nginx-1.7.5.tar.gz
-
-# 切换到 nginx-目录
-cd nginx-1.7.5
-
-# 编译安装nginx
-make
-sudo make install
-
-# 安装nginx init脚本
-sudo wget https://raw.github.com/JasonGiedymin/nginx-init-ubuntu/master/nginx -O /etc/init.d/nginx
-sudo chmod +x /etc/init.d/nginx
-
-# 开启启动nginx
-sudo update-rc.d nginx defaults
-
-# 启动和停止nginx 服务，生成配置文件
-sudo service nginx start
-sudo service nginx stop
-sudo service nginx restart
-```
-
 ### 开放端口号
 
 ```shell
-查看哪些端口被打开  netstat -anp
-关闭端口号：iptables -I INPUT -p tcp --drop 端口号 -j DROP
-　         iptables -I OUTPUT -p tcp --dport 端口号 -j DROP
+#查看哪些端口被打开  
+netstat -anp
 
-打开端口号：iptables -I INPUT -ptcp --dport  端口号 -j ACCEPT
-将修改永久保存到防火墙中：iptables-save
+#关闭端口号：
+iptables -I INPUT -p tcp --drop 端口号 -j DROP
+iptables -I OUTPUT -p tcp --dport 端口号 -j DROP
 
-关闭/打开防火墙（需要重启系统）
-开启： chkconfig iptables on
-关闭： chkconfig iptables off
+#打开端口号：
+iptables -I INPUT -ptcp --dport  端口号 -j ACCEPT
+#将修改永久保存到防火墙中：
+iptables-save
+
+#关闭/打开防火墙（需要重启系统）
+  #开启： 
+  chkconfig iptables on
+  #关闭： 
+  chkconfig iptables off
 ```
 
 ---
