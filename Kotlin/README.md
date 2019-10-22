@@ -98,6 +98,7 @@ Collections：
 - [破解 Kotlin 协程(7) - 序列生成器篇](https://juejin.im/post/5cfe19025188252ee72966ee))
 - [破解 Kotlin 协程(8) - Android 篇](https://juejin.im/post/5cfe1947e51d45105d63a4e3)
 - [破解 Kotlin 协程(9) - Channel 篇](https://mp.weixin.qq.com/s/8j74bn9x0-gFmZxa6k6GwA)
+- [破解 Kotlin 协程 番外篇(1) - 协程为什么被称为『轻量级线程』？](https://www.bennyhuo.com/2019/10/19/coroutine-why-so-called-lightweight-thread/)
 
 Sample：
 

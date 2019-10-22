@@ -1,6 +1,12 @@
 # Android Archtitecture References
 
 ---
+# AAC
+
+- [viewmodels-and-livedata-patterns-antipatterns](https://medium.com/androiddevelopers/viewmodels-and-livedata-patterns-antipatterns-21efaef74a54)
+- [saving-ui-state-with-viewmodel-savedstate-and-dagger](https://proandroiddev.com/saving-ui-state-with-viewmodel-savedstate-and-dagger-f77bcaeb8b08#7f89)
+
+---
 ## 值得研究的项目
 
 Google：
