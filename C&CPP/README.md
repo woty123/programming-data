@@ -2,11 +2,11 @@
 
 C 语言基础与提高：
 
-- [C学习资料](C-Basic/00-C学习资料.md)
+- [C学习资料](01-C-Basic/00-C学习资料.md)
 
 C++ 语言基础与提高：
 
-- [CPP 学习资料](CPP-Basic/00-CPP学习资料.md)
+- [CPP 学习资料](02-CPP-Basic/00-CPP学习资料.md)
 
 编译与构建：
 

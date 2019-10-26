@@ -4,6 +4,8 @@
 
 - [Linux之父炮轰C++：糟糕程序员的垃圾语言](http://blog.csdn.net/turingbook/article/details/1775488)
 
+炮轰归炮轰，我们一般程序员还是得学：
+
 ## 学习资料
 
 - 《C++ Primer》
@@ -14,6 +16,9 @@
 - [cplusplus](http://www.cplusplus.com/)
 - [菜鸟教程](http://www.runoob.com/cplusplus/)
 - [C++笔记](http://www.hahack.com/wiki/)
+
+视频教程
+
 - [C++基础教程完整版](http://yun.itheima.com/course/275.html)
 
 ## c++ 标准库

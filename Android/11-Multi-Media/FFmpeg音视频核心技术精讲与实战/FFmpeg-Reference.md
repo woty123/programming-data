@@ -1,6 +1,7 @@
 # FFmeng资料
 
-- [ffmpeg](https://ffmpeg.org/)
+- [ffmpeg 官网](https://ffmpeg.org/)
+- [ffmpeg 官方 wiki](https://trac.ffmpeg.org/wiki)
 
 ---
 ## 1 编译

@@ -9,7 +9,7 @@
 
 录音实质是一个压缩采集到的图像或音频数据的过程，这个过程又称为编码，封装格式：FLV、AVI、MP4，播放视频或音频文件，实质就是一个解码过程。
 
-![](index_files/c45d751f-fbb9-4203-8aa0-52c504f63343.jpg)
+![](images/c45d751f-fbb9-4203-8aa0-52c504f63343.jpg)
 
 信息查看工具：
 
@@ -71,7 +71,7 @@ YUV格式中，Y只包含亮度信息，而UV只包含色度信息。
 
 以YUV420P为例，图像像素数据的存储方式如图所示：
 
-![](index_files/7b2ddef5-4de7-4871-8b64-eff304aa6b96.jpg)
+![](images/7b2ddef5-4de7-4871-8b64-eff304aa6b96.jpg)
 
 从上图图可以看出，YUV420P首先存储了整张图像的Y信息，然后存储整张图像的U信息，最后存储了整张图像的V信息。
 
@@ -165,7 +165,8 @@ ffplay.exe用于视频的播放。最简单的命令：`ffplayinput.avi`
 ### FFmpeg解码的函数
 
 解码流程图：
-![](index_files/1ad590d7-a2f7-4e07-92c9-fb466f29cb2f.jpg)
+
+![](images/1ad590d7-a2f7-4e07-92c9-fb466f29cb2f.jpg)
 
 函数简介：
 
@@ -183,7 +184,7 @@ avformat_close_input()：关闭输入视频文件
 
 ### FFmpeg解码的数据结构
 
-![](index_files/50982093-81e2-4075-8714-6dcf9847ba76.png)
+![](images/50982093-81e2-4075-8714-6dcf9847ba76.png)
 
 FFmpeg数据结构简介：
 
@@ -255,4 +256,4 @@ AVFrame：
 
 解码后YUV格式的视频像素数据保存在AVFrame的`data[0]、data[1]、data[2]`中。但是这些像素值并不是连续存储的，每行有效像素之后存储了一些无效像素。以亮度Y数据为例，`data[0]`中一共包含了`linesize[0]*height`个数据。但是出于优化等方面的考虑，`linesize[0]`实际上并不等于宽度width，而是一个比宽度大一些的值。因此需要使用`sws_scale()`进行转换。转换后去除了无效数据，width和`linesize[0]`取值相等
 
-![](index_files/31d967c8-40d7-483e-b25d-4fd2d6be66d8.jpg)
+![](images/31d967c8-40d7-483e-b25d-4fd2d6be66d8.jpg)

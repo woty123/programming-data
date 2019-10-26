@@ -1,4 +1,4 @@
-# Head First C
+# Head First C-《嗨翻C语言》阅读记录
 
 ## 1 C语言入门：进入 C 语言的世界
 

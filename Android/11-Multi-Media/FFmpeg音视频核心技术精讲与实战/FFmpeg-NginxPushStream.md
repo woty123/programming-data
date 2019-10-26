@@ -153,6 +153,26 @@ RTMP 拉流测试地址
 4. 美国2：rtmp://media3.scctv.net/live/scctv_800
 5. 美国中文电视：rtmp://media3.sinovision.net:1935/live/livestream
 6. 湖南卫视：rtmp://58.200.131.2:1935/livetv/hunantv
+7. 香港衛視：rtmp://live.hkstv.hk.lxdns.com/live/hks
+8. 蕪湖綜合頻道 : <http://live.wuhubtv.com/channels/1531/500.flv/live>
+9. 蚌埠生活頻道 : rtmp://vod.ahbbtv.com:1935/live/shpd1
+10. 淮北新聞頻道 : rtmp://vod.0561rtv.com:1935/live/live1
+11. 淮北影視頻道 : rtmp://vod.0561rtv.com:1935/live/live4
+12. 重慶衛視 ：rtmp://live5.cqnews.net:1935/live/TVFLV15
+
+RTSP
+
+1. 珠海過澳門大廳攝像頭監控：rtsp://218.204.223.237:554/live/1/66251FC11353191F/e7ooqwcfbqjoo80j.sdp
+2. 大熊兔（點播）：rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov
+
+m3u8
+
+1. 香港衛視：<http://live.hkstv.hk.lxdns.com/live/hks/playlist.m3u8>
+2. CCTV1高清：<http://ivi.bupt.edu.cn/hls/cctv1hd.m3u8>
+3. CCTV3高清：<http://ivi.bupt.edu.cn/hls/cctv3hd.m3u8>
+4. CCTV5高清：<http://ivi.bupt.edu.cn/hls/cctv5hd.m3u8>
+5. CCTV5+高清：<http://ivi.bupt.edu.cn/hls/cctv5phd.m3u8>
+6. CCTV6高清：<http://ivi.bupt.edu.cn/hls/cctv6hd.m3u8>
 
 在线拉流地址
 
