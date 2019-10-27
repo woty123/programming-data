@@ -23,6 +23,10 @@ app/backup
 .project
 .settings
 *.mp4
+*.out
+*.aac
+*.txt
+
 
 # VisualStudio
 ## Ignore Visual Studio temporary files, build results, and
