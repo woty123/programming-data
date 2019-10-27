@@ -50,19 +50,20 @@ FFmpeg 代码结构：
 - `av_find_best_stream()` 从数据包中找到最好的流
 - `av_read_frame/av_packet_unref()` 读取与释放（为什么这里是 readframe 而不是 readstream 呢？历史遗留问题 ）
 
-## 5-9 ffmpeg抽取音频数据-2
-
-## 5-10 ffmpeg抽取音频数据-3
-
 ## 5-11 ffmpeg抽取视频H264数据-1
 
-## 5-12 ffmpeg抽取视频H264数据-2
+- Start code：用以区分一帧一帧的视频数据，Start code 是一个特征码。
+- SPS/PPS：存储视频的宽高，帧率等数据。SPS/PPS 数据非常小，每个关键帧前面都添加一个 SPS/PPS 可以防止因为丢包而无法解析的问题。
+- 获取SPS/PPS：`codec -> extradata`
 
-## 5-13 ffmpeg抽取视频H264数据-3
+## 5-14 ffmpeg将mp4转成flv
 
-## 5-14 ffmpeg将mp4转成flv-1
-
-## 5-15 ffmpeg将mp4转成flv-2
+- `avformat_alloc_output_context2()`/`avformat_free_context()` 用于输出
+- `avformat_new_stream()` 创建新的 stream
+- `avcodec_parameters_copy()` 拷贝视频信息
+- `avformat_write_header()`写多媒体文件头，用以标识FFmpeg支持的多媒体文件
+- `avformat_write_frame()`/`av_interleaved_write_frame()` 写数据
+- `av_write_trailer()` 写尾部信息
 
 ## 5-16 ffmpeg音视频裁剪
 
