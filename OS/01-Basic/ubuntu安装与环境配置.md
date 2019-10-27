@@ -30,6 +30,10 @@
 ---
 ## 2 ubuntu环境搭建与相关配置
 
+### 配置源
+
+参考 [Ubuntu 18.04换国内源 中科大源 阿里源 163源 清华源](https://blog.csdn.net/xiangxianghehe/article/details/80112149)
+
 ### 安装主题与美化
 
 1：安装优化工具

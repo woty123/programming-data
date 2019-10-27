@@ -20,9 +20,35 @@ FFmpeg 代码结构：
 
 ## 5-6 ffmpeg处理流数据的基本概念
 
+相关概念：
+
+- 多媒体文件其实是个容器
+- 在容器的有很多流（Stream/Track）
+- 每种流是由不同的编码器编码的
+- 从流中读取的数据称之为包
+- 在一个包中包含者一个或多个帧
+
+重要的结构体：
+
+- AVFormatContext 格式上下文，多个 API 的桥梁
+- AVStream 对应流/轨
+- AVPacket 对应包
+
+对流操作的基本步骤：
+
+![](images/05-ffmepg-process-stream.png)
+
 ## 5-7 ffmpeg打印音视频Meta信息
 
+- `avregister_all()` 将FFmpeg所以定义的编解码库等注册到程序中，一个必须的API。
+- `avformat_open_input()/avformat_close_input()` 读取与释放
+- `av_dump_format()` 打印音视频文件元信息
+
 ## 5-8 ffmpeg抽取音频数据-1
+
+- `av_init_packet()` 初始化数据包结构体
+- `av_find_best_stream()` 从数据包中找到最好的流
+- `av_read_frame/av_packet_unref()` 读取与释放（为什么这里是 readframe 而不是 readstream 呢？历史遗留问题 ）
 
 ## 5-9 ffmpeg抽取音频数据-2
 
