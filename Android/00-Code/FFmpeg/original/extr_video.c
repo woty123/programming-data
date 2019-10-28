@@ -20,26 +20,40 @@
      ((const uint8_t *)(x))[1])
 #endif
 
+/**
+ * 添加特征玛 start code：
+ * 
+ * sps_pps：spspps_pkt.data
+ * ssps_pps_size：spspps_pkt.size
+ */
 static int alloc_and_copy(AVPacket *out, const uint8_t *sps_pps, uint32_t sps_pps_size, const uint8_t *in, uint32_t in_size) {
     uint32_t offset = out->size;
+    int err;
 
     //SPS/PPS的特征玛是四个字节：00 00 00 01
     //非SPS/PPS的特征玛是三个字节：00 00 01
-    //都设置为四个字节也可以
+    //但是都设置为四个字节也可以
+    //offset = 0 则 nal_header_size = 4
     uint8_t nal_header_size = offset ? 3 : 4;
-    int err;
+
+    av_log(NULL, AV_LOG_INFO, "------------添加 Start code 处理，offset = %d, nal_header_size = %d, sps_pps_size = %d\n",offset,nal_header_size,sps_pps_size);
 
     err = av_grow_packet(out, sps_pps_size + in_size + nal_header_size);
-    if (err < 0)
-        return err;
 
+    if (err < 0){
+        return err;
+    }
+
+    //如果传进来的数据带 sps/pps，则进行拷贝 sps/pps 数据
     if (sps_pps) {
         memcpy(out->data + offset, sps_pps, sps_pps_size);
     }
+
     memcpy(out->data + sps_pps_size + nal_header_size + offset, in, in_size);
-    if (!offset) {
+
+    if (!offset) {//设置 Start Code 为 00 00 00 01
         AV_WB32(out->data + sps_pps_size, 1);
-    } else {
+    } else {//设置  Start Code  为 00 00 01
         (out->data + offset + sps_pps_size)[0] =
             (out->data + offset + sps_pps_size)[1] = 0;
         (out->data + offset + sps_pps_size)[2] = 1;
@@ -48,24 +62,31 @@ static int alloc_and_copy(AVPacket *out, const uint8_t *sps_pps, uint32_t sps_pp
     return 0;
 }
 
-//读取sps/pps
+//读取 sps/pps 到 out_extradata 中
 int h264_extradata_to_annexb(const uint8_t *codec_extradata, const int codec_extradata_size, AVPacket *out_extradata, int padding) {
+    av_log(NULL, AV_LOG_INFO, "------------新的 sps/pps 处理\n");
+
     uint16_t unit_size;
     uint64_t total_size = 0;
     uint8_t *out = NULL, unit_nb, sps_done = 0, sps_seen = 0, pps_seen = 0, sps_offset = 0, pps_offset = 0;
 
-    const uint8_t *extradata = codec_extradata + 4;  //扩增数据的前四个字节没用，跳过
+    //扩增数据的前四个字节没用，跳过
+    const uint8_t *extradata = codec_extradata + 4;
 
     static const uint8_t nalu_header[4] = {0, 0, 0, 1};
 
-    //第一个字节用于表示后面每一个 sps/pps 所需字节数
+    //然后下一个字节用于表示后面每一个 sps/pps 所需字节数
     int length_size = (*extradata++ & 0x3) + 1;  // retrieve length coded size, 用于指示表示编码数据长度所需字节数
+    av_log(NULL, AV_LOG_INFO, "------------length_size = %d\n", length_size);
 
     sps_offset = pps_offset = -1;
 
-    /* sps/pps 的 个数*/
+    /* sps/pps 的 个数，一般只有一个*/
     /* retrieve sps and pps unit(s) */
+
     unit_nb = *extradata++ & 0x1f; /* number of sps unit(s) */
+    av_log(NULL, AV_LOG_INFO, "------------unit_nb = %d\n", unit_nb);
+
     if (!unit_nb) {
         goto pps;
     } else {
@@ -85,6 +106,7 @@ int h264_extradata_to_annexb(const uint8_t *codec_extradata, const int codec_ext
             av_free(out);
             return AVERROR(EINVAL);
         }
+
         if (extradata + 2 + unit_size > codec_extradata + codec_extradata_size) {
             av_log(NULL, AV_LOG_ERROR,
                    "Packet header is not contained in global extradata, "
@@ -100,6 +122,7 @@ int h264_extradata_to_annexb(const uint8_t *codec_extradata, const int codec_ext
         memcpy(out + total_size - unit_size - 4, nalu_header, 4);        //拷贝nal header
         memcpy(out + total_size - unit_size, extradata + 2, unit_size);  //拷贝  sps/pps
         extradata += 2 + unit_size;
+
     pps:
         if (!unit_nb && !sps_done++) {
             unit_nb = *extradata++; /* number of pps unit(s) */
@@ -133,7 +156,7 @@ int h264_extradata_to_annexb(const uint8_t *codec_extradata, const int codec_ext
 }
 
 int h264_mp4toannexb(AVFormatContext *fmt_ctx, AVPacket *in, FILE *dst_fd) {
-     av_log(NULL, AV_LOG_INFO, "-新的Packet------------------------------------------------------------------------------------\n");
+    av_log(NULL, AV_LOG_INFO, "-新的Packet------------------------------------------------------------------------------------\n");
     //一个 AVPacket 存储一个帧或多个帧，一个帧包含多个片，一个NALU对应一个片
 
     AVPacket *out = NULL;  //用于输出
@@ -160,7 +183,7 @@ int h264_mp4toannexb(AVFormatContext *fmt_ctx, AVPacket *in, FILE *dst_fd) {
     do {
         ret = AVERROR(EINVAL);
         if (buf + 4 /*s->length_size*/ > buf_end) {
-             av_log(NULL, AV_LOG_INFO, "buf + 4 > buf_end, goto fail\n");
+            av_log(NULL, AV_LOG_INFO, "buf + 4 > buf_end, goto fail\n");
             goto fail;
         }
 
@@ -180,7 +203,7 @@ int h264_mp4toannexb(AVFormatContext *fmt_ctx, AVPacket *in, FILE *dst_fd) {
         }
 
         if (nal_size > buf_end - buf || nal_size < 0) {
-             av_log(NULL, AV_LOG_INFO, "nal_size > buf_end - buf || nal_size < 0, goto fail\n");
+            av_log(NULL, AV_LOG_INFO, "nal_size > buf_end - buf || nal_size < 0, goto fail\n");
             goto fail;
         }
 
@@ -229,7 +252,7 @@ int h264_mp4toannexb(AVFormatContext *fmt_ctx, AVPacket *in, FILE *dst_fd) {
 
             //为数据添加特征码
             if ((ret = alloc_and_copy(out, spspps_pkt.data, spspps_pkt.size, buf, nal_size)) < 0) {
-                av_log(NULL, AV_LOG_INFO, "unit_type = 5, alloc_and_copy goto fail, ret = %d, error = %s\n",ret, av_err2str(ret));
+                av_log(NULL, AV_LOG_INFO, "unit_type = 5, alloc_and_copy goto fail, ret = %d, error = %s\n", ret, av_err2str(ret));
                 goto fail;
             }
             /*s->new_idr = 0;*/
@@ -247,7 +270,7 @@ int h264_mp4toannexb(AVFormatContext *fmt_ctx, AVPacket *in, FILE *dst_fd) {
         }*/
         else {  //非关键帧，直接拷贝
             if ((ret = alloc_and_copy(out, NULL, 0, buf, nal_size)) < 0) {
-                av_log(NULL, AV_LOG_INFO, "unit_type = other, alloc_and_copy goto fail, ret = %d, error = %s\n",ret, av_err2str(ret));
+                av_log(NULL, AV_LOG_INFO, "unit_type = other, alloc_and_copy goto fail, ret = %d, error = %s\n", ret, av_err2str(ret));
                 goto fail;
             }
             /*
@@ -280,7 +303,7 @@ int h264_mp4toannexb(AVFormatContext *fmt_ctx, AVPacket *in, FILE *dst_fd) {
 fail:
     av_packet_free(&out);
 
-    av_log(NULL, AV_LOG_INFO, "处理完一个 AVPacket，cumul_size = %d\n", cumul_size);
+    av_log(NULL, AV_LOG_INFO, "处理完一个 AVPacket，cumul_size = %d\n\n", cumul_size);
     return ret;
 }
 
