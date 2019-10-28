@@ -14,9 +14,7 @@ FFmpeg 代码结构：
 
 ## 5-3 ffmpeg文件的删除与重命名
 
-## 5-4 ffmpeg操作目录及list的实现-1
-
-## 5-5 ffmpeg操作目录及list的实现-2
+## 5-4 ffmpeg操作目录及list的实现
 
 ## 5-6 ffmpeg处理流数据的基本概念
 
@@ -44,16 +42,16 @@ FFmpeg 代码结构：
 - `avformat_open_input()/avformat_close_input()` 读取与释放
 - `av_dump_format()` 打印音视频文件元信息
 
-## 5-8 ffmpeg抽取音频数据-1
+## 5-8 ffmpeg抽取音频数据
 
 - `av_init_packet()` 初始化数据包结构体
 - `av_find_best_stream()` 从数据包中找到最好的流
 - `av_read_frame/av_packet_unref()` 读取与释放（为什么这里是 readframe 而不是 readstream 呢？历史遗留问题 ）
 
-## 5-11 ffmpeg抽取视频H264数据-1
+## 5-11 ffmpeg抽取视频H264数据
 
-- Start code：用以区分一帧一帧的视频数据，Start code 是一个特征码。
-- SPS/PPS：存储视频的宽高，帧率等数据。SPS/PPS 数据非常小，每个关键帧前面都添加一个 SPS/PPS 可以防止因为丢包而无法解析的问题。
+- Start code：用以区分一帧一帧的视频数据，Start code 是一个特征码，每一帧前面都要有特征码，特征码为 `00 00 01` 或者 `00 00 00 01`（关键帧）。
+- SPS/PPS：存储视频的宽高，帧率等数据。SPS/PPS 数据非常小，每个关键帧前面都添加一个 SPS/PPS 可以防止因为丢包而无法解析的问题。每个 SPS/PPS 前面也要有一个 Start code。
 - 获取SPS/PPS：`codec -> extradata`
 
 ## 5-14 ffmpeg将mp4转成flv
