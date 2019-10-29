@@ -56,13 +56,19 @@ FFmpeg 代码结构：
 
 ## 5-14 ffmpeg将mp4转成flv
 
-- `avformat_alloc_output_context2()`/`avformat_free_context()` 用于输出
-- `avformat_new_stream()` 创建新的 stream
-- `avcodec_parameters_copy()` 拷贝视频信息
-- `avformat_write_header()`写多媒体文件头，用以标识FFmpeg支持的多媒体文件
-- `avformat_write_frame()`/`av_interleaved_write_frame()` 写数据
-- `av_write_trailer()` 写尾部信息
+- `avformat_alloc_output_context2()`/`avformat_free_context()` 用于输出多媒体文件的上下文。
+- `avformat_new_stream()` 创建新的 stream(轨)。
+- `avcodec_parameters_copy()` 拷贝视频信息。
+- `avformat_write_header()`写多媒体文件头，用以标识 FFmpeg 支持的多媒体文件。
+- `avformat_write_frame()` 或者 `av_interleaved_write_frame()` 写多媒体数据，后者更常用。
+- `av_write_trailer()` 写尾部信息。
 
 ## 5-16 ffmpeg音视频裁剪
 
+- 关键函数：`av_seek_frame()` 跳到某一个时间点。
+
 ## 5-17 作业：ffmpeg实现小咖秀
+
+- 将两个媒体文件分别抽取音频与视频轨
+- 将音频与视频轨合并成一个新文件
+- 对音频与视频轨进行裁剪
