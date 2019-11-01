@@ -3,8 +3,7 @@
 - [ffmpeg 官网](https://ffmpeg.org/)
 - [ffmpeg 官方 wiki](https://trac.ffmpeg.org/wiki)
 
----
-## 1 编译
+## 编译
 
 - [FFmpeg官方编译指引](https://trac.ffmpeg.org/wiki/CompilationGuide)
 - [ffmpeg-android-java](https://github.com/WritingMinds/ffmpeg-android-java)：Android端命令行
@@ -33,15 +32,19 @@ SLIB_INSTALL_NAME='$(SLIBNAME_WITH_MAJOR)'
 SLIB_INSTALL_LINKS='$(SLIBNAME)'
 ```
 
----
-## 库
+## 相关资料
+
+### 库
 
 - [VideoCompression](https://github.com/RudreshJR/VideoCompression)，Android Library for VideoCompressionLibrary for VideoCompression
 - [RxFFmpeg](https://github.com/microshow/RxFFmpeg)
 
----
-## 学习
+### 项目
+
+- [WeiXinRecordedDemo](https://github.com/Zhaoss/WeiXinRecordedDemo)
+
+### 学习
 
 - [FFMPEG视音频编解码零基础学习方法](http://blog.csdn.net/leixiaohua1020/article/details/15811977)
-- [WeiXinRecordedDemo](https://github.com/Zhaoss/WeiXinRecordedDemo)
-- [WliveTV](https://github.com/wanliyang1990/WliveTV) 视频教程
+- [Android 音视频开发学习思路](https://www.cnblogs.com/renhui/p/7452572.html)
+- [WliveTV](https://github.com/wanliyang1990/WliveTV) 付费视频教程

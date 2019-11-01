@@ -14,9 +14,7 @@ FFmpeg 代码结构：
 
 ## 5-3 ffmpeg文件的删除与重命名
 
-## 5-4 ffmpeg操作目录及list的实现-1
-
-## 5-5 ffmpeg操作目录及list的实现-2
+## 5-4 ffmpeg操作目录及list的实现
 
 ## 5-6 ffmpeg处理流数据的基本概念
 
@@ -44,27 +42,33 @@ FFmpeg 代码结构：
 - `avformat_open_input()/avformat_close_input()` 读取与释放
 - `av_dump_format()` 打印音视频文件元信息
 
-## 5-8 ffmpeg抽取音频数据-1
+## 5-8 ffmpeg抽取音频数据
 
 - `av_init_packet()` 初始化数据包结构体
 - `av_find_best_stream()` 从数据包中找到最好的流
 - `av_read_frame/av_packet_unref()` 读取与释放（为什么这里是 readframe 而不是 readstream 呢？历史遗留问题 ）
 
-## 5-11 ffmpeg抽取视频H264数据-1
+## 5-11 ffmpeg抽取视频H264数据
 
-- Start code：用以区分一帧一帧的视频数据，Start code 是一个特征码。
-- SPS/PPS：存储视频的宽高，帧率等数据。SPS/PPS 数据非常小，每个关键帧前面都添加一个 SPS/PPS 可以防止因为丢包而无法解析的问题。
+- Start code：用以区分一帧一帧的视频数据，Start code 是一个特征码，每一帧前面都要有特征码，特征码为 `00 00 01` 或者 `00 00 00 01`（关键帧）。
+- SPS/PPS：存储视频的宽高，帧率等数据。SPS/PPS 数据非常小，每个关键帧前面都添加一个 SPS/PPS 可以防止因为丢包而无法解析的问题。每个 SPS/PPS 前面也要有一个 Start code。
 - 获取SPS/PPS：`codec -> extradata`
 
 ## 5-14 ffmpeg将mp4转成flv
 
-- `avformat_alloc_output_context2()`/`avformat_free_context()` 用于输出
-- `avformat_new_stream()` 创建新的 stream
-- `avcodec_parameters_copy()` 拷贝视频信息
-- `avformat_write_header()`写多媒体文件头，用以标识FFmpeg支持的多媒体文件
-- `avformat_write_frame()`/`av_interleaved_write_frame()` 写数据
-- `av_write_trailer()` 写尾部信息
+- `avformat_alloc_output_context2()`/`avformat_free_context()` 用于输出多媒体文件的上下文。
+- `avformat_new_stream()` 创建新的 stream(轨)。
+- `avcodec_parameters_copy()` 拷贝视频信息。
+- `avformat_write_header()`写多媒体文件头，用以标识 FFmpeg 支持的多媒体文件。
+- `avformat_write_frame()` 或者 `av_interleaved_write_frame()` 写多媒体数据，后者更常用。
+- `av_write_trailer()` 写尾部信息。
 
 ## 5-16 ffmpeg音视频裁剪
 
+- 关键函数：`av_seek_frame()` 跳到某一个时间点。
+
 ## 5-17 作业：ffmpeg实现小咖秀
+
+- 将两个媒体文件分别抽取音频与视频轨
+- 将音频与视频轨合并成一个新文件
+- 对音频与视频轨进行裁剪
