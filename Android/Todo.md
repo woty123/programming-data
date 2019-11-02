@@ -73,10 +73,6 @@
 - [突破Android P非SDK API限制的几种代码实现](https://juejin.im/post/5ba0f3f7e51d450e6f2e39e0)
 - [突破Android P的非公开API限制](https://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247488664&idx=1&sn=610312f426d72b73103970bff2c32a30&chksm=f951a1dbce2628cd5e0f9fa60a67fc4eb3d080a7f102cdfc80d7a18161a2d2c04992b2b59ed4&mpshare=1&scene=1&srcid=0413gOKphy8dm0Rm5sxUey4b#rd)
 
-## Android 换肤
-
-- [Android-skin-support](https://github.com/ximsfei/Android-skin-support)
-
 ## NDK
 
 - [xHook](https://github.com/iqiyi/xHook)
