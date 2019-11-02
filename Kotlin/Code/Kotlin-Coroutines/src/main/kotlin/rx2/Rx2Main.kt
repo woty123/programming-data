@@ -15,7 +15,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 /* https://github.com/Kotlin/kotlinx.coroutines/blob/master/reactive/kotlinx-coroutines-rx-example/src/main.kt */
-
 interface GitHub {
     @GET("/repos/{owner}/{repo}/contributors")
     fun contributors(
