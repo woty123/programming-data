@@ -359,7 +359,7 @@ public class AppContext extends Application{
 - 代码不够优雅
 - 可维护性差
 
-### 延迟初始化方案：延迟加载
+### 延迟初始化方案：使用 IdleHandler 实现延迟加载
 
 核心思想：对延迟任务进行分批初始化
 

@@ -43,6 +43,7 @@
 
 - [kotlin_dsl guide](https://docs.gradle.org/current/userguide/kotlin_dsl.html)
 - [kotlin-dsl](https://github.com/gradle/kotlin-dsl)
+- [kotlin-dsl-samples](https://github.com/gradle/kotlin-dsl-samples)
 
 ### 持续集成
 

@@ -1,6 +1,5 @@
 # Java8 概要
 
----
 ## 1 Lambda表达式
 
 - 一个Lambda表达式是一个带有参数的代码块
@@ -30,16 +29,13 @@
 
 和lambda表达式一样，方法引用也不会独立存在，它们经常被用于转换为函数式接口。
 
-
 ### 默认方法
 
 接口中可以添加静态方法和默认方法。
 
----
-## 2 StreamAPI
+## 2 Stream API
 
 Stream是Java8中处理集合的关键抽象概念，它可以指定你希望对集合进行的操作，但是将执行操作的时间交给具体的实现来决定。
-
 
 - 创建Stream
 - 使用各种操作符
@@ -60,36 +56,42 @@ Stream中的函数式接口包括：
 - `UnaryOperator<T>` 一元操作符
 - `BinaryOperator<T>` 二元操作符
 
----
-## 3 新的日期和时间API
+## 3 新的日期和时间 API
 
-内容在java.time包中
+参考 `java.time` 包
 
----
 ## 4 并发增强
 
 - 原子值
-- ConcurrentHashMap改进
 - 并行数组操作
+- ConcurrentHashMap 改进
 - CompletableFuture
 
 参考[Java8 和 Java 9中并发工具的改变](http://colobu.com/2018/03/12/Concurrency-Utilities-Enhancements-in-Java-8-Java-9/)
 
----
 ## 5  其他改进
 
-- 字符串增加了join方法
+- 字符串增加了 join 方法
 - 可重复注解
 
----
-## 6 JavaScript引擎：Nashorn
+### HashMap 优化
+
+- Java8 之前的 HashMap 的内部结果是：数组 + 链表)
+- Java8 的 HashMap 的内部结果是：数组 + (链表/红黑树)
+
+### JVM 内存结构
+
+- Java8 Hotspot JVM 去掉了永久区（方法区属于永久区的一部分，永久区中存储的信息回收条件非常苛刻）。
+- Java8 Hotspot JVM 使用 Metaspace 代替永久区，存储加载的类信息，Metaspace 不使用申请的堆空间，而是直接使用物理内存。
+
+## 6 JavaScript 引擎：Nashorn
 
 略
 
 ---
 # 参考
 
+- [Java8新特性](Java8新特性.pdf)
 - [Java8Stream详解](http://colobu.com/2016/03/02/Java-Stream/)
 - [Java8新特性终极版](http://www.jianshu.com/p/5b800057f2d8)
 - [现代java开发指南](http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0428/2811.html)
-

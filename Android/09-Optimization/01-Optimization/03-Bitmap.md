@@ -17,7 +17,7 @@
 2. 尺寸压缩：canvas
 3. 采样率压缩：inSampleSize
 4. libjpeg
-5. libjpeg-turbo
+5. libjpeg-turbo，参考 [高性能图片压缩 —— libjpeg-turbo 的编译与集成](https://juejin.im/post/5cb1d6f7518825186d653aa7)
 
 参考[Android图片压缩的几种方案](https://mp.weixin.qq.com/s/-ixGY5E34Fbsy0N3-XTk-Q?)
 

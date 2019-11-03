@@ -397,3 +397,18 @@ MultiDex中的针对各个系统版本有不同的实现，比如V19类就是针
 
 - 启动速度变慢，由于启动需要加载更多的dex，导致启动速度变慢，甚至可能出现ANR现象
 - 由于Dalvik LinearAlloc的bug，可能导致使用mulitDex的应用无法在4.0以前的手机使用
+
+---
+## 5 MultiDex相关资料
+
+- [MultiDex文档](https://developer.android.com/studio/build/multidex.html?hl=zh-cn)
+- [包括65536原因、multidex解决、NoClassDefFoundError、Application Not Responding、App首次启动加载方案等](http://yydcdut.com/2016/03/20/split-dex/)
+- [MultiDex安装过程源码分析](http://mouxuejie.com/blog/2016-06-11/multidex-source-analysis/)
+- [Android分包原理](http://souly.cn/%E6%8A%80%E6%9C%AF%E5%8D%9A%E6%96%87/2016/02/25/android%E5%88%86%E5%8C%85%E5%8E%9F%E7%90%86/)
+- [其实你不知道MultiDex到底有多坑](http://blog.zongwu233.com/the-touble-of-multidex)
+- [由Android 65K方法数限制引发的思考](http://jayfeng.com/2016/03/10/%E7%94%B1Android-65K%E6%96%B9%E6%B3%95%E6%95%B0%E9%99%90%E5%88%B6%E5%BC%95%E5%8F%91%E7%9A%84%E6%80%9D%E8%80%83/)
+
+### MultiDex Lib
+
+- [快速加载Dex](https://github.com/asLody/TurboDex)
+- [Dex65536-ant](https://github.com/mmin18/Dex65536)

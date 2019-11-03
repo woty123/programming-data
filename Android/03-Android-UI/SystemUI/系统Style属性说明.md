@@ -7,7 +7,7 @@
 |`android:windowIsFloating`|设置是否浮现在activity之上true或者false（窗体是否浮在下层之上），当windowIsFloating为true时，window默认为包裹内容的|
 |`android:windowIsTranslucent`|设置window是否为透明，需要swipteDismiss时要设置|
 |`android:background` |表示ViewTree中View的默认背景颜色|
-|`android:windowBackground` |设置window的背景颜色，**注意background和windowBackground的区别，windowBackground是表示窗口的背景色，只作用与DecorView，而background作用于ViewTree中所有的View，当需要显示一个透明背景的窗口时，需要把两个都设置为透明色**|
+|`android:windowBackground` |设置window的背景颜色，**注意background和windowBackground的区别，windowBackground是表示窗口的背景色，只作用于 DecorView，而 background 作用于 ViewTree 中所有的 View，当需要显示一个透明背景的窗口时，需要把两个都设置为透明色**|
 |`android:windowContentOverlay`|在窗口的内容区域的前景放置重叠Drawable，通常是标题下面的阴影。|
 |`android:backgroundDimEnabled` | 是否允许对话框的背景变暗？如果允许背景就变暗了（用在浮动窗口）|
 |`android:backgroundDimAmount`|变暗的程度|
@@ -19,8 +19,6 @@
 |`android:windowAnimationStyle` |窗体切换时的动画样式|
 | `windowCloseOnTouchOutside` |是否再点击外部可关闭|
 | `windowContentOverlay`|（设置窗体内容背景）|
-
-
 
 ## 一般自定义Dialog的theme
 
@@ -49,7 +47,7 @@
 
 #  2 Theme属性
 
-```
+```xml
       android:theme="@android:style/Theme.Dialog" // 将一个Activity显示为对话框模式
       android:theme="@android:style/Theme.NoTitleBar" // 不显示应用程序标题栏
       android:theme="@android:style/Theme.NoTitleBar.Fullscreen" // 不显示应用程序标题栏，并全屏
@@ -81,16 +79,14 @@
 toolbar右边的三个点是 操作栏右侧的操作溢出菜单，与手机物理菜单按键作用一样
 需要支持快速访问的重要操作，可以在相应的 `<item>` 中添加 `android:showAsAction=”ifRoom”` ，从而将此项提升到操作栏中。`</item>`
 
-
 `android：showAsAction`总共有五个属性:
 
-*   never：永远不会显示。只会在溢出列表中显示。
-*   ifRoom：会显示在Item中，但是如果已经有4个或者4个以上的Item时会隐藏在溢出列表中。
-*   always：无论是否溢出，总会显示。
-*   withText：Title会显示。
-*   collapseActionView：可拓展的Item。
-
+* never：永远不会显示。只会在溢出列表中显示。
+* ifRoom：会显示在Item中，但是如果已经有4个或者4个以上的Item时会隐藏在溢出列表中。
+* always：无论是否溢出，总会显示。
+* withText：Title会显示。
+* collapseActionView：可拓展的Item。
 
 # 4 引用
 
-[系统R.attr.html说明](https://developer.android.com/reference/android/R.attr.html)
+- [系统R.attr.html说明](https://developer.android.com/reference/android/R.attr.html)
