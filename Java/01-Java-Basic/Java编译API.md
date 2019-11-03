@@ -14,4 +14,3 @@ Javac 的 API 随着 JDK 的发展有许多的变更，比如：
 - [Java编译过程：Compilation Overview](http://openjdk.java.net/groups/compiler/doc/compilation-overview/index.html)
 - [Java 编译器 javac 笔记](http://nullwy.me/2017/04/javac-api/)
 - [The Hacker’s Guide to Javac](Java编译-The_Hacker’s_Guide_to_Javac.pdf)
-- [现代编译器的Java实现(第二版)](Java编译-现代编译器的Java实现(第二版).pdf)
