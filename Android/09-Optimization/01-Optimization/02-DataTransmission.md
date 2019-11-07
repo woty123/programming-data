@@ -9,7 +9,6 @@
 - **Nano-Proto-Buffers**：基于Protocal，为移动终端做了特殊的优化，代码执行效率更高，内存使用效率更佳。
 - **FlatBuffers**：这个开源库最开始是由Google研发的，专注于提供更优秀的性能。
 
----
 ## FlatBuffers
 
 FlatBuffers 是一个开源的跨平台数据序列化库，可以应用到几乎任何语言（C++, C#, Go, Java, JavaScript, PHP, Python），最开始是 Google 为游戏或者其他对性能要求很高的应用开发的。
@@ -32,7 +31,6 @@ JSON是目前常用的数据序列化技术，可读性强，但是序列化和�
 2. 数据序列化后是二进制的，没有可读性
 3. 构建FlatBuffers对象比较麻烦
 
-----
 ## 引用
 
 ### json

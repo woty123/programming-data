@@ -170,7 +170,7 @@ Trace.endSection()
 
 使用方式1：DDMS
 
-![ddms_systrace.png](../images/ddms_systrace.png)
+![ddms_systrace.png](images/ddms_systrace.png)
 
 总结：
 
