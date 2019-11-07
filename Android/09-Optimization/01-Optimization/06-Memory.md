@@ -53,7 +53,7 @@ public class Main{
   - 本地方法栈：Java 虚拟机规范中在此区域定义了 outofmemory 和 stackoverflow 异常。（在hotspotVM把虚拟机栈和本地方法栈合为一个栈区）
 - 共享数据区
   - 方法区：用于存储 ClassLoader 加载的类信息。方法区还包括运行时常量池，用于存储字面量、符号引用等，这里发生 GC 的条件比较苛刻。
-  - java堆：虚拟机管理的最大的一块内存，对象都存储在堆中，Java 虚拟机规范中在此区域定义了 outofmemory 异常
+  - java堆：虚拟机管理的最大的一块内存，对象都存储在堆中，Java 虚拟机规范中在此区域定义了 outofmemory 异常。
 
 ![](images/memory03-java-memory-detail.png)
 
@@ -63,7 +63,7 @@ public class Main{
 
 当某对象不再被其他对象引用的时候才会进行回收，那么如何确定一个对象不再被其他对象引用呢？
 
-- 引用计数算法：根据对象的引用数来决定是否回收该对象，缺点是互相引用容易出现计算器永不为 0 的情况，而事实上，JVM 从而使用过此算法。
+- 引用计数算法：根据对象的引用数来决定是否回收该对象，缺点是互相引用容易出现计算器永不为 0 的情况，事实上，JVM 从而使用过此算法。
 - 可达性分析算法：参考下图，当从 GC ROOT 出发到某一个对象，当无法找到至少一条引用路径时，说明该对象可以被回收。
 
 ![](images/memory01-gc-root.png)
@@ -72,37 +72,26 @@ public class Main{
 
 - 虚拟机栈正在运行使用的引用。
 - 静态属性、常量。
-- JNI引用的对象。
+- JNI 引用的对象。
 
 ### Java 的四种引用
 
 垃圾回收也与对象的引用类型有关系：
 
-- 强引用：一般的引用，如 `Object obj=new Object();` 如果对象可达，就算发送 OOM 也不会回收该对象。
-- 软引用 SoftReference：内存不足时回收，存放一些重要性不是很强又不能随便让清除的对象，比如图片切换到后台不需要马上显示了。
-- 弱引用 WeakReference：第一次扫到了，就标记下来，第二次扫到直接回收。
-- 虚引用 PhantomReference：幽灵幻影引用，不对生存造成任何影响，用于跟踪GC的回收通知。
-
-GC 是需要 2 次扫描才回收对象，所以我们可以用 finalize 去救活丢失引用的对象，例如：
-
-```java
-static App a;
-@Override
-protected void() throws Throwable{
-    super.finalize();
-    a=this;
-}
-```
+- StrongReference强引用：对象的一般保存，生命周期直到JVM停止的时候才会终止。
+- SoftReference软引用：回收时机是当内存不足的时候；使用`SoftReference<String>`结合`ReferenceQueue`构造有效期短，生命周期为内存不足时终止。
+- WeakReference弱引用：回收时机是在进行垃圾回收的时候，生命周期为GC后终止，即只要GC发现若引用就会进行回收。
+- PhatomReference虚引用：回收时机是在垃圾回收的时候，一般结合`ReferenceQueue`来跟踪对象被垃圾回收期回收的活动，生命周期为GC后终止。
 
 ### JVM 内存回收算法
 
-GC 主要发生在堆内存中，而堆内存又可以进一步划分为各种代。
+GC 主要发生在堆内存中，而堆内存又可以进一步划分为各种区域。
 
 ![](images/memory04-java-heap-generation.png)
 
 - 新生代
-  - Eden Space
-  - Survivor Space
+  - 一个：Eden Space
+  - 两个：Survivor Space
 - 老年代
 - 永久代（Java8 后被元数据区取代）
 
@@ -129,8 +118,7 @@ JVM 会根究不同区域的特点采取不同的垃圾回收算法，常见的�
 - Parallel Scavenge收集器
 - Serial Old收集器
 - Parallel Old收集器
-- CMS 收集器（Android ART 默认采用方案）
-  - CMS采用"标记-清理"算法实现以获取最短回收停顿时间为目标的收集器
+- CMS 收集器（Android ART 默认采用方案），CMS采用"标记-清理"算法实现以获取最短回收停顿时间为目标的收集器：
   - 初始标记：标记一下GC Roots能直接关联到的对象
   - 并发标记：进行GC Roots Tracing 的过程
   - 重新标记：是为了修正并发标记期间因用户程序继续运行而导致标记产品变动的那一部分对象的标记记录
@@ -173,10 +161,10 @@ MAT对比操作前后的hprof文件来定位内存泄露是泄露了什么数据
 
 1. Dump 出内存泄露“当时”的内存镜像 hprof，分析怀疑泄露的类。
 2. 把上面 2 得出的这些嫌疑犯一个一个排查个遍。步骤：
-    - 进入 Histogram，过滤出某一个嫌疑对象类
-    - 然后分析持有此类对象引用的外部对象（在该类上面点击右键`List Objects--->with incoming references`）
-    - 再过滤掉一些弱引用、软引用、虚引用，因为它们迟早可以被GC干掉不属于内存泄露，(在类上面点击右键`Merge Shortest Paths to GC Roots--->exclude all phantom/weak/soft etc.references`)
-    - 逐个分析每个对象的 GC 路径是否正常，此时就要进入代码分析，判断此时这个对象的引用持有是否合理，这就要靠经验了。
+   - 进入 Histogram，过滤出某一个嫌疑对象类
+   - 然后分析持有此类对象引用的外部对象（在该类上面点击右键`List Objects--->with incoming references`）
+   - 再过滤掉一些弱引用、软引用、虚引用，因为它们迟早可以被GC干掉不属于内存泄露，(在类上面点击右键`Merge Shortest Paths to GC Roots--->exclude all phantom/weak/soft etc.references`)
+   - 逐个分析每个对象的 GC 路径是否正常，此时就要进入代码分析，判断此时这个对象的引用持有是否合理，这就要靠经验了。
 
 ### 如何判断一个应用里面避免内存泄露做得很好
 
@@ -290,7 +278,7 @@ public void sample(){
 
 ![](images/memory07-memory-Jitter.png)
 
-如果内存占用图形出现了连续的锯齿状，则说明这段时间内存发生了频繁的分配与回收，同时也可以查看下面对象的分配与回收数。
+如果内存占用动态图出现了连续的锯齿状，则说明这段时间内存发生了频繁的分配与回收，同时也可以查看下面对象的分配与回收数。
 
 ## 6  优化建议
 
@@ -302,17 +290,17 @@ public void sample(){
   - 数组，链表，栈，树，图。
   - 数据量千级以内可以使用 Sparse 数组(key为整数)，ArrayMap（key为对象）性能不如 HashMap 但节约内存。
 - 枚举优化：每一个枚举值都是一个单例对象，在使用它时会增加额外的内存消耗，可以考虑使用`注解 + 整型`的方式来代替枚举的使用。
-- 字符串的连接尽量少用加号(+)
+- 字符串的连接尽量少用加号(+)。
 - 重复申请内存的问题：
   - 避免在递归函数、回调函数中 new 对象，避免直接在循环中 new 对象等。
   - 不要在 `onMeause()  onLayout() onDraw()` 分配对象。
-- 避免 GC 回收将来要重用的对象：内存设计模式对象沲+LRU算法
-- 使用 LRUCache(最近最少使用先回收) 算法处理缓存。
+- 避免 GC 回收将来要重用的对象：内存设计模式对象沲+LRU算法。
+- 使用 LRUCache 算法管理缓存。
 - Handler 的使用问题：
   - 非静态内部类持有外部内引用问题,如果开启的线程需要传入参数，用弱引接收可解决问题。
   - handler.postDelayed()问题，记得在 Activity/Fragment 销毁时，调用 `handler.removeCallbacksAndMessages(null)`。
-- 对于图片列表，一个列表可能占用着大量的内存，对应这种情况，可以监听UI的状态，如果Fragment或Activity处于不可见状态，可以暂时把列表置空，然后在Fragment或Activity可见时重新设置之前的数据，这样在UI处于不可见的状态下，列表上的图片都是可被回收的，需要注意的是，在给列表重新设置之前的数据后，尽可能的恢复之气的UI状态
-- 合理使用 Java 的四种引用类型：开发时，为了防止内存溢出，处理一些比较占用内存大并且生命周期长的对象的时候，可以尽量使用软引用和弱引用。
+- 对于图片列表，一个列表可能占用着大量的内存，对应这种情况，可以监听UI的状态，如果 Fragment/Activity 处于不可见状态，可以暂时把列表置空，然后在Fragment或Activity可见时重新设置之前的数据，这样在UI处于不可见的状态下，列表上的图片都是可被回收的，需要注意的是，在给列表重新设置之前的数据后，尽可能的恢复之气的UI状态
+- 合理使用 Java 的四种引用类型：为了防止内存溢出，处理一些比较占用内存大并且生命周期长的对象的时候，可以尽量使用软引用和弱引用。
 - 尽量使用IntentService，而不是 Service。
 - WebView 放在单独的进程中。
 
