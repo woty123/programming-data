@@ -87,23 +87,22 @@ MAT对比操作前后的hprof文件来定位内存泄露是泄露了什么数据
 快速定位到操作前后所持有的对象哪些是增加了，GC后还是比之前多出来的对象就可能是泄露对象嫌疑犯。提示：
 
 - Histogram(直方图)中还可以对对象进行Group，比如选择`Group By Package`更方便查看自己Package中的对象信息。
-- Android Memory Monitor捕获的hprof文件不是标准的hprof文件，需要在Cuptures栏右击文件导入标准的hprof文件才能被MAT分析。
+- Android Memory Monitor捕获的hprof文件不是标准的hprof文件，需要在 Cuptures 栏右击文件导入标准的 hprof 文件才能被 MAT 分析,或者也可以使用命令行：`hprof-conv -z origin.hprof new.hprof`。
 
 ### 3 MAT分析hprof来定位内存泄露的原因所在
 
-找到哪个对象持有了上面怀疑出来的发生泄露的对象
+找到哪个对象持有了上面怀疑出来的发生泄露的对象？
 
-1. Dump出内存泄露“当时”的内存镜像hprof，分析怀疑泄露的类
-2. 把上面2得出的这些嫌疑犯一个一个排查个遍。步骤：
-    - 进入Histogram，过滤出某一个嫌疑对象类
+1. Dump 出内存泄露“当时”的内存镜像 hprof，分析怀疑泄露的类。
+2. 把上面 2 得出的这些嫌疑犯一个一个排查个遍。步骤：
+    - 进入 Histogram，过滤出某一个嫌疑对象类
     - 然后分析持有此类对象引用的外部对象（在该类上面点击右键`List Objects--->with incoming references`）
     - 再过滤掉一些弱引用、软引用、虚引用，因为它们迟早可以被GC干掉不属于内存泄露，(在类上面点击右键`Merge Shortest Paths to GC Roots--->exclude all phantom/weak/soft etc.references`)
-    - 逐个分析每个对象的GC路径是否正常，此时就要进入代码分析，判断此时这个对象的引用持有是否合理，这就要靠经验了。
+    - 逐个分析每个对象的 GC 路径是否正常，此时就要进入代码分析，判断此时这个对象的引用持有是否合理，这就要靠经验了。
 
 ### 如何判断一个应用里面避免内存泄露做得很好
 
-当app退出的时候，这个进程里面所有的对象应该就都被回收了，尤其是很容易被泄露的（View，Activity）是否还内存当中。
-可以让app退出以后，查看系统该进程里面的所有的View、Activity对象是否为0.
+当app退出的时候，这个进程里面所有的对象应该就都被回收了，尤其是很容易被泄露的（View，Activity）是否还内存当中。可以让app退出以后，查看系统该进程里面的所有的View、Activity对象是否为0.
 
 工具：使用`AndroidStudio--AndroidMonitor--System Information--Memory Usage`查看Objects里面的views和Activity的数量是否为0.
 

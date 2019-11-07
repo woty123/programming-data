@@ -92,7 +92,7 @@ DALVIK THREADS:
 
 1. 使用 FileObserver 监听 `/data/anr/traces.txt` 的变化，但是很多高版本的 ROM，已经没有读取这个文件的权限了。Bugly 目前也是使用的此方式。
 2. 海外可以使用 Google Play 服务。
-3. 国内微信利用 [Hardcoder](https://mp.weixin.qq.com/s/9Z8j3Dv_5jgf7LDQHKA0NQ?) 框架向厂商获取了更大的权限，但是 Hardcoder 并没有开源。
+3. 国内微信利用 [Hardcoder](https://mp.weixin.qq.com/s/9Z8j3Dv_5jgf7LDQHKA0NQ?) 框架向厂商获取了更大的权限。
 
 ## 参考
 
