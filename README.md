@@ -134,7 +134,7 @@
 ## 架构总结
 
 - [架构相关资料](Android/08-Architecture/References.md)
-- [项目架构实践01-开发准备](Android/08-Architecture/01-开发准备.md)
+- [01-开发准备](Android/08-Architecture/01-开发准备.md)
 - [02-开发规范](Android/08-Architecture/02-开发规范.md)
 - [03-认识架构](Android/08-Architecture/03-认识架构.md)
 - [04-架构实施](Android/08-Architecture/04-架构实施.md)
