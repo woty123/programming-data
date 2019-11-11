@@ -692,7 +692,7 @@ public class ShoppingCartRepository   {
 
 ### 使用 BindsOptionalOf
 
-BindsOptionalO 提供注入对象的方法上，表示此注入对象可能不存在，即可能不会被注入。使用方式：
+BindsOptionalOf 提供注入对象的方法上，表示此注入对象可能不存在，即可能不会被注入。使用方式：
 
 ```java
 //step 1
