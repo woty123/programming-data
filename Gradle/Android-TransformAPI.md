@@ -248,3 +248,4 @@ public enum Status {
 - [metis](https://github.com/yangxlei/metis)
 - [sa-sdk-android-plugin2](https://github.com/sensorsdata/sa-sdk-android-plugin2)
 - [click-debounce](https://github.com/SmartDengg/click-debounce)
+- [MethodTraceMan](https://github.com/zhengcx/MethodTraceMan)
