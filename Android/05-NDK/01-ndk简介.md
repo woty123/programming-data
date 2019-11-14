@@ -18,22 +18,6 @@ Java Native Interface（JNI）标准是java平台的一部分，JNI是Java语言
 3. 基于安全性的考虑。防止代码被反编译，为了安全起见，使用C/C++语言来编写重要的部分以增大系统的安全性，最后生成so库（用过第三方库的应该都不陌生）便于给人提供方便。（任何有效的代码混淆对于会smail语法反编译你apk是分分钟的事，即使你加壳也不能幸免高手的攻击）
 4. 便于移植。用C/C++写得库可以方便在其他的嵌入式平台上再次使用。
 
-### NDK使用
-
-配置 Android.mk 和 Application.mk 文件，编写好相关代码，然后使用 ndk-build 命令进行编译。
-
-示例：
-
-```shell
-ndk-build NDK_PROJECT_PATH=. NDK_APPLICATION_MK=./jni/Application.mk NDK_LIBS_OUT=./jniLibs
-```
-
-- `NDK_PROJECT_PATH` 指定项目路径, 会自动读取这个目录下的 jni/Android.mk 文件
-- `NDK_APPLICATION_MK` 指定 Application.mk 的位置
-- `NDK_LIBS_OUT` 指定将生成的 .so 文件放到哪个目录，默认 Android Studio 会读取 jniLibs 目录下的 .so 文件, 所以我们把 .so 文件生成到这
-
-关于 ndk-build 的命令选项可以通过`ndk-build -h`获取。
-
 ---
 ## 2 一些概念
 
@@ -65,13 +49,34 @@ ndk-build NDK_PROJECT_PATH=. NDK_APPLICATION_MK=./jni/Application.mk NDK_LIBS_OU
 2. 在AndroidStudio上，徒手编写 `Android.mk` 然后使用 ndk-build 编译，这种方式需要在`gradle.properties`中添加`android.useDeprecatedNdk = true`。
 3. 使用 `gradle-experimental` NDK 插件进行开发，这个方式只是一个试验性功能，现在已经被废弃。
 4. 使用 AndroidStudio2.2 及更高版本，这个版本增强了 C++ 的开发能力，能够使用 ndk-build 或 CMake 去编译和调试项目里的 C++ 代码，此时 AndroidStudio 用于构建原生库的默认工具是 CMake，但是仍然支持使用 ndkBuild。
-    - 在`externalNativeBuild 中配置 ndkBuild`
-    - 在`externalNativeBuild 中配置 cmake`
+   - 在`externalNativeBuild 中配置 ndkBuild`
+   - 在`externalNativeBuild 中配置 cmake`
+5. 使用独立工具链
 
-### 关于gcc与clang
+### 使用 ndk-build
 
-- Android NDK从r11开始建议大家切换到clang。并且把GCC标记为deprecated，将GCC版本锁定在GCC 4.9不再更新。
-- Android NDK从r13起，默认使用Clang进行编译。
+配置 Android.mk 和 Application.mk 文件，编写好相关代码，然后使用 ndk-build 命令进行编译。
+
+示例：
+
+```shell
+ndk-build NDK_PROJECT_PATH=. NDK_APPLICATION_MK=./jni/Application.mk NDK_LIBS_OUT=./jniLibs
+```
+
+- `NDK_PROJECT_PATH` 指定项目路径, 会自动读取这个目录下的 jni/Android.mk 文件
+- `NDK_APPLICATION_MK` 指定 Application.mk 的位置
+- `NDK_LIBS_OUT` 指定将生成的 .so 文件放到哪个目录，默认 Android Studio 会读取 jniLibs 目录下的 .so 文件, 所以我们把 .so 文件生成到这
+
+关于 ndk-build 的命令选项可以通过`ndk-build -h`获取。
+
+### 使用 cmake
+
+参考官方文档。
+
+### 关于 gcc 与 clang
+
+- Android NDK从 r11 开始建议大家切换到 clang。并且把 GCC 标记为 deprecated，将 GCC 版本锁定在 GCC4.9 不再更新。
+- Android NDK从 r13 起，默认使用 Clang 进行编译。
 
 ---
 ## 4 NDK开发学习内容
