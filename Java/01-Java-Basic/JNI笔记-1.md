@@ -1,5 +1,3 @@
-
----
 JNI 学习资料：
 
 - [Oracle JNI 文档 1.5](https://docs.oracle.com/javase/1.5.0/docs/guide/jni/spec/jniTOC.html)
@@ -9,9 +7,9 @@ JNI 学习资料：
 - [极客学院：JNI/NDK 开发指南](http://wiki.jikexueyuan.com/project/jni-ndk-developer-guide/workflow.html)
 - [IntelliJ IDEA平台下 JNI 编程](http://blog.csdn.net/huachao1001/article/details/53906237)
 
->笔记大量翻译自[《The Java™ NativeInterfaceProgrammer’s Guide and Specification》](http://barbie.uta.edu/~jli/Resources/Resource%20Provisoning&Performance%20Evaluation/85.pdf)
+>笔记翻译自[《The Java™ NativeInterfaceProgrammer’s Guide and Specification》](http://barbie.uta.edu/~jli/Resources/Resource%20Provisoning&Performance%20Evaluation/85.pdf)
 
-#  JNI 笔记 1
+# JNI 笔记 1
 
 ---
 ## 0 JNI 开发环境
@@ -45,7 +43,6 @@ windows JNI开发需要工具：MinGW(64位)提供的 gcc 工具链。
 ![生成dll配置](index_files/create_dll.png "生成dll配置")
 
 `-Wl,--add-stdcall-alias -I "$JDKPath$\include" -I "$JDKPath$\include\win32" -shared -o $FileDir$\$FileNameWithoutAllExtensions$.dll $FileDir$\$FileName$`
-
 
 ---
 ## 1 JNI 是什么
@@ -176,9 +173,8 @@ JNI 中常用的宏定义常量
 - `JNI_FALSE = 0` ,`JNI_TRUE = 1` 是定义jboolean类型的两个常量
 - `JNI_OK` 表示 JNI 函数成功返回， `JNI_ERR` 有时用于表示错误。
 - `JNI_COMMIT` 与 `JNI_ABORT` 两个常量被用于函数中，释放本地拷贝的基本类型数组。
-    - JNI_COMMIT 强制要求本地数组数据拷贝至JVM中对应的数组，
-    - JNI_ABORT 释放本地数组占用的内存空间，并且不作为新返回数据拷贝至JVM中对应的数组。
-
+  - JNI_COMMIT 强制要求本地数组数据拷贝至JVM中对应的数组，
+  - JNI_ABORT 释放本地数组占用的内存空间，并且不作为新返回数据拷贝至JVM中对应的数组。
 
 ---
 ### 3.2 不透明类型：opaque references
@@ -221,12 +217,12 @@ UNICODE：
 
 NewStringUTF 可以创建一个新的字符串，如果此时没有足够的内存，NewStringUTF 将抛 OutOfMemoryError 异常，同时返回NULL。
 
-#### 把 jstring 转成 C/C++ 字串。
+#### 把 jstring 转成 C/C++ 字串
 
 JNI支持 Unicode/UTF-8 字符编码互转。
 
-- Unicode以16-bits值编码；
-- UTF-8 是一种以字节为单位变长格式的字符编码，并与7-bitsASCII码兼容。UTF-8字串与C字串一样，以NULL('\0')做结束符。
+- Unicode 以 16-bits 值编码；
+- UTF-8 是一种以字节为单位变长格式的字符编码，并与 `7-bitsASCII` 码兼容。UTF-8 字串与 C 字串一样，以 `NULL('\0')` 做结束符。
 
 以 UTF-8 类函为例，要读取 jstring 对象的内容，需要使用 GetStringUTFChars 函数把 jstring 转成 C/C++ 字串：
 
@@ -247,7 +243,6 @@ jstring Java_Prompt_getLine(JNIEnv* env,jobject obj,jstring prompt){
 ```
 
 上面代码中注意，记得检测 GetStringUTFChars 的返回值，因为调用该函数会有内存分配操作，失败后，该函数返回NULL，并抛 OutOfMemoryError 异常。GetStringUTFChars 函数返回一个指向描述字符串的**改良UTF-8**字符的指针，可以得到实际的Java字符串的字符指针，因为Java字符串是不可变的，所以不要试图将数据写入该字符数组，同时使用完后，应该调用 ReleaseStringUTFChars 释放内存（Unicode -> UTF-8转换的原因：jstring 转化时，必须先 decode 转化成 `mirror::String`，然后再转化成 utf-8 编码，这涉及到内存分配，所以使用完是需要释放的）。
-
 
 #### isCopy 参数
 
@@ -330,7 +325,7 @@ Object[]|jobjectArray
 
 - `jXxxArray (*NewXxxArray)(JNIEnv*, jsize);`创建Xxx类型数组
 
-JNI支持SetIntArrayRegion允许重新设置数组一个区域的值，其他基本类型(boolean,short, 和float)也有对应的支持。
+JNI支持 SetIntArrayRegion 允许重新设置数组一个区域的值，其他基本类型(boolean,short, 和float)也有对应的支持。
 
 - `GetXxxArrayRegion` 将Java数组复制到C数组中
 - `SetXxxArrayRegion` 将C数组复制到数组Java中
@@ -352,15 +347,12 @@ Java 1.2支持 `Get/ReleasePrimitiveArrayCritical`，该套函数的使用原则
 
 #### NIO
 
-
 - `jobject NewDirectByteBuffer(void* address, jlong capacity)`
 - `void* GetDirectBufferAddress(jobject buf)`
 - `jlong GetDirectBufferCapacity(jobject buf)`
 
-
 ---
 ## 4 从本地代码调用 Java
-
 
 JNI 中针对静态和非静态成分分别定义不同的操作方法，所以在反射时类时，先区分是否是静态成分。另外 Java层的字段和方法，不管它是什么访问权限，从 JNI 都可以访问到，可以说 Java 面向语言的封装性在 JNI 层不见了。
 
@@ -391,7 +383,7 @@ D | double
 
 示例：
 
-```
+```java
             字段：
             "Ljava/lang/String;" 对应 String
             "[I" 对应 int[]
@@ -414,7 +406,7 @@ D | double
 
 一般 jni 中获取一个 jclass，我们会这样编码：
 
-```
+```c
 jclass intArrCls = (*env)->FindClass(env,"[I");
 if(intArrCls == NULL){
     returnNULL;/*exception thrown */
@@ -431,7 +423,6 @@ if(intArrCls == NULL){
 - 检查类描述符是否正确，注意包分隔符是`/`而不是`.`
 - 构造 ClassLoader，并利用 `Class.forName(String name, boolean initialize,ClassLoader loader)` 装载类
 
-
 ### 4.3 访问字段和方法
 
 Java语言支持两种成员：静态成员和实例成员. 对应 JNI 中获取和赋值成员的方法是不同的。
@@ -442,15 +433,12 @@ Java语言支持两种成员：静态成员和实例成员. 对应 JNI 中获取
 
 示例：
 
-```
+```c
 (*env)->GetFieldID(env,cls,"s","Ljava/lang/String;"); 获取一个字段id
 (*env)->GetStaticFieldID(env,cls,"si","I"); 获取一个静态字段id
 (*env)->GetMethodID(env,cls,"callback","()V"); 获取一个方法id
 (*env)->GetMethodID(env,stringClass,"<init>","([C)V"); 获取一个构造函数的id
 ```
-
-
-
 
 ### 4.4 缓存 Field 和 Method 的 id
 
@@ -490,6 +478,7 @@ class InstanceMethodCall{
     }
 }
 ```
+
 Jni中：
 
 ```c
@@ -499,11 +488,10 @@ JNIEXPORT void JNICALLJava_InstanceMethodCall_initIDs(JNIEnv*env, jclass cls){
 }
 ```
 
-方式1 与方式2 对比，在对 Java 源码无改动权时使用时缓存是一种合理的解决方案，但有许多弊端：
+方式1 与方式 2 对比，在对 Java 源码无改动权时使用时缓存是一种合理的解决方案，但有许多弊端：
 
 - 无害的竞争条件和重复与NULL比较
 - 在类没被卸载时，MethodID 和 FieldID一直有效. 所以你必须保证：当你的JNI代码依赖这些缓存值的声明周期内，该类不会被卸载。而与另一种优化策略，连同类的初始化缓存Method/Field ID，每当类再次被装载，缓存值会被更新，所以，有条件的话，更安全的优化策略是`连同类的初始化缓存Method/Field ID`。
-
 
 ### 4.4 性能考量
 

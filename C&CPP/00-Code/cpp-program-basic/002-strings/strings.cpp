@@ -92,7 +92,7 @@ static void processString() {
     decltype(str2.size()) punctCount = 0;
     for (auto c:str2) {
         if (ispunct(c)) {//ispunct在cctype中，判断字符是否为标点符号
-            ++punct_count;
+            ++punctCount;
         }
     }
     cout << "punctCount = " << punctCount << endl;
