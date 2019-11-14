@@ -110,12 +110,3 @@ ViewTreeObserver可以为我们所用的方法：
             mHeader.getViewTreeObserver().removeGlobalOnLayoutListener(this);
         }
 ```
-
-
-
-
-
-
-
-
-

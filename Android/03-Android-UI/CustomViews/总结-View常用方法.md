@@ -116,9 +116,9 @@ bringToFront方法在SDK中的说明是“Change the view's z order in the tree,
 
 `setLayerType(LAYER_TYPE_SOFTWARE, null);`
 
-## 7  nextfocus
+## 7 nextfocus
 
- 配合` focusSearch(@FocusRealDirection int direction)`方法使用，如果当前view指定了` android:nextFocusRight="@+id/tv"`，那么 focusSearch传入指定 方向得到的是id为tv 的view
+ 配合`focusSearch(@FocusRealDirection int direction)`方法使用，如果当前view指定了` android:nextFocusRight="@+id/tv"`，那么 focusSearch传入指定 方向得到的是id为tv 的view
 
 ## 8 clipToPadding
 
@@ -131,10 +131,6 @@ bringToFront方法在SDK中的说明是“Change the view's z order in the tree,
 ## 10 android:duplicateParentState="true"
 
 如果希望子view的状态跟随父View的状态变化的话加上这个属性，即selector的状态， 如pressed等。
-
-```
-           http://blog.csdn.net/a220315410/article/details/23127787
-```
 
 [View的各种属性说明](http://blog.csdn.net/meng_lw/article/details/7974166)
 
@@ -169,7 +165,7 @@ View的解析公共属性的源码中有一段：
 1. 安卓M版本（6.0）及以上
 2. FrameLayout本身及其子类
 
-## 13 getChildDrawingOrder和setChildrenDrawingOrderEnabled：
+## 13 getChildDrawingOrder 和 setChildrenDrawingOrderEnabled
 
 参考：[改变GridView或ListView刷新ITEM的次序](http://m.blog.csdn.net/blog/l598252892/9813249)
 
@@ -227,19 +223,16 @@ frame.contains(x, y)
 
 自定一个View，在 onMeasure 中控制 max_height
 
----
 ## 21 使用View的静态方法自动生成id
 
 ```java
     View.generateViewId()
 ```
 
----
 ## 22 ArgbEvaluator
 
 `ArgbEvaluator.evaluate(float fraction, Object startValue, Object endValue);` 用于根据一个起始颜色值和一个结束颜色值以及一个偏移量生成一个新的颜色，分分钟实现类似于微信底部栏滑动颜色渐变
 
----
 ## 23 ListView局部刷新
 
 有的列表可能notifyDataSetChanged()代价有点高，最好能局部刷新。
@@ -261,7 +254,6 @@ frame.contains(x, y)
 
 也可以使用 hasStableIds ，静态参考[Android开发——ListView局部刷新的实现](https://blog.csdn.net/SEU_Calvin/article/details/69661110)
 
----
 ## 24 `setCompoundDrawablesWithIntrinsicBounds()` 方法
 
 ```java
@@ -297,7 +289,6 @@ frame.contains(x, y)
 
 具体参考[shadows-clipping](https://developer.android.com/training/material/shadows-clipping)
 
----
 ## 27 View中的mTransientViews
 
 mTransitioningViews 官方解释如下：
@@ -306,21 +297,18 @@ mTransitioningViews 官方解释如下：
      The set of views that are currently being transitioned. This list is used to track views being removed that should not actually be removed from the parent yet because they are being animated.
 ```
 
-当某个child正在做动画的时候(这里指`android.app.Fragment和android.animation.LayoutTransition`移除view的动画)，还不能删除这个child，应该等到动画结束，所以在ViewGroup中暂时保留这个child，直到动画真正结束后再真正删除。ViewGroup有两个成对出现的方法：`startViewTransition和endViewTransition`。在startViewTransition方法中将child加入mTransitioningViews中，在endViewTransition中最终执行view.dispatchDetachedFromWindow()，并在函数最后调用invalidate()。
+当某个 child 正在做动画的时候(这里指`android.app.Fragment和android.animation.LayoutTransition`移除view的动画)，还不能删除这个child，应该等到动画结束，所以在 ViewGroup 中暂时保留这个 child，直到动画真正结束后再真正删除。ViewGroup有两个成对出现的方法：`startViewTransition和endViewTransition`。在 startViewTransition 方法中将 child 加入 mTransitioningViews 中，在endViewTransition中最终执行 `view.dispatchDetachedFromWindow()`，并在函数最后调用 `invalidate()`。
 
-在removeView的时候，如果当前child在mTransitioningViews中，ViewGroup并不会执行view.dispatchDetachedFromWindow()，也不会设置当前view的mParent为空。由此可以看到一个潜在的问题，如果我们在执行LayoutTransition的DISAPPEARING动画同时removeView，这时子view还并未删除，如果直接将子view加入其它ViewGroup中则会报错 “The specified child already has a parent. You must call removeView() on the child's parent first.”  因为此时这个view还未从上一个ViewGroup中删除。
+在 removeView 的时候，如果当前 child 在 mTransitioningViews 中，ViewGroup 并不会执行 `view.dispatchDetachedFromWindow()`，也不会设置当前 view 的 mParent 为空。由此可以看到一个潜在的问题，如果我们在执行 LayoutTransition 的 DISAPPEARING 动画同时 removeView，这时子 view 还并未删除，如果直接将子 view 加入其它ViewGroup中则会报错 “The specified child already has a parent. You must call removeView() on the child's parent first.”  因为此时这个 view 还未从上一个 ViewGroup 中删除。
 
----
 ## 28 postOnAnimation
 
 常用于 View 动画，比如配合在 Scroller 使用，表示在下一帧刷新。
 
----
 ## 29 TOOLTIP
 
 View 中的新特性，用于长按时展示这个 View 的说明。
 
----
 ## 30 View.PFLAG_PREPRESSED
 
 View.java:
