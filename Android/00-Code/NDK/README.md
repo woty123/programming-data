@@ -2,7 +2,7 @@
 
 ## 示例
 
-- `JNISample`：JNI示例
+- `JNISample`：JNI示例，Java 与 C 交互 Demo
 - `eclipse`：eclipse ndk开发
 - `Sample1`：不配置gradle，徒手编写c代码
 - `Sample2`：gradle-experimental

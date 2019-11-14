@@ -20,7 +20,7 @@ Java Native Interface（JNI）标准是java平台的一部分，JNI是Java语言
 
 ### NDK使用
 
-配置Android.mk和Application.mk文件，编写好相关代码，然后使用ndk-build命令进行编译。
+配置 Android.mk 和 Application.mk 文件，编写好相关代码，然后使用 ndk-build 命令进行编译。
 
 示例：
 
@@ -32,7 +32,7 @@ ndk-build NDK_PROJECT_PATH=. NDK_APPLICATION_MK=./jni/Application.mk NDK_LIBS_OU
 - `NDK_APPLICATION_MK` 指定 Application.mk 的位置
 - `NDK_LIBS_OUT` 指定将生成的 .so 文件放到哪个目录，默认 Android Studio 会读取 jniLibs 目录下的 .so 文件, 所以我们把 .so 文件生成到这
 
-关于ndk-build的命令选项可以通过`ndk-build -h`获取。
+关于 ndk-build 的命令选项可以通过`ndk-build -h`获取。
 
 ---
 ## 2 一些概念
@@ -41,7 +41,7 @@ ndk-build NDK_PROJECT_PATH=. NDK_APPLICATION_MK=./jni/Application.mk NDK_LIBS_OU
 
 把一个源文件 源代码 翻译(编译)成一个二进制文件的过程
 
-### 连接
+### 链接
 
 把编译生成的二进制，根据操作系统，根据当前处理器的类型．把这个二进制文件转化成一个真正可以执行的二进制文件．
 
@@ -61,12 +61,12 @@ ndk-build NDK_PROJECT_PATH=. NDK_APPLICATION_MK=./jni/Application.mk NDK_LIBS_OU
 ---
 ## 3 NDK 开发方式
 
-1. 使用使用eclipse开发
-2. 在AndroidStudio上，徒手编写Android.mk然后ndk-build编译，这种方式需要在`gradle.properties`中添加`android.useDeprecatedNdk = true`
-3. 使用gradle-experimental NDK插件进行开发，这个方式只是一个试验性功能，现在已经废弃
-4. 使用AndroidStudio2.2及更高版本，这个版本增强了C++的开发能力，能够使用 ndk-build 或 CMake 去编译和调试项目里的 C++ 代码，此时AndroidStudio用于构建原生库的默认工具是 CMake，但是仍然支持使用ndkBuild
-    - 在`externalNativeBuild中配置ndkBuild`
-    - 在`externalNativeBuild中配置cmake`
+1. 使用使用 eclipse 开发。
+2. 在AndroidStudio上，徒手编写 `Android.mk` 然后使用 ndk-build 编译，这种方式需要在`gradle.properties`中添加`android.useDeprecatedNdk = true`。
+3. 使用 `gradle-experimental` NDK 插件进行开发，这个方式只是一个试验性功能，现在已经被废弃。
+4. 使用 AndroidStudio2.2 及更高版本，这个版本增强了 C++ 的开发能力，能够使用 ndk-build 或 CMake 去编译和调试项目里的 C++ 代码，此时 AndroidStudio 用于构建原生库的默认工具是 CMake，但是仍然支持使用 ndkBuild。
+    - 在`externalNativeBuild 中配置 ndkBuild`
+    - 在`externalNativeBuild 中配置 cmake`
 
 ### 关于gcc与clang
 
