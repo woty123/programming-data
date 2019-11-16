@@ -3,7 +3,7 @@
 ---
 ## 1 okhttp 核心类介绍
 
-OkHttpClient 客户端类，相当于配置中⼼心，所有的请求都会共享这些配置（例如出错是否重试、共享的连接池）。OkHttpClient中的配置主要有：
+OkHttpClient 客户端类，相当于配置中⼼心，所有的请求都会共享这些配置（例如出错是否重试、共享的连接池）。OkHttpClient 中的配置主要有：
 
 - `Dispatcher dispatcher`：度器器，⽤于调度后台发起的网络请求，有后台总请求数和单主机总请求数的控制。
 - `List<Protocol> protocols`：支持的应用层协议，即 HTTP/1.1、HTTP/2 等。
@@ -20,7 +20,7 @@ OkHttpClient 客户端类，相当于配置中⼼心，所有的请求都会共�
 - `boolean retryOnConnectionFailure`：在请求失败的时候是否⾃动重试。注意，⼤多数的请求失败并不属于 OkHttp 所定义的「需要重试」，这种重试只适⽤于「同一个域名的多个 IP 切换重试」「Socket 失效重试」等情况。
 - `int connectTimeout`：建立连接（TCP 或 TLS）的超时时间。
 - `int readTimeout`：发起请求到读到响应数据的超时时间。
-- `int writeTimeout`：发起请求并被目标服务器接受的超时时间。（为什什么？因为有时候对方服务器可能由于某种原因而不读取你的 Request）
+- `int writeTimeout`：发起请求并被目标服务器接受的超时时间。（为什么？因为有时候对方服务器可能由于某种原因而不读取你的 Request）
 - `ConnectionPool connectionPool`：连接池复用、回收算法
 
 ---

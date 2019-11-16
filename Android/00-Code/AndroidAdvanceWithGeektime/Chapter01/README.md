@@ -122,9 +122,9 @@ D:\codes\github\Programming-Notes\00-Code\Android\AndroidAdvanceWithGeektime\Cha
    3. 重复崩溃率
 10. 了解什么是 [安全模式](https://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247488429&idx=1&sn=448b414a0424d06855359b3eb2ba8569&source=41#wechat_redirect)
 11. 如何客观地衡量稳定性
-   1. 线上 ANR 如何的上报与分析
-   2. 异常率，除了常规崩溃和主动自杀外，实现对 `系统出现异常、断电、用户主动重启、被系统杀死、ANR` 等情况的统计，包括下面列表列出的应用退出的情形
-   3. 根据统计，得出异常率
+    1. 线上 ANR 如何的上报与分析
+    2. 异常率，除了常规崩溃和主动自杀外，实现对 `系统出现异常、断电、用户主动重启、被系统杀死、ANR` 等情况的统计，包括下面列表列出的应用退出的情形
+    3. 根据统计，得出异常率
 12. 应用退出的情形，哪些统计，哪些不统计
     1. 主动自杀。`Process.killProcess()、exit()` 等。（不统计）
     2. 崩溃。出现了 Java 或 Native 崩溃。（单独统计）
