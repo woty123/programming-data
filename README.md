@@ -116,6 +116,13 @@
 
 - [优化相关](Android/09-Optimization/README.md)
 
+优化相关笔记：
+
+- [相关资料](Android/09-Optimization/README.md)
+- [01-《Android开发-从小工到专家》-性能优化.md](Android/09-Optimization/01-Optimization/01-《Android开发-从小工到专家》-性能优化.md)
+- [03-Bitmap 优化](Android/09-Optimization/01-Optimization/03-Bitmap.md)
+- [06-Memory 优化](Android/09-Optimization/01-Optimization/06-Memory.md)
+
 [国内Top团队大牛带你玩转Android性能分析与优化](https://coding.imooc.com/class/308.html) 笔记：
 
 - [相关资料](Android/09-Optimization/02-Android性能分析与优化课程/README.md)

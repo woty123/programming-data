@@ -81,9 +81,11 @@ ndk-build NDK_PROJECT_PATH=. NDK_APPLICATION_MK=./jni/Application.mk NDK_LIBS_OU
 ---
 ## 4 NDK开发学习内容
 
-- c与c++语言
-- ndk-build方式nkd开发
-- cmake方式nkd开发
-- api选择与适配
-- android平台提供的本地api
-- 引入第三方的本地库，例如ffmpeg
+- c 与 c++ 语言
+- 构建方式
+  - ndk-build 方式
+  - cmake 方式
+- android平台提供的本地 api
+- 引入第三方的本地库，例如 ffmpeg
+- native 异常分析与调试
+- native 异常收集
