@@ -3,26 +3,22 @@
 BitmapRegionDecoder可以根据一个Rect指定的区域生成表示原始图片此区域的Bitmap对象，使用方式如下：
 
 ```java
-                open = getContext().getAssets().open("tupian.jpg");//获取图片的输入流
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inJustDecodeBounds = true;//只对图片进行采样
-                BitmapFactory.decodeStream(open, null, options);
-    
-                //获取宽高
-                int outWidth = options.outWidth;
-                int outHeight = options.outHeight;
-                //根据输入流创建一个BitmapRegionDecoder
-                BitmapRegionDecoder brd = BitmapRegionDecoder.newInstance(open, false);
-    
-                BitmapFactory.Options optionsBrd = new BitmapFactory.Options();
-                options.inPreferredConfig = Bitmap.Config.RGB_565;
-                //生成原始图片的一部分
-                Bitmap bitmap = brd.decodeRegion(new Rect(0, 0, outWidth / 2, outHeight / 2), optionsBrd);
+open = getContext().getAssets().open("tupian.jpg");//获取图片的输入流
+BitmapFactory.Options options = new BitmapFactory.Options();
+options.inJustDecodeBounds = true;//只对图片进行采样
+BitmapFactory.decodeStream(open, null, options);
+
+//获取宽高
+int outWidth = options.outWidth;
+int outHeight = options.outHeight;
+//根据输入流创建一个BitmapRegionDecoder
+BitmapRegionDecoder brd = BitmapRegionDecoder.newInstance(open, false);
+
+BitmapFactory.Options optionsBrd = new BitmapFactory.Options();
+options.inPreferredConfig = Bitmap.Config.RGB_565;
+//生成原始图片的一部分
+Bitmap bitmap = brd.decodeRegion(new Rect(0, 0, outWidth / 2, outHeight / 2), optionsBrd);
 ```
-
-
-
-
 
 有时候面对一张巨大的图片，在不缩放巨图的情况下，只能根据用户的手势拖动来显示巨图的某一部分。这时候BitmapRegionDecoder就可以派上用场。如下面清明上河图：
 
@@ -138,4 +134,3 @@ public class LargeImageView extends View {
     }
 }
 ```
-

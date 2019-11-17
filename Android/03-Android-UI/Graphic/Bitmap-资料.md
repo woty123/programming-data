@@ -1,7 +1,7 @@
 
 ## 文章
 
-- [ Android 开发绕不过的坑：你的 Bitmap 究竟占多大内存？](http://bugly.qq.com/bbs/forum.php?mod=viewthread&tid=498)
+- [Android 开发绕不过的坑：你的 Bitmap 究竟占多大内存？](http://bugly.qq.com/bbs/forum.php?mod=viewthread&tid=498)
 - [移动端图片格式调研](http://blog.ibireme.com/2015/11/02/mobile_image_benchmark/)
 - [Bitmap.recycle引发的血案](http://blog.csdn.net/eclipsexys/article/details/50581162)
 - [Android Bitmap面面观](http://mp.weixin.qq.com/s?__biz=MzA4MjU5NTY0NA==&mid=404530070&idx=1&sn=e2580b69d6ec73dabf8160216aa6702a&scene=23&srcid=0322dGvv5B4miLg3vt0q2rK2#rd)
