@@ -1,12 +1,15 @@
 package com.ztiany.view.custom.image;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapRegionDecoder;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -17,6 +20,8 @@ import java.io.InputStream;
  * setImageStream(getContext().getAssets().open("qm.jpg"));
  */
 public class LargeImageView extends View {
+
+    private static final String TAG = "LargeImageView";
 
     private int mImageWidth, mImageHeight;
     private Rect mRect;
@@ -34,6 +39,7 @@ public class LargeImageView extends View {
 
     public LargeImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setBackgroundColor(Color.RED);
         init();
     }
 
@@ -42,8 +48,8 @@ public class LargeImageView extends View {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int measuredWidth = getMeasuredWidth();
         int measuredHeight = getMeasuredHeight();
-        int left = mImageWidth / 2 - measuredWidth / 2;
-        int top = mImageHeight / 2 - measuredHeight / 2;
+        int left = (int) (mImageWidth / 2F - measuredWidth / 2F);
+        int top = (int) (mImageHeight / 2F - measuredHeight / 2F);
         mRect.set(left, top, left + measuredWidth, top + measuredHeight);
     }
 
@@ -54,7 +60,6 @@ public class LargeImageView extends View {
             canvas.drawBitmap(mBitmapRegionDecoder.decodeRegion(mRect, mOptions), 0, 0, null);
         }
     }
-
 
     public void setImageStream(InputStream imageStream) {
         try {
@@ -84,6 +89,7 @@ public class LargeImageView extends View {
         mOptions.inPreferredConfig = Bitmap.Config.RGB_565;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
@@ -112,6 +118,8 @@ public class LargeImageView extends View {
     }
 
     private void onMove(float moveX, float moveY) {
+        Log.d(TAG, "onMove() called with: moveX = [" + moveX + "], moveY = [" + moveY + "]");
+        Log.d(TAG, "onMove() called with: mImageWidth = [" + mImageWidth + "], mImageHeight = [" + mImageHeight + "]");
         if (mImageWidth > getWidth()) {
             mRect.offset((int) moveX, 0);
             invalidate();
@@ -121,4 +129,5 @@ public class LargeImageView extends View {
             invalidate();
         }
     }
+
 }
