@@ -5,7 +5,6 @@
 
 ### ndk工具目录说明
 
-
 | 目录名 | 描述|
 |---|---|
 | build   | 存放和编译相关的脚本文件,最外面的ndk-build就是调用该目录下的makefile文件,其中makefile文件都存放在build/core目录 |
@@ -24,7 +23,6 @@ obj是中间目录，编译源代码后所产生的目标文件都保存在该�
 ### 掌握Android.mk和Application.mk语法
 
 其实.mk文件都是make文件的片段，类似`include $(BUILD_SHARED_LIBRARY)`是从NDK目录把`build-shared-library.mk`文件引入到当前make文件中，其实并没有什么神奇之处。
-
 
 ---
 ## 5 日志与调试
@@ -48,31 +46,31 @@ adb shell start
 
 ### gdb调试
 
-*   编译加上-g参数：`gcc test1.c -g -o test1`
-*   进入调试：`gdb test1`
-*   开始调试：`start`
-*   显示代码：`list`-简写l
-*   查看函数内容：`list 函数名称`
-*   查看某行代码：`list 行数`
-*   执行下一步：`next`-简写n
-*   查看变量：`print 变量名`-简写p
-*   进入到某个函数：`step`-简写s
-*   设置断点：`break 行号`(gdb中的行号)-简写b
-*   运行：`continue`-遇到断点会停止-简写b
-*   查看断点信息：`info breakpoints`
-*   删除断点：`delete breakpoints 断点编号`
-*   修改变量的值：`set var 变量=值`
-*   程序调用堆栈：`backtrace-简写bt`，当前函数之前的所有已调用函数列表，每一个都分配一个“帧”，最近调用的函数在0号帧里
-*   切换栈帧：`frame 1`查看指定栈帧的变量
-*   自动显示：`display 变量名`
-*   取消自动显示：`undisplay 行号`（自动显示的行号）
-*   查看内存布局：`x /20 buff`，查看buff数组的前20个元素
-*   程序非正常退出，如何查看错误？
-    1.  `ulimit -a` 查看core文件是否分配大小
-    2.  `ulimit -c 1024` 创建的core文件大小为1024字节
-    3.  `gcc test2.c -g -o test2` 编译链接得到带有-g选项的可执行程序
-    4.  `./test2` 执行程序，会生成core日志文件
-    5.  `gdb test2 core` 打开日志文件，定位错误信息到具体的代码行数
+- 编译加上-g参数：`gcc test1.c -g -o test1`
+- 进入调试：`gdb test1`
+- 开始调试：`start`
+- 显示代码：`list`-简写l
+- 查看函数内容：`list 函数名称`
+- 查看某行代码：`list 行数`
+- 执行下一步：`next`-简写n
+- 查看变量：`print 变量名`-简写p
+- 进入到某个函数：`step`-简写s
+- 设置断点：`break 行号`(gdb中的行号)-简写b
+- 运行：`continue`-遇到断点会停止-简写b
+- 查看断点信息：`info breakpoints`
+- 删除断点：`delete breakpoints 断点编号`
+- 修改变量的值：`set var 变量=值`
+- 程序调用堆栈：`backtrace-简写bt`，当前函数之前的所有已调用函数列表，每一个都分配一个“帧”，最近调用的函数在0号帧里
+- 切换栈帧：`frame 1`查看指定栈帧的变量
+- 自动显示：`display 变量名`
+- 取消自动显示：`undisplay 行号`（自动显示的行号）
+- 查看内存布局：`x /20 buff`，查看buff数组的前20个元素
+- 程序非正常退出，如何查看错误？
+  1.  `ulimit -a` 查看core文件是否分配大小
+  2.  `ulimit -c 1024` 创建的core文件大小为1024字节
+  3.  `gcc test2.c -g -o test2` 编译链接得到带有-g选项的可执行程序
+  4.  `./test2` 执行程序，会生成core日志文件
+  5.  `gdb test2 core` 打开日志文件，定位错误信息到具体的代码行数
 
 ---
 ## 6 Binoic API
@@ -82,7 +80,8 @@ adb shell start
 ### 与进程交互
 
 使用system函数可以向shell传递命令，system函数在stblib头文件中：
-```
+
+```c
 int result = system("mkdir /data/data/com.example.hellojni/temp");
 if(result == 0 || result == 127){
    //shell fail
@@ -142,7 +141,6 @@ Android支持Java线程和原生线程，原生线程API定义在`pthread`中。
 - 原生代码不能获益于其他并发程序的概念和组件，比如信号量等
 - 在不同线程中的原生代码不同信息或直接共享资源
 
-
 ### 线程API：`pthread.h`
 
 - `int pthread_create(pthread_t *thread, pthread_attr_t const * attr, void *(*start_routine)(void *), void * arg);`：用于创建线程
@@ -160,7 +158,8 @@ POSIX线程提供的两种最常用的同步工具为：互斥锁(mutexes)和信
 互斥锁保证代码的互斥，锁定的部分代码不同同时执行。
 
 使用流程
-```
+
+```c
 //创建互斥锁
 static pthread_mutex_t mutex;
 
@@ -180,7 +179,8 @@ pthread_mutex_unlock(&mutex); //返回0表示失败
 信号量定义在`semaphore.h`中
 
 使用流程：
-```
+
+```c
 //创建信号量
 sem_t sem;
 
@@ -199,7 +199,8 @@ int sem_destroy(sem_t* sem);
 
 #### 调度策略
 
-POSIX线程规范要求实现一组调度策略，最常使用的策略如下:：
+POSIX线程规范要求实现一组调度策略，最常使用的策略如下：
+
 - SCHED_FIFO：先进先出调度策略基于线程进入列表的时间，可以基于线程优先级
 - SCHED_RR：循环轮询调度策略是线程执行时间加以限制的SCHED_FIFO，其目的是规避线程独占可用的CPU时间
 
@@ -208,7 +209,6 @@ POSIX线程规范要求实现一组调度策略，最常使用的策略如下:�
 #### 优先级
 
 POSIX也提供了基于调度策略调整线程优先级的函数，可以在调用`pthread_create(`)创建线程时，用线程属性参数`pthread_attr_t`的`sched_policy`来定义线程优先级，也可以在运行时调用`pthread_setschedparam`函数提供优先级，应用程序可以使用`sched_get_priority_max`函数和`sched_get_priority_min`函数来查询这些数
-
 
 ---
 ## 8 POSI Socket API
@@ -220,10 +220,10 @@ POSIX也提供了基于调度策略调整线程优先级的函数，可以在调
 - 2 `int bind(int, const struct sockaddr *, int);`，将socket与一个地址绑定
 
 - 3 网络字节排序：在硬件层上，不同机器体系结构使用不同的数据排序和表示规则，这种称为机器字节排序或字节序。例如Big-endian(ARM、x86使用)和Little-endian(MIPS使用)，字节排序规则不同的机器不能直接交互数据，为了使字节排序不同的机器能在网络上通信，IP将Big-endian字节排序设置为官方的数据传输网络字节排序规则，像Java虚拟机已经使用了Big-endian字节排序，所以Java中不需要程序员作字节排序转换，而原生代码需要在机器字节排序和网络字节排序间做必要的转换，socket库提供了一组遍历函数，是原生代码可以透明地处理字节排序转换，这些函数定义在`sys/endian.h`中：
-    - htons:将unsigned short 从主机字节排序转换到网络字节排序
-    - ntons:与htons相反
-    - htonl:将unsigned integer 从主机字节排序转换到网络字节排序
-    - ntonl:与htonl相反
+  - htons:将unsigned short 从主机字节排序转换到网络字节排序
+  - ntons:与htons相反
+  - htonl:将unsigned integer 从主机字节排序转换到网络字节排序
+  - ntonl:与htonl相反
 
 
 - 4 `int listen(int, int);`，监听socke是通过listen函数完成的

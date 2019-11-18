@@ -106,11 +106,11 @@ JNI 是一套双向的接口，允许 Java 与本地代码间的互操作。而�
 Java 方法与本地方法编写规范
 
 ```c
-                //ztiany.JNIMain.java中的方法
-                public static native void helloC();
+//ztiany.JNIMain.java中的方法
+public static native void helloC();
 
-                //此时c文件在中的方法应该写成
-                JNIEXPORT void JNICALL Java_ztiany_JNIMain_helloC(JNIEnv * env, jclass cls){
+//此时c文件在中的方法应该写成
+JNIEXPORT void JNICALL Java_ztiany_JNIMain_helloC(JNIEnv * env, jclass cls)
 ```
 
 1. 使用完整的Java方法名:`ztiany.JNIMain.helloC`

@@ -12,7 +12,6 @@ JNI 把 instance 和 array 类型的指针对外公布为 opaque reference，这
 - 各种引用都有使用范围：如 `local references` 只能在当前线程的 native method 中使用。
 - 防止内存泄漏：在JNI中，不管是局部还是全局引用，在用完之后就可以进行手动的释放，以防止持续的内存占用，通过`DeleteXXXRef`类方法来告知虚拟机何时回收一个JNI变量
 
-
 ### 5.1 局部引用
 
 大部分 JNI 函数都会创建局部引用，如 NewObject 创建一个实例，并返回一个指向该实例的 LocalRef。LocalRef 只在创建该对象的线程中有效，不要把 LocalRef 存到全局变量中供其他线程使用。
@@ -556,7 +555,7 @@ char *JNU_GetStringNativeChars(JNIEnv *env, jstring jstr) {
 
 当System.loadLibrary加载本地库时，虚拟机将在本地库中搜索以下导出条目：
 
-```
+```c
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved);
 ```
 
@@ -608,11 +607,9 @@ JNIEnv *JNU_GetEnv() {
 
 虚拟机在卸载 JNI 本地库时调用 JNI_OnUnload 处理程序。然而这不够精确。虚拟机何时确定可以卸载本地库？哪个线程运行 JNI_OnUnload 处理程序？卸载本地库的规则如下：
 
-
 - 虚拟机将每个本地库与发出 `System.loadLibrary` 调用的类C的类加载器L 相关联。
 - 虚拟机调用 JNI_OnUnload 处理程序并在确定类加载器 L 不再是活动对象后卸载本地库。因为类加载器引用它定义的所有类，这意味着C也可以被卸载。
 - JNI_OnUnload 处理程序在终结器中运行，并由 `java.lang.System.runFinalization` 同步调用或者由虚拟机异步调用。
-
 
 以下是 JNI_OnUnload 处理程序的定义，该处理程序清除上面 JNI_OnLoad 方法分配的资源：
 

@@ -28,3 +28,7 @@ service是一个后台服务，专门用来处理常驻后台的工作的组件�
 5. 监听QQ,微信，系统应用，友盟，小米推送等等的广播，然后把自己启动了。
 6. 利用账号同步机制唤醒我们的进程AccountManager
 7. NDK来解决，Native进程来实现双进程守护。
+
+## 三、开源库
+
+- [Android Keep Alive(安卓保活)，Cactus 集成双进程前台服务，JobScheduler，onePix(一像素)，WorkManager，无声音乐](https://github.com/gyf-dev/Cactus)
