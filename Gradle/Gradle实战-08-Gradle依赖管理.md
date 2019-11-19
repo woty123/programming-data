@@ -68,7 +68,7 @@ java插件引入了各种标准的配置来定义java构建生命周期所应用
         Configuration setDescription(String description);
 ```
 
-一个Project对应ConfigurationContainer，一个ConfigurationContainer包含0或多个Configuration，**Java插件提供了6个现成的配置**:
+一个 Project 对应一个 ConfigurationContainer，一个 ConfigurationContainer 包含 0 或多个 Configuration，**Java插件提供了6个现成的配置**:
 
 - compile
 - runtime
@@ -92,7 +92,7 @@ java插件引入了各种标准的配置来定义java构建生命周期所应用
     }
 ```
 
-这个cargo就像java提供的`compile`一样，也是一个配置，会被映射为一个Configuration实例，而可以通过Configuration提供的各种api来决定如果管理相应配置的依赖。运行`gradle dependencies`：
+这个cargo就像java提供的`compile`一样，也是一个配置，会被映射为一个 Configuration 实例，可以通过 Configuration 提供的各种 api 来决定如果管理相应配置的依赖。运行`gradle dependencies`：
 
 ```log
     ------------------------------------------------------------
@@ -156,7 +156,7 @@ Gradle dependencies task展示了project中的各种配置。为项目添加一�
         boolean contentEquals(Dependency dependency);
 ```
 
-一个Project对应DependencyHandler，一个ConfigurationContainer包含0或多个Dependency。当我们在dependencies代码块中添加` cargo 'org.codehaus.cargo:cargo-ant:1.3.1`时，其实就是像`DepecndencyHandler`add一个`Depecndency`。
+一个Project对应DependencyHandler，一个ConfigurationContainer包含0或多个Dependency。当我们在dependencies代码块中添加`cargo 'org.codehaus.cargo:cargo-ant:1.3.1`时，其实就是像`DepecndencyHandler`add一个`Depecndency`。
 
 #### 外部依赖模块
 

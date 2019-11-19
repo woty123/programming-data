@@ -1,7 +1,7 @@
 # Android Archtitecture References
 
 ---
-# AAC
+## AAC
 
 - [viewmodels-and-livedata-patterns-antipatterns](https://medium.com/androiddevelopers/viewmodels-and-livedata-patterns-antipatterns-21efaef74a54)
 - [saving-ui-state-with-viewmodel-savedstate-and-dagger](https://proandroiddev.com/saving-ui-state-with-viewmodel-savedstate-and-dagger-f77bcaeb8b08#7f89)
@@ -23,9 +23,6 @@ CleanArchitecture：
 
 - [Android-CleanArchitecture](https://github.com/android10/Android-CleanArchitecture)
 - [Android-CleanArchitecture-Kotlin](https://github.com/android10/Android-CleanArchitecture-Kotlin)
-
-Reactive：
-
 - [Android-ReactiveProgramming](https://github.com/android10/Android-ReactiveProgramming)
 
 AOP
@@ -84,9 +81,13 @@ MVX：
 - [android日常开发总结的技术经验60条](http://www.vmatianyu.cn/summarization-of-technical-experience.html "android日常开发总结的技术经验60条")
 - [Android 开发最佳实践](https://github.com/futurice/android-best-practices/blob/master/translations/Chinese/README.cn.md)
 - [苏宁易购Android架构演进史](https://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247488720&idx=1&sn=9fb295dbaa1686697c5e1a7e5aaa7123&chksm=f951a193ce2628854a92fbcf1f4b4103dd1b8d29537d8a1db09e9dcbeb5a05e991a45343d804&mpshare=1&scene=1&srcid=0417WopVHCuItM79aGDFhIgX#rd)
-- [微信Android模块化架构重构实践](https://mp.weixin.qq.com/s/mkhCzeoLdev5TyO6DqHEdw)
 - [我对移动端架构的思考](https://juejin.im/post/5b44d50de51d451925627900)
 - [Android项目开发如何设计整体架构？](https://www.zhihu.com/question/45517397)
+
+微信架构实践
+
+- [微信Android模块化架构重构实践](https://mp.weixin.qq.com/s/mkhCzeoLdev5TyO6DqHEdw)
+- [实现微信 pins 工程](https://segmentfault.com/a/1190000015798515)
 
 其他架构：
 
@@ -102,7 +103,7 @@ MVX：
  [关于烂代码的那些事（下）](http://blog.2baxb.me/archives/1499)
 
 ---
-## Keegan 架构系列文章
+## 架构系列文章
 
 ### App架构设计经验谈
 
@@ -117,12 +118,3 @@ MVX：
 - [Android项目重构之路:架构篇](http://keeganlee.me/post/android/20150605)
 - [Android项目重构之路:界面篇](http://keeganlee.me/post/android/20150619)
 - [Android项目重构之路:实现篇](http://keeganlee.me/post/android/20150629)
-
-### App项目实战之路
-
-- [App项目实战之路(一):概述篇](http://keeganlee.me/post/practice/20160807)
-- [App项目实战之路(二):API篇](http://keeganlee.me/post/practice/20160812)
-- [App项目实战之路(三):原型篇](http://keeganlee.me/post/practice/20160816)
-- [App项目实战之路(四):UI篇](http://keeganlee.me/post/practice/20160903)
-- [App项目实战之路(五):服务端篇](http://keeganlee.me/post/practice/20161006)
-- [App项目实战之路(六):数据库篇](http://keeganlee.me/post/practice/20161016)
