@@ -37,6 +37,8 @@
 - [形形色色的锁-2](https://cloud.tencent.com/developer/article/1334828)
 - [图解悲观锁和乐观锁](http://www.imooc.com/article/285147)
 - [java 中的锁 -- 偏向锁、轻量级锁、自旋锁、重量级锁](https://blog.csdn.net/zqz_zqz/article/details/70233767)
+- [通俗易懂 悲观锁、乐观锁、可重入锁、自旋锁、偏向锁、轻量/重量级锁、读写锁、各种锁及其Java实现！](https://zhuanlan.zhihu.com/p/71156910?utm_source=wechat_session&utm_medium=social&utm_oi=546780358729965568)
+- [透彻理解Java并发编程](https://segmentfault.com/blog/ressmix_multithread?page=3)
 
 ## I/O
 

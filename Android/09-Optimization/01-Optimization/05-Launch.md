@@ -12,7 +12,7 @@
 
 使用命令行来启动app，同时进行时间测量。单位：毫秒
 
-```
+```shell
     adb shell am start -W [PackageName]/[PackageName.MainActivity]
     adb shell am start -W com.gzsll.hupu/.ui.splash.SplashActivity
     adb shell am start -W com.example.applicationstartoptimizedemo/com.example.applicationstartoptimizedemo.SplashActivity
@@ -41,21 +41,21 @@
 ---
 ## 4 减少应用的启动时间的耗时
 
-- 不要在Application的构造方法、attachBaseContext()、onCreate()里面进行初始化耗时操作。
+- 不要在Application的构造方法：attachBaseContext()、onCreate() 里面进行初始化耗时操作。
 - 由于用户只关心最后的显示的这一帧，对我们的布局的层次要求要减少，自定义控件的话考虑测量、布局、绘制的时间。
-- 对于SharedPreference的初始化。因为初始化的时候是需要将数据全部读取出来放到内存当中。
+- 对于 SharedPreference 的初始化。因为初始化的时候是需要将数据全部读取出来放到内存当中。
   - 1.可以尽可能减少sp文件数量(IO需要时间)
   - 2.像这样的初始化最好放到线程里面
   - 3.大的数据缓存到数据库里面
 
-app启动的耗时主要是在：Application初始化 + MainActivity的界面加载绘制时间。由于MainActivity的业务和布局复杂度非常高，甚至该界面必须要有一些初始化的数据才能显示。那么这个时候MainActivity就可能半天都出不来，这就给用户感觉app太卡了。我们要做的就是给用户赶紧利落的体验。点击app就立马弹出我们的界面。于是乎想到使用SplashActivity，用来显示非常简单的一个欢迎页面。但是SplashActivity启动之后，还是需要跳到MainActivity。MainActivity还是需要从头开始加载布局和数据。想到SplashActivity里面可以去做一些MainActivity的数据的预加载。然后需要通过意图传到MainActivity。可不可以再做一些更好的优化呢？
+app启动的耗时主要是在：Application 初始化 + MainActivity 的界面加载绘制时间。由于 MainActivity 的业务和布局复杂度非常高，甚至该界面必须要有一些初始化的数据才能显示。那么这个时候 MainActivity 就可能半天都出不来，这就给用户感觉app太卡了。我们要做的就是给用户赶紧利落的体验。点击app就立马弹出我们的界面。于是乎想到使用SplashActivity，用来显示非常简单的一个欢迎页面。但是 SplashActivity 启动之后，还是需要跳到MainActivity。MainActivity还是需要从头开始加载布局和数据。想到 SplashActivity 里面可以去做一些 MainActivity 的数据的预加载。然后需要通过意图传到 MainActivity。可不可以再做一些更好的优化呢？
 
-如果我们能让这两个时间重叠在一个时间段内并发地做这两个事情就省时间了。解决方案：**将SplashActivity和MainActivity合为一个**。一进来还是显示的MainActivity，SplashActivity可以变成一个SplashFragment，然后放一个FrameLayout作为根布局直接现实SplashFragment界面。SplashFragment里面非常之简单，就是现实一个图片，启动非常快。当SplashFragment显示完毕后再将它remove。同时在splash的2S的友好时间内进行网络数据缓存。这个时候我们才看到MainActivity，就不必再去等待网络数据返回了。
+如果我们能让这两个时间重叠在一个时间段内并发地做这两个事情就省时间了。解决方案：**将SplashActivity和MainActivity合为一个**。一进来还是显示的 MainActivity，SplashActivity 可以变成一个SplashFragment，然后放一个 FrameLayout 作为根布局直接现实 SplashFragment 界面。SplashFragment 里面非常简单，就是现实一个图片，启动非常快。当 SplashFragment 显示完毕后再将它 remove。同时在splash 的 2S 的友好时间内进行网络数据缓存。这个时候我们才看到 MainActivity，就不必再去等待网络数据返回了。
 
 ---
 ## 5 延迟加载 DelayLoad
 
-- viewStub：viewStub的设计就是为了防止MainActivity的启动加载资源太耗时了。对某些View延迟进行加载。
+- ViewStub：如果 MainActivity 启动加载资源太耗时，使用 ViewStub 可以对某些 View 进行延迟加载。
 - onwindowfocuschange
 - ViewTreeObserver
 
@@ -70,3 +70,4 @@ app启动的耗时主要是在：Application初始化 + MainActivity的界面加
 - [App Startup Time](https://developer.android.google.cn/topic/performance/vitals/launch-time)
 - [你的 APP 为何启动那么慢？](https://mp.weixin.qq.com/s/i0Qkp8rZ_IfmVEoWSxvpdw)
 - [App异步起动库：SmartStart](https://github.com/conghongjie/SmartStart)
+- [今日头条APP启动很快，原来是做了这些优化？](https://mp.weixin.qq.com/s/9umkSbTxcm8I9O4jdJDP-A)
