@@ -3,7 +3,7 @@
 ---
 ## 1 阻塞队列介绍
 
-阻塞队列（BlockingQueue）继承自Collection，是一个支持两个附加操作的队列。这两个附加的操作是：
+阻塞队列属于并发容器中重要的一部分，JDK 中使用 `Blocking` 来标识一个队列为阻塞队列（BlockingQueue），阻塞队列是一个支持两个附加操作的队列。这两个附加的操作是：
 
 - 在队列为空时，获取元素的线程会等待队列变为非空。
 - 当队列满时，存储元素的线程会等待队列可用。
@@ -23,17 +23,16 @@
 - **阻塞** 上面所说的两种附加操作
 - **超时退出** 在阻塞的基础上加上超时的功能，获取超时后返回空值
 
-
 ---
-## 2 Java中的阻塞队列
+## 2 JDK 中提供的阻塞队列
 
-*   **ArrayBlockingQueue** ：一个由数组结构组成的有界阻塞队列。
-*   **LinkedBlockingQueue** ：一个由链表结构组成的有界阻塞队列。
-*   **PriorityBlockingQueue** ：一个支持优先级排序的无界阻塞队列。
-*   **DelayQueue**：一个使用优先级队列实现的无界阻塞队列。
-*   **SynchronousQueue**：一个不存储元素的阻塞队列。
-*   **LinkedTransferQueue**：一个由链表结构组成的无界阻塞队列。
-*   **LinkedBlockingDeque**：一个由链表结构组成的双向阻塞队列。
+- **ArrayBlockingQueue** ：一个由数组结构组成的有界阻塞队列。
+- **LinkedBlockingQueue** ：一个由链表结构组成的有界阻塞队列。
+- **PriorityBlockingQueue** ：一个支持优先级排序的无界阻塞队列。
+- **DelayQueue**：一个使用优先级队列实现的无界阻塞队列。
+- **SynchronousQueue**：一个不存储元素的阻塞队列。
+- **LinkedTransferQueue**：一个由链表结构组成的无界阻塞队列。
+- **LinkedBlockingDeque**：一个由链表结构组成的双向阻塞队列。
 
 ### 2.1 ArrayBlockingQueue
 
@@ -64,8 +63,8 @@ PriorityBlockingQueue是一个支持优先级的无界队列。默认情况下�
 
 DelayQueue是一个支持**延时获取元素**的无界阻塞队列。队列使用PriorityQueue来实现。队列中的元素必须实现**Delayed**接口，在创建元素时可以指定多久才能从队列中获取当前元素。只有在延迟期满时才能从队列中提取元素。我们可以将DelayQueue运用在以下应用场景：
 
-*   缓存系统的设计：可以用DelayQueue保存缓存元素的有效期，使用一个线程循环查询DelayQueue，一旦能从DelayQueue中获取元素时，表示缓存有效期到了。
-*   定时任务调度。使用DelayQueue保存当天将会执行的任务和执行时间，一旦从DelayQueue中获取到任务就开始执行，从比如TimerQueue就是使用DelayQueue实现的。
+- 缓存系统的设计：可以用DelayQueue保存缓存元素的有效期，使用一个线程循环查询DelayQueue，一旦能从DelayQueue中获取元素时，表示缓存有效期到了。
+- 定时任务调度。使用DelayQueue保存当天将会执行的任务和执行时间，一旦从DelayQueue中获取到任务就开始执行，从比如TimerQueue就是使用DelayQueue实现的。
 
 #### 如何使用Delayed接口
 
@@ -74,7 +73,6 @@ DelayQueue中的元素必须实现Delayed接口，参考ScheduledThreadPoolExeut
 1. 在创建对象时，初始化基本数据，使用time记录当前任务延迟到什么时候执行，可以sequenceNumber来表示元素在队列中的先后顺序：
 2. 实现getDelay方法，返回当前元素还需要延长多少时间
 3. 实现compareTo方法来指定元素的顺序，一般我们会把事件最长的放在队列的最后面
-
 
 下面是一个简单的实现
 
@@ -153,7 +151,9 @@ DelayQueue中的元素必须实现Delayed接口，参考ScheduledThreadPoolExeut
                     poll.start();
                 }
             }
-    打印结果为：
+
+
+打印结果为：
     
     task 6
     task 3
@@ -168,7 +168,6 @@ DelayQueue中的元素必须实现Delayed接口，参考ScheduledThreadPoolExeut
 ### 2.5 SynchronousQueue
 
 SynchronousQueue是一个**不存储元素的阻塞队列**。每一个put操作必须等待一个take操作，否则不能继续添加元素。SynchronousQueue可以看成是一个传球手，负责把生产者线程处理的数据**直接传递**给消费者线程。队列本身并不存储任何元素，非常适合于传递性场景,比如在一个线程中使用的数据，传递给另外一个线程使用，SynchronousQueue的吞吐量高于LinkedBlockingQueue 和 ArrayBlockingQueue。
-
 
 ### 2.6 LinkedTransferQueue
 
@@ -192,7 +191,7 @@ tryTransfer方法。则是用来试探下生产者传入的元素是否能直接
 对于带有时间限制的tryTransfer(E e, long timeout, TimeUnit unit)方法，则是试图把生产者传入的元素直接传给消费者，但是如果没有消费者消费该元素则等待指定的时间再返回，如果超时还没消费元素，则返回false，如果在超时时间内消费了元素，则返回true。
 
 ```java
-    final    LinkedTransferQueue<String> strings = new LinkedTransferQueue<String>();
+    final LinkedTransferQueue<String> strings = new LinkedTransferQueue<String>();
         new Thread(){
             public void run() {
                 try {
@@ -218,7 +217,7 @@ tryTransfer方法。则是用来试探下生产者传入的元素是否能直接
 LinkedBlockingDeque是一个由链表结构组成的**双向阻塞队列**。**所谓双向队列指的你可以从队列的两端插入和移出元素**。双端队列因为多了一个操作队列的入口，在多线程同时入队时，也就减少了一半的竞争。相比其他的阻塞队列，LinkedBlockingDeque多了addFirst，addLast，offerFirst，offerLast，peekFirst，peekLast等方法，以First单词结尾的方法，表示插入，获取（peek）或移除双端队列的第一个元素。以Last单词结尾的方法，表示插入，获取或移除双端队列的最后一个元素。另外插入方法add等同于addLast，移除方法remove等效于removeFirst。但是**take方法却等同于takeFirst**，不知道是不是Jdk的bug，使用时还是用带有First和Last后缀的方法更清楚。
 
 ```java
-    LinkedBlockingDeque<String> strings = new LinkedBlockingDeque<String>(10);
+LinkedBlockingDeque<String> strings = new LinkedBlockingDeque<String>(10);
 ```
 
 ---
@@ -226,12 +225,8 @@ LinkedBlockingDeque是一个由链表结构组成的**双向阻塞队列**。**�
 
 ![](index_files/1482855894948JavaQueue.jpg)
 
-
 ---
 ## 4 应用场景
 
 - 阻塞队列可以用来当锁
 - 生产与消费模式
-
-
-

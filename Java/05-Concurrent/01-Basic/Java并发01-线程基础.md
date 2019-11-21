@@ -29,6 +29,4 @@
 - 在调用lock()方法获取Lock锁时被锁住不会响应中断
 - IO阻塞状态不会响应中断
 
-其实很好判断，一个方法如果会抛出InterruptedException，那么它就是可以响应中断的。
-
-
+其实很好判断，一个方法如果会抛出 InterruptedException，那么它就是可以响应中断的。

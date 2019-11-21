@@ -1,4 +1,4 @@
-# 同步集合
+# 并发容器
 
 ---
 ## 1 CopyOnWriteArrayList

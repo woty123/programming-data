@@ -1,3 +1,4 @@
+# Java 核心技术 36 讲-知识补充
 
 ---
 ## lock-free
@@ -18,7 +19,7 @@ CopyOnWriteArrayList 官方文档：
 
 CopyOnWrite 并不是绝对安全的，使用的时候还是要按照规则使用，不然即使不会发生并发相关异常，但是会引发 ArrayIndexOutOfBoundsException 异常：
 
-```
+```java
        CopyOnWriteArrayList<String> cow = new CopyOnWriteArrayList<>();
         for (int i = 0; i < 100; i++) {
             cow.add(String.valueOf(i));
@@ -58,7 +59,6 @@ CopyOnWrite 并不是绝对安全的，使用的时候还是要按照规则使�
 
 - 《Java虚拟机规范(JavaSE7)》
 - [Java8内存模型—永久代(PermGen)和元空间(Metaspace)](https://www.cnblogs.com/paddix/p/5309550.html)
-
 
 ---
 ## 关于内存
@@ -105,7 +105,6 @@ reserved 、committed、used：
 - PSS- Proportional Set Size 实际使用的物理内存（比例分配共享库占用的内存）
 - USS- Unique Set Size 进程独自占用的物理内存（不包含共享库占用的内存）
 - 一般来说内存占用大小有如下规律：`VSS >= RSS >= PSS >= USS`
-
 
 引用：
 
