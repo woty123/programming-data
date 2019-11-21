@@ -15,17 +15,17 @@ Language：
 - [Kotlin](Kotlin/README.md)
 - [Python](Python/README.md)
 
-Platform
+Platform：
 
 - [Android](Android/README.md)
 - [Flutter](Flutter/README.md)
 - [JavaEE](JavaEE/README.md)
 - [Front-end](Front-end/README.md)
 
-Architecture
+Architecture：
 
 - [Arch](Arch/README.md)
 
-Tools
+Tools：
 
 - [Gradle](Gradle/README.md)

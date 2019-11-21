@@ -42,11 +42,11 @@
 - [03-File操作](03-IO&Network/03-File操作.md)
 - [04-文件压缩](03-IO&Network/04-文件压缩.md)
 - [05-NIO](03-IO&Network/05-NIO.md)
-- [Java-TCP_IP_Socket编程](03-IO&Network/Java-TCP_IP_Socket编程.md)
+- [Java TCP/IP Socket编程](03-IO&Network/Java-TCP_IP_Socket编程.md)
 
 ## Java 并发
 
-- [Java并发01-线程基础](05-Concurrent/README.md)
+- [Java 并发](05-Concurrent/README.md)
 
 ## 开源框架
 
