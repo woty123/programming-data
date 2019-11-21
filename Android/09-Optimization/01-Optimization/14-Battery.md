@@ -7,8 +7,7 @@
 
 ## 优化方案
 
-- 让CPU间断式的工作
 - JobScheduler
   - 把工作任务放到合适的时间再去执行，比如充电时间，wifi连接后
   - 也可以把多个任务合并到一起，再选择时间去执行
-- Doze和App Standby模式
+- Doze 和 App Standby 模式

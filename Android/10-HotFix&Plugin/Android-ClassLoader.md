@@ -200,7 +200,7 @@ final class DexPathList {
 
         /*接下里初始化各个成员*/
         ArrayList<IOException> suppressedExceptions = new ArrayList<IOException>();
-        // 
+
         // 解析或保存dex路径
         this.dexElements = makePathElements(splitDexPath(dexPath), optimizedDirectory, suppressedExceptions);
 
@@ -243,9 +243,6 @@ final class DexPathList {
      *使用separator将给定的路径字符串拆分为文件元素，合并结果并过滤掉不存在的元素，不可读或不是常规文件或目录。
      *directoriesOnly为ture时才会进行校验
      */
-
-
-
     private static List<File> splitPaths(String searchPath, boolean directoriesOnly) {
         List<File> result = new ArrayList<>();
 
