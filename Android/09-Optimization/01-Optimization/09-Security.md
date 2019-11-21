@@ -63,12 +63,12 @@ dex 加固的主要流程：
       1. 在 manifest 中配置程序入口为 SDK 提供的 ProxyApplication。
       2. 在 manifest 中使用 matedata 配置程序自身的 Application。
    2. 有加固需求的项目打包生成 APK。
-3. 加固过程：
+3. 加固过程（使用加固工具）：
    1. 将 APK 解压，得到 dex 等文件。
    2. 将解压后的所有 dex 文件进行加密。
    3. 重新打包 APK，然后进行 ZipAlign 和重新签名。
-4. 解密过程：
-   1. 在 Application 启动时，把 Apk 中被加密的 dex 解密出来，然后反射替换类加载器中的 dexElements。
+4. 解密过程（使用加固 SDK）
+   1. 在被加固应用启动时，ProxyApplication 把 Apk 中被加密的 dex 解密出来，然后反射替换类加载器中的 dexElements。
    2. 待 dex 解密和替换完毕，获取程序在 manifest 中配置的程序自身的 Application，利用反射，实例化该 Application，并替换到系统中去。
 
 Dex 加固实战参考：
