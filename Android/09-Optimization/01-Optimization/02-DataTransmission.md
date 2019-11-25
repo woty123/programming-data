@@ -1,9 +1,10 @@
-# 数据传输格式与优化
+# 数据传输优化
 
 数据的序列化是程序代码里面必不可少的组成部分，当我们讨论到数据序列化的性能的时候，需要了解有哪些候选的方案，他们各自的优缺点是什么。数据序列化的行为可能发生在数据传递过程中的任何阶段，例如网络传输，不同进程间数据传递，不同类之间的参数传递，把数据存储到磁盘上等等。
 
 数据传输方案：
 
+- **xml**：使用标签和熟悉描述数据，数据比较冗余。
 - **Json**：目前移动端广泛采用的数据传输方式，使用字符串作为载体，操作方便。性能较差。
 - **Protocal Buffers**：强大，灵活，但是对内存的消耗会比较大，并不是移动终端上的最佳选择。
 - **Nano-Proto-Buffers**：基于Protocal，为移动终端做了特殊的优化，代码执行效率更高，内存使用效率更佳。
@@ -51,11 +52,6 @@ JSON是目前常用的数据序列化技术，可读性强，但是序列化和�
 - [FlatBuffers 体验](http://www.race604.com/flatbuffers-intro/)
 - [FlatBuffers使用简介](http://www.jianshu.com/p/6eb04a149cd8)
 - [FlatBuffers 介绍](https://github.com/xitu/gold-miner/blob/master/TODO/flatbuffers-in-android-introdution.md)
-
-### Html
-
-- [HtmlParser](https://www.ibm.com/developerworks/cn/opensource/os-cn-crawler/)
-- [jsoup-annotations](https://github.com/fcannizzaro/jsoup-annotations)
 
 ### protobuf
 
