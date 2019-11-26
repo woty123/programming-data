@@ -24,7 +24,8 @@
 
 学习路线：
 
-- 浏览一遍 Flutter 官方文档。
+- 学习 Dart 语法
+- 浏览一遍 Flutter 官方文档
 - 阅读 《Flutter实战》
 - 阅读 Flutter 开源项目
 
@@ -35,15 +36,15 @@ Dart
 - [Dart](https://www.dartlang.org/)
 - [Dart 中文网](http://dart.goodev.org/)
 
-官方文档
+flutter 官方文档
 
 - [flutter 官网](https://flutter.dev/)
 - [flutter github](https://github.com/flutter/flutter)
-- [Flutter 中文网](http://doc.flutter-dev.cn/)
+- [flutter 中文网](http://doc.flutter-dev.cn/)
 - [flutter 中文官网](https://flutterchina.club/)
 - [flutter 中文社区](https://flutter-io.cn/)
 
-入门体验
+flutter 入门体验
 
 - [Write Your First Flutter App, part 1](https://codelabs.developers.google.com/codelabs/first-flutter-app-pt1/#0)
 - [Write Your First Flutter App, part 2](https://codelabs.developers.google.com/codelabs/first-flutter-app-pt2/#1)
@@ -57,6 +58,7 @@ Dart
 - [Flutter系列博文](https://www.jianshu.com/p/399c01657920)
 - [Flutter-learning](https://github.com/AweiLoveAndroid/Flutter-learning)
 - [flutter专栏教程](http://blog.csdn.net/column/details/13593.html)
+- [日更的FlutterDemo合集](https://github.com/OpenFlutter/Flutter-Notebook)
 - [贾鹏辉的技术博客官网-Fluter](http://www.devio.org/tags/#Flutter)
   - [一个很棒的Flutter学习资源列表](http://www.devio.org/2018/09/09/awesome-flutter/)
   - [Flutter入门必备基础知识](http://www.imooc.com/article/282911)
@@ -66,7 +68,29 @@ Dart
   - [带你快速掌握Flutter的视图(Widgets)](http://www.devio.org/2019/03/16/flutter-views/)
   - [两分钟带你快速掌握Flutter的项目结构、资源、依赖和本地化](http://www.devio.org/2019/04/02/flutter-project-structure-resources-dependencies-and-localization/)
   - [快速上手Flutter开发系列教程」之线程和异步UI](http://www.devio.org/2019/03/16/thread-and-asynchronous-ui/)
-  
+
+视频教程：
+
+- [Flutter从入门到进阶：实战携程网App](https://coding.imooc.com/class/chapter/321.html)
+
+实例项目
+
+- [flutter-official-examples](https://github.com/flutter/flutter/blob/master/examples/README.md)
+- [flutter-official-samples](https://github.com/flutter/samples)
+- [Simple basic isolated apps, for budding flutter devs.](https://github.com/nisrulz/flutter-examples)
+- [Basic Flutter apps, for flutter devs.](https://github.com/iampawan/FlutterExampleApps)
+- [Kotlin + MVP + Flutter ，让你可以在自己的项目中集成 Flutter 并使用](https://juejin.im/post/5b7cf52e51882542c963f0f1)
+- [Flutter版】玩安卓，非常适合学习，代码不多、注释多](https://github.com/yechaoa/wanandroid_flutter)
+- [Flutter豆瓣客户端](https://github.com/kaina404/FlutterDouBan)
+- [flutter-go](https://github.com/alibaba/flutter-go)
+- [Awesome Flutter：带你从入门到进阶的 Flutter 指南](https://juejin.im/post/5b2869e66fb9a00e5f3e861f)
+- [超完整的Flutter项目，功能丰富，适合学习和日常使用。](https://github.com/CarGuo/GSYGithubAppFlutter)
+- [HistoryOfEverything](https://github.com/2d-inc/HistoryOfEverything)
+- [高仿书旗小说 Flutter版](https://github.com/huanxsd/flutter_shuqi)
+- [Best-Flutter-UI-Templates](https://github.com/mitesh77/Best-Flutter-UI-Templates)
+- [FlutterCandies](https://github.com/fluttercandies)
+- [本项目包括各种基本控件使用](https://github.com/shichunlei/flutter_app)
+
 Google
 
 - [Flutter 您需要知道的知识点 | FAQ・第一期](https://mp.weixin.qq.com/s?__biz=MzAwODY4OTk2Mg==&mid=2652048481&idx=1&sn=3775bb6e61b9b4d7d7c5a48871a13807&chksm=808cac24b7fb2532858b94dc45f1ec4f8ec83f28f186e0cbc53a40034b3398feddea553e3054&scene=21#wechat_redirect)
@@ -84,26 +108,6 @@ plugin
 - [flutter_boost](https://github.com/alibaba/flutter_boost)：新一代Flutter-Native混合解决方案。 FlutterBoost是一个Flutter插件，它可以轻松地为现有原生应用程序提供Flutter混合集成方案。
 - [best-flutter](https://github.com/best-flutter)一群热爱flutter的开发者，开源了许多插件。
 - [awesome-flutter](https://github.com/Solido/awesome-flutter)
-
-实例项目
-
-- [flutter-official-examples](https://github.com/flutter/flutter/blob/master/examples/README.md)
-- [flutter-official-samples](https://github.com/flutter/samples)
-- [Simple basic isolated apps, for budding flutter devs.](https://github.com/nisrulz/flutter-examples)
-- [Basic Flutter apps, for flutter devs.](https://github.com/iampawan/FlutterExampleApps)
-- [Kotlin + MVP + Flutter ，让你可以在自己的项目中集成 Flutter 并使用](https://juejin.im/post/5b7cf52e51882542c963f0f1)
-- [Flutter版】玩安卓，非常适合学习，代码不多、注释多](https://github.com/yechaoa/wanandroid_flutter)
-- [Flutter豆瓣客户端](https://github.com/kaina404/FlutterDouBan)
-- [flutter-go](https://github.com/alibaba/flutter-go)
-- [Awesome Flutter：带你从入门到进阶的 Flutter 指南](https://juejin.im/post/5b2869e66fb9a00e5f3e861f)
-- [超完整的Flutter项目，功能丰富，适合学习和日常使用。](https://github.com/CarGuo/GSYGithubAppFlutter)
-- [HistoryOfEverything](https://github.com/2d-inc/HistoryOfEverything)
-- [高仿书旗小说 Flutter版](https://github.com/huanxsd/flutter_shuqi)
-- [Best-Flutter-UI-Templates](https://github.com/mitesh77/Best-Flutter-UI-Templates)
-
-视频教程：
-
-- [Flutter从入门到进阶 实战携程网App](https://coding.imooc.com/class/chapter/321.html)
 
 深入
 
