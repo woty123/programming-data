@@ -106,3 +106,4 @@ Native fork子进程用于观察当前app主进程的存亡状态。对于5.0以
 
 - [Android Keep Alive(安卓保活)，Cactus 集成双进程前台服务，JobScheduler，onePix(一像素)，WorkManager，无声音乐](https://github.com/gyf-dev/Cactus)
 - [ProgressDaemon](https://github.com/oneapp1e/ProgressDaemon)
+- [论Android应用进程长存的可行性](https://blog.csdn.net/aigestudio/article/details/51348408)
