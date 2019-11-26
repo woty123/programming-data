@@ -1,13 +1,11 @@
 # 提升应用的启动速度 和 splash页面的设计
 
----
 ## 1 三种启动情况
 
 - 冷启动：当直接从桌面上直接启动，同时后台没有该进程的缓存，这个时候系统就需要重新创建一个新的进程并且分配各种资源。
 - 热启动：该 app 后台有该进程的缓存，这时候启动的进程就属于热启动，热启动不需要重新分配进程，也不会重新创建 Application 了，直接走的就是 app 的入口 Activity，这样就速度快很多。
 - 温启动：用户退出 App 后, 系统可能由于内存原因将App杀死, 进程和 Activity 都需要重启, 但是可以在 onCreate 中将被动杀死时锁保存的状态(saved instance state)恢复。
 
----
 ## 2 如何测量一个应用的启动时间
 
 使用命令行来启动app，同时进行时间测量。单位：毫秒
@@ -23,7 +21,6 @@
     WaitTime: 175 包括系统的影响时间---比较上面大。
 ```
 
----
 ## 3 应用启动的流程
 
 - Application
@@ -38,7 +35,6 @@
 
 分析时间花在哪里
 
----
 ## 4 减少应用的启动时间的耗时
 
 - 不要在Application的构造方法：attachBaseContext()、onCreate() 里面进行初始化耗时操作。
@@ -52,19 +48,16 @@ app启动的耗时主要是在：Application 初始化 + MainActivity 的界面�
 
 如果我们能让这两个时间重叠在一个时间段内并发地做这两个事情就省时间了。解决方案：**将SplashActivity和MainActivity合为一个**。一进来还是显示的 MainActivity，SplashActivity 可以变成一个SplashFragment，然后放一个 FrameLayout 作为根布局直接现实 SplashFragment 界面。SplashFragment 里面非常简单，就是现实一个图片，启动非常快。当 SplashFragment 显示完毕后再将它 remove。同时在splash 的 2S 的友好时间内进行网络数据缓存。这个时候我们才看到 MainActivity，就不必再去等待网络数据返回了。
 
----
 ## 5 延迟加载 DelayLoad
 
 - ViewStub：如果 MainActivity 启动加载资源太耗时，使用 ViewStub 可以对某些 View 进行延迟加载。
 - onwindowfocuschange
 - ViewTreeObserver
 
----
 ## 6 设置 Activity 启动背景（伪优化）
 
 参考[解决启动Android应用程序时出现白屏或者黑屏的问题](https://blog.csdn.net/wangjiang_qianmo/article/details/51736418)
 
----
 ## 引用
 
 - [App Startup Time](https://developer.android.google.cn/topic/performance/vitals/launch-time)
