@@ -1,6 +1,6 @@
 # Apk的安装过程
 
-Apk的安装是通过PackageManagerService完成的，可以在shell中使用pm命令安装apk，但是pm命令也是调用的PackagManagerService。
+Apk的安装是通过PackageManagerService完成的，我们在shell中使用pm命令进行apk安装，其实最终也是通过调用PackagManagerService来完成应用安装的。
 
 ---
 ## 1 Pm命令分析

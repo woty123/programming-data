@@ -74,10 +74,11 @@ PathClassLoader和DexClassLoader的并没有复杂的实现，功能全都继承
             }
         }
 
-        PathClassLoader的构造方法接受三个参数：
-        - dexPath apk路径
-        - libraryPath so的路径
-        - parent 父加载器
+        //PathClassLoader的构造方法接受三个参数：
+
+        //  - dexPath apk路径
+        //  - libraryPath so的路径
+        //  - parent 父加载器
 
         public class DexClassLoader extends BaseDexClassLoader {
 

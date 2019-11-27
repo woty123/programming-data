@@ -7,10 +7,12 @@ Java中的ClassLoader机制我们应该已经非常熟悉了，而Android只是�
 
 Android中的类加载器继承关系为：
 
+```java
     ClassLoader
         |-->BaseDexClassLoader
              |-->PathClassLoader
              |-->DexClassLoader
+```
 
 PathClassLoader和DexClassLoader是Android平台的两个主要的ClassLoader，它们都继承自BaseDexClassLoader。
 
@@ -708,6 +710,7 @@ public final class DexFile {
 首先看一下Android中类加载器的层级结构
 
 在Application类中执行下面代码：
+
 ```java
         Log.d(TAG, "ClassLoader.getSystemClassLoader():" + ClassLoader.getSystemClassLoader());
         
@@ -744,6 +747,7 @@ MainActivity.class.getClassLoader():
     dalvik.system.PathClassLoader[DexPathList[[zip file "/data/app/com.ztiany.classloader-1/base.apk"],nativeLibraryDirectories=[/data/app/com.ztiany.classloader-2/lib/arm64, /vendor/lib64, /system/lib64]]]
     java.lang.BootClassLoader@2b0a45f
 ```
+
 从结果可以看出，Android中ClassLoader的层级结构与Java是不同的：
 
 - BootClassLoader是顶级的类加载器，由它加载系统API和Java标准类库

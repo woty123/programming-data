@@ -22,9 +22,9 @@ public class AppContext extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        hookPluginClassLoader();
+        //hookPluginClassLoader();
         printClassLoader();
-        loadPluginClass();
+        //loadPluginClass();
     }
 
     private void loadPluginClass() {
