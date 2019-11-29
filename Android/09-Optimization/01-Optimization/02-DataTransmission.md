@@ -14,7 +14,7 @@
 
 Json 是目前使用最广泛的数据传输格式，移动端一般使用 Gson 作为 Json 的序列化和反序列工具。
 
-具体参考：
+关于 Gson 的适应，可以参考：
 
 - [gson 官方Examples](https://sites.google.com/site/gson/gson-user-guide#TOC-Primitives-Examples)
 - [你真的会用Gson吗?Gson使用指南（一）](http://www.jianshu.com/p/e740196225a4)

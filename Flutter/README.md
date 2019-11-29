@@ -71,7 +71,8 @@ flutter 入门体验
 
 视频教程：
 
-- [Flutter从入门到进阶：实战携程网App](https://coding.imooc.com/class/chapter/321.html)
+- 慕课网：[Flutter从入门到进阶：实战携程网App](https://coding.imooc.com/class/chapter/321.html)
+- 极客时间：[Flutter核心技术与实战](https://time.geekbang.org/column/intro/200)、[2019年最新Flutter学习全攻略](https://time.geekbang.org/column/article/106380)
 
 实例项目
 

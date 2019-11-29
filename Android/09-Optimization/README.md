@@ -25,7 +25,7 @@
 - [APK瘦身实践--强烈推荐](http://mp.weixin.qq.com/s?__biz=MzA4ODIxMzg5MQ==&mid=404379253&idx=2&sn=fddd0ec8d1d6016d3d2678b4a6f62b5a&scene=1&srcid=0329hCjFnoW7FsaJIbGIYQma#rd)
 - [Android APP终极瘦身指南](http://www.jayfeng.com/2016/03/01/Android-APP%E7%BB%88%E6%9E%81%E7%98%A6%E8%BA%AB%E6%8C%87%E5%8D%97/?spm=a313e.7916648.0.0.FecU5Z "http://www.jayfeng.com/2016/03/01/Android-APP%E7%BB%88%E6%9E%81%E7%98%A6%E8%BA%AB%E6%8C%87%E5%8D%97/?spm=a313e.7916648.0.0.FecU5Z")
 - [APK 瘦身记，如何实现高达 53% 的压缩效果](http://mp.weixin.qq.com/s?__biz=MzIwMTI4Nzk5Ng==&mid=402517579&idx=1&sn=2951ec2b3aef4ce6f6a5c06ad4c49d73&scene=1&srcid=03306GCdiG6G4yhZIaDsHVL9&from=groupmessage&isappinstalled=0#wechat_redirect)
-- [Mess详解（关于Activity、自定义View等的混淆）](http://www.wangyuwei.me/2017/02/09/Mess%E8%AF%A6%E8%A7%A3%EF%BC%88%E5%85%B3%E4%BA%8EActivity%E3%80%81%E8%87%AA%E5%AE%9A%E4%B9%89View%E7%AD%89%E7%9A%84%E6%B7%B7%E6%B7%86%EF%BC%89/)
+- [Android性能优化:apk瘦身](https://juejin.im/post/5d2ef27251882572fa5b9522)
 
 ## App加固混淆与逆向
 
@@ -44,3 +44,4 @@
 - [读proguar的笔记](http://www.jianshu.com/p/60e82aafcfd0)
 - [AndroidSutdio混淆详解](https://juejin.im/post/5947e7e8128fe1006a52d922)
 - [Android Proguard 最佳实践](https://mp.weixin.qq.com/s/sFPnK_nvNQOWRK3rd3XnZw)
+- [Mess详解（关于Activity、自定义View等的混淆）](http://www.wangyuwei.me/2017/02/09/Mess%E8%AF%A6%E8%A7%A3%EF%BC%88%E5%85%B3%E4%BA%8EActivity%E3%80%81%E8%87%AA%E5%AE%9A%E4%B9%89View%E7%AD%89%E7%9A%84%E6%B7%B7%E6%B7%86%EF%BC%89/)

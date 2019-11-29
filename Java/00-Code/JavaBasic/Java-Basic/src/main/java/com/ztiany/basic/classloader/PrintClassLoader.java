@@ -19,6 +19,7 @@ class PrintClassLoader {
         URL[] appUrLs = ((URLClassLoader) appClassLoader).getURLs();
         System.out.println("AppClassLoader=====================================================");
         System.out.println("AppClassLoader    " + appClassLoader);
+        //ClassLoader.getSystemClassLoader方法无论何时均会返回ApplicationClassLoader,其只加载classpath下的class文件。
         System.out.println("getSystemClassLoader    "+ClassLoader.getSystemClassLoader());
         for (URL appUrL : appUrLs) {
             System.out.println("url " + appUrL);

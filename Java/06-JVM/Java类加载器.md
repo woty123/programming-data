@@ -42,7 +42,7 @@ java程序拥有至少三种类加载器：
 
 在Oracle的Java语言实现中，扩展类加载器和系统类加载器都是用java来实现的，它们都是URLClassLoader类的实例。ClassLoader的继承结构如下
 
-```
+```java
 ClassLoader
    |
    |——SecureClassLoader
@@ -54,6 +54,7 @@ ClassLoader
 ```
 
 获取类加载器：
+
 ```java
     public class Main {
         public static void main(String... args) {
@@ -73,7 +74,6 @@ ClassLoader
     sun.misc.Launcher$AppClassLoader@42a57993
     sun.misc.Launcher$ExtClassLoader@6b2fc6ca
 ```
-
 
 ---
 ## 2 双亲委派模式
@@ -119,7 +119,8 @@ null
 其工作过程是：如果一个类加载器收到了类加载请求，它并不会自己先去加载，而是把这个请求委托给父类的加载器去执行，如果父类加载器还存在其父类加载器，则进一步向上委托，于是请求最终将到达顶层的启动类加载器，如果父类加载器可以完成类加载任务，就成功返回，倘若父类加载器无法完成此加载任务，子加载器才会尝试自己去加载，这就是双亲委派模式。工作方向是**先向上委托加载，然后再向下传递结果**。
 
 ClassLoader的loadClass方法用于根据类的全限定名加载一个类，该方法中实现了双亲委派机制的主要逻辑：
-```
+
+```java
 public Class<?> loadClass(String name) throws ClassNotFoundException {
         //调用受保护的loadClass方法
         return loadClass(name, false);
@@ -168,6 +169,7 @@ protected Class<?> loadClass(String name, boolean resolve)
         }
     }
 ```
+
 上面代码为loadClass的全部逻辑，可以看出，并不是很复杂，但涉及到以下几个方法需要掌握。
 
 #### loadClass方法
@@ -185,7 +187,8 @@ protected Class<?> loadClass(String name, boolean resolve)
 defineClass()方法是用来将byte字节流解析成JVM能够识别的Class对象(ClassLoader中已实现该方法逻辑)，通过这个方法不仅能够通过class文件实例化class对象，也可以通过其他方式实例化class对象，如通过网络接收一个类的字节码，然后转换为byte字节流创建对应的Class对象，**defineClass()方法通常与findClass()方法一起使用**，一般情况下，在自定义类加载器时，会直接覆盖ClassLoader的findClass()方法并编写加载规则，取得要加载类的字节码后转换成流，然后调用defineClass()方法生成类的Class对象。
 
 示例：
-```
+
+```java
     protected Class<?> findClass(String name) throws ClassNotFoundException {
         try {
             byte[] classBytes = null;
@@ -202,18 +205,17 @@ defineClass()方法是用来将byte字节流解析成JVM能够识别的Class对�
 
 需要注意的是，如果直接调用defineClass()方法生成类的Class对象，这个类的Class对象并没有解析(也可以理解为链接阶段，毕竟解析是链接的最后一步)，其解析操作需要等待初始化阶段进行。
 
-
 #### resolveClass方法
 
 使用该方法可以使用类的Class对象创建完成也同时被解析。
-
 
 ### 2.2 类加载器间的关系
 
 #### 继承关系
 
 Java中ClassLoader有如下继承结构：
-```
+
+```java
 ClassLoader
    |
    |——SecureClassLoader
@@ -236,7 +238,6 @@ ClassLoader
 - 系统类加载器(AppClassLoader)，由Java语言实现，父类加载器为ExtClassLoader
 - 自定义类加载器，**父类加载器为AppClassLoader**
 
-
 ---
 ## 3 类与类加载器
 
@@ -248,8 +249,6 @@ ClassLoader
 
 - 显示加载即通过`Class.forName、this.getClass().getClassLoader().loadClass()`等方式获取Class
 - 隐式加载属于类的解析过程，即一个被加载的类依赖了另一个类，则被依赖的类也会被加载，这个过程是虚拟机自动进行的
-
-
 
 ---
 ## 4 线程上下文类加载器
@@ -269,11 +268,12 @@ ClassLoader
 
 >在Java应用中存在着很多服务提供者接口（Service Provider Interface，SPI），这些接口允许第三方为它们提供实现，如常见的 SPI 有 JDBC、JNDI等，这些 SPI 的接口属于 Java 核心库，一般存在rt.jar包中，由Bootstrap类加载器加载，而 SPI 的第三方实现代码则是作为Java应用所依赖的 jar 包被存放在classpath路径下，由于SPI接口中的代码经常需要加载具体的第三方实现类并调用其相关方法，但SPI的核心接口类是由引导类加载器来加载的，而Bootstrap类加载器无法直接加载SPI的实现类，同时由于双亲委派模式的存在，Bootstrap类加载器也无法反向委托AppClassLoader加载器SPI的实现类。在这种情况下，我们就需要一种特殊的类加载器来加载第三方的类库，而线程上下文类加载器就是很好的选择。
 
-
 线程上下文类加载器（ContextClassLoader）是从`JDK 1.2`开始引入的，每个线程都有一个上下文类加载器，主线程的上下文类加载器是系统类加载器，如果不做任何特殊的操作，任何新建的线程的上下文类加载器都是系统类加载器，但我们可以指定线程的上下文类加载器：
 
+```java
     Thread.currentThread().getContextClassLoader()//获取类加载器
     Thread.currentThread().setContextClassLoader()//设置类加载器
+```
 
 在线程中运行的代码可以通过线程类加载器来加载类和资源，**这样就破坏了双亲委派机制**：
 
@@ -303,7 +303,6 @@ ClassLoader
         thread.start();
     }
 ```
-
 
 ---
 ## 5 编写自己的类加载器
@@ -349,7 +348,6 @@ class CustomClassLoader extends ClassLoader {
 }
 ```
 
-
 ---
 ## 6 总结
 
@@ -370,5 +368,3 @@ class CustomClassLoader extends ClassLoader {
 
 - [深入理解Java类加载器(ClassLoader)](http://blog.csdn.net/javazejian/article/details/73413292)
 - 《Java核心技术》
-
-
