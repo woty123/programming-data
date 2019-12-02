@@ -177,3 +177,31 @@ try {
 - 创建线程池设置合适的线程数非常重要，这部分内容，可以参考[Java线程.md](08-Java线程.md)。
 - 《Java 并发编程实战》的第 7 章《取消与关闭》的 7.3 节“处理非正常的线程终止” 详细介绍了异常处理的方案。
 - 《Java 并发编程实战》的第 8 章《线程池的使用》对线程池的使用也有更深入的介绍。
+
+## 6 思考题
+
+使用线程池，默认情况下创建的线程名字都类似pool-1-thread-2这样，没有业务含义。而很多情况下为了便于诊断问题，都需要给线程赋予一个有意义的名字，有哪些办法可以给线程池里的线程指定名字？
+
+1. 给线程池设置名称前缀
+
+```java
+ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
+threadPoolTaskExecutor.setThreadNamePrefix("CUSTOM_NAME_PREFIX");
+```
+
+2 自定义 ThreadFactory
+
+```java
+class CustomThreadFactory implements ThreadFactory {
+  ......
+}
+
+ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(10,
+                100,
+                120,
+                TimeUnit.SECONDS,
+                new LinkedBlockingQueue<>(),
+                new CustomThreadFactory(),
+                new ThreadPoolExecutor.AbortPolicy()
+        );
+```
