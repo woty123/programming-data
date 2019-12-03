@@ -106,3 +106,4 @@ DALVIK THREADS:
 
 - [Android ANR在线监控原理](https://www.jianshu.com/p/e3fa7e4540fc)
 - [ANR-WatchDog](https://github.com/SalomonBrys/ANR-WatchDog)
+- [xCrash](https://github.com/iqiyi/xCrash)
