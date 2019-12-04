@@ -6,6 +6,7 @@
 
  ============================================================================
  */
+
 #include <stdio.h>
 #include <mem.h>
 
@@ -15,6 +16,7 @@ static void structArray();
 static void structPointer();
 static void functionPointerInStruct();
 static void traverseStruct();
+static void compoundLiteralStruct1();
 
 int main() {
     //结构体示例
@@ -24,18 +26,48 @@ int main() {
     //结构体数组
     //structArray();
     //结构体数组遍历
-    traverseStruct();
+    //traverseStruct();
     //结构体指针
     //structPointer();
     //结构体中的函数指针
     //functionPointerInStruct();
+    //复合字面量和结构（C99）
+    compoundLiteralStruct1();
     return 0;
+}
+
+static void compoundLiteralStruct1() {
+#define MAXTITL  41
+#define MAXAUTL  31
+
+    // 结构模版：标记是 book
+    struct book {
+        char title[MAXTITL];
+        char author[MAXAUTL];
+        float value;
+    };
+
+    struct book readFirst;
+    int score;
+
+    printf("Enter test score: ");
+    scanf("%d", &score);
+
+    if (score >= 84) {
+        readFirst = (struct book) {"Crime and Punishment", "Fyodor Dostoyevsky", 11.25};
+    } else {
+        readFirst = (struct book) {"Mr. Bouncy's Nice Hat", "Fred Winsome", 5.99};
+    }
+
+    printf("Your assigned reading:\n");
+    printf("%s by %s: $%.2f\n", readFirst.title, readFirst.author, readFirst.value);
 }
 
 //在结构体中声明指针变量
 static void functionPointerInStruct() {
     struct Arr {
         int (*f)(int, int);
+
         int a;
         int b;
     };
@@ -97,7 +129,6 @@ static void structArray() {
     }
 }
 
-
 //结构体遍历
 static void traverseStruct() {
 
@@ -106,7 +137,8 @@ static void traverseStruct() {
         int age;
     };
 
-    struct Man mans[] = {{"Jack", 20}, {"Rose", 19}};
+    struct Man mans[] = {{"Jack", 20},
+                         {"Rose", 19}};
     //遍历结构体数组
 
     //1.
@@ -162,6 +194,7 @@ static void defineStruct() {
         int year;
         int day;
     };
+
     struct Man {
         char name[20];
         struct Date birthday;
@@ -180,14 +213,12 @@ static void defineStruct() {
     struct Student student = {20, "张三", 'm', 30, 23.6F, "湖南"};
     printf("student age = %d \n", student.age);
 
-
     //形式2
     struct Date1 {
         int month;
         int year;
         int day;
     } date1, date2;
-
 
     //形式3:匿名结构体
     struct {
