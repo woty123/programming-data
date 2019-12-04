@@ -102,7 +102,7 @@ Integer result = futureTask.get();
 
 编写并发程序，首先要做的就是分工：所谓分工指的是如何高效地拆解任务并分配给线程。对于烧水泡茶这个程序，一种最优的分工方案可以是下图所示的这样：
 
-![](images/15_get_tea_process1.png)
+![](images/15_get_tea_process_2.png)
 
 - 用两个线程 T1 和 T2 来完成烧水泡茶程序，T1 负责洗水壶、烧开水、泡茶这三道工序，T2 负责洗茶壶、洗茶杯、拿茶叶三道工序。
 - 其中 T1 在执行泡茶这道工序时需要等待 T2 完成拿茶叶的工序。对于 T1 的这个等待动作，有很多种办法，例如 Thread.join()、CountDownLatch，甚至阻塞队列都可以解决，当然也包括 FeatureTask。
