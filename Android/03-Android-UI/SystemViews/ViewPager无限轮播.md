@@ -44,6 +44,7 @@ onPageScrollStateChanged是ViewPager的状态变化回调，有三种状态
 ### 新的方式onPageScrolled
 
 刚刚说到`onPageScrolled`方法的 positionOffset 表示当前滑动偏移的百分比，取值范围是(0.0F,1.0F)，但是有一点需要注意，当ViewPager已经滑动到某一页时positionOffset的值为0，看下面数据：
+
 ```
     Page 0
      [0], positionOffset = [0.0], positionOffsetPixels = [0]
@@ -79,7 +80,6 @@ onPageScrollStateChanged是ViewPager的状态变化回调，有三种状态
 
 ![](index_files/51db4a02-bcf3-4269-814b-6557f43c7abf.png)
 
-
 实现步骤为：
 
 1. 当给ViewPager设置数据时，偷偷的在头和尾分别加上一页。
@@ -104,11 +104,9 @@ public void onPageScrolled(int position, float positionOffset, int positionOffse
 }
 ```
 
-
 ### 最终方案onPageScrollStateChanged
 
 使用onPageScrolled确实可以达到无限轮播的效果，但是还有一个问题，就是在滑动到最后一页或第一页时ViewPager会出现闪动，原因是onPageScrolled的调用时机，onPageScrolled调用时ViewPager的Page切换动画可能还没有执行完毕，此时立即调用setCurrentItem的话，就造成页面切换不能无缝衔接，具体参考[Android寻坑之路】ViewPager实现无限轮播切换页面出现闪屏(白屏)问题](https://www.jianshu.com/p/99b9e4b53dc0)，所以最终的解决方案是onPageScrollStateChanged方法，当ViewPager处于ViewPager.SCROLL_STATE_IDLE状态时，表示ViewPager没有任何滚动正在进行，即已经完成滚动。
-
 
 ```java
     public void onPageScrollStateChanged(int state) {

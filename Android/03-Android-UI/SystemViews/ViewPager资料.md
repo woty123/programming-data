@@ -43,13 +43,12 @@ FragmentPagerAdapter 的 destroyItem 中没有 remove Fragment，而是使用的
     }
 ```
 
-
 ---
 ## 相关资料
 
 ### 开源库
 
-- [ ViewPager动画系列]( http://www.lightskystreet.com/2014/12/15/viewpager-anim/ )
+- [ViewPager动画系列]( http://www.lightskystreet.com/2014/12/15/viewpager-anim/)
 - [ViewPager3D， not use view pager transformer ](https://github.com/geminiwen/AndroidCubeDemo)
 - [DraggedViewPager Pager可拖动-Item可拖动](https://github.com/yueban/DraggedViewPager)
 - [Android-ConvenientBanner:通用的广告栏控件，让你轻松实现广告头效果。支持无限循环，可以设置自动翻页和时间](https://github.com/saiwu-bigkoo/Android-ConvenientBanner)
@@ -66,7 +65,6 @@ FragmentPagerAdapter 的 destroyItem 中没有 remove Fragment，而是使用的
 - [florent37 / HollyViewPager](https://github.com/florent37/HollyViewPager)
 - [Pixplicity / MultiViewPager](https://github.com/Pixplicity/MultiViewPager)
 - [CleverRecyclerView 是一个基于 RecyclerView 的扩展库，提供了与 ViewPager 类似的滑动效果并且添加了一些有用的特性。](https://github.com/luckyandyzhang/CleverRecyclerView)
-
 
 ###  ViewPager 动画详解
 
