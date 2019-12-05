@@ -25,7 +25,6 @@ void enumSample() {
     enum Weekday day1 = sta;
     printf("%d", day1);
 
-
     //定义枚举，指定枚举的值
     enum Enum {
         a = 3, b = 5

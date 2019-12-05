@@ -7,16 +7,37 @@
  ============================================================================
  */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <mem.h>
 
 static void defineStruct();
+
 static void referenceStruct();
+
 static void structArray();
+
 static void structPointer();
+
 static void functionPointerInStruct();
+
 static void traverseStruct();
+
 static void compoundLiteralStruct1();
+
+static void compoundLiteralStruct2();
+
+static void flexibleArrayMember();
+
+#define MAXTITL  41
+#define MAXAUTL  31
+
+// 结构模版：标记是 book
+struct book {
+    char title[MAXTITL];
+    char author[MAXAUTL];
+    float value;
+};
 
 int main() {
     //结构体示例
@@ -32,20 +53,50 @@ int main() {
     //结构体中的函数指针
     //functionPointerInStruct();
     //复合字面量和结构（C99）
-    compoundLiteralStruct1();
+    //compoundLiteralStruct1();
+    //compoundLiteralStruct2();
+    //伸缩型数组成员（flexible array member ）（C11）
+    flexibleArrayMember();
     return 0;
 }
 
-static void compoundLiteralStruct1() {
-#define MAXTITL  41
-#define MAXAUTL  31
-
-    // 结构模版：标记是 book
-    struct book {
-        char title[MAXTITL];
-        char author[MAXAUTL];
-        float value;
+static void flexibleArrayMember() {
+    struct flex {
+        int count;
+        double average;
+        // 伸缩型数组成员
+        double scores[];
     };
+
+    struct flex *pf1;    // 声明一个指针
+    struct flex *pf2;    // 声明一个指针
+
+    // 请求为一个结构和一个数组分配存储空间
+    pf1 = malloc(sizeof(struct flex) + 5 * sizeof(double));
+    // 可以为伸缩型数组成员分配不同的存储空间
+    pf2 = malloc(sizeof(struct flex) + 9 * sizeof(double));
+
+    pf1->scores[0] = 1.0F;
+    pf2->scores[0] = 10.0F;
+
+    printf(" pf1->scores[0]  = %f\n", pf1->scores[0]);
+    printf(" pf2->scores[0]  = %f\n", pf2->scores[0]);
+
+    free(pf1);
+    free(pf2);
+}
+
+static void receiveCompoundLiteralStruct(struct book *structbook) {
+    printf("book name: %s", structbook->title);
+}
+
+//如果函数接受一个地址，可以传递复合字面量的地址：
+static void compoundLiteralStruct2() {
+    receiveCompoundLiteralStruct(&(struct book) {"How to find a beautiful girl", "Ztiany", 2.0F});
+}
+
+//复合字面量
+static void compoundLiteralStruct1() {
 
     struct book readFirst;
     int score;
