@@ -1,5 +1,7 @@
 # 《Android C++高级编程：使用NDK》笔记
 
+原书代码[pro-android-c-w-ndk](https://github.com/apress/pro-android-c-w-ndk)。
+
 ---
 ## 2 深入理解Android NDK
 
