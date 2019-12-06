@@ -19,18 +19,21 @@ C++ 被认为是一种中级语言，它综合了高级语言和低级语言的�
 
 C++的版本：
 
-- C++98：第一个C++标准
-- C++03：第二个C++标准
-- C++11：第三个C++标准
-- C++14：第四个C++标准
+版本 | 标准 | 发布日期
+--|----|-----
+C ++ 98 |  ISO / IEC 14882：1998 | 1998-09-01
+C ++ 03 |  ISO / IEC 14882：2003 | 2003-10-16
+C ++ 11 |  ISO / IEC 14882：2011 | 2011-09-01
+C ++ 14 |  ISO / IEC 14882：2014 | 2014
+C ++ 17 |  TBD | 2017年1月1日
+C ++ 20 |  TBD | 2020年1月1日
 
 ---
 ## 2 C++编译器
 
-- gcc：<https://gcc.gnu.org/>
-- clang：<https://clang.llvm.org/>
-- visual c++：微软
-- intel c++
+- gcc：<https://gcc.gnu.org/> GNU编译器集合。
+- clang：<https://clang.llvm.org/> LLVM 的 C 语言系列前端。
+- MSVC：集成在 Microsoft VisualStudio 中的构建工具。
 
 相关参考：
 
