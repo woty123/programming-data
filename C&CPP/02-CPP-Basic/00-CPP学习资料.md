@@ -14,6 +14,7 @@
 - 《Effective C++》
 - 《C++ 编程规范》
 - 《C++ 必知必会》
+- [riptutorial c++](https://riptutorial.com/zh-CN/cplusplus)
 - [cplusplus](http://www.cplusplus.com/)
 - [菜鸟教程](http://www.runoob.com/cplusplus/)
 - [C++笔记](http://www.hahack.com/wiki/)
@@ -21,6 +22,7 @@
 视频教程
 
 - [C++基础教程完整版](http://yun.itheima.com/course/275.html)
+- [其他教程](http://yun.itheima.com/course/c55.html?hm)
 
 ## c++ 标准库
 
