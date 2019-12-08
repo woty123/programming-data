@@ -22,7 +22,7 @@
 视频教程
 
 - [C++基础教程完整版](http://yun.itheima.com/course/275.html)
-- [其他教程](http://yun.itheima.com/course/c55.html?hm)
+- [其他 C++ 教程](http://yun.itheima.com/course/c55.html?hm)
 
 ## c++ 标准库
 

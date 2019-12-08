@@ -25,7 +25,11 @@ static void defineString() {
     //直接初始化与拷贝初始化
     //使用=初始化一个变量，实际上执行的是拷贝初始化，编译器把=号左边的值拷贝到新创建的对象中去
     //如果不使用=，则执行的是直接初始化
-    string str6 = string(10, 'a');//这种方式是创建一个临时对象，在执行拷贝初始化
+    string str6 = string(10, 'a');//这种方式是创建一个临时对象，再执行拷贝初始化
+
+    //C++11也允许将列表初始化用于C-风格字符串和string对象：
+    string str7 = {"anc"};
+    char str8[] = {"abc"};
 }
 
 //2：字符串的操作
@@ -71,7 +75,6 @@ static void getLineSample() {
     }
 }
 
-
 //3：处理字符串中的字符
 static void processString() {
 
@@ -105,7 +108,6 @@ static void processString() {
     str1[0] = tolower(str1[0]);
     cout << "new str1 = " << str1 << endl;
 
-
     //使用下边执行迭代
     for (decltype(str1.size()) index = 0; index != str1.size() && !isspace(str1[index]); ++index) {
         str1[index] = tolower(str1[index]);
@@ -116,8 +118,7 @@ static void processString() {
 //把输入的数字转换为16进制表示
 static void sampleHex() {
     const string hex_digits = "0123456789ABCDEF";
-    cout << "enter a series of number between 0 and 15"
-         << "separated by spaces" << endl;
+    cout << "enter a series of number between 0 and 15" << "separated by spaces" << endl;
     string result;
     string::size_type n;
     while (cin >> n) {
