@@ -19,7 +19,6 @@ void printVector(vector<int> &v) {
 
 //初始化
 void test01() {
-
     vector<int> vl;//默认构造
 
     int arr[] = {10, 20, 30, 40};
@@ -68,7 +67,7 @@ void test03() {
     vector<int> v4(arr1, arr1 + sizeof(arr1) / sizeof(int));//默认构造
 
     cout << "size：" << v4.size() << endl;
-    if (v4.empty() == true) {
+    if (v4.empty()) {
         cout << "空！" << endl;
     } else {
         cout << "不空！" << endl;
@@ -112,7 +111,6 @@ void test04() {
 
 //插入和删除
 void test05() {
-
     vector<int> v;
     v.push_back(10);
     v.push_back(20);
@@ -137,7 +135,7 @@ void test05() {
 
 //巧用swap缩减空间
 void test06() {
-    //vector添加元素 他会自动增长 你删除元素时候，会自动减少吗？
+    //vector添加元素，他会自动增长，你删除元素时候，会自动减少吗？
 
     vector<int> v;
     for (int i = 0; i < 100000; i++) {
@@ -154,6 +152,12 @@ void test06() {
 
     //收缩空间
     vector<int>(v).swap(v);
+    cout << "--------------" << endl;
+    cout << "size:" << v.size() << endl;
+    cout << "capacity:" << v.capacity() << endl;
+
+    //清空
+    vector<int>().swap(v);
     cout << "--------------" << endl;
     cout << "size:" << v.size() << endl;
     cout << "capacity:" << v.capacity() << endl;
@@ -181,6 +185,12 @@ void test07() {
     //如果你知道容器大概要存储的元素个数，那么你可以用reserve预留空间
 }
 
+void test08() {
+    vector<int> vector1(1, 10);
+    vector<int> vector2(1, 10);
+    cout << "vector1 == vector2 = " << (vector1 == vector2) << endl;
+    cout << "vector1 === vector2 = " << (&vector1 == &vector2) << endl;
+}
 
 int main(void) {
     //test01();
@@ -188,7 +198,8 @@ int main(void) {
     //test03();
     //test04();
     //test05();
-    test06();
+    //test06();
     //test07();
+    test08();
     return 0;
 }
