@@ -56,7 +56,19 @@ vector<int> vector1(1, 10);
 vector<int> vector2(1, 10);
 cout << "vector1 == vector2 = " << (vector1 == vector2) << endl;//true
 cout << "vector1 === vector2 = " << (&vector1 == &vector2) << endl;//false
+```
 
+收缩 vertor 的容量：在容器中，其内存占用的空间是只增不减的，clear 能释放元素，却不能减小 vector 占用的内存，可以使用下面方法使 vector 收缩到合适的大小。
+
+```cpp
+//6个值为 1 的元素
+vector<int> vec(6,1);
+//释放：可以单个清除，也可以清除一段区间里的元素
+vec.erase(vec.begin(),vec.end())
+//清理容器，即erase所有，但是依然占用内存空间
+vec.clear();
+//收缩空间
+vector< int >().swap(vec);  
 ```
 
 ## 3 vector能高效的增长
@@ -65,13 +77,14 @@ C++标准要求，vector能在运行时高效的增长，因此在定义vector�
 
 ## 4 安全的泛型编程
 
-对于 for 循环遍历 vector，有以下建议：
+对于 for 循环遍历 vector，C++ 中普遍采用以下风格：
 
 ```cpp
- reset the elements in the vector to zero
- for (vector<int>::size_type ix = 0; ix != ivec.size(); ++ix)
+//  reset the elements in the vector to zero
+ for (vector<int>::size_type ix = 0; ix != ivec.size(); ++ix){
     ivec[ix] = 0;
+ }
 ```
 
-1. 对于遍历结束的条件判断，推荐使用 `!=` 而不是 `<`。
+1. 对于遍历结束的条件判断，使用 `!=` 而不是 `<`：这一原因是因为 C++ 程序员更喜欢用迭代器而不是索引的方式来遍历容器中的元素。所有标准库容器的迭代器都定义了`!=和=`，但它们中大多没有`<`运算符。
 2. 不在 for 循环之前就调用 size 成员函数并保存其返回的值，而是在 for 语句头中调用 size 成员函数：在 C++ 中，有些数据结构（如 vector）可以动态增长。上例中循环仅需要读取元素，而不需要增加新的元素。但是，循环可以容易地增加新元素，如果确实增加了新元素的话，那么测试已保存的 size 值作为循环的结束条件就会有问题，因为没有将新加入的元素计算在内。所以我们倾向于在每次循环中测试 size 的当前值，而不是在进入循环前，存储 size 值的副本。在标准库中，像 size 这样的小库函数几乎都定义为内联函数，所以每次循环过程中调用它的运行时代价是比较小的。

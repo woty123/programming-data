@@ -64,9 +64,22 @@ static void dereference() {
     //注意：但凡使用了迭代器循环体，就不要向迭代器所属容器添加元素了。
 }
 
+void constIterator() {
+    vector<int> vector1(1, 10);
+    const vector<int> vector2(1, 10);
+    vector<int>::iterator begin1 = vector1.begin();
+    vector<int>::iterator end1 = vector1.end();
+    vector<int>::const_iterator cbegin1 = vector1.cbegin();
+    vector<int>::const_iterator cend1 = vector1.cend();
+
+    vector<int>::const_iterator begin2 = vector2.begin();
+    vector<int>::const_iterator end2 = vector2.end();
+}
+
 int main() {
     //useIterator();
     //iteratorType();
-    dereference();
+    //dereference();
+    constIterator();
     return EXIT_SUCCESS;
 }

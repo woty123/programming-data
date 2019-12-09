@@ -8,11 +8,13 @@
 
 ## 学习资料
 
-- 《C++ Primer》
-- 《C++ Primer Plus》
-- 《C++ 标准库》
+- 《C++ Primer 5E》
 - 《Effective C++》
+- 《More Effective C++》
+- 《Effective STL》
+- 《Effective Modern C++》
 - 《C++ 编程规范》
+- 《C++ 标准库》
 - 《C++ 必知必会》
 - [riptutorial c++](https://riptutorial.com/zh-CN/cplusplus)
 - [cplusplus](http://www.cplusplus.com/)
