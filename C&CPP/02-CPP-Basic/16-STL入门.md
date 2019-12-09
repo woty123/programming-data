@@ -3,70 +3,82 @@
 ---
 ## 1 STL简介
 
-STL(Standard Template Library，标准模板库)，是惠普实验室开发的一系列软件的统称。现在主要出现在c++中，但是在引入c++之前该技术已经存在很长时间了。
+STL(Standard Template Library，标准模板库)，是惠普实验室开发的一系列软件的统称。现在主要出现 在c++ 中，但是在引入 c++ 之前该技术已经存在很长时间了。
 
-STL从广义上分为: 
+STL从广义上分为:
 
-- 容器(container) 
-- 算法(algorithm) 
-- 迭代器(iterator)
+- 函数(function)
+- 容器(container)
+- 算法(algorithm)
+- 迭代器(iterator
 
-容器和算法之间通过迭代器进行无缝连接。STL几乎所有的代码都采用了模板类或者模板函数，这相比传统的由函数和类组成的库来说提供了更好的代码重用机会。在c++标准程序库中隶属于STL的占到了80%以上。
+容器和算法之间通过迭代器进行无缝连接。STL 几乎所有的代码都采用了模板类或者模板函数，这相比传统的由函数和类组成的库来说提供了更好的代码重用机会。在 C++ 标准程序库中隶属于 STL 的占到了 80% 以上。
 
 在c++标准中，STL被组织成以下13个头文件：
 
-```
-<algorithm>、<deque>、<functional>、<iterator>、<vector>、<list>、<map>、<memory>、<numeric>、<queue>、<set>、<stack> 和<utility>
+```cpp
+#include <algorithm>
+#include <deque>
+#include <functional>
+#include <iterator>
+#include <vector>
+#include <list>
+#include <map>
+#include <memory>
+#include <numeric>
+#include <queue>
+#include <set>
+#include <stack>
+#include <utility>
 ```
 
-STL的一个重要特点是数据结构和算法的分离。尽管这是个简单的概念，但是这种分离确实使得STL变得非常通用。例如在STL的vector容器中，可以放入元素、基础数据类型变量、元素的地址；STL的`sort() `排序函数可以用来操作vector、list等容器。
-
+STL的一个重要特点是数据结构和算法的分离。尽管这是个简单的概念，但是这种分离确实使得 STL 变得非常通用。例如在 STL 的 vector 容器中，可以放入元素、基础数据类型变量、元素的地址；STL的`sort()`排序函数可以用来操作 vector、list 等容器。
 
 STL具有高可重用性，高性能，高移植性，跨平台的优点：
 
-- 高可重用性：STL中几乎所有的代码都采用了模板类和模版函数的方式实现，这相比于传统的由函数和类组成的库来说提供了更好的代码重用机会。
-- 高性能：如map可以高效地从十万条记录里面查找出指定的记录，因为map是采用红黑树的变体实现的。(红黑树是平横二叉树的一种)
-- 高移植性：如在项目A上用STL编写的模块，可以直接移植到项目B上。
-- 跨平台：如用windows的Visual Studio编写的代码可以在Mac OS的XCode上直接编译。
+- 高可重用性：STL 中几乎所有的代码都采用了模板类和模版函数的方式实现，这相比于传统的由函数和类组成的库来说提供了更好的代码重用机会。
+- 高性能：如 map 可以高效地从十万条记录里面查找出指定的记录，因为 map 是采用红黑树的变体实现的。(红黑树是平横二叉树的一种)
+- 高移植性：如在项目 A 上用 STL 编写的模块，可以直接移植到项目 B 上。
+- 跨平台：如用 windows 的 Visual Studio 编写的代码可以在 Mac OS 的 XCode 上直接编译。
+
+具体参考[维基百科：STL](https://zh.wikipedia.org/wiki/%E6%A0%87%E5%87%86%E6%A8%A1%E6%9D%BF%E5%BA%93)
 
 ### STL三大组件介绍
 
 #### 容器概念介绍
 
-STL中容器是指存储有限数据元素的一种数据结构。比如栈(stack)，队列(queue)...，那么什么是数据结构，我们研究把数据按照特定的方式排列起来，便于我们查找、删除、排序或者其他一些目的，这种不同的排列方式我们就可以叫数据结构。STL中容器分为：序列式容器和关联式容器。
+STL 中容器是指存储有限数据元素的一种数据结构。比如栈(stack)，队列(queue)...，那么什么是数据结构，我们研究把数据按照特定的方式排列起来，便于我们查找、删除、排序或者其他一些目的，这种不同的排列方式我们就可以叫数据结构。STL 中容器分为：
+
+- 序列式容器
+- 关联式容器
 
 #### 迭代器介绍
 
-迭代器（iterator）是一种对象，它能够用来遍历标准模板库容器中的部分或全部元素
-
+迭代器（iterator）是一种对象，它能够用来遍历标准模板库容器中的部分或全部元素。
 
 #### 算法介绍
 
-以有限的步骤，解决逻辑或者数学上的问题，这门学科我们就叫做算法。
-
-STL提供的算法，都很高效，而且还有个最大的特点，可复用性。STL提供了大约100个实现算法的模版函数，比如算法for_each将为指定序列中的每一个元素调用指定的函数等。
-这样一来，只要我们熟悉了STL之后，许多代码可以被大大的化简，只需要通过调用一两个算法函数，就可以完成所需要的功能并大大地提升效率
-
+以有限的步骤，解决逻辑或者数学上的问题，这门学科我们就叫做算法。STL提供的算法，都很高效，而且还有个最大的特点，可复用性。STL 提供了大约 100 个实现算法的模版函数，比如算法 for_each 将为指定序列中的每一个元素调用指定的函数等。这样一来，只要我们熟悉了 STL 之后，许多代码可以被大大的化简，只需要通过调用一两个算法函数，就可以完成所需要的功能并大大地提升效率。
 
 ---
 ## 2 常用容器
 
 相关内容：
 
-- `string`容器特性,及其相关API的使用
-- `vector`容器特性,及其相关API的使用
-- `deque`容器特性,及其相关API的使用
-- `queue`容器特性,及其相关API的使用
-- `stack`容器特性,及其相关API的使用
-- `list`容器特性,及其相关API的使用
+- `string`容器特性，及其相关API的使用
+- `vector`容器特性，及其相关API的使用
+- `deque`容器特性，及其相关API的使用
+- `queue`容器特性，及其相关API的使用
+- `stack`容器特性，及其相关API的使用
+- `list`容器特性，及其相关API的使用
 - `set/multiset`容器特性，及其相关API的使用
 - `map/multiset`容器特性，及其相关API的使用
 - 函数对象的概念
 
 ### 2.1 string容器
 
-说到string的特性，就不得不和char*类型的字符串的对比：
-    
+说到 string 的特性，就不得不和 char* 类型的字符串的对比：
+
 - char*是一个指针，String是一个类
 - string封装了char*，管理这个字符串，是一个char*型的容器
 - String封装了很多实用的成员方法
@@ -74,11 +86,11 @@ STL提供的算法，都很高效，而且还有个最大的特点，可复用�
 
 #### string初始化
 
-```
-string();//创建一个空的字符串 例如: string str;      
+```cpp
+string();//创建一个空的字符串 例如: string str;
 string(const string& str);//使用一个string对象初始化另一个string对象
 string(const char* s);//使用字符串s初始化
-string(int n, char c);//使用n个字符c初始化 
+string(int n, char c);//使用n个字符c初始化
 //例子:
 //默认构造函数
 string s1;
@@ -90,8 +102,10 @@ char* str = "itcast";
 string s3(str);
 string s4(10, 'a');
 ```
+
 #### 赋值操作
-```
+
+```cpp
 string& operator=(const char* s);//char*类型字符串 赋值给当前的字符串
 string& operator=(const string &s);//把字符串s赋给当前的字符串
 string& operator=(char c);//字符赋值给当前的字符串
@@ -101,8 +115,10 @@ string& assign(const string &s);//把字符串s赋给当前字符串
 string& assign(int n, char c);//用n个字符c赋给当前字符串
 string& assign(const string &s, int start, int n);//将s从start开始n个字符赋值给字符串
 ```
+
 #### string存取字符操作
-```
+
+```cpp
 char& operator[](int n);//通过[]方式取字符
 char& at(int n);//通过at方法获取字符
 //at访问越界会抛出异常，[]越界会直接程序会挂掉。
@@ -110,8 +126,10 @@ string s = "itcast";
 char c = s[1];
 c = s.at(1);
 ```
-####  string拼接操作
-```
+
+#### string拼接操作
+
+```cpp
 string& operator+=(const string& str);//重载+=操作符
 string& operator+=(const char* str);//重载+=操作符
 string& operator+=(const char c);//重载+=操作符
@@ -121,8 +139,10 @@ string& append(const string &s);//同operator+=()
 string& append(const string &s, int pos, int n);//把字符串s中从pos开始的n个字符连接到当前字符串结尾
 string& append(int n, char c);//在当前字符串结尾添加n个字符c
 ```
+
 #### string查找和替换
-```
+
+```cpp
 int find(const string& str, int pos = 0) const; //查找str第一次出现位置,从pos开始查找
 int find(const char* s, int pos = 0) const;  //查找s第一次出现位置,从pos开始查找
 int find(const char* s, int pos, int n) const;  //从pos位置查找s的前n个字符第一次位置
@@ -134,8 +154,10 @@ int rfind(const char c, int pos = 0) const; //查找字符c最后一次出现位
 string& replace(int pos, int n, const string& str); //替换从pos开始n个字符为字符串str
 string& replace(int pos, int n, const char* s); //替换从pos开始的n个字符为字符串s
 ```
+
 #### string比较操作
-```
+
+```cpp
 /*
 compare函数在>时返回 1，<时返回 -1，==时返回 0。
 比较区分大小写，比较时参考字典顺序，排越前面的越小。
@@ -144,17 +166,20 @@ compare函数在>时返回 1，<时返回 -1，==时返回 0。
 int compare(const string &s) const;//与字符串s比较
 int compare(const char *s) const;//与字符串s比较
 ```
-####  string子串
-``` 
+
+#### string子串
+
+```cpp
 string substr(int pos = 0, int n = npos) const;//返回由pos开始的n个字符组成的字符串
 ```
 
 #### string插入和删除操作
-```
+
+```cpp
 string& insert(int pos, const char* s); //插入字符串
 string& insert(int pos, const string& str); //插入字符串
 string& insert(int pos, int n, char c);//在指定位置插入n个字符c
-string& erase(int pos, int n = npos);//删除从Pos开始的n个字符 
+string& erase(int pos, int n = npos);//删除从Pos开始的n个字符
 ```
 
 ### 2.2 vector容器
@@ -164,10 +189,15 @@ vector容器是一个长度动态改变的动态数组，既然也是数组，�
 - vector是动态数组，连续内存空间，具有随机存取效率高的优点。
 - vector是单口容器，在队尾插入和删除元素效率高，在指定位置插入会导致数据元素移动，效率低。
 - 当vector空间满的时候，再当插入新元素的时候，vector会重新申请一块更大的内存空间，将原空间数据拷贝到新的内存空间，然后释放旧的内存空间，再将新元素插入到新空间中，以此可以看出vector的空间动态增长效率较低。
+标必需明确，只能对确知已存在的元素执行下标操作，如果下标越界，可能会得到一个未知的值，所谓缓冲区溢出就是这类错误。
 
+**vector能高效的增长**：
 
-####  vector构造函数
-```
+C++标准要求，vector能在运行时高效的增长，因此在定义vector对象时设定其大小就没有必要了，事实上这么做，可能性能更差，**只有一种情况例外，就是所有元素的值都一样**。否则有更有效的方法是先定义一个空的vector，然后在运行时添加元素。
+
+#### vector构造函数
+
+```cpp
 vector<T> v; //采用模板实现类实现，默认构造函数
 vector(v.begin(), v.end());//将v[begin(), end())区间中的元素拷贝给本身。
 vector(n, elem);//构造函数将n个elem拷贝给本身。
@@ -175,10 +205,12 @@ vector(const vector &vec);//拷贝构造函数。
 
 //例子：使用第二个构造函数 我们可以...
 int arr[] = {2,3,4,1,9};
-vector<int> v1(arr, arr + sizeof(arr) / sizeof(int)); 
+vector<int> v1(arr, arr + sizeof(arr) / sizeof(int));
 ```
+
 #### vector常用赋值操作
-```
+
+```cpp
 assign(beg, end);//将[beg, end)区间中的数据拷贝赋值给本身。
 assign(n, elem);//将n个elem拷贝赋值给本身。
 vector& operator=(const vector  &vec);//重载等号操作符
@@ -188,8 +220,10 @@ swap(vec);// 将vec与本身的元素互换。
 int arr[] = { 0, 1, 2, 3, 4 };
 assign(arr, arr + 5);//使用数组初始化vector
 ```
+
 #### vector大小操作
-```
+
+```cpp
 size();//返回容器中元素的个数
 empty();//判断容器是否为空
 resize(int num);//重新指定容器的长度为num，若容器变长，则以默认值填充新位置。如果容器变短，则末尾超出容器长度的元素被删除。
@@ -197,21 +231,23 @@ resize(int num, elem);//重新指定容器的长度为num，若容器变长，�
 capacity();//容器的容量
 reserve(int len);//容器预留len个元素长度，预留位置不初始化，元素不可访问。
 ```
- 
+
 - resize 若容器变长，则以默认值填充新位置。如果容器变短，则末尾超出容器长度的元素被删除。
 - reserve和resize的区别？reserve是容器预留空间，但在空间内不真正创建元素对象，所以在没有添加新的对象之前，不能引用容器内的元素，
 resize是改变容器的大小，且在创建对象，因此，调用这个函数之后，就可以引用容器内的对象了.
 
+#### vector数据存取操作
 
-####  vector数据存取操作
-```
+```cpp
 at(int idx); //返回索引idx所指的数据，如果idx越界，抛出out_of_range异常。
 operator[];//返回索引idx所指的数据，越界时，运行直接报错
 front();//返回容器中第一个数据元素
 back();//返回容器中最后一个数据元素
 ```
+
 #### vector插入和删除操作
-```
+
+```cpp
 insert(const_iterator pos, int count,ele);//迭代器指向位置pos插入count个元素ele.
 push_back(ele); //尾部插入元素ele
 pop_back();//删除最后一个元素
@@ -220,20 +256,18 @@ erase(const_iterator pos);//删除迭代器指向的元素
 clear();//删除容器中所有元素
 ```
 
-###  2.3  deque容器
+### 2.3  deque容器
 
-deque是“double-ended queue”的缩写,和vector一样，deque也支持随机存取。vector是单向开口的连续性空间，deque则是一种双向开口的连续性空间，
-所谓双向开口，意思是可以在头尾两端分别做元素的插入和删除操作，vector当然也可以在头尾两端进行插入和删除操作，但是头部插入和删除操作效率奇差，无法被接受。
+deque是“double-ended queue”的缩写,和vector一样，deque也支持随机存取。vector是单向开口的连续性空间，deque则是一种双向开口的连续性空间，所谓双向开口，意思是可以在头尾两端分别做元素的插入和删除操作，vector当然也可以在头尾两端进行插入和删除操作，但是头部插入和删除操作效率奇差，无法被接受。
 
 deque和vector的最大差异：
 
 1. 一在于deque允许常数时间内对头端进行元素插入和删除操作。
-1. 二在于deque没有容量的概念，因为它是动态的以分段的连续空间组合而成，随时可以增加一段新的空间并链接起来，换句话说，
-像vector那样“因旧空间不足而重新分配一块更大的空间，然后再复制元素，释放空间”这样的操作不会发生在deque身上，也因此deque没有必要提供所谓的空间保留功能。
-
+2. 二在于deque没有容量的概念，因为它是动态的以分段的连续空间组合而成，随时可以增加一段新的空间并链接起来，换句话说，像vector那样“因旧空间不足而重新分配一块更大的空间，然后再复制元素，释放空间”这样的操作不会发生在deque身上，也因此deque没有必要提供所谓的空间保留功能。
 
 #### deque构造函数
-```
+
+```cpp
 vector<T> v; //采用模板实现类实现，默认构造函数
 vector(v.begin(), v.end());//将v[begin(), end())区间中的元素拷贝给本身。
 vector(n, elem);//构造函数将n个elem拷贝给本身。
@@ -245,47 +279,54 @@ vector<int> v1(arr, arr + sizeof(arr) / sizeof(int));
 ```
 
 #### deque赋值操作
-```
+
+```cpp
 assign(beg, end);//将[beg, end)区间中的数据拷贝赋值给本身。
 assign(n, elem);//将n个elem拷贝赋值给本身。
-deque& operator=(const deque &deq); //重载等号操作符 
+deque& operator=(const deque &deq); //重载等号操作符
 swap(deq);// 将deq与本身的元素互换
 ```
-####  deque大小操作
-```
+
+#### deque大小操作
+
+```cpp
 deque.size();//返回容器中元素的个数
 deque.empty();//判断容器是否为空
 deque.resize(num);//重新指定容器的长度为num,若容器变长，则以默认值填充新位置。如果容器变短，则末尾超出容器长度的元素被删除。
 deque.resize(num, elem); //重新指定容器的长度为num,若容器变长，则以elem值填充新位置,如果容器变短，则末尾超出容器长度的元素被删除。
 ```
+
 #### deque双端插入和删除操作
-```
+
+```cpp
 push_back(elem);//在容器尾部添加一个数据
 push_front(elem);//在容器头部插入一个数据
 pop_back();//删除容器最后一个数据
 pop_front();//删除容器第一个数据
 ```
-####  deque数据存取
-```
+
+#### deque数据存取
+
+```cpp
 at(idx);//返回索引idx所指的数据，如果idx越界，抛出out_of_range。
 operator[];//返回索引idx所指的数据，如果idx越界，不抛出异常，直接出错。
 front();//返回第一个数据。
 back();//返回最后一个数据
 ```
-####  deque插入操作
-```
+
+#### deque插入操作
+
+```cpp
 insert(pos,elem);//在pos位置插入一个elem元素的拷贝，返回新数据的位置。
 insert(pos,n,elem);//在pos位置插入n个elem数据，无返回值。
 insert(pos,beg,end);//在pos位置插入[beg,end)区间的数据，无返回值。
 ```
 
- deque是分段连续的内存空间，通过中控器维持一种连续内存空间的状态，其实现复杂性要大于vector queue stack等容器，
- 其迭代器的实现也更加复杂，在需要对deque容器元素进行排序的时候，建议先将deque容器中数据数据元素拷贝到vector容器中，
- 对vector进行排序，然后再将排序完成的数据拷贝回deque容器。
- 
+deque是分段连续的内存空间，通过中控器维持一种连续内存空间的状态，其实现复杂性要大于vector queue stack等容器， 其迭代器的实现也更加复杂，在需要对deque容器元素进行排序的时候，建议先将deque容器中数据数据元素拷贝到vector容器中， 对vector进行排序，然后再将排序完成的数据拷贝回deque容器。
 
 #### deque删除操作
-```
+
+```cpp
 clear();//移除容器的所有数据
 erase(beg,end);//删除[beg,end)区间的数据，返回下一个数据的位置。
 erase(pos);//删除pos位置的数据，返回下一个数据的位置。
@@ -293,56 +334,65 @@ erase(pos);//删除pos位置的数据，返回下一个数据的位置。
 
 ### 2.4  stack特性
 
-stack是一种先进后出(first in last out,FILO)的数据结构，它只有一个出口，stack只允许在栈顶新增元素，移除元素，获得顶端元素，
-但是除了顶端之外，其他地方不允许存取元素，只有栈顶元素可以被外界使用，也就是说stack不具有遍历行为，没有迭代器。
-
+stack是一种先进后出(first in last out,FILO)的数据结构，它只有一个出口，stack只允许在栈顶新增元素，移除元素，获得顶端元素，但是除了顶端之外，其他地方不允许存取元素，只有栈顶元素可以被外界使用，也就是说stack不具有遍历行为，没有迭代器。
 
 #### stack构造函数
-```
-stack<T> stkT;//stack采用模板类实现， stack对象的默认构造形式： 
+
+```cpp
+stack<T> stkT;//stack采用模板类实现， stack对象的默认构造形式：
 stack(const stack &stk);//拷贝构造函数
 ```
+
 #### stack赋值操作
-```
+
+```cpp
 stack& operator=(const stack &stk);//重载等号操作符
 ```
+
 #### stack数据存取操作
-```
+
+```cpp
 push(elem);//向栈顶添加元素
 pop();//从栈顶移除第一个元素
 top();//返回栈顶元素
 ```
+
 #### stack大小操作
-```
+
+```cpp
 empty();//判断堆栈是否为空
 size();//返回堆栈的大小
 ```
 
 ### 2.5 queue
 
-queue是一种先进先出(first in first out, FIFO)的数据类型,他有两个口，数据元素只能从一个口进，
-从另一个口出.队列只允许从队尾加入元素，队头删除元素，必须符合先进先出的原则，queue和stack一样不具有遍历行为，不能随机存取。
-
+queue是一种先进先出(first in first out, FIFO)的数据类型,他有两个口，数据元素只能从一个口进，从另一个口出.队列只允许从队尾加入元素，队头删除元素，必须符合先进先出的原则，queue和stack一样不具有遍历行为，不能随机存取。
 
 #### queue构造函数
-```
+
+```cpp
 queue<T> queT;//queue采用模板类实现，queue对象的默认构造形式：
 queue(const queue &que);//拷贝构造函数
 ```
 
 #### queue存取、插入和删除操作
-```
+
+```cpp
 push(elem);//往队尾添加元素
 pop();//从队头移除第一个元素
 back();//返回最后一个元素
 front();//返回第一个元素
 ```
+
 #### queue赋值操作
-```
+
+```cpp
 queue& operator=(const queue &que);//重载等号操作z
 ```
+
 #### queue大小操作
-```
+
+```cpp
 empty();//判断队列是否为空
 size();//返回队列的大小
 ```
@@ -356,14 +406,17 @@ size();//返回队列的大小
 - 链表灵活，但是空间和时间额外耗费较大
 
 #### list构造函数
-```
+
+```cpp
 list<T> lstT;//list采用采用模板类实现,对象的默认构造形式：
 list(beg,end);//构造函数将[beg, end)区间中的元素拷贝给本身。
 list(n,elem);//构造函数将n个elem拷贝给本身。
 list(const list &lst);//拷贝构造函数。
 ```
-####  list数据元素插入和删除操作
-```
+
+#### list数据元素插入和删除操作
+
+```cpp
 push_back(elem);//在容器尾部加入一个元素
 pop_back();//删除容器中最后一个元素
 push_front(elem);//在容器开头插入一个元素
@@ -376,8 +429,10 @@ erase(beg,end);//删除[beg,end)区间的数据，返回下一个数据的位置
 erase(pos);//删除pos位置的数据，返回下一个数据的位置。
 remove(elem);//删除容器中所有与elem值匹配的元素。
 ```
+
 #### list大小操作
-```
+
+```cpp
 size();//返回容器中元素的个数
 empty();//判断容器是否为空
 resize(num);//重新指定容器的长度为num，若容器变长，则以默认值填充新位置。如果容器变短，则末尾超出容器长度的元素被删除。
@@ -385,7 +440,8 @@ resize(num, elem);//重新指定容器的长度为num，若容器变长，则以
 ```
 
 #### list赋值操作
-```
+
+```cpp
 assign(beg, end);//将[beg, end)区间中的数据拷贝赋值给本身。
 assign(n, elem);//将n个elem拷贝赋值给本身。
 list& operator=(const list &lst);//重载等号操作符
@@ -393,13 +449,15 @@ swap(lst);//将lst与本身的元素互换。
 ```
 
 #### list数据的存取
-```
+
+```cpp
 front();//返回第一个元素。
 back();//返回最后一个元素。
 ```
 
-####  list反转排列排序
-```
+#### list反转排列排序
+
+```cpp
 reverse();//反转链表，比如lst包含1,3,5元素，运行此方法后，lst就包含5,3,1元素。
 sort(); //list排序
 ```
@@ -411,28 +469,28 @@ sort(); //list排序
 
 ### 2.7 set/multiset容器
 
-set/multiset的特性是所有元素会根据元素的值自动进行排序。set是以RB-tree（红黑树，平衡二叉树的一种）为底层机制，其查找效率非常好。
-**set容器中不允许重复元素,multiset允许重复元素。**
+set/multiset的特性是所有元素会根据元素的值自动进行排序。set是以RB-tree（红黑树，平衡二叉树的一种）为底层机制，其查找效率非常好。**set容器中不允许重复元素,multiset允许重复元素。**
 
 不可以通过set的迭代器改变元素的值吗，因为set集合是根据元素值进行排序，关系到set的排序规则，如果任意改变set的元素值，会严重破坏set组织。
 
-
 #### set构造函数
-```
+
+```cpp
 set<T> st;//set默认构造函数：
 mulitset<T> mst; //multiset默认构造函数: 
 set(const set &st);//拷贝构造函数
 ```
 
 #### set大小操作
-```
+
+```cpp
 size();//返回容器中元素的数目
 empty();//判断容器是否为空
 ```
 
-
 #### set插入和删除操作
-```
+
+```cpp
 insert(elem);//在容器中插入元素。
 clear();//清除所有元素
 erase(pos);//删除pos迭代器所指的元素，返回下一个元素的迭代器。
@@ -441,7 +499,8 @@ erase(elem);//删除容器中值为elem的元素。
 ```
 
 #### set查找操作
-```
+
+```cpp
 find(key);//查找键key是否存在,若存在，返回该键的元素的迭代器；若不存在，返回map.end();
 lower_bound(keyElem);//返回第一个key>=keyElem元素的迭代器。
 upper_bound(keyElem);//返回第一个key>keyElem元素的迭代器。
@@ -451,7 +510,6 @@ equal_range(keyElem);//返回容器中key与keyElem相等的上下限的两个�
 #### set元素排序
 
 往set中添加元素后，我们发现打印出来set集合中的元素是从小到大的升序排列，那么我们如何指定排序为降序呢？需要了解函数对象的概念。
-
 
 ### 2.8 map/multimap容器
 
@@ -464,7 +522,7 @@ map和multimap区别在于，map不允许相同key值存在，multimap则允许�
 
 类模板：`template <class T1, class T2> struct pair`
 
-```
+```cpp
 //第一种方法创建一个对组
 pair<string, int> pair1(string("name"), 20);
 cout << pair1.first << endl; //访问pair第一个值
@@ -479,27 +537,30 @@ cout << pair3.first << endl;
 cout << pair3.second << endl;
 ```
 
-####  map构造函数
-```
-map<T1, T2> mapTT;//map默认构造函数: 
+#### map构造函数
+
+```cpp
+map<T1, T2> mapTT;//map默认构造函数
 map(const map &mp);//拷贝构造函数
 ```
 
-####  map赋值操作
-```
+#### map赋值操作
+
+```cpp
 map& operator=(const map &mp);//重载等号操作符
 swap(mp);//交换两个集合容器
 ```
 
 #### map大小操作
-```
+
+```cpp
 size();//返回容器中元素的数目
 empty();//判断容器是否为空
-
 ```
 
 #### map插入数据元素操作
-```
+
+```cpp
 map.insert(...); //往容器插入元素，返回pair<iterator,bool>
 map<int, string> mapStu;
 // 第一种 通过pair的方式插入对象
@@ -512,22 +573,25 @@ mapStu.insert(map<int, string>::value_type(1, "小李"));
 mapStu[3] = "小刘";
 mapStu[5] = "小王";
 ```
+
 注意：
+
 - 前三种方法，采用的是`insert()`方法，该方法返回值为`pair<iterator,bool>`
 - 第四种方法非常直观，但存在一个性能的问题。插入3时，先在mapStu中查找主键为3的项，若没发现，则将一个键为3，值为初始化值的对组插入到mapStu中，然后再将值修改成“小刘”。若发现已存在3这个键，则修改这个键对应的value。
 - `string strName = mapStu[2];`//取操作或插入操作，只有当mapStu存在2这个键时才是正确的取操作，否则会自动插入一个实例，    键为2，值为初始化值。
 
-
 #### map删除操作
-```
+
+```cpp
 clear();//删除所有元素
 erase(pos);//删除pos迭代器所指的元素，返回下一个元素的迭代器。
 erase(beg,end);//删除区间[beg,end)的所有元素 ，返回下一个元素的迭代器。
 erase(keyElem);//删除容器中key为keyElem的对组。
 ```
 
-####  map查找操作
-```
+#### map查找操作
+
+```cpp
 find(key);//查找键key是否存在,若存在，返回该键的元素的迭代器；/若不存在，返回map.end();
 count(keyElem);//返回容器中key为keyElem的对组个数。对map来说，要么是0，要么是1。对multimap来说，值可能大于1。
 lower_bound(keyElem);//返回第一个key<=keyElem元素的迭代器。
@@ -543,12 +607,12 @@ STL容器所提供的都是值(value)寓意，而非引用(reference)寓意，�
 - 通常STL不会抛出异常，需要使用者传入正确参数。
 - 每个容器都提供了一个默认的构造函数和默认的拷贝构造函数。
 - 大小相关的构造方法:  
-    - `size()`返回容器中元素的个数 
-    - `empty()`判断容器是否为空
+  - `size()`返回容器中元素的个数
+  - `empty()`判断容器是否为空
 
 #### 向容器中插入元素，需要注意元素的深拷贝与浅拷贝问题
 
-```c++
+```cpp
 #include<iostream>
 #include<vector>
 
@@ -590,7 +654,6 @@ int main(){
 
 原因在于两个指针指向了同一块堆区内存，这样会导致不可预知的结果，函数结束其中一个调用析构函数，销毁了data指向的内存空间，而另一个对象析构的时候就会挂掉。问题的解决办法就是，**给我们的对象提供一个拷贝构造函数，并且重载=操作符,两个指针分别指向自己的那一块内存，互不影响。**
 
-
 ### 2.10 STL容器使用时机
 
 ![](images/stl_containers.png)
@@ -598,15 +661,15 @@ int main(){
 - vector的使用场景：比如软件历史操作记录的存储，我们经常要查看历史记录，比如上一次的记录，上上次的记录，但却不会去删除记录，因为记录是事实的描述。
 - deque的使用场景：比如排队购票系统，对排队者的存储可以采用deque，支持头端的快速移除，尾端的快速添加。如果采用vector，则头端移除时，会移动大量的数据，速度慢。
 - vector与deque的比较：
-    - 一：`vector.at()`比`deque.at()`效率高，比如`vector.at(0)`是固定的，deque的开始位置却是不固定的。
-    - 二：如果有大量释放操作的话，vector花的时间更少，这跟二者的内部实现有关。
-    - 三：deque支持头部的快速插入与快速移除，这是deque的优点。
+  - 一：`vector.at()`比`deque.at()`效率高，比如`vector.at(0)`是固定的，deque的开始位置却是不固定的。
+  - 二：如果有大量释放操作的话，vector花的时间更少，这跟二者的内部实现有关。
+  - 三：deque支持头部的快速插入与快速移除，这是deque的优点。
 - list的使用场景：比如公交车乘客的存储，随时可能有乘客下车，支持频繁的不确实位置元素的移除插入。
-set的使用场景：比如对手机游戏的个人得分记录的存储，存储要求从高分到低分的顺序排列。 
+- set的使用场景：比如对手机游戏的个人得分记录的存储，存储要求从高分到低分的顺序排列。
 - map的使用场景：比如按ID号存储十万个用户，想要快速要通过ID查找对应的用户。二叉树的查找效率，这时就体现出来了。如果是vector容器，最坏的情况下可能要遍历完整个容器才能找到该用户。
 
 ---
-## 3 常用算法 
+## 3 常用算法
 
 相关内容：
 
@@ -633,6 +696,7 @@ set的使用场景：比如对手机游戏的个人得分记录的存储，存�
 假定某个类有一个重载的operator()，而且重载的operator()要求获取一个参数，我们就将这个类称为“一元仿函数”（unary functor）；相反，如果重载的operator()要求获取两个参数，就将这个类称为“二元仿函数”（binary functor）。
 
 示例：
+
 ```c++
 #include<iostream>
 #include<vector>
@@ -724,7 +788,6 @@ public:
 };
 
 void test04(){
-    
     vector<int> v;
     v.push_back(1);
     v.push_back(3);
@@ -752,9 +815,10 @@ int main(){
 
 #### 谓词概念
 
-谓词是指普通函数或重载的operator()返回值是bool类型的函数对象(仿函数)。如果operator接受一个参数，那么叫做一元谓词,如果接受两个参数，那么叫做二元谓词，谓词可作为一个判断式。
+谓词是指普通函数或重载的 operator() 返回值是 bool 类型的函数对象(仿函数)。如果 operator 接受一个参数，那么叫做一元谓词,如果接受两个参数，那么叫做二元谓词，谓词可作为一个判断式。
 
 示例：
+
 ```c++
 struct myfuncobj01{
       bool operator(int v){}  //接受一个参数，并且返回值为Bool 即一元谓词
@@ -884,6 +948,7 @@ int main(){
 STL内建了一些函数对象。分为:算数类函数对象,关系运算类函数对象，逻辑运算类仿函数。这些仿函数所产生的对象，用法和一般函数完全相同，当然我们还可以产生无名的临时对象来履行函数功能。使用内建函数对象，需要引入头文件 `#include<functional>`。
 
 - 6个算数类函数对象，除了negate是一元运算，其他都是二元运算。
+
 ```cpp
 template<class T> T plus<T>//加法仿函数
 template<class T> T minute<T>//减法仿函数
@@ -892,7 +957,9 @@ template<class T> T divides<T>//除法仿函数
 template<class T> T modulus<T>//取模仿函数
 template<class T> T negate<T>//取反仿函数
 ```
+
 - 6个关系运算类函数对象，每一种都是二元运算。
+
 ```cpp
 template<class T> bool equal_to<T>//等于
 template<class T> bool not_equal_to<T>//不等于
@@ -901,7 +968,9 @@ template<class T> bool greater_equal<T>//大于等于
 template<class T> bool less<T>//小于
 template<class T> bool less_equal<T>//小于等于
 ```
+
 - 逻辑运算类运算函数，not为一元运算，其余为二元运算
+
 ```cpp
 template<class T> bool logical_and<T>//逻辑与
 template<class T> bool logical_or<T>//逻辑或
@@ -909,6 +978,7 @@ template<class T> bool logical_not<T>//逻辑非
 ```
 
 使用示例
+
 ```cpp
 //使用内建函数对象声明一个对象
 plus<int> myPlus;
@@ -964,7 +1034,7 @@ public:
 };
 
 void test01(){
-    
+
     plus<int> myplus; //实例化一个对象
     int ret = myplus(10, 20);
     cout << "ret : " << ret << endl;
@@ -999,7 +1069,7 @@ struct myprint : public binary_function<int,int,void>{   //二元函数对象 �
 };
 
 void test02(){
-    
+
     vector<int> v;
     v.push_back(1);
     v.push_back(2);
@@ -1034,7 +1104,7 @@ void test03(){
     v.push_back(1);
     v.push_back(5);
     v.push_back(4);
-    
+
     vector<int>::iterator it =  find_if(v.begin(), v.end(), not1(bind2nd(less_equal<int>(), 2)));
     cout << "it:" << *it << endl;
     sort(v.begin(),v.end(),not2(greater<int>()));
@@ -1120,11 +1190,10 @@ int main(){
 }
 ```
 
+如果希望函数对象适配器能对我们自己编写的函数对象有效，我们需要根据我们的函数对象类型继承STL的父类对象。如果你本身是二元函数对象则需要继承
 
-如果希望函数对象适配器能对我们自己编写的函数对象有效，我们需要根据我们的函数对象类型继承STL的父类对象。如果你本身是二元函数对象则需要继承 
 - 二元函数继承：`public binary_function<参数类型,参数类型,返回类型>`
 - 一元函数继承：`public unary_function<参数类型,返回类型>`
-
 
 ### 3.2 算法概述
 
@@ -1139,12 +1208,11 @@ STL算法分为：**质变算法和非质变算法。**
 所有的STL算法都作用在由迭代器[first,end)所标示出来的区间上，所谓质变算法，是指运算过程中会改变区间内的(迭代器所指)的元素内容。
 比如，拷贝(copy)、互换(swap)、替换(replace)、填写(fill)、删除(remove)、排序(sort)等算法都属于此类。
 
-非质变算法是指是指在运算过程中不会区间内(迭代器所指)的元素内容，比如查找(find)、计数(count)、遍历(for_each)、寻找极值(max, min)等，都属于此类。
-但是如果你在`for_each`遍历每个元素的时候试图应用一个会改变元素内容的仿函数，那么元素当然也会改变。
-
+非质变算法是指是指在运算过程中不会区间内(迭代器所指)的元素内容，比如查找(find)、计数(count)、遍历(for_each)、寻找极值(max, min)等，都属于此类。但是如果你在`for_each`遍历每个元素的时候试图应用一个会改变元素内容的仿函数，那么元素当然也会改变。
 
 #### 常用遍历算法
-```
+
+```cpp
 /*
     遍历算法 遍历容器元素
     @param beg 开始迭代器
@@ -1176,6 +1244,7 @@ transform(iterator beg1, iterator end1, iterator beg2, _callbakc)
     @return 返回查找元素的位置
 */
 find(iterator beg, iterator end, value)
+
 /*
     adjacent_find算法 查找相邻重复元素
     @param beg 容器开始迭代器
@@ -1184,6 +1253,7 @@ find(iterator beg, iterator end, value)
     @return 返回相邻元素的第一个位置的迭代器
 */
 adjacent_find(iterator beg, iterator end, _callback);
+
 /*
     binary_search算法 二分查找法
     注意: 在无序序列中不可用
@@ -1193,6 +1263,7 @@ adjacent_find(iterator beg, iterator end, _callback);
     @return bool 查找返回true 否则false
 */
 bool binary_search(iterator beg, iterator end, value);
+
 /*
     find_if算法 条件查找
     @param beg 容器开始迭代器
@@ -1201,6 +1272,7 @@ bool binary_search(iterator beg, iterator end, value);
     @return bool 查找返回true 否则false
 */
 find_if(iterator beg, iterator end, _callback);
+
 /*
     count算法 统计元素出现次数
     @param beg 容器开始迭代器
@@ -1209,6 +1281,7 @@ find_if(iterator beg, iterator end, _callback);
     @return int返回元素个数
 */
 count(iterator beg, iterator end, value);
+
 /*
     count算法 统计元素出现次数
     @param beg 容器开始迭代器
@@ -1231,6 +1304,7 @@ count_if(iterator beg, iterator end, _callback);
     @param dest  目标容器开始迭代器
 */
 merge(iterator beg1, iterator end1, iterator beg2, iterator end2, iterator dest)
+
 /*
     sort算法 容器元素排序
     注意:两个容器必须是有序的
@@ -1238,13 +1312,17 @@ merge(iterator beg1, iterator end1, iterator beg2, iterator end2, iterator dest)
     @param end 容器1结束迭代器
     @param _callback 回调函数或者谓词(返回bool类型的函数对象)
 */
+
 sort(iterator beg, iterator end, _callback)
+
 /*
     sort算法 对指定范围内的元素随机调整次序
     @param beg 容器开始迭代器
     @param end 容器结束迭代器
 */
+
 random_shuffle(iterator beg, iterator end)
+
 /*
     reverse算法 反转指定范围的元素
     @param beg 容器开始迭代器
@@ -1262,6 +1340,7 @@ reverse(iterator beg, iterator end)
     @param end 容器结束迭代器
     @param dest 目标容器结束迭代器
 */
+
 copy(iterator beg, iterator end, iterator dest)
 /*
     replace算法 将容器内指定范围的旧元素修改为新元素
@@ -1270,6 +1349,7 @@ copy(iterator beg, iterator end, iterator dest)
     @param oldvalue 旧元素
     @param oldvalue 新元素
 */
+
 replace(iterator beg, iterator end, oldvalue, newvalue)
 /*
     replace_if算法 将容器内指定范围满足条件的元素替换为新元素
@@ -1278,7 +1358,9 @@ replace(iterator beg, iterator end, oldvalue, newvalue)
     @param callback函数回调或者谓词(返回Bool类型的函数对象)
     @param oldvalue 新元素
 */
+
 replace_if(iterator beg, iterator end, _callback, newvalue)
+
 /*
     swap算法 互换两个容器的元素
     @param c1容器1
@@ -1288,6 +1370,7 @@ swap(container c1, container c2)
 ```
 
 #### 常用算数生成算法
+
 ```cpp
 /*
     accumulate算法 计算容器元素累计总和
@@ -1295,7 +1378,9 @@ swap(container c1, container c2)
     @param end 容器结束迭代器
     @param value累加值
 */
+
 accumulate(iterator beg, iterator end, value)
+
 /*
     fill算法 向容器中添加元素
     @param beg 容器开始迭代器
@@ -1306,6 +1391,7 @@ fill(iterator beg, iterator end, value)
 ```
 
 #### 常用集合算法
+
 ```cpp
 /*
     set_intersection算法 求两个set集合的交集
@@ -1318,6 +1404,7 @@ fill(iterator beg, iterator end, value)
     @return 目标容器的最后一个元素的迭代器地址
 */
 set_intersection(iterator beg1, iterator end1, iterator beg2, iterator end2, iterator dest)
+
 /*
     set_union算法 求两个set集合的并集
     注意:两个集合必须是有序序列
@@ -1329,6 +1416,7 @@ set_intersection(iterator beg1, iterator end1, iterator beg2, iterator end2, ite
     @return 目标容器的最后一个元素的迭代器地址
 */
 set_union(iterator beg1, iterator end1, iterator beg2, iterator end2, iterator dest)
+
 /*
     set_difference算法 求两个set集合的差集
     注意:两个集合必须是有序序列

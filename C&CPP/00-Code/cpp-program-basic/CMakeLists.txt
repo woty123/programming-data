@@ -3,5 +3,5 @@ project(cplusplus-program)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES 02-strings/strings.cpp)
+set(SOURCE_FILES 02-strings/string_io.cpp)
 add_executable(C__Basic ${SOURCE_FILES})

@@ -36,7 +36,6 @@ static void useIterator() {
     cout << "s1 = " << s1 << endl;
 }
 
-
 //2：迭代器类型
 static void iteratorType() {
     //常量迭代器
@@ -48,7 +47,6 @@ static void iteratorType() {
     //auto
     auto it3 = string1.begin();
 }
-
 
 //3：解引用操作，箭头操作符
 static void dereference() {
@@ -65,7 +63,6 @@ static void dereference() {
 
     //注意：但凡使用了迭代器循环体，就不要向迭代器所属容器添加元素了。
 }
-
 
 int main() {
     //useIterator();
