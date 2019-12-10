@@ -1,6 +1,6 @@
 # [《Android全埋点解决方案》](https://book.douban.com/subject/33400077/)
 
-选择买点方案需要考虑的几点：
+选择埋点方案需要考虑的几点：
 
 - 效率：不影响现有业务。
 - 兼容性：Android SDK版本、Java 和 Kotlin、Lamdba、DataBinding、Fragment等等都需要考虑。
