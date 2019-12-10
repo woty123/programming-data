@@ -16,7 +16,6 @@ decltype(even) *arrPtr(int i) {//返回一个指针，指针指向5个元素的�
     return (i % 2) == 0 ? &even : &odd;
 }
 
-
 //2：c++11尾置返回类型声明
 static auto func(int i) -> int (*)[10];//该函数返回一个指针，指针指向含有十个元素的int数组
 

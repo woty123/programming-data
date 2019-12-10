@@ -30,6 +30,8 @@ static void initializeArray() {
     int arr9[10][10];
     int (*arr10)[10] = arr9;//arr10是一个指针数组
     int (&arrRef)[5] = arr3;//arrRef引用一个含有5个元素的int数组
+
+    cout << "arr5[1] = " << arr5[5] << endl;
 }
 
 //2：访问数组
@@ -82,9 +84,9 @@ static void arrayInitializeVector() {
 }
 
 int main() {
-    //initializeArray();
+    initializeArray();
     //accessArray();
     //arrayPointer();
-    arrayInitializeVector();
+    //arrayInitializeVector();
     return EXIT_SUCCESS;
 }

@@ -76,10 +76,27 @@ void constIterator() {
     vector<int>::const_iterator end2 = vector2.end();
 }
 
+void midIterator() {
+    vector<int> ivec;
+    for (int i = 0; i < 10; ++i) {
+        ivec.push_back(i);
+    }
+
+    cout << "ivec.size " << ivec.size() << endl;
+
+    auto mid = ivec.begin() + ivec.size() / 2;
+    auto end = ivec.end();
+
+    for (auto begin = ivec.begin(); begin != mid; ++begin) {
+        cout << "element " << *begin << endl;
+    }
+}
+
 int main() {
     //useIterator();
     //iteratorType();
     //dereference();
-    constIterator();
+    //constIterator();
+    midIterator();
     return EXIT_SUCCESS;
 }

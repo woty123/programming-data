@@ -11,6 +11,10 @@
 
 using namespace std;
 
+void receiveA(int *pI) {
+
+}
+
 int main() {
 
     //static_cast
@@ -21,7 +25,6 @@ int main() {
     void *pSlope = &i1;//任何非常量对象的地址都能存入void*
     double *slope2 = static_cast<double * >(pSlope);
 
-
     //const_cast
     int i3 = 333;
     const int *p_ci3 = &i3;
@@ -30,6 +33,9 @@ int main() {
 
     cout << "p_i3 = " << *p_i3 << endl;//始终为：100
     cout << "i3 = " << i3 << endl;//如果i3是const的，那么无法修改i3的值，i3始终未为333
+
+    //函数接收非 const 参数
+    receiveA(const_cast<int *>(p_ci3));
 
     return EXIT_SUCCESS;
 }

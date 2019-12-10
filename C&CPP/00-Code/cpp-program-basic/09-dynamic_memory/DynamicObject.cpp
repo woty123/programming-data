@@ -16,7 +16,6 @@
 using namespace std;
 
 int main() {
-
     //基本类型
     int *pi1 = new int;  // pi指向一个未知的int值
     int *pi2 = new int(1024);  // pi指向一个int，值为1024
@@ -25,7 +24,6 @@ int main() {
     delete (pi1);
     delete (pi2);
     delete (pi3);
-
 
     //内置类类型
     string *ps1 = new string(10, '9');    // *ps 为 "9999999999"

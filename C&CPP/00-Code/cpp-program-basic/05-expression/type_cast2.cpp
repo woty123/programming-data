@@ -126,4 +126,3 @@ int main(void) {
     test03();
     return 0;
 }
-
