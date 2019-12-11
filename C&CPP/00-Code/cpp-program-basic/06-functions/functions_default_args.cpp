@@ -9,6 +9,7 @@
 
 #include <cstdlib>
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -16,16 +17,6 @@ typedef string::size_type sz;
 
 /*参数中可以定义默认参数*/
 static string screen(sz ht = 24, sz wid = 80, char back = ' ');
-
-/*声明内联函数*/
-inline int add(int a, int b) {
-    return a + b;
-}
-
-/*声明constexpr函数 */
-constexpr int length() {
-    return 3;
-}
 
 int main() {
     string window;
@@ -35,9 +26,16 @@ int main() {
     window = screen(33, 44);
     window = screen(33, 44, '#');
 
+    sz local = 55;
+    //window(locale)//局部变量不能作为默认实参
+
     return EXIT_SUCCESS;
 }
 
-static string screen(sz ht = 24, sz wid = 80, char back = ' ') {
+static string screen(sz ht, sz wid, char back) {
+    cout << "----------------------------------------------" << endl;
+    cout << "ht = " << ht << endl;
+    cout << "wid = " << wid << endl;
+    cout << "back = " << back << endl;
     return "Fake Screen";
 }

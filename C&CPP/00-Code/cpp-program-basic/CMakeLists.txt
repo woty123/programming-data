@@ -3,5 +3,5 @@ project(cplusplus-program)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES 05-expression/typeid.cpp)
+set(SOURCE_FILES 06-functions/functions_default_args.cpp)
 add_executable(C__Basic ${SOURCE_FILES})

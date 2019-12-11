@@ -21,3 +21,7 @@
 
 - [C++ 基础教程完整版](http://yun.itheima.com/course/275.html) 第三阶段C++开发编程
 - 《C++ Prime》
+
+Clion 调试
+
+- [在 CLion 中进行调试](https://blog.jetbrains.com/cn/2019/05/%E5%9C%A8-clion-%E4%B8%AD%E8%BF%9B%E8%A1%8C%E8%B0%83%E8%AF%95/)
