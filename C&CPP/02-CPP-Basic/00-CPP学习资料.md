@@ -19,7 +19,11 @@
 - [riptutorial c++](https://riptutorial.com/zh-CN/cplusplus)
 - [cplusplus](http://www.cplusplus.com/)
 - [菜鸟教程](http://www.runoob.com/cplusplus/)
+
+博客
+
 - [C++笔记](http://www.hahack.com/wiki/)
+- [cpp-primer 笔记](https://r00tk1ts.github.io/tags/cpp-primer/)
 
 视频教程
 
