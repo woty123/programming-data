@@ -2,13 +2,15 @@
  ============================================================================
  
  Author      : Ztiany
- Description : 演示如何定义一个类
+ Description : 定义类
 
  ============================================================================
  */
 
 #ifndef C_BASIC_CLASS1_H
 #define C_BASIC_CLASS1_H
+
+#include <iostream>
 
 class Box {
 
@@ -30,6 +32,11 @@ public:
     void setBreadth(double bre);
 
     void setHeight(double hei);
+
+    void printBoxInfo() const {
+        std::cout << "length = " << length << "breadth = " << breadth << "height = " << height << std::endl;
+    }
+
 };
 
 //单独使用范围解析运算符 :: 来定义。
@@ -45,5 +52,12 @@ void Box::setHeight(double hei) {
     height = hei;
 }
 
+class LinkScreen;
+
+class LinkScreen {
+    Box box;
+    LinkScreen *next;
+    LinkScreen *prev;
+};
 
 #endif //C_BASIC_CLASS1_H

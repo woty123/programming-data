@@ -7,10 +7,8 @@
  ============================================================================
  */
 
-
 #ifndef C_BASIC_LINE_H
 #define C_BASIC_LINE_H
-
 
 #include <iostream>
 

@@ -30,7 +30,6 @@ static void test_box() {
     box2.setBreadth(13.0);
     box2.setHeight(10.0);
 
-
     // box 1 的体积
     volume = box1.getVolume();
     cout << "The volume of the box1: " << volume << endl;

@@ -10,10 +10,8 @@
 #ifndef C_BASIC_FRIEND_CLASS_H
 #define C_BASIC_FRIEND_CLASS_H
 
-
 #include <iostream>
 #include <vector>
-
 
 class Box {
 private:
