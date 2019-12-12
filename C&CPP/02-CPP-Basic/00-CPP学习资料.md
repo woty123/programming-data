@@ -19,6 +19,7 @@
 - [riptutorial c++](https://riptutorial.com/zh-CN/cplusplus)
 - [cplusplus](http://www.cplusplus.com/)
 - [菜鸟教程](http://www.runoob.com/cplusplus/)
+- [C++ FAQ LITE — Frequently Asked Questions](http://www.sunistudio.com/cppfaq/)
 
 博客
 
