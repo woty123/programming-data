@@ -140,7 +140,7 @@ HTTPS
 
 防抓包
 
-- [漫画：App 防止 Fiddler 抓包小技巧！](http://vlambda.com/wz_xby9j2HnOT.html)
+- [漫画：App 防止 Fiddler 抓包小技巧！](https://cloud.tencent.com/developer/article/1445715)
 
 dns
 
