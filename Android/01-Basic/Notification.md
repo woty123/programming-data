@@ -24,8 +24,8 @@ Notification通知，是一种让你的应用程序在不使用Activity的情况
 
  通知有两种可视化样式，取决于版本和drawer的状态：
 
- - 标准视图：在通知drawer中显示标准视图的通知。
- - 大型视图：当通知被展开时可以看到的一个大型视图。该视图也是扩展通知的一部分，该特征引入于4.1Jerry Bean。
+- 标准视图：在通知drawer中显示标准视图的通知。
+- 大型视图：当通知被展开时可以看到的一个大型视图。该视图也是扩展通知的一部分，该特征引入于4.1Jerry Bean。
 
 #### 正常视图元素介绍
 
@@ -54,8 +54,8 @@ Notification通知，是一种让你的应用程序在不使用Activity的情况
 
 **另外，如下的两个通知视觉元素仅支持大型视图，所以采用标准视图的没有效果**
 
- - Big content title：允许你添加一个标题去覆盖正常视图的内容标题，但它只能出现在可扩展的视图中。
- - Summary text：允许你在细节区域底端添加一行文本。
+- Big content title：允许你添加一个标题去覆盖正常视图的内容标题，但它只能出现在可扩展的视图中。
+- Summary text：允许你在细节区域底端添加一行文本。
 
 ---
 ## 2 如何使用Notification
@@ -65,29 +65,29 @@ Notification的api在不同的系统版本变化较大,为了解决Android系统
 ### 2.1 简单的使用方法
 
 ```java
-            Intent intent = new Intent(this, SecondActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 100,intent, PendingIntent.FLAG_UPDATE_CURRENT);
-    
-    
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-            builder.setSmallIcon(R.mipmap.ic_launcher)//小图
-                    .setContentTitle("有新的消息")//标题
-                    .setContentText("没有呢，骗你的")//内容
-                    //可选元素
-                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_message))//大图
-                    .setWhen(System.currentTimeMillis())//时间
-                    .setAutoCancel(true)//点击后自动取消
-                    .setContentIntent(pendingIntent)//点击后执行的意图
-                    .setTicker("你妈妈叫你回家吃饭------------")//
-                    .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_LIGHTS)//设置标识 默认声音/振动/
-                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))//设置声音，如果需要自定义声音，需要将资源文件复制到存储中
-                    .setColor(Color.RED)//小图颜色 6.0
-                    .setNumber(32)//number和附加信息貌似只会显示一个
-                    .setContentInfo("附加信息")//附加信息
-                    //.setOnlyAlertOnce(true) 同一个通知 播放首次声音和振动
-                    .setProgress(100, 20, false);//设置进度 分别为最大进度/实际进度/是否使用动画，如果最后参数为true，签名两个参数无效，最需需要设置setProgress(0,0,false)再取消通知，否则通知取消不了
-    
-            NotificationManagerCompat.from(this).notify(ID_1, builder.build());//分别为 通知的id ， 和通知
+Intent intent = new Intent(this, SecondActivity.class);
+PendingIntent pendingIntent = PendingIntent.getActivity(this, 100,intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+builder.setSmallIcon(R.mipmap.ic_launcher)//小图
+        .setContentTitle("有新的消息")//标题
+        .setContentText("没有呢，骗你的")//内容
+        //可选元素
+        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_message))//大图
+        .setWhen(System.currentTimeMillis())//时间
+        .setAutoCancel(true)//点击后自动取消
+        .setContentIntent(pendingIntent)//点击后执行的意图
+        .setTicker("你妈妈叫你回家吃饭------------")//
+        .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_LIGHTS)//设置标识 默认声音/振动/
+        .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))//设置声音，如果需要自定义声音，需要将资源文件复制到存储中
+        .setColor(Color.RED)//小图颜色 6.0
+        .setNumber(32)//number和附加信息貌似只会显示一个
+        .setContentInfo("附加信息")//附加信息
+        //.setOnlyAlertOnce(true) 同一个通知 播放首次声音和振动
+        .setProgress(100, 20, false);//设置进度 分别为最大进度/实际进度/是否使用动画，如果最后参数为true，签名两个参数无效，最需需要设置setProgress(0,0,false)再取消通知，否则通知取消不了
+
+NotificationManagerCompat.from(this).notify(ID_1, builder.build());//分别为 通知的id ， 和通知
 ```
 
 上面代码可以显示一个简单的Notification如下：
@@ -98,9 +98,9 @@ Notification的api在不同的系统版本变化较大,为了解决Android系统
 
 - 添加时间：setWhen
 - 添加flags：setDefaults，可以设置如下效果（具体参考官方文档）
-    - 声音
-    - 振动
-    - 闪烁灯
+  - 声音
+  - 振动
+  - 闪烁灯
 - 通知的数量：setNumber
 - 点击后自动消失：setAutoCancel
 - 设置小图表背景色：setColor（5.0支持）
@@ -109,11 +109,14 @@ Notification的api在不同的系统版本变化较大,为了解决Android系统
 ### 2.2 配置持续的和连续的Notification
 
 设置连续的通知
-```
+
+```java
     .setOngoing(true)//连续的通知，一直持续振动，播放音乐，和闪烁，直到用户处理
 ```
+
 设置持续的通知：
-```
+
+```java
     Notification.FLAG_INSISTENT 表示那些正在进行的事件(下载，播放音乐，前台的Service必须要有持续的通知)
 ```
 
@@ -129,7 +132,7 @@ Notification的api在不同的系统版本变化较大,为了解决Android系统
 
 ### 2.4 Api4.1后的Style的通知
 
-#### 大型文本通知样式：
+#### 大型文本通知样式
 
 ```java
       .setStyle(new NotificationCompat.InboxStyle() // 设置通知样式为收件箱样式
@@ -194,7 +197,7 @@ Notification的api在不同的系统版本变化较大,为了解决Android系统
 
 如，可以设置如下属性：
 
-```
+```java
     android:launchMode="singleTask"
     taskAffinity:设置新的任务栈，在新的任务栈启动该Activity
     android:excludeFromRecents="true"退出后不在历史任务栈中保留该任务栈
@@ -283,8 +286,8 @@ Notification的api在不同的系统版本变化较大，下面根据不同版�
          NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
          notificationManager.notify(1, notification);
 ```
-在这个版本中setLatestEventInfo是唯一的实现方法，在构造notification的时候有很多种写法，但是要注意，用Notification notification = new Notification();这种构建方法的时候，一定要加上notification.icon这个设置，不然，程序虽不会报错，但是会没有效果。
 
+在这个版本中setLatestEventInfo是唯一的实现方法，在构造notification的时候有很多种写法，但是要注意，用Notification notification = new Notification();这种构建方法的时候，一定要加上notification.icon这个设置，不然，程序虽不会报错，但是会没有效果。
 
 ### 高于API Level 11，低于API Level 16 (Android 4.1.2)
 
@@ -297,26 +300,50 @@ Android在API级别 11中添加了Notification.Builder，高于API Level 11，�
                     .setAutoCancel(true)
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentIntent(pendingIntent)
-                    .setContentTitle("haha")
-                    .setContentText("你大爷");
+                    .setContentTitle("hahaa")
+                    .setContentText("Haha");
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             notificationManager.notify(1, builder.getNotification());
 ```
-
 
 ### 高于API Level 16的版本
 
 高于API Level 16的版本，就可以用Builder和build()函数使用notification了。
 
+
 ```java
-     Notification notification = new Notification.Builder(context)    
-             .setAutoCancel(true)    
-             .setContentTitle("title")    
-             .setContentText("describe")    
-             .setContentIntent(pendingIntent)    
-             .setSmallIcon(R.drawable.ic_launcher)    
-             .setWhen(System.currentTimeMillis())    
+     Notification notification = new Notification.Builder(context)
+             .setAutoCancel(true)
+             .setContentTitle("title")
+             .setContentText("describe")
+             .setContentIntent(pendingIntent)
+             .setSmallIcon(R.drawable.ic_launcher)
+             .setWhen(System.currentTimeMillis())
              .build();
+```
+
+### API Level26
+
+API Level 26的版本，需要只当 NotificationChannel
+
+```java
+mNotificationManager = (NotificationManager) AppContext.get().getSystemService(Context.NOTIFICATION_SERVICE);
+
+if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+    NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "upgrade", NotificationManager.IMPORTANCE_LOW);
+    channel.setDescription("for show downloading apk progress");
+    channel.setSound(null, null);
+    mNotificationManager.createNotificationChannel(channel);
+}
+
+mBuilder = new NotificationCompat.Builder(AppContext.get(), CHANNEL_ID)
+        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        .setContentTitle(AppUtils.getAppName())
+        .setContentText("正在下载新版本")
+        .setSmallIcon(R.drawable.icon_notification);
+        .setProgress((int) total, (int) progress, true);
+
+mNotificationManager.notify(ID, mBuilder.build());
 ```
 
 ---
