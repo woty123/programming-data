@@ -351,7 +351,5 @@ mNotificationManager.notify(ID, mBuilder.build());
 
 - [官方文档地址](http://developer.android.com/intl/zh-cn/guide/topics/ui/notifiers/notifications.html)
 - [Android倚天剑之Notification之江南style](http://www.cnblogs.com/dyllove98/archive/2013/06/08/3127580.html)
-- [Android自定义Notification并没有那么简单](http://sixwolf.net/blog/2016/04/18/Android%E8%87%AA%E5%AE%9A%E4%B9%89Notification%E5%B9%B6%E6%B2%A1%E6%9C%89%E9%82%A3%E4%B9%88%E7%AE%80%E5%8D%95/)
-- [Android Notification常见样式总结](http://blog.csdn.net/w804518214/article/details/51231946)
 - [Android通知栏微技巧，那些你所没关注过的小细节](http://blog.csdn.net/guolin_blog/article/details/50945228)
 - [Android Notification 详解](https://www.jianshu.com/p/d2051a785309)
