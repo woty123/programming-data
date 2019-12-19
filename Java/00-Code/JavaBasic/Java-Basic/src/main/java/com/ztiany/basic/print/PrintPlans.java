@@ -21,7 +21,7 @@ public class PrintPlans {
      */
 
     public static void main(String... args) throws FileNotFoundException {
-        List<OnePlan> onePlans = createPlan(getWeeOfToday(), 24, 163, 2);
+        List<OnePlan> onePlans = createPlan(getWeeOfToday(), 27, 163, 3);
         outputPlans(onePlans);
     }
 
