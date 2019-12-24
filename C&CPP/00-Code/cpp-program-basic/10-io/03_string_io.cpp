@@ -41,7 +41,7 @@ void sample2() {
     istringstream input_istring(format_message.str());
     string dump;
     input_istring >> dump >> val1 >> dump >> val2;
-
+    
     cout << "number is " << val1 << " " << val2 << endl;
 }
 

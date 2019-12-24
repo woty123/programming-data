@@ -3,5 +3,5 @@ project(cplusplus-program)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES 07-oop/copy_control_manager_pointer.cpp)
+set(SOURCE_FILES 10-io/03_string_io.cpp)
 add_executable(C__Basic ${SOURCE_FILES})
