@@ -26,7 +26,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.ActionMode;
@@ -46,6 +45,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ztiany.systemui.R;
+
+import androidx.annotation.RequiresApi;
 
 
 /**

@@ -1,3 +1,3 @@
 # Android View 学习相关代码
 
-![](art/android.jpg)
+![](custom-view/images/android.jpg)

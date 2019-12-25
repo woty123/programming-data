@@ -1,4 +1,3 @@
-include ':android-gesture-detectors'
-include ':recyclerview'
-include ':custom-view'
+include ':views'
+include ':web-view'
 include ':system-ui-helper'

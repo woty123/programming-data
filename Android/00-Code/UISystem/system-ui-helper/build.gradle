@@ -23,6 +23,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation libraries.androidCompat
+    implementation libraries.appcompat
     testImplementation 'junit:junit:4.12'
 }
