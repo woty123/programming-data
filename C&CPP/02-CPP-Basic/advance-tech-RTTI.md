@@ -112,4 +112,18 @@ if (auto *tempP = dynamic_cast<DeriveWithVirtual *>(baseWithVirtualTempP)) {
 
 ## 3 typeid 运算符
 
-- [ ] todo
+使用方式：
+
+```cpp
+//e 是任意表达式或类型的名字
+typeid(e);
+```
+
+- typeid 的返回值是 typeinfo 类型或其派生类型的一个常量引用，typeinfo 定一个在标准库 typeinfo 头文件中。
+- typeid 可以作用于任意表达式，但是会忽略顶层 const。
+- 如果 e 是一个引用类型，则 typeid 返回该引用所引用的对象的类型。
+- 如果 e 是数组和函数，并不会执行向指针的标准类型转换（不会转换为首元素的地址），即 typeid 作用于数组时返回的是数组类型而不是指针类型。
+
+## 参考
+
+- [RTTI简介](https://blog.csdn.net/K346K346/article/details/49831841)
