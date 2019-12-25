@@ -123,7 +123,34 @@ typeid(e);
 - typeid 可以作用于任意表达式，但是会忽略顶层 const。
 - 如果 e 是一个引用类型，则 typeid 返回该引用所引用的对象的类型。
 - 如果 e 是数组和函数，并不会执行向指针的标准类型转换（不会转换为首元素的地址），即 typeid 作用于数组时返回的是数组类型而不是指针类型。
+- 当 e 不是类类型或者是一个不包含虚函数的类时，typeid 返回对象的静态类型，此时编译器无需对 e 进行动态检查和求值。
+- 当 e 是一个定义了至少一个虚函数的类时，typeid 会进行动态检查，对 e 进行求值。
+- 如果 e 是一个空指针，则 typeid 将抛出一个名为 bad_typeid 的异常。
+- 当 typeid 作用于指针时（而非指针所指向的对象），返回的结果时该指针的静态编译类型，**typeid 应该作用于对象**。
 
-## 参考
+```cpp
+//在运行时比较两个对象的类型
+if (typeid(*baseWithVirtualP) == typeid(deriveWithVirtual)) {
+    cout << "typeid(*baseWithVirtualP) == typeid(deriveWithVirtual) == true" << endl;
+}
+
+//检测运行时类型是否是某种指定的类型
+if (typeid(*baseWithVirtualP) == typeid(DeriveWithVirtual)) {
+    cout << "typeid(*baseWithVirtualP) == typeid(DeriveWithVirtual) == true" << endl;
+}
+```
+
+## 4 type_info 类
+
+type_info 类的具体定义随着编译器的不同而略有差异，但是 C++ 标准规定 type_info 必须定义在 typeinfo 头文件中，并且至少提供下列操作：
+
+- `t1 == t2`：如果 type_info 对象 t1 和 t2 表示同一种类型，则返回 true，否则返回 false。
+- `t1 != t2`：如果 type_info 对象 t1 和 t2 表示不同的类型，则返回 true，否则返回 false。
+- `t.name()`：返回一个 C 风格的字符串，表示类型的名称。
+- `t1.before(t2)`：返回一个 bool 值，表示 t1 是否位于 t2 之前，before 采用的顺序关系是依赖于编译器的。
+
+type_info 没有默认的构造函数，其拷贝、移动构造函数以及赋值操作符都是定义为删除的，得到 type_info 唯一的途径就是 typeid 操作符，
+
+## 5 参考
 
 - [RTTI简介](https://blog.csdn.net/K346K346/article/details/49831841)
