@@ -1,5 +1,8 @@
 ext {
 
+    commonCompileSdkVersion = 27
+    commonBuildToolsVersion = '27.0.3'
+
     androidLibrariesVersion = "27.1.1"
 
     libraries = [
