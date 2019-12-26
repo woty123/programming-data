@@ -8,7 +8,6 @@
 
 ### References
 
-- [操作系统面试重难点总结](http://www.jianshu.com/p/d254b138de03)
 - [《Think OS: A Brief Introduction to Operating Systems》](http://greenteapress.com/thinkos/html/index.html)
 - [《Think OS》中文版](https://legacy.gitbook.com/book/wizardforcel/think-os/details)
 - [《鸟哥的Linux私房菜》](http://linux.vbird.org/new_linux.php)
@@ -21,6 +20,7 @@
 ### Blogs
 
 - [5分钟让你明白“软链接”和“硬链接”的区别](https://www.jianshu.com/p/dde6a01c4094)
+- [操作系统面试重难点总结](http://www.jianshu.com/p/d254b138de03)
 
 ### Books
 

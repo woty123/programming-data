@@ -14,9 +14,9 @@ Python的作者，**Guido von Rossum**，荷兰人。1982年，Guido从阿姆斯
 - Python的作者是Guido van Rossum（龟叔）
 - Python是龟叔在1989年圣诞节期间，为了打发无聊的圣诞节而用C编写的一个编程语言
 - Python正式诞生于1991年Python的解释器如今有多个语言实现，我们常用的是CPython（官方版本的C语言实现），其他还有
-    - Jython（可以运行在Java平台）
-    - IronPython（可以运行在.NET和Mono平台）
-    - PyPy（Python实现的，支持JIT即时编译）
+  - Jython（可以运行在Java平台）
+  - IronPython（可以运行在.NET和Mono平台）
+  - PyPy（Python实现的，支持JIT即时编译）
 - Python目前有两个版本，Python2和Python3，目前最新版分别为2.7.12和3.6，现阶段大部分公司用的是Python2
 - **Life is shot, you need Python**：人生苦短，我用Python。
 - 命令行：输入`import this`显示python之禅
@@ -68,4 +68,3 @@ Python的缺点：
 - 科学计算
 - 桌面软件
 - 服务器软件（网络软件）：Python对于各种网络协议的支持很完善，因此经常被用于编写服务器软件、网络爬虫。
-

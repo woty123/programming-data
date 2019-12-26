@@ -9,25 +9,23 @@
 - 《Groovy程序设计》
 - 《Groovy In Action》
 
-
 ## 2 《Groovy程序设计学习笔记》
 
 ### 第一部分：Groovy起步
 
 1. 引言
-    - Groovy是什么
-    - 为何使用动态语言
-    - 为何选择Groovy
+   - Groovy是什么
+   - 为何使用动态语言
+   - 为何选择Groovy
 2. Groovy起步
-    - 安装Groovy
-    - 使用GroovyConsole,Groovysh工具
-5. 使用闭包
-6. 使用字符串
-7. 使用集合类
-    - List
-    - Map
-    - Range
-
+   - 安装Groovy
+   - 使用GroovyConsole,Groovysh工具
+3. 使用闭包
+4. 使用字符串
+5. 使用集合类
+   - List
+   - Map
+   - Range
 
 ### 第二部分：使用Groovy
 
@@ -61,12 +59,10 @@
 2. 单元测试与模拟
 3. 在Groovy中创建DSL
 
-
 ## 3  Groovy应用
 
--  [Gradle](https://gradle.org/)
--  [Grails](https://grails.org/)
-
+- [Gradle](https://gradle.org/)
+- [Grails](https://grails.org/)
 
 ## 4 DSL简介
 
