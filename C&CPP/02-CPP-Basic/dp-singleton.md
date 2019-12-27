@@ -4,6 +4,7 @@
 //Instance.h
 #ifndef INSTANCE_H
 #define INSTANCE_H
+
 class Instance {
 public:
     static Instance* getInstance();
@@ -22,4 +23,6 @@ Instance* Instance::getInstance() {
     }
     return instance;
 }
+
+#endif INSTANCE_H
 ```
