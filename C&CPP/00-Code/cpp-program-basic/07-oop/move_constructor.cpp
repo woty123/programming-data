@@ -39,21 +39,29 @@ void sample3() {
 }
 
 void sample4() {
-    //vector<MoveClass> vector1;
-    //vector1.push_back(MoveClass("mc1"));
+    vector<MoveClass> vector1;
+    vector1.push_back(MoveClass("mc1"));
 
-    vector<MoveClassWithExcept> vector2;
-    vector2.push_back(MoveClassWithExcept("mcwe1"));
+    MoveClass moveClass1("A");
+    moveClass1 = MoveClass("B");
 
     //vector<NoMoveClass> vector3;
     //vector3.push_back(NoMoveClass("nmc1"));
+}
+
+void sample5() {
+    MoveClass moveClass1("A");
+    MoveClass moveClass2("B");
+    moveClass1 = moveClass2;//moveClass2是左值，使用拷贝操作
+    moveClass1 = MoveClass("C");//使用移动操作，MoveClass("C") 是右值
 }
 
 //-Og -fno-elide-constructors
 int main() {
     //sample1();
     //sample2();
-    sample3();
-//    sample4();
+    //sample3();
+    //sample4();
+    sample5();
     return EXIT_SUCCESS;
 }

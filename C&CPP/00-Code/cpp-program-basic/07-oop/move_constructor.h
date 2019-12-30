@@ -29,20 +29,10 @@ public:
         if (other.name_) {
             name_ = new std::string(*other.name_);
         }
-
         if (name_) {
             std::cout << *name_ << "  copy MoveClass()" << std::endl;
         } else {
             std::cout << "copy MoveClass()" << std::endl;
-        }
-    }
-
-    MoveClass(MoveClass &&other) noexcept : name_(other.name_) {
-        other.name_ = nullptr;
-        if (name_) {
-            std::cout << *name_ << "  move MoveClass()" << std::endl;
-        } else {
-            std::cout << "move MoveClass()" << std::endl;
         }
     }
 
@@ -62,72 +52,41 @@ public:
         return *this;
     }
 
+    MoveClass(MoveClass &&other) noexcept : name_(other.name_) {
+        //将源对象置为可析构状态
+        other.name_ = nullptr;
+        if (name_) {
+            std::cout << *name_ << "  move MoveClass()" << std::endl;
+        } else {
+            std::cout << "move MoveClass()" << std::endl;
+        }
+    }
+
+    MoveClass &operator=(MoveClass &&other) noexcept {
+        if (this == &other) {
+            return *this;
+        }
+        //使用已有的资源
+        delete name_;
+        //执行资源拷贝
+        if (other.name_) {
+            name_ = other.name_;
+        }
+        //将源对象置为可析构状态
+        other.name_ = nullptr;
+        if (name_) {
+            std::cout << *name_ << "  operator= move MoveClass()" << std::endl;
+        } else {
+            std::cout << "operator= move MoveClass()" << std::endl;
+        }
+        return *this;
+    }
+
     ~MoveClass() {
         if (name_) {
             std::cout << *name_ << "  ~" << "MoveClass()" << std::endl;
         } else {
             std::cout << "~" << "MoveClass()" << std::endl;
-        }
-        delete name_;
-    }
-};
-
-
-class MoveClassWithExcept {
-private:
-    std::string *name_;
-public:
-
-    MoveClassWithExcept() : name_(nullptr) {
-        std::cout << "MoveClass()" << std::endl;
-    }
-
-    explicit MoveClassWithExcept(const std::string &name) : name_(new std::string(name)) {
-        std::cout << name << "  MoveClassWithExcept()" << std::endl;
-    }
-
-    MoveClassWithExcept(const MoveClassWithExcept &other) {
-        if (other.name_) {
-            name_ = new std::string(*other.name_);
-        }
-
-        if (name_) {
-            std::cout << *name_ << "  copy MoveClassWithExcept()" << std::endl;
-        } else {
-            std::cout << "copy MoveClassWithExcept()" << std::endl;
-        }
-    }
-
-    MoveClassWithExcept(MoveClassWithExcept &&other) : name_(other.name_) {
-        other.name_ = nullptr;
-        if (name_) {
-            std::cout << *name_ << "  move MoveClassWithExcept()" << std::endl;
-        } else {
-            std::cout << "move MoveClassWithExcept()" << std::endl;
-        }
-    }
-
-    MoveClassWithExcept &operator=(const MoveClassWithExcept &other) {
-        if (this == &other) {
-            return *this;
-        }
-        delete name_;
-        if (other.name_) {
-            name_ = new std::string(*other.name_);
-        }
-        if (name_) {
-            std::cout << *name_ << "  operator= MoveClassWithExcept()" << std::endl;
-        } else {
-            std::cout << "operator= MoveClassWithExcept()" << std::endl;
-        }
-        return *this;
-    }
-
-    ~MoveClassWithExcept() {
-        if (name_) {
-            std::cout << *name_ << "  ~" << "MoveClassWithExcept()" << std::endl;
-        } else {
-            std::cout << "~" << "MoveClassWithExcept()" << std::endl;
         }
         delete name_;
     }
