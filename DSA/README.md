@@ -1,6 +1,14 @@
 # 数据结构与算法学习
 
-## 玩转数据结构
+## 数据结构与算法-C语言描述
+
+[C++基础教程完整版](http://yun.itheima.com/course/275.html) 数据结构部分学习笔记：
+
+- [1 复杂度分析](01-Basic/C1-复杂度分析.md)
+- [2 数据结构](01-Basic/C2-数据结构.md)
+- [3 排序算法](01-Basic/C3-排序算法.md)
+
+## 慕课网：玩转数据结构
 
 - [玩转数据结构00-概述](PlayWithDataStructures/玩转数据结构00-概述.md)
 - [玩转数据结构01-数组](PlayWithDataStructures/玩转数据结构01-数组.md)
@@ -18,7 +26,7 @@
 - [玩转数据结构13-红黑树](PlayWithDataStructures/玩转数据结构13-红黑树.md)
 - [玩转数据结构14-哈希表](PlayWithDataStructures/玩转数据结构14-哈希表.md)
 
-## 学习算法思维
+## 慕课网：学习算法思维
 
 - [学习算法思维00-概述](PlayWithAlgorithms/学习算法思维00-概述.md)
 - [学习算法思维01-排序基础](PlayWithAlgorithms/学习算法思维01-排序基础.md)

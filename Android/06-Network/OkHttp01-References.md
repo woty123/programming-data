@@ -3,7 +3,7 @@
 ---
 ## 1 OkHttp 介绍
 
-首先OkHttp并不是市面上的一些网络框架，它和**HttpUrlConnection**和**HttpClient**一样，是一套基于Tcp/Ip协议，实现对底层Socket封装的一套网络编程API，OkHttp 具备如下特点：
+首先 OkHttp 并不是市面上的一些网络框架，它和 **HttpUrlConnection** 和 **HttpClient** 一样，是一套基于 Tcp/Ip 协议，实现对底层 Socket 封装的一套网络编程API，OkHttp 具备如下特点：
 
 - 自动重试
 - 自动重定向
