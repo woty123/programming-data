@@ -1,4 +1,4 @@
-# Feture
+# Feture 与 FutureTask
 
 ## 1 如何获取任务执行结果
 

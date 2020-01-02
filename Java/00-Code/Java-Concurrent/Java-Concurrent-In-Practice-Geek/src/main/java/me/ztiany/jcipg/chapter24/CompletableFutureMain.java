@@ -1,5 +1,6 @@
 package me.ztiany.jcipg.chapter24;
 
+import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -11,7 +12,51 @@ import java.util.concurrent.TimeUnit;
 public class CompletableFutureMain {
 
     public static void main(String... args) {
-        sample1();
+        //sample1();
+        //sample2();
+        //sample3();
+        sample4();
+    }
+
+    private static void sample4() {
+        CompletableFuture<Integer>
+                f0 = CompletableFuture
+                .supplyAsync(() -> 7 / 0)
+                .thenApply(r -> r * 10)
+                .exceptionally(e -> 0);
+
+        System.out.println(f0.join());
+    }
+
+    private static void sample3() {
+        CompletableFuture<String> f1 =
+                CompletableFuture.supplyAsync(() -> {
+                    int t = getRandom(5, 10);
+                    sleep(t, TimeUnit.SECONDS);
+                    return String.valueOf(t);
+                });
+
+        CompletableFuture<String> f2 =
+                CompletableFuture.supplyAsync(() -> {
+                    int t = getRandom(5, 10);
+                    sleep(t, TimeUnit.SECONDS);
+                    return String.valueOf(t);
+                });
+
+        CompletableFuture<String> f3 = f1.applyToEither(f2, s -> s);
+
+        System.out.println(f3.join());
+    }
+
+    private static int getRandom(int i, int i1) {
+        return new Random(i).nextInt(i1);
+    }
+
+    private static void sample2() {
+        CompletableFuture<String> f0 =
+                CompletableFuture.supplyAsync(() -> "Hello World")      //①
+                        .thenApply(s -> s + " QQ")  //②
+                        .thenApply(String::toUpperCase);//③
     }
 
     private static void sample1() {
@@ -20,7 +65,7 @@ public class CompletableFutureMain {
             System.out.println("T1:洗水壶...");
             sleep(1, TimeUnit.SECONDS);
             System.out.println("T1:烧开水...");
-            sleep(15, TimeUnit.SECONDS);
+            sleep(1, TimeUnit.SECONDS);
         });
 
         //任务2：洗茶壶->洗茶杯->拿茶叶
@@ -29,7 +74,7 @@ public class CompletableFutureMain {
             sleep(1, TimeUnit.SECONDS);
 
             System.out.println("T2:洗茶杯...");
-            sleep(2, TimeUnit.SECONDS);
+            sleep(1, TimeUnit.SECONDS);
 
             System.out.println("T2:拿茶叶...");
             sleep(1, TimeUnit.SECONDS);
