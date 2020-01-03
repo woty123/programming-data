@@ -7,25 +7,24 @@
 ```java
         // 创建线程池
         ExecutorService executor = Executors.newFixedThreadPool(3);
-
         // 异步向电商S1询价
-        Future<Integer> f1 = executor.submit(() -> getPriceByS1());
+        Future<Integer> f1 = executor.submit(CompletionServiceMain::getPriceByS1);
         // 异步向电商S2询价
-        Future<Integer> f2 = executor.submit(() -> getPriceByS2());
+        Future<Integer> f2 = executor.submit(CompletionServiceMain::getPriceByS2);
         // 异步向电商S3询价
-        Future<Integer> f3 = executor.submit(() -> getPriceByS3());
+        Future<Integer> f3 = executor.submit(CompletionServiceMain::getPriceByS3);
 
         // 获取电商S1报价并保存
-        r = f1.get();
-        executor.execute(() -> save(r));
+        final Integer r1 = f1.get();
+        executor.execute(() -> save(r1));
 
         // 获取电商S2报价并保存
-        r = f2.get();
-        executor.execute(() -> save(r));
+        final Integer r2 = f2.get();
+        executor.execute(() -> save(r2));
 
         // 获取电商S3报价并保存
-        r = f3.get();
-        executor.execute(() -> save(r));
+        final Integer r3 = f3.get();
+        executor.execute(() -> save(r3));
 ```
 
 这种优化方案有一个问题：如果获取电商 S1 报价的耗时很长，那么即便获取电商 S2 报价的耗时很短，也无法让保存 S2 报价的操作先执行，因为这个主线程都阻塞在了 f1.get() 操作上。
@@ -36,13 +35,13 @@
         // 创建线程池
         ExecutorService executor = Executors.newFixedThreadPool(3);
         // 异步向电商S1询价
-        Future<String> f1 = executor.submit(() -> getPriceByS1());
+        Future<Integer> f1 = executor.submit(() -> getPriceByS1());
         // 异步向电商S2询价
-        Future<String> f2 = executor.submit(() -> getPriceByS2());
-        // 异步向电商S3询价
-        Future<String> f3 = executor.submit(() -> getPriceByS3());
+        Future<Integer> f2 = executor.submit(() -> getPriceByS2());
+        // 异步向电商S3询价FutureTask
+        Future<Integer> f3 = executor.submit(() -> getPriceByS3());
         // 创建阻塞队列
-        BlockingQueue<String> bq = new LinkedBlockingQueue<>();
+        BlockingQueue<Integer> bq = new LinkedBlockingQueue<>();
         //电商S1报价异步进入阻塞队列
         executor.execute(() -> {
             try {
@@ -70,7 +69,7 @@
 
         //异步保存所有报价
         for (int i = 0; i < 3; i++) {
-            String r = bq.take();
+            Integer r = bq.take();
             executor.execute(() -> save(r));
         }
 ```
@@ -78,13 +77,13 @@
 >这里感觉其实还可以使用 FutureTask，通过实现 FutureTask 的 done 方法可以监听任务执行完成。
 
 ```cpp
-  // 创建阻塞队列
-        final BlockingQueue<String> bq = new LinkedBlockingQueue<>();
+        // 创建阻塞队列
+        final BlockingQueue<Integer> bq = new LinkedBlockingQueue<>();
         //执行器
         ExecutorService executor = Executors.newFixedThreadPool(3);
 
-        class Task extends FutureTask<String> {
-            private Task(Callable<String> callable) {
+        class Task extends FutureTask<Integer> {
+            private Task(Callable<Integer> callable) {
                 super(callable);
             }
 
@@ -107,7 +106,7 @@
 
         //异步保存所有报价
         for (int i = 0; i < 3; i++) {
-            String r = bq.take();
+            Integer r = bq.take();
             executor.execute(() -> save(r));
         }
 ```
@@ -136,7 +135,7 @@ ExecutorCompletionService(Executor executor, BlockingQueue> completionQueue)。
         // 创建线程池
         ExecutorService executor = Executors.newFixedThreadPool(3);
         // 创建CompletionService
-        CompletionService<String> cs = new ExecutorCompletionService<>(executor);
+        CompletionService<Integer> cs = new ExecutorCompletionService<>(executor);
         // 异步向电商S1询价
         cs.submit(() -> getPriceByS1());
         // 异步向电商S2询价
@@ -145,7 +144,7 @@ ExecutorCompletionService(Executor executor, BlockingQueue> completionQueue)。
         cs.submit(() -> getPriceByS3());
         // 将询价结果异步保存到数据库
         for (int i = 0; i < 3; i++) {
-            String r = cs.take().get();
+            Integer r = cs.take().get();
             executor.execute(() -> save(r));
         }
 ```
