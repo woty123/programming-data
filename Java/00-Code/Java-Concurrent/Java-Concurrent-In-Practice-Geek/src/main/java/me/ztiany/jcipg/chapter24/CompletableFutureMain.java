@@ -12,10 +12,10 @@ import java.util.concurrent.TimeUnit;
 public class CompletableFutureMain {
 
     public static void main(String... args) {
-        //sample1();
+        sample1();
         //sample2();
         //sample3();
-        sample4();
+        //sample4();
     }
 
     private static void sample4() {
@@ -83,6 +83,7 @@ public class CompletableFutureMain {
 
         //任务3：任务1和任务2完成后执行：泡茶
         CompletableFuture<String> f3 = f1.thenCombine(f2, (__, tf) -> {
+            System.out.println("f3 running at: " + Thread.currentThread());
             System.out.println("T1:拿到茶叶:" + tf);
             System.out.println("T1:泡茶...");
             return "上茶:" + tf;
