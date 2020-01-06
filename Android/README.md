@@ -136,23 +136,7 @@
 
 ## 架构总结
 
-- [架构相关资料](08-Architecture/References.md)
-- [01-开发准备](08-Architecture/01-开发准备.md)
-- [02-开发规范](08-Architecture/02-开发规范.md)
-- [03-认识架构](08-Architecture/03-认识架构.md)
-- [04-架构实施](08-Architecture/04-架构实施.md)
-- [05-组件化与模块化](08-Architecture/05-组件化与模块化.md)
-- [-AOP编程](08-Architecture/AOP编程.md)
-- [CleanArchitecture学习](08-Architecture/CleanArchitecture学习.md)
-- [DataBinding](08-Architecture/DataBinding.md)
-- [Jetpack-AAC-1](08-Architecture/Jetpack-AAC-1.md)
-- [Jetpack-AAC-2](08-Architecture/Jetpack-AAC-2.md)
-- [Jetpack-AAC-3](08-Architecture/Jetpack-AAC-3.md)
-- [Jetpack-Navigation](08-Architecture/-Jetpack-Navigation.md)
-- [Jetpack-介绍](08-Architecture/Jetpack-介绍.md)
-- [列表设计与思考](08-Architecture/列表设计与思考.md)
-- [项目测试与CI](08-Architecture/项目测试与CI.md)
-- [跨平台开发模式](08-Architecture/跨平台开发模式.md)
+- [架构相关资料](08-Architecture/README.md)
 
 ## 网络
 
