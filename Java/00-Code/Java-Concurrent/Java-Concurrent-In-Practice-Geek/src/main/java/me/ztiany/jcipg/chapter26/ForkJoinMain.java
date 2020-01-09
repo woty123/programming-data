@@ -74,13 +74,8 @@ public class ForkJoinMain {
     }
 
 
-    static void sample2() {
-        String[] fc = {"hello world",
-                "hello me",
-                "hello fork",
-                "hello join",
-                "fork join in world"};
-
+    private static void sample2() {
+        String[] fc = {"hello world", "hello me", "hello fork", "hello join", "fork join in world"};
         //创建ForkJoin线程池
         ForkJoinPool fjp = new ForkJoinPool(3);
         //创建任务
@@ -120,17 +115,16 @@ public class ForkJoinMain {
 
         //合并结果
         private Map<String, Long> merge(Map<String, Long> r1, Map<String, Long> r2) {
-
             Map<String, Long> result = new HashMap<>();
             result.putAll(r1);
-
             //合并结果
             r2.forEach((k, v) -> {
                 Long c = result.get(k);
-                if (c != null)
+                if (c != null) {
                     result.put(k, c + v);
-                else
+                } else {
                     result.put(k, v);
+                }
             });
             return result;
         }
@@ -138,16 +132,16 @@ public class ForkJoinMain {
         //统计单词数量
         private Map<String, Long> calc(String line) {
             Map<String, Long> result = new HashMap<>();
-
             //分割单词
             String[] words = line.split("\\s+");
             //统计单词数量
             for (String w : words) {
                 Long v = result.get(w);
-                if (v != null)
+                if (v != null) {
                     result.put(w, v + 1);
-                else
+                } else {
                     result.put(w, 1L);
+                }
             }
             return result;
         }
