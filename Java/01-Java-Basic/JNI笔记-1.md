@@ -1,3 +1,5 @@
+# JNI 笔记 1
+
 JNI 学习资料：
 
 - [Oracle JNI 文档 1.5](https://docs.oracle.com/javase/1.5.0/docs/guide/jni/spec/jniTOC.html)
@@ -7,9 +9,7 @@ JNI 学习资料：
 - [极客学院：JNI/NDK 开发指南](http://wiki.jikexueyuan.com/project/jni-ndk-developer-guide/workflow.html)
 - [IntelliJ IDEA平台下 JNI 编程](http://blog.csdn.net/huachao1001/article/details/53906237)
 
->笔记翻译自[《The Java™ NativeInterfaceProgrammer’s Guide and Specification》](http://barbie.uta.edu/~jli/Resources/Resource%20Provisoning&Performance%20Evaluation/85.pdf)
-
-# JNI 笔记 1
+>笔记大部分翻译自[《The Java™ NativeInterfaceProgrammer’s Guide and Specification》](http://barbie.uta.edu/~jli/Resources/Resource%20Provisoning&Performance%20Evaluation/85.pdf)
 
 ---
 ## 0 JNI 开发环境
@@ -28,13 +28,13 @@ windows JNI开发需要工具：MinGW(64位)提供的 gcc 工具链。
 
 命令：
 
-- `gcc -c HelloC.c  -I "H:\dev_tools\java8\include" -I "H:\dev_tools\java8\include\win32"` 用于编译c代码生成 `.o` 库
-- `gcc -Wl,--add-stdcall-alias -shared -o HelloC.dll HelloC.o` 用于把 `.o` 库转换成windows平台的 `dll` 库
+- `gcc -c HelloC.c  -I "H:\dev_tools\java8\include" -I "H:\dev_tools\java8\include\win32"` 用于编译 c 代码生成 `.o` 库
+- `gcc -Wl,--add-stdcall-alias -shared -o HelloC.dll HelloC.o` 用于把 `.o` 库转换成 windows 平台的 `dll` 库
 - `gcc -Wl,--add-stdcall-alias -I "H:\dev_tools\java8\include" -I "H:\dev_tools\java8\include\win32" -shared -o helloC.dll HelloC.c` 直接生成.dll库
 
 ### IDEA 技巧
 
-使用 ExternalTools自动生成头文件和编译c代码：`Setting-->Tool-->ExternalTools`
+使用 ExternalTools 自动生成头文件和编译 c 代码：`Setting-->Tool-->ExternalTools`
 
 ![生成头文件配置](index_files/create_header.png "生成头文件配置")
 
@@ -47,7 +47,7 @@ windows JNI开发需要工具：MinGW(64位)提供的 gcc 工具链。
 ---
 ## 1 JNI 是什么
 
-JNI(Java Native Interface)是 SUN 定义的一套标准接口，如 Dalvik, Apache Harmony 项目...等 Java 虚拟机，都会实现 JNI 接口，供本地(C/C++)应用与 Java VM 互调。 JNI 可以供 Java 代码调用本地代码，本地代码也可以调用 Java 代码。
+JNI(Java Native Interface)是 SUN 定义的一套标准接口，如 Dalvik, Apache Harmony 项目等 Java 虚拟机，都会实现 JNI 接口，供本地(C/C++)应用与 Java VM 互调。 JNI 可以供 Java 代码调用本地代码，本地代码也可以调用 Java 代码。
 
 当 Java 部署到具体的本地环境时，出于一些原因，有必要让其和本地代码进行交互：
 

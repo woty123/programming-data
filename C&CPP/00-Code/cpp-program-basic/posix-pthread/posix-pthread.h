@@ -24,7 +24,7 @@ public:
 
 };
 
-
+/** 一个阻塞队列实现  */
 template<typename T>
 class SafeQueue {
 public:
@@ -43,7 +43,7 @@ public:
         pthread_mutex_lock(&mutex);
         q.push(t);
         //notify
-        // 由系统唤醒一个线程 控制不了
+        // 由系统唤醒一个线程控制不了
         //pthread_cond_signal(&cond);
         // 广播通知所有等待的线程
         pthread_cond_broadcast(&cond);
@@ -64,7 +64,6 @@ public:
             // 挂起 释放锁
             pthread_cond_wait(&cond, &mutex);
         }
-        //
         t = q.front();
         q.pop();
         pthread_mutex_unlock(&mutex);

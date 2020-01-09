@@ -33,7 +33,7 @@ export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
 2. 解压到文件夹下(放在HOME目录下即可)
 3. 导航至`android-studio/bin/` 目录，并执行 `. studio.sh`。启动AndroidStudio，之后AndroidStudio设置向导将指导您完成余下的设置，包括下载开发所需的AndroidSDK组件
 
-如果运行 AndroidStudio 构建项目是遇到问题
+如果运行 AndroidStudio 构建项目时遇到问题
 
 ```bash
 # 在Android Studio文件夹下执行下面命令

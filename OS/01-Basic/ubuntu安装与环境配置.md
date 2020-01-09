@@ -9,10 +9,10 @@
 1. U盘启动
 2. uefi警告时选择`后退`
 3. 分区为：
- - `/Boot`(引导分区) ，1000M ，主分区
- - `/`(根分区) ，30760M ，这里不要设置的太小，毕竟可能安装许多软件
- - 交换分区，8000M。
- - `/home`(用户目录), 剩余所有容量
+   - `/Boot`(引导分区) ，1000M ，主分区
+   - `/`(根分区) ，30760M ，这里不要设置的太小，毕竟可能安装许多软件
+   - 交换分区，8000M。
+   - `/home`(用户目录), 剩余所有容量
 4. 安装完毕
 5. 进入windows10，使用easyBCD添加引导项：`grub2-自动选择`
 
@@ -192,15 +192,21 @@ sql授权说明
 
 ### 开放端口号
 
+1. Ubuntu 默认有装 iptables，可通过 `which iptables` 确认
+2. Ubuntu 默认没有 iptables 配置文件，可通过`iptables-save > /etc/iptables.up.rules`生成
+3. 读取配置并生效可以通过  `iptables-restore < /etc/iptables.up.rules`
+
 ```shell
 #查看哪些端口被打开  
 netstat -anp
+#查看当前防火墙配置并显示规则行号
+iptables -L --line-numbers
 
-#关闭端口号：
-iptables -I INPUT -p tcp --drop 端口号 -j DROP
+#关闭端口号（DROP表示关闭）：
+iptables -I INPUT -p tcp --dprop 端口号 -j DROP
 iptables -I OUTPUT -p tcp --dport 端口号 -j DROP
 
-#打开端口号：
+#打开端口号（ACCEPT 表示打开）：
 iptables -I INPUT -ptcp --dport  端口号 -j ACCEPT
 #将修改永久保存到防火墙中：
 iptables-save
@@ -210,6 +216,15 @@ iptables-save
   chkconfig iptables on
   #关闭：
   chkconfig iptables off
+```
+
+配置开机启动：vim  `/etc/network/interfaces` 增加
+
+```shell
+#启动时应用防火墙  
+pre-up iptables-restore < /etc/iptables.up.rules
+#关闭时保存防火墙设置,以便下次启动时使用
+post-down iptables-save > /etc/iptables.up.rules
 ```
 
 ---

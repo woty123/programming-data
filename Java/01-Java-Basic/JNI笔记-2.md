@@ -37,7 +37,6 @@ jstring MyNewString(JNIEnv*env,jchar* chars,jint len){
 
 >这里不要和第四节讨论的 `缓存 filedId 和 methodId` 搞混淆了，filedId 和 methodId 的实际类型是基本类型，所以不存在引用释放与否。
 
-
 #### 主动释放 LocalRef
 
 有两种方式让 LocalRef 无效：
@@ -223,7 +222,7 @@ JNIEXPORT void JNICALLJava_CatchThrow_doit(JNIEnv *env, jobject obj){
 
 最终的输出结果为：
 
-```
+```java
 java.lang.NullPointerException:
     at CatchThrow.callback(CatchThrow.java)
     at CatchThrow.doit(Native Method)
@@ -233,7 +232,6 @@ java.lang.IllegalArgumentException: thrown from C code
 ```
 
 本地代码中的异常不会中断本能地方法的控制流，在JNI中产生的异常(通过调用ThrowNew)，这与 Java 语言中异常发生的行为不同，在Java中发生异常，VM 自动把控制权转向 `try/catch` 中匹配的异常类型处理块，VM 首先清空异常队列，然后执行异常处理块。相反，JNI 中必须显式地执行 VM 的处理方式。
-
 
 ### 6.2 检测异常是否发生
 
@@ -311,7 +309,6 @@ void f(JNIEnv *env, jobject fraction){
 
 在 JNI 中调用任何子流程前，必须严格按着 `检查->处理->清除` 的逻辑处理异常。如果没有预先清空异常就调用一个 JNI 方法，行为不可预料。有一些函数可以在未清空异常前调用，但只局限于很少的几个，而且多是异常处理JNI函数。在异常发生后，及时释放资源很重要，比如 `ReleaseStringChars`。
 
-
 ### 6.4 工具方法与异常处理
 
 可以将抛出异常的逻辑封装为一个工具方法：
@@ -333,7 +330,6 @@ void JNU_ThrowByName(JNIEnv* env,const char* name,const char* msg){
 - 工具函数应该提供返回值告诉调用者释放发生异常，以简化调用者的处理
 - 工具函数要注意处理LocalRef
 
-
 ---
 ## 7 JNI 与线程
 
@@ -346,7 +342,7 @@ void JNU_ThrowByName(JNIEnv* env,const char* name,const char* msg){
 
 JNI 中没有 synchronized 这样的关键字来保证线程安全，但是提供了同等级别的 API 来获取和释放 Monitor 锁：
 
-```
+```cpp
 if((*env)->MonitorEnter(env,obj)!=JNI_OK){//进入监视器
     .../*error handling */
 }
@@ -372,7 +368,6 @@ if((*env)->MonitorExit(env,obj)!=JNI_OK){//退出监视器
 - 当前线程不拥有监视器时调用 MonitorExit 会导致错误并导致引发 IllegalMonitorStateException。
 - 上面的代码包含一对匹配的 MonitorEnter 和 MonitorExit 调用，但我们仍然需要检查可能的错误。例如，如果底层线程实现无法分配执行监视器操作所需的资源，则监视操作可能会失败。
 - 未能调用 MonitorExit 很可能会导致死锁。通过将上面的C代码段与 Java 代码段进行比较，可以看到使用 Java 编程比使用 JNI 更容易。因此，最好用 Java 表达同步结构。例如，如果静态本地方法需要进入与其定义类关联的监视器，则应该定义一个 `static synchronized native` 方法，而不是在本地代码中处理同步逻辑。
-
 
 ### 7.2 JNI 中实现 Wait 和 Notify
 
@@ -553,7 +548,7 @@ char *JNU_GetStringNativeChars(JNIEnv *env, jstring jstr) {
 
 #### JNI_OnLoad
 
-当System.loadLibrary加载本地库时，虚拟机将在本地库中搜索以下导出条目：
+当 System.loadLibrary 加载本地库时，虚拟机将在本地库中搜索以下导出条目：
 
 ```c
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved);
