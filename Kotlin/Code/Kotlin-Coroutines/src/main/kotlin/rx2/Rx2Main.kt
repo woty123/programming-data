@@ -1,7 +1,5 @@
 package rx2
 
-import io.reactivex.Observable
-import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -11,23 +9,8 @@ import kotlinx.coroutines.rx2.awaitFirst
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Path
 
-/* https://github.com/Kotlin/kotlinx.coroutines/blob/master/reactive/kotlinx-coroutines-rx-example/src/main.kt */
-interface GitHub {
-    @GET("/repos/{owner}/{repo}/contributors")
-    fun contributors(
-            @Path("owner") owner: String,
-            @Path("repo") repo: String
-    ): Observable<List<Contributor>>
 
-    @GET("users/{user}/repos")
-    fun listRepos(@Path("user") user: String): Single<List<Repo>>
-}
-
-data class Contributor(val login: String, val contributions: Int)
-data class Repo(val name: String)
 
 fun main() = runBlocking {
 
@@ -39,7 +22,7 @@ fun main() = runBlocking {
         addCallAdapterFactory(RxJava2CallAdapterFactory.create())
     }.build()
 
-    val github = retrofit.create(GitHub::class.java)
+    val github = retrofit.create(GitHubRx::class.java)
 
     val launch = launch {
 
@@ -88,7 +71,7 @@ private fun rx() = runBlocking {
         addCallAdapterFactory(RxJava2CallAdapterFactory.create())
     }.build()
 
-    val github = retrofit.create(GitHub::class.java)
+    val github = retrofit.create(GitHubRx::class.java)
     //订阅与取消都在不同一个线程中，订阅后发射数据不会阻塞取消动作
     val contributors = github.contributors("JetBrains", "Kotlin")
             .subscribeOn(Schedulers.io())

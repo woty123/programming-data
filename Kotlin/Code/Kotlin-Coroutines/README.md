@@ -11,12 +11,12 @@ Kotlin协程以包括以下模块
 ---
 ## 0 包说明
 
-- analyse [破解 kotlin 协程系列 ](https://juejin.im/post/5ceb423451882533441ece67)
-- core
-- concept
-- reactive
-- retrofit
-- rx2
+- analyse： [破解 kotlin 协程系列 ](https://juejin.im/post/5ceb423451882533441ece67) 示例代码
+- concept：帮助理解 kotlin 协程
+- retrofit：kotlin 协程与 retrofit 配合示例代码
+- reactive：kotlin 协程官方文档 reactive 模块示例代码
+- rx2：kotlin 协程官方文档 rxjava 模块示例代码
+- core：kotlin 协程官方文档 core 模块示例代码
 
 ---
 ## 1 Core 模块主要包括以下内容
