@@ -16,7 +16,6 @@ interface GitHub {
     fun contributorsAsync(): Deferred<Map<String, String>>
 }
 
-
 private val okHttpClient = OkHttpClient.Builder().build()
 
 private val retrofit = Retrofit.Builder().apply {

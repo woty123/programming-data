@@ -95,10 +95,10 @@ Collections：
 - [破解 Kotlin 协程(4) - 异常处理篇](https://juejin.im/post/5ceb480de51d4556da53d031)
 - [破解 Kotlin 协程(5) - 协程取消篇](https://juejin.im/post/5ceb48d2e51d45109b01b120)
 - [破解 Kotlin 协程(6) - 协程挂起篇](https://juejin.im/post/5ceb494851882532b93019e2)
-- [破解 Kotlin 协程(7) - 序列生成器篇](https://juejin.im/post/5cfe19025188252ee72966ee))
+- [破解 Kotlin 协程(7) - 序列生成器篇](https://juejin.im/post/5cfe19025188252ee72966ee)
 - [破解 Kotlin 协程(8) - Android 篇](https://juejin.im/post/5cfe1947e51d45105d63a4e3)
-- [破解 Kotlin 协程(9) - Channel 篇](https://mp.weixin.qq.com/s/8j74bn9x0-gFmZxa6k6GwA)
-- [破解 Kotlin 协程 番外篇(1) - 协程为什么被称为『轻量级线程』？](https://www.bennyhuo.com/2019/10/19/coroutine-why-so-called-lightweight-thread/)
+- [破解 Kotlin 协程(9) - Channel 篇](https://juejin.im/post/5d80fa6b518825446d0d15bf)
+- [破解 Kotlin 协程 番外篇(1) - 协程为什么被称为『轻量级线程』？](https://juejin.im/post/5dbaeda8f265da4cfb51271b)
 
 Sample：
 
@@ -121,3 +121,4 @@ RxJava VS Coroutines
 - [RxJava to Kotlin coroutines](https://medium.com/androiddevelopers/rxjava-to-kotlin-coroutines-1204c896a700)
 - [Kotlin coroutines vs RxJava: an initial performance test](https://proandroiddev.com/kotlin-coroutines-vs-rxjava-an-initial-performance-test-68160cfc6723)
 - [Forget RxJava: Kotlin Coroutines are all you need. Part 1/2](https://proandroiddev.com/forget-rxjava-kotlin-coroutines-are-all-you-need-part-1-2-4f62ecc4f99b)
+- [Forget RxJava: Kotlin Coroutines are all you need. Part 2/2 — Channels.](https://proandroiddev.com/forget-rxjava-kotlin-coroutines-are-all-you-need-d4dbdb509708)

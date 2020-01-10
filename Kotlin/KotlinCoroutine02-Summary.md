@@ -138,7 +138,7 @@ private fun asyncReturn(){
 ---
 ### 2.2 理解暂停点与 Continuation
 
-一个协程的执行经常是断断续续的: `执行一段, 挂起来, 再执行一段, 再挂起来, ...`，每个挂起的地方是一个 suspension point, 每一小段执行是一个 Continuation，协程的执行流被它的 `"suspension point"` 分割成了很多个 `"Continuation"`，kotlin编译器会把这些 `"suspension point"` 编译成单独的函数，然后根据状态转移去调用不同的挂起点分割开的函数：
+一个协程的执行经常是断断续续的: `执行一段, 挂起来, 再执行一段, 再挂起来, ...`，每个挂起的地方是一个 suspension point, 每一小段执行是一个 Continuation，协程的执行流被它的 `"suspension point"` 分割成了很多个 `"Continuation"`，kotlin 编译器会把这些 `"suspension point"` 编译成单独的函数或代码段，然后根据状态转移去调用由挂起点分割开的函数或代码段：
 
 ```kotlin
 public interface Continuation<in T> {
@@ -163,12 +163,12 @@ public interface Continuation<in T> {
 - 打断点 debug
 - 使用 kotlin 提供的 debug jvm 参数
 
-协程被编译成状态机（单个函数被编译成多个函数）：
+协程被编译成状态机（单个函数被编译成多个函数或代码段）：
 
 ![kotlin_coroutine_01_status](images/kotlin_coroutine_01_status.jpg)
 
 - 协程由编译器编译为状态机，我们编写的代码与实际运行的代码有很多的差别。
-- suspend 函数即状态转移，单个 suspend 函数被编译成多个函数，即把每一个挂牵点编译成一个单独的函数。
+- suspend 函数即状态转移，单个 suspend 函数被编译成多个函数，即把每一个挂牵点编译成一个单独的函数或代码段。
 - 多个协程 Context 可以组合，类型是 CombinedContext。
 - suspend 代码块会被编译成继承 CoroutineImpl 类的类型。
 
@@ -441,11 +441,27 @@ CoroutineDispatcher 继承了 ContinuationInterceptor，显然需要处理协程
 ---
 ### 2 CoroutineScope
 
-CoroutineScope 定义创建协程的范围。每个协程构建器（比如 launch、async）都是 CoroutineScope 的扩展，并继承其 coroutineContext 以自动传播上下文元素和取消。
+CoroutineScope 定义创建协程的范围。每个协程构建器（比如 launch、async）都是 CoroutineScope 的扩展，并继承其 coroutineContext 以自动传播上下文元素和取消（取消行为，当 CoroutineScope 被取消，由其发起的协程都将被取消）。
 
-CoroutineScope 封装了协程的内部状态：`isActive 和 coroutineContext` 属性，isActive 表示协程是否是活跃的(没有完成也没有被取消)，coroutineContext 表示当前这个协程的上下文。所谓通用的协程构建器 receiver，即协程运行 block 都以 CoroutineScope 为运行环境。
+>CoroutineScope 即给协程一个运行范围，以便更好地管理运行的协程。
+
+CoroutineScope 封装了协程的内部状态：`isActive 和 coroutineContext` 属性，isActive 表示协程是否是活跃的(没有完成也没有被取消)，coroutineContext 表示当前这个协程的上下文。
 
 每个 coroutine 生成器 (如launch、async 等) 和每个作用域函数 (如 coroutinScope、 withContext、supervisorScope 等) 都将自己的作用域与自己的 Job 实例一起提供到它运行的内部代码块中。按照惯例, 它们全都会等待块内的所有子协程完成后再完成自己，从而强制执行结构化并发的规则。
+
+以 launch 协程构建器为例，将要启动的协程以 CoroutineScope 为 receiver，即协程运行 block 以 CoroutineScope 为运行环境：
+
+```java
+public fun CoroutineScope.launch(
+    context: CoroutineContext = EmptyCoroutineContext,
+    start: CoroutineStart = CoroutineStart.DEFAULT,
+    block: suspend CoroutineScope.() -> Unit
+): Job {
+    ......
+}
+```
+
+最好的方式是通过  CoroutineScope 或 MainScope 的工程方法去获取一个独立的 CoroutineScope 实例，一般不建议手动实现 CoroutineScope 接口，使用代理是首选的方式。
 
 CoroutineScope 应该在具有明确定义的生命周期的实体上实现，这些实体负责启动子协程。 Android 上的此类实体的示例是 Activity。
 
@@ -593,7 +609,12 @@ suspend fun loadDataForUI() = coroutineScope {
 2. 如果 doSomeWork 抛出异常，则取消异步任务并且 loadDataForUI 重新抛出该异常。
 3. 如果取消 loadDataForUI 的外部作用域，则取消启动 async和 withContext。
 
-supervisorScope：使用 SupervisorJob 创建新的 CoroutineScope，并使用此范围调用指定的协程代码块。提供的范围从外部范围继承其 coroutineContext，但使用 SupervisorJob 覆盖上下文的 Job。范围内某个子协程的失败不会导致此范围（由 supervisorScope 启动的协程）失败并且不会影响其他子协程。范围本身的失败（块或取消中抛出的异常）使范围及其所有子节点失败，但不会取消此范围的父协程的 Job。
+supervisorScope：使用 SupervisorJob 创建新的 CoroutineScope，并使用此范围调用指定的协程代码块。提供的范围从外部范围继承其 coroutineContext，但使用 SupervisorJob 覆盖上下文的 Job。范围内某个子协程的失败不会导致此范围（由 supervisorScope 启动的协程）失败并且不会影响其他子协程。
+
+具体参考：
+
+- [破解 Kotlin 协程(4) - 异常处理篇：异常传播](https://juejin.im/post/5ceb480de51d4556da53d031#heading-3)
+- [supervisor-job doc](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-supervisor-job.html)
 
 ### 4 顶级 suspending functions
 
