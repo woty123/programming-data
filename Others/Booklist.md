@@ -41,24 +41,28 @@
 ## C&C++
 
 1. 《C prime plus》
-2. 《C++ prime》
-3. 《C++ prime plus》
+2. 《C++ prime 5E》
+3. 《C++ prime plus》（不推荐）
 
 ## Java平台
 
 * 《EffectiveJava》 第二版
+* 《EffectiveJava》 第三版
 * 《Java编程思想》
 * 《Java核心技术：卷1》
 * 《Java核心技术：卷2》
-* 《深入理解Java虚拟机：JVM高级特性与最佳实践》
+* 《深入理解Java虚拟机：JVM高级特性与最佳实践》第二版
+* 《深入理解Java虚拟机：JVM高级特性与最佳实践》第三版
 * 《揭秘Java虚拟机：JVM设计原理与实现》
-* 《写给大忙人的javaSE
+* 《写给大忙人的javaSE》（不推荐）
 * 《Java并发编程的艺术》
 * 《Java高并发程序设计》
 * 《Java并发编程实战》
 * 《Java TCP/IP Socket 编程》
 * 《Groovy程序设计》
 * 《Kotlin实战》
+* 《Kotlin核心编程》（微信读书）
+* 《NIO与Socket编程技术指南》（微信读书）
 
 ## Android
 
@@ -145,7 +149,6 @@
 * 《Effective Java中文版》（原书第3版）
 * 《UNIX 网络编程 卷 1：套接字联网 API》（第 3 版）
 * 《Web 性能权威指南》
-* 《NIO与Socket编程技术指南》
 * 《TCP/IP网络编程》
 * 《Android软件安全权威指南》
 * 《PWA 实战》
@@ -153,6 +156,6 @@
 其他
 
 * 《悖论：9大谜题》
-* 《自然哲学之数学原理》**——牛顿
+* 《自然哲学之数学原理》——牛顿
 * 《三体》
 * 《今日简史》
