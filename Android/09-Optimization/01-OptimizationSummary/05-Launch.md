@@ -62,5 +62,6 @@ app启动的耗时主要是在：Application 初始化 + MainActivity 的界面�
 
 - [App Startup Time](https://developer.android.google.cn/topic/performance/vitals/launch-time)
 - [你的 APP 为何启动那么慢？](https://mp.weixin.qq.com/s/i0Qkp8rZ_IfmVEoWSxvpdw)
-- [App异步起动库：SmartStart](https://github.com/conghongjie/SmartStart)
 - [今日头条APP启动很快，原来是做了这些优化？](https://mp.weixin.qq.com/s/9umkSbTxcm8I9O4jdJDP-A)
+- [App异步起动库：SmartStart](https://github.com/conghongjie/SmartStart)
+- [Anchors：异步依赖任务初始化 Android 启动框架](https://github.com/YummyLau/Anchors)
