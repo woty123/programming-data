@@ -87,6 +87,8 @@ AST：
 - [capt 全称 Class Annotation Processor Tool，是作者基于 ASM 和 Android Transform API 打造的 Android 平台的字节码的注解处理工具。](https://mp.weixin.qq.com/s/8_88oUB2MJi27BJJOb-2_Q)
 - [sdk-editor-plugin](https://github.com/iwhys/sdk-editor-plugin)
 - [DroidAssist 是一个轻量级的 Android 字节码编辑插件，基于 Javassist 对字节码操作，根据 xml 配置处理 class 文件，以达到对 class 文件进行动态修改的效果](https://github.com/didi/DroidAssist)
+- [ByteX：字节码插件开发平台](https://github.com/bytedance/ByteX)
+- [Hunter：A fast, incremental, concurrent framework to develop compile plugin for android project to manipulate bytecode](https://github.com/Leaking/Hunter)
 
 运行时 AOP：
 
