@@ -1,12 +1,12 @@
 # Android Archtitecture References
 
----
 ## AAC
 
+- [对Google的吐槽：2019年11月，分析Android原生开发的现状](https://mp.weixin.qq.com/s/4Z_Do6kC8WC5u5qnGgZNKw)
 - [viewmodels-and-livedata-patterns-antipatterns](https://medium.com/androiddevelopers/viewmodels-and-livedata-patterns-antipatterns-21efaef74a54)
 - [saving-ui-state-with-viewmodel-savedstate-and-dagger](https://proandroiddev.com/saving-ui-state-with-viewmodel-savedstate-and-dagger-f77bcaeb8b08#7f89)
+- [kotlin-architecture-components](https://github.com/satorufujiwara/kotlin-architecture-components)
 
----
 ## 值得研究的项目
 
 Google：
@@ -30,26 +30,20 @@ AOP
 - AOP架构之[EasyMVP](https://github.com/6thsolution/EasyMVP)
 - AOP架构之[T-MVP](https://github.com/north2016/T-MVP)
 
+从零开始仿写一个抖音app系列
+
+- [从零开始仿写一个抖音App](https://www.jianshu.com/p/e92bd896ac35)
+- [从零开始仿写一个抖音App-MyTikTok](https://github.com/dongmin2002345/MyTikTok)
+
 Other：
 
 - [AndroidChromium-理清本项目业务逻辑完全可以胜任国内一线公司工程师](https://github.com/JackyAndroid/AndroidChromium)
+- [非常彻底的组件化-auc-frame](https://blankj.com/2019/07/22/auc-frame/)
 
-Flux
-
-- [android-flux-architecture](https://github.com/satorufujiwara/android-flux-architecture)
-- [kotlin-android-flux](https://github.com/satorufujiwara/kotlin-android-flux)
-- [kotlin-architecture-components](https://github.com/satorufujiwara/kotlin-architecture-components)
-
-从零开始仿写一个抖音app系列
-
-- [从零开始仿写一个抖音App](https://github.com/whenSunSet/MyTikTok)
-
----
 ## 接口设计
 
 - [从客户端的角度设计后端的接口](http://www.jianshu.com/p/35a7b6f5f92e)
 
----
 ## 软件 UI 框架模式
 
 UI 架构史：
@@ -78,7 +72,6 @@ MVX：
 - [Android应用架构学习笔记](http://mp.weixin.qq.com/s?__biz=MzA3ODg4MDk0Ng==&mid=401668447&idx=1&sn=5b6b6c2ea8e415041498634a2b67699a&scene=23&srcid=0217TGuCBRFE3EiMIp7ftNys#rd)
 - [从零开始的Android新项目系列](http://blog.zhaiyifan.cn/2016/03/14/android-new-project-from-0-p1/)
 - [Android开发架构思考及经验总结](https://zhuanlan.zhihu.com/p/24614642)
-- [android日常开发总结的技术经验60条](http://www.vmatianyu.cn/summarization-of-technical-experience.html "android日常开发总结的技术经验60条")
 - [Android 开发最佳实践](https://github.com/futurice/android-best-practices/blob/master/translations/Chinese/README.cn.md)
 - [苏宁易购Android架构演进史](https://mp.weixin.qq.com/s?__biz=MzUxMzcxMzE5Ng==&mid=2247488720&idx=1&sn=9fb295dbaa1686697c5e1a7e5aaa7123&chksm=f951a193ce2628854a92fbcf1f4b4103dd1b8d29537d8a1db09e9dcbeb5a05e991a45343d804&mpshare=1&scene=1&srcid=0417WopVHCuItM79aGDFhIgX#rd)
 - [我对移动端架构的思考](https://juejin.im/post/5b44d50de51d451925627900)
@@ -94,15 +87,15 @@ MVX：
 - [Flux 架构入门教程](http://www.ruanyifeng.com/blog/2016/01/flux.html)
 - [Android Fulx](http://androidflux.github.io/)
 - [Redux 入门教程](http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_one_basic_usages.html)
+- [android-flux-architecture](https://github.com/satorufujiwara/android-flux-architecture)
+- [kotlin-android-flux](https://github.com/satorufujiwara/kotlin-android-flux)
 
----
 ## 关于烂代码的那些事
 
- [关于烂代码的那些事（上）](http://blog.2baxb.me/archives/1343)
- [关于烂代码的那些事（中）](http://blog.2baxb.me/archives/1378)
- [关于烂代码的那些事（下）](http://blog.2baxb.me/archives/1499)
+- [关于烂代码的那些事（上）](http://blog.2baxb.me/archives/1343)
+- [关于烂代码的那些事（中）](http://blog.2baxb.me/archives/1378)
+- [关于烂代码的那些事（下）](http://blog.2baxb.me/archives/1499)
 
----
 ## 架构系列文章
 
 ### App架构设计经验谈

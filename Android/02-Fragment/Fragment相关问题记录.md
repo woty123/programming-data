@@ -31,40 +31,40 @@
 
 ```java
 //https://stackoverflow.com/questions/44977682/how-to-set-target-fragment
-public class DialogFragmentB extends DialogFragment{ 
-   ... 
+public class DialogFragmentB extends DialogFragment{
+   ...
    public Dialog onCreateDialog (Bundle b){
-   // here i create two dialogs, first dialogA and then it calls dialogB 
-   // finally dialogB has to return his datas and datas from dialogA in fragmentA 
-      ... 
+   // here i create two dialogs, first dialogA and then it calls dialogB
+   // finally dialogB has to return his datas and datas from dialogA in fragmentA
+      ...
       public void onClick(View v){
-         ... 
-         FragmentManager fm = getFragmentManager(); 
-         // these two code's lines resolved my headache -------------- 
-         Fragment ft = fm.findFragmentByTag(FragmentA.FRAGMENT_A_TAG); 
-         ft.setTargetFragment(ft, FragmentA.CODE_REQUEST); 
-         // ---------------------------------------------------------- 
-         dialogB.dismiss(); 
+         ...
+         FragmentManager fm = getFragmentManager();
+         // these two code's lines resolved my headache --------------
+         Fragment ft = fm.findFragmentByTag(FragmentA.FRAGMENT_A_TAG);
+         ft.setTargetFragment(ft, FragmentA.CODE_REQUEST);
+         // ----------------------------------------------------------
+         dialogB.dismiss();
          sendResult(Activity.RESULT_OK, myData);
-      } 
-      return dialogB; 
-   } 
-   // And here myData goes in onActivityResult in fragmentA 
+      }
+      return dialogB;
+   }
+   // And here myData goes in onActivityResult in fragmentA
     private void sendResult(int resultCode, MyData myData){
-        if(getTargetFragment() == null){ 
-            return; 
-        } 
+        if(getTargetFragment() == null){
+            return;
+        }
         Intent intent = new Intent();
         intent.putExtra(EXTRA_DATE_2, myData);
         getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
-    } 
-} 
+    }
+}
 ```
 
 ---
 ## 4 Fragment事务应该立即执行还是加入到事物队列
 
-popBackStackImmediate还是popBackStack？
+popBackStackImmediate 还是 popBackStack？
 
-- 如果Activity中存在多个Fragment，当需要返回的1一个Fragmetn后立即加入新的Fragment。建议使用popBackStackImmediate，不然后面的加入操作会影响前面的出栈操作，可能造成重影。
-- 另外注意，新添加的commitNow()方法有个限制，无法把当前提交的 Fragment 添加到堆
+- 如果 Activity 中存在多个 Fragment，当需要返回的 1 一个 Fragmetn 后立即加入新的 Fragment。建议使用 popBackStackImmediate，不然后面的加入操作会影响前面的出栈操作，可能造成重影。
+- 另外注意，新添加的 commitNow() 方法有个限制，无法把当前提交的 Fragment 添加到栈。
