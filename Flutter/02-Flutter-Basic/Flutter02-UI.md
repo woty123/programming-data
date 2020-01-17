@@ -1,5 +1,11 @@
 # Flutter UI
 
+## Flutter工程结构
+
+![flutter-construct](images/02-flutter-construct.png)
+
+可以看出：Flutter 工程实际上就是一个同时内嵌了 Android 和 iOS 原生子工程的父工程。
+
 ## Widget 如何管理自己的状态
 
 - 自己管理。
@@ -99,6 +105,11 @@ build 方法的调用时机：
 - 在调用 setState() 之后。
 - 在调用 didChangeDependencies() 之后。
 - 在State对象从树中一个位置移除后（会调用 deactivate）又重新插入到树的其它位置之后。
+
+StatefulWidget 与 StatelessWidget 的接口设计区别
+
+- StatelessWidget 因为是不变的，所以直接提供 build 方法构建 widget 即可。
+- StatefulWidget 需要依据数据才能完成构建，而对于 StatefulWidget 来说，其依赖的数据在 Widget 生命周期中可能会频繁地发生变化。由 State 创建 Widget，以数据驱动视图更新，而不是直接操作 UI 更新视觉属性，代码表达可以更精炼，逻辑也可以更清晰。
 
 ## 关于文本
 

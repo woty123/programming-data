@@ -34,7 +34,7 @@
 Dart
 
 - [Dart](https://www.dartlang.org/)
-- [Dart 中文网](http://dart.goodev.org/)
+- [Dart 中文网](https://www.dartcn.com/)
 
 flutter 官方文档
 
