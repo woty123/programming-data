@@ -146,7 +146,7 @@ gcc test.o -o test
 gcc test.c -O2
 ```
 
-### -l 和 -L
+### 头文件与库链接
 
 - `-l`和`-L`参数：用来指定程序要链接的库
   - `-l`参数紧接着就是库名，加入库名是`libA.so`，那么命令就是`-lA`
@@ -156,32 +156,12 @@ gcc test.c -O2
   - `-include`用来包含头文件，但一般情况下包含头文件都在源码里用`#include`引入了，所以`-include`参数很少用。
   - `-I`参数是用来指定头文件目录，`/usr/include`目录一般是不用指定的，gcc可以找到，但是如果头文件不在`/usr/include`里就要用`-I`参数指定了，比如头文件放在`/myinclude`目录里，那编译命令行就要加上`-I/myinclude`参数，参数可以用相对路径，比如头文件在当前目录，可以用`-I.`来指定。
 
-指定头文件：
-
 ```shell
-# 使用xx作为这一次编译的头文件与库文件的查找目录，查找该目录下面的 usr/include usr/lib目录
-gcc --sysroot=XX
-
-# 头文件查找目录,覆盖--sysroot ，查找该目录下的 /usr/include
-gcc -isysroot XX
-
-# 指定头文件查找路径（直接查找根目录）
-gcc -isystem XX
-
 # 头文件查找目录
 gcc -IXX
-```
 
->优先级：-I -> -isystem -> sysroot
-
-指定库文件：
-
-```shell
 # 指定库文件查找目录
-gcc -LXX
-
-# 指定需要链接的库名
-gcc -lxx.so
+gcc -LXX -lxx.so
 ```
 
 ### -Wl
@@ -248,6 +228,20 @@ gcc -c testA.c
 gcc -c testB.c
 #将testA.o和testB.o链接成test
 gcc -o testA.o testB.o -o test
+```
+
+### 使用c99标准编译
+
+```shell
+gcc -std=c99 hello.c
+```
+
+### `-fno-elide-constructors`
+
+适用于g++。C++语言因为各种临时对象的问题，所以编译器通常会自行进行优化，比如NRV优化（O0已存在该优化），会减少几次拷贝构造函数的调用过程。如果你想关闭这个优化，则可以使用该参数：
+
+```shell
+g++ -fno-elide-constructors hello.cpp
 ```
 
 ### windows 相关
