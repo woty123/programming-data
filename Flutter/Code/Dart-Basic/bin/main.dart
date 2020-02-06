@@ -5,9 +5,9 @@ import 'package:Dart_Basic/04-operator.dart' as operation;
 import 'package:Dart_Basic/geektime/dart_sample.dart' as geek_dart;
 
 void main(List<String> arguments) {
-  //dart_type.dataTypeSample();
-  //function.functionSample();
-  //clazz.classSample();
+//  dart_type.dataTypeSample();
+//  function.functionSample();
+//  clazz.classSample();
   operation.operatorSample();
-  geek_dart.test();
+//  geek_dart.test();
 }

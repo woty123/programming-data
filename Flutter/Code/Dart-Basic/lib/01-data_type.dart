@@ -2,7 +2,7 @@
 //    在 Dart 中，我们可以用 var 或者具体的类型来声明一个变量。当使用 var 定义变量时，表示类型是交由编译器推断决定的，当然你也可以用静态类型去定义变量，更清楚地跟编译器表达你的意图，这样编辑器和编译器就能使用这些静态类型，向你提供代码补全或编译警告的提示了。
 //    在默认情况下，未初始化的变量的值都是 null，因此我们不用担心无法判定一个传递过来的、未定义变量到底是 undefined。
 //    Dart 是类型安全的语言，并且所有类型都是对象类型，都继承自顶层类型 Object，因此一切变量的值都是类的实例（即对象），甚至数字、布尔值、函数和 null 也都是继承自 Object 的对象。
-//    Dart 语言支持以下内建类型：如 num、bool、String、List (也被称为 Array) 和 Map、Set、Rune (用于在字符串中表示 Unicode 字符)、Symbo。
+//    Dart 语言支持以下内建类型：如 num、bool、String、List (也被称为 Array) 和 Map、Set、Rune (用于在字符串中表示 Unicode 字符)、Symbol。
 import 'dart:ffi';
 import 'dart:math';
 
