@@ -56,6 +56,8 @@ RenderObject 是主要负责实现视图渲染的对象。
 
 Flutter 通过引入 Widget、Element 与 RenderObject 这三个概念，把原本从视图数据到视图渲染的复杂构建过程拆分得更简单、直接，在易于集中治理的同时，保证了较高的渲染效率。
 
+>绘制侧重绘图命令（GPU前），渲染侧重最终呈现（GPU后）
+
 ## 3 RenderObjectWidget 介绍
 
 **RenderObjectWidget 负责实际的布局和绘制**：在开发中我们使用 StatelessWidget 和 StatefulWidget 来构建界面，但这两者只是用来组装控件的容器，并不负责组件最后的布局和绘制。在 Flutter 中，布局和绘制工作实际上是在 Widget 的另一个子类 RenderObjectWidget 内完成的。
@@ -165,3 +167,5 @@ abstract class RenderObject extends AbstractNode with DiagnosticableTreeMixin im
 ## 5 思考
 
 如何理解 Widget、Element 和 RenderObject 这三个概念的？它们之间是一一对应的吗？你能否在 Android/iOS/Web 中找到对应的概念呢？
+
+>Element是可复用的，只要 Widget 前后类型一样。比如 Widget 是蓝色的，重建后变红色了，Element 是会复用的。所以是多个 Widget（销毁前后）会对应一个 Element，而一个Element对应一个RenderObject。
