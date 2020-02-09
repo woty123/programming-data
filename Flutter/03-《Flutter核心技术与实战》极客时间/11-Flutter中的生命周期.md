@@ -1,11 +1,8 @@
-# Flutter中的生命周期
+# Flutter 中组件的生命周期
 
-通过父 Widget 初始化时传入的静态配置：
+通过父 Widget 初始化时传入的静态配置，StatelessWidget 就能完全控制其静态展示。而 StatefulWidget，还需要借助于 State 对象，在特定的阶段来处理用户的交互或其内部数据的变化，并体现在 UI 上。这些特定的阶段，就涵盖了**一个组件从加载到卸载的全过程，即生命周期**。
 
-- StatelessWidget 能完全控制其静态展示。
-- StatefulWidget，则还需要借助于 State 对象，在特定的阶段来处理用户的交互或其内部数据的变化，并体现在 UI 上。这些特定的阶段，就涵盖了**一个组件从加载到卸载的全过程，即生命周期**。
-
-需要关注的生命周期：
+我们需要关注的组件生命周期有：
 
 - **Widget 生命周期**：Flutter 中的 Widget 生命周期通过 State 来体现。
 - **App 的生命周期**： App 是一个特殊的 Widget。除了需要处理视图显示的各个阶段（即视图的生命周期）之外，还需要应对应用从启动到退出所经历的各个状态（App 的生命周期）。
@@ -45,7 +42,7 @@ Widget 的状态更新，主要由 3 个方法触发：`setState、didchangeDepe
 
 一旦这三个方法的一个被调用，Flutter 随后就会销毁老 Widget，并调用 build 方法重建 Widget。
 
->State 调用 set 会直接触发自身对应 Widget 的 build 方法，会触发子 Widget State 的 didUpdateWidget 和 build 方法。
+>State 调用 setState 会直接触发自身对应 Widget 的 build 方法，会触发子 Widget 对应 State 的 didUpdateWidget 和 build 方法。
 
 ### Widget 销毁
 
@@ -180,9 +177,9 @@ WidgetsBinding.instance.addPersistentFrameCallback((_){
 
 ## 3 总结
 
-1. 认识了 Widget 生命周期的实际承载者 State，将 State 的生命周期划分为了创建（插入视图树）、更新（在视图树中存在）、销毁（从视图树种移除），还有不同阶段对应的回调方法。
-2. 认识了 Flutter 常用的生命周期状态切换机制。以此来掌握 Flutter 的 App 生命周期监听方法，并理解 Flutter 常用的生命周期状态切换机制。
-3. Flutter 帧绘制回调机制，理解了单次 Frame 绘制回调与实时 Frame 绘制回调的异同与使用场景。
+1. 认识 Widget 生命周期的实际承载者 State，将 State 的生命周期划分为了创建（插入视图树）、更新（在视图树中存在）、销毁（从视图树种移除），还有不同阶段对应的回调方法。
+2. 认识 Flutter 常用的生命周期状态切换机制。以此来掌握 Flutter 的 App 生命周期监听方法，并理解 Flutter 常用的生命周期状态切换机制。
+3. 掌握 Flutter 帧绘制回调机制，理解单次 Frame 绘制回调与实时 Frame 绘制回调的异同与使用场景。
 
 总之只要记住创建、更新与销毁这三条主线的调用规则，就一定能把这些方法的调用顺序串起来，并能在实际开发中运用正确的方法去感知状态变更，写出合理的组件。
 
