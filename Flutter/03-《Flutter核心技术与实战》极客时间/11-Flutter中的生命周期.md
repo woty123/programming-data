@@ -187,7 +187,7 @@ WidgetsBinding.instance.addPersistentFrameCallback((_){
 
 1.构造方法与 initState 函数在 State 的生命周期中都只会被调用一次，也大都用于完成一些初始化的工作。根据今天的学习，你能否举出例子，比如哪些操作适合放在构造方法，哪些操作适合放在 initState，而哪些操作必须放在 initState。
 
-- 在构造函数中 Widget 还未生成，所以只能做一些参数传入的处理，initState 中可以做初始化 State 的变量的操作。
+- 在构造函数中 Widget 还未生成（state 的 widget 属性此时还为 null），所以只能做一些参数传入的处理，initState 中可以做初始化 State 的变量的操作。
 
 2.通过 didChangeDependencies 触发 Widget 重建时，父子 Widget 之间的生命周期函数调用时序是怎样的？
 

@@ -18,6 +18,12 @@ class LifecyclePage extends StatefulWidget {
 
 class _LifecyclePageState extends State<LifecyclePage>
     with WidgetsBindingObserver {
+  //构造方法
+  _LifecyclePageState() {
+    //此时获取 widget 返回 null。
+    print("page1 _LifecyclePageState init, widget = $widget");
+  }
+
   //绘制界面
   @override
   Widget build(BuildContext context) {
