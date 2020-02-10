@@ -40,14 +40,17 @@ class MultiTypeListView extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline,
                 ),
               );
-            }
-            //type 12
-            else if (item is MessageItem) {
+            } // type 1 end
+
+            //type 2
+            else {
+              MessageItem type2 = item;
               return new ListTile(
-                title: new Text(item.sender),
-                subtitle: new Text(item.body),
+                title: new Text(type2.sender),
+                subtitle: new Text(type2.body),
               );
             }
+            //type 2 end
           },
         ),
       ),

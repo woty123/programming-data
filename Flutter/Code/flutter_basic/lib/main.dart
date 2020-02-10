@@ -139,6 +139,7 @@ class Page {
 
 _buildBody(List<Page> routes) {
   return ListView.builder(
+      itemExtent: 100,
       itemCount: routes.length,
       itemBuilder: (BuildContext context, int index) {
         return new ListTile(
