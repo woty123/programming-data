@@ -28,6 +28,21 @@ import 'package:flutter_basic/gesture/02_InkWell.dart';
 import 'package:flutter_basic/gesture/03_dismissible.dart';
 import 'package:flutter_basic/gesture/04_draw.dart';
 
+//布局
+import 'package:flutter_basic/layout/01_layout.dart';
+import 'package:flutter_basic/layout/02_layout.dart';
+import 'package:flutter_basic/layout/03_constrained_box.dart';
+import 'package:flutter_basic/layout/04_material_pager1.dart';
+import 'package:flutter_basic/layout/05_material_pager2.dart';
+import 'package:flutter_basic/layout/06_update-item.dart';
+
+//动画
+import 'package:flutter_basic/animation/01_zoomin_logo.dart';
+import 'package:flutter_basic/animation/02_animated_widget.dart';
+
+//自定义View
+import 'package:flutter_basic/custom-view/draw-cake.dart';
+
 //导航
 import 'package:flutter_basic/navigator/01_simple_navigator.dart';
 import 'package:flutter_basic/navigator/02_pass_values.dart';
@@ -37,17 +52,6 @@ import 'package:flutter_basic/navigator/03_return_values.dart';
 import 'package:flutter_basic/network/01_http.dart';
 import 'package:flutter_basic/network/02_web_socket.dart';
 import 'package:flutter_basic/network/03_loading_status.dart';
-
-//布局
-import 'package:flutter_basic/layout/01_layout.dart';
-import 'package:flutter_basic/layout/02_layout.dart';
-import 'package:flutter_basic/layout/03_constrained_box.dart';
-import 'package:flutter_basic/layout/04_material_pager1.dart';
-import 'package:flutter_basic/layout/05_material_pager2.dart';
-
-//动画
-import 'package:flutter_basic/animation/01_zoomin_logo.dart';
-import 'package:flutter_basic/animation/02_animated_widget.dart';
 
 //生命周期
 import 'package:flutter_basic/lifecycle/LifecyclePage.dart';
@@ -83,6 +87,23 @@ List<Page> _buildRoutes() {
     Page("DismissibleWidget",
         (BuildContext context) => buildDismissibleWidget()),
     Page("DrawableWidget", (BuildContext context) => buildDrawableWidget()),
+    //layout
+    Page("LayoutDemoWidget", (BuildContext context) => buildLayoutWidget()),
+    Page("LayoutDemoInteractiveWidget",
+        (BuildContext context) => buildLayoutInteractiveWidget()),
+    Page("ConstrainedBoxWidget",
+        (BuildContext context) => buildConstrainedBoxWidget()),
+    Page("MaterialPagerWidge1t",
+        (BuildContext context) => buildMaterialPagerWidget1()),
+    Page("MaterialPagerWidget2",
+        (BuildContext context) => buildMaterialPagerWidget2()),
+    Page("UpdateItemWidget", (BuildContext context) => buildUpdateItemWidget()),
+    //Animation
+    Page("ZoomInLogoWidget", (BuildContext context) => buildZoomInLogoWidget()),
+    Page("ZoomInLogoAnimatedWidget",
+        (BuildContext context) => buildZoomInLogoAnimatedWidget()),
+    //Custom View
+    Page("CakeView", (BuildContext context) => buildCustomCakeView()),
     //basic navigator
     Page("SimpleNavigatorWidget",
         (BuildContext context) => buildSimpleNavigatorWidget()),
@@ -96,20 +117,6 @@ List<Page> _buildRoutes() {
     Page("WebSocketWidget", (BuildContext context) => buildWebSocketWidget()),
     Page("LoadingStatusWidget",
         (BuildContext context) => buildLoadingStatusWidget()),
-    //layout
-    Page("LayoutDemoWidget", (BuildContext context) => buildLayoutWidget()),
-    Page("LayoutDemoInteractiveWidget",
-        (BuildContext context) => buildLayoutInteractiveWidget()),
-    Page("ConstrainedBoxWidget",
-        (BuildContext context) => buildConstrainedBoxWidget()),
-    Page("MaterialPagerWidge1t",
-        (BuildContext context) => buildMaterialPagerWidget1()),
-    Page("MaterialPagerWidget2",
-        (BuildContext context) => buildMaterialPagerWidget2()),
-    //Animation
-    Page("ZoomInLogoWidget", (BuildContext context) => buildZoomInLogoWidget()),
-    Page("ZoomInLogoAnimatedWidget",
-        (BuildContext context) => buildZoomInLogoAnimatedWidget()),
     //Lifecycle
     Page("Lifecycle", (BuildContext context) => buildLifecyclePageWidget())
   ];
@@ -139,7 +146,7 @@ class Page {
 
 _buildBody(List<Page> routes) {
   return ListView.builder(
-      itemExtent: 100,
+      itemExtent: 50,
       itemCount: routes.length,
       itemBuilder: (BuildContext context, int index) {
         return new ListTile(

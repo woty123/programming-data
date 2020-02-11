@@ -1,5 +1,7 @@
 # [《Flutter核心技术与实战》](https://time.geekbang.org/column/article/104040) 整理
 
+课程源码 [flutter_core_demo](https://github.com/cyndibaby905/flutter_core_demo)。
+
 ## 1 Flutter开发起步
 
 - 03-深入理解跨平台方案的历史发展逻辑

@@ -37,3 +37,5 @@
 
 - <a href="https://mp.weixin.qq.com/s?__biz=MzA3NTYzODYzMg==&mid=2653576954&idx=1&sn=6826647df10da83c645b2c49cf1326a6&scene=0&key=b28b03434249256b44ee65d4569915ec0e351029da65164eb15145525d54520545ea9aaa618ac2acbc1cb13da8732576&ascene=0&uin=MTY5MDI4NDA4Mg%3D%3D&devicetype=iMac+MacBookPro11%2C3+OSX+OSX+10.11.4+build(15E65)&version=11020201&pass_ticket=xhrhRgyx6brcoV5fHzprhLVH3zZgev4Gngfghh7S78ntItjTqkVo5kGUw%2BtmAxIY">手把手教你逆向分析 Android 程序</a>
 - [美团Android资源混淆保护实践](https://tech.meituan.com/2015/09/30/mt-android-resource-obfuscation.html)
+- 《Android应用安全防护和逆向分析》
+- [安全和逆向](http://www.520monkey.com/archives/category/%e5%ae%89%e5%85%a8%e5%92%8c%e9%80%86%e5%90%91)
