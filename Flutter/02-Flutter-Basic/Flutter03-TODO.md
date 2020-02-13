@@ -28,3 +28,4 @@
 
 - <https://pub.dev/packages/provider>
 - <https://pub.dev/packages/auto_size_text>
+- <https://api.flutter.dev/flutter/dart-core/DateTime-class.html>
