@@ -6,14 +6,11 @@ import 'package:flutter/material.dart';
 当他们这样做时，我们需要将该条目从收件箱移至垃圾箱。Flutter通过提供 Dismissible Widget 使这项任务变得简单。
 */
 Widget buildDismissibleWidget() {
-  return new MaterialApp(
-    title: "Dismissible",
-    home: new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Dismissible"),
-      ),
-      body: DismissibleBody(),
+  return new Scaffold(
+    appBar: new AppBar(
+      title: new Text("Dismissible"),
     ),
+    body: DismissibleBody(),
   );
 }
 
@@ -24,9 +21,7 @@ class DismissibleBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return new ListView.builder(
         itemCount: items.length,
-
         itemBuilder: (context, index) {
-
           final item = items[index];
 
           return new Dismissible(
@@ -36,7 +31,6 @@ class DismissibleBody extends StatelessWidget {
                 Scaffold.of(context).showSnackBar(
                     new SnackBar(content: new Text("$item dismissed")));
               },
-
               background: new Container(
                 color: Colors.red,
               ),

@@ -23,10 +23,13 @@ import 'package:flutter_basic/list/07_sliver_scroll.dart';
 import 'package:flutter_basic/list/08_notification_listener.dart';
 
 //手势
-import 'package:flutter_basic/gesture/01_tap.dart';
+import 'package:flutter_basic/gesture/01_GestureDetector.dart';
 import 'package:flutter_basic/gesture/02_InkWell.dart';
-import 'package:flutter_basic/gesture/03_dismissible.dart';
-import 'package:flutter_basic/gesture/04_draw.dart';
+import 'package:flutter_basic/gesture/03_dismissible-item.dart';
+import 'package:flutter_basic/gesture/04_draw-signature.dart';
+import 'package:flutter_basic/gesture/05_listener.dart';
+import 'package:flutter_basic/gesture/06-dragable.dart';
+import 'package:flutter_basic/gesture/07-RawGestureDetector.dart';
 
 //布局
 import 'package:flutter_basic/layout/01_layout.dart';
@@ -56,69 +59,61 @@ import 'package:flutter_basic/network/03_loading_status.dart';
 //生命周期
 import 'package:flutter_basic/lifecycle/LifecyclePage.dart';
 
+import 'common.dart';
+
 void main() => runApp(new FlutterBasicWidget());
 
 List<Page> _buildRoutes() {
   return [
     //basic widget
-    Page("HelloWorld", (BuildContext context) => buildHelloWorldApp()),
-    Page("BasicWidget", (BuildContext context) => buildBasicWidgetApp()),
-    Page("MaterialWidget", (BuildContext context) => buildMaterialWidget()),
-    Page("TapAbleButton", (BuildContext context) => buildTapAbleButton()),
-    Page("StatefulWidget", (BuildContext context) => buildStatefulWidget()),
-    Page("ShoppingCartList", (BuildContext context) => buildShoppingCartList()),
-    Page("InheritedWidget", (BuildContext context) => buildInheritedWidget()),
+    Page("Text", (context) => buildHelloWorldApp()),
+    Page("Basic", (context) => buildBasicWidgetApp()),
+    Page("Material", (context) => buildMaterialWidget()),
+    Page("TapAbleButton", (context) => buildTapAbleButton()),
+    Page("Stateful", (context) => buildStatefulWidget()),
+    Page("ShoppingCartList", (context) => buildShoppingCartList()),
+    Page("Inherited", (context) => buildInheritedWidget()),
     //basic image
-    Page("ImageList", (BuildContext context) => buildImageList()),
+    Page("ImageList", (context) => buildImageList()),
     //basic list
-    Page("SimpleList", (BuildContext context) => buildSimpleList()),
-    Page("HorizontalListView",
-        (BuildContext context) => buildHorizontalListView()),
-    Page("LongListView", (BuildContext context) => buildLongListView()),
-    Page("MultiListView", (BuildContext context) => buildMultiListView()),
-    Page("GridViewWidget", (BuildContext context) => buildGridViewWidget()),
-    Page("InfiniteListView", (BuildContext context) => buildInfiniteListView()),
-    Page("CustomScrollView", (BuildContext context) => buildCustomScrollView()),
-    Page("ScrollNotificationWidget",
-        (BuildContext context) => buildScrollNotificationWidget()),
+    Page("SimpleList", (context) => buildSimpleList()),
+    Page("HorizontalListView", (context) => buildHorizontalListView()),
+    Page("LongListView", (context) => buildLongListView()),
+    Page("MultiListView", (context) => buildMultiListView()),
+    Page("GridView", (context) => buildGridViewWidget()),
+    Page("InfiniteListView", (context) => buildInfiniteListView()),
+    Page("CustomScrollView", (context) => buildCustomScrollView()),
+    Page("ScrollNotification", (context) => buildScrollNotificationWidget()),
     //basic gesture
-    Page("TapAbleWidget", (BuildContext context) => buildTapAbleWidget()),
-    Page("InkWellWidget", (BuildContext context) => buildInkWellWidget()),
-    Page("DismissibleWidget",
-        (BuildContext context) => buildDismissibleWidget()),
-    Page("DrawableWidget", (BuildContext context) => buildDrawableWidget()),
+    Page("Tapable", (context) => buildTapAbleWidget()),
+    Page("InkWell", (context) => buildInkWellWidget()),
+    Page("Dismissible", (context) => buildDismissibleWidget()),
+    Page("Drawable", (context) => buildDrawableWidget()),
+    Page("TouchEventListener", (context) => buildTouchEventListenerWidget()),
+    Page("Dragable", (context) => buildDragableWidget()),
+    Page("RawGestureDetector", (context) => buildDoubleGestureWidget()),
     //layout
-    Page("LayoutDemoWidget", (BuildContext context) => buildLayoutWidget()),
-    Page("LayoutDemoInteractiveWidget",
-        (BuildContext context) => buildLayoutInteractiveWidget()),
-    Page("ConstrainedBoxWidget",
-        (BuildContext context) => buildConstrainedBoxWidget()),
-    Page("MaterialPagerWidge1t",
-        (BuildContext context) => buildMaterialPagerWidget1()),
-    Page("MaterialPagerWidget2",
-        (BuildContext context) => buildMaterialPagerWidget2()),
-    Page("UpdateItemWidget", (BuildContext context) => buildUpdateItemWidget()),
+    Page("LayoutDemo", (context) => buildLayoutWidget()),
+    Page("LayoutDemoInteractive", (context) => buildLayoutInteractiveWidget()),
+    Page("ConstrainedBox", (context) => buildConstrainedBoxWidget()),
+    Page("MaterialPager1", (context) => buildMaterialPagerWidget1()),
+    Page("MaterialPager2", (context) => buildMaterialPagerWidget2()),
+    Page("UpdateItem", (context) => buildUpdateItemWidget()),
     //Animation
-    Page("ZoomInLogoWidget", (BuildContext context) => buildZoomInLogoWidget()),
-    Page("ZoomInLogoAnimatedWidget",
-        (BuildContext context) => buildZoomInLogoAnimatedWidget()),
+    Page("ZoomInLogo", (context) => buildZoomInLogoWidget()),
+    Page("ZoomInLogoAnimated", (context) => buildZoomInLogoAnimatedWidget()),
     //Custom View
-    Page("CakeView", (BuildContext context) => buildCustomCakeView()),
+    Page("CakeView", (context) => buildCustomCakeView()),
     //basic navigator
-    Page("SimpleNavigatorWidget",
-        (BuildContext context) => buildSimpleNavigatorWidget()),
-    Page("PassValuesNavigatorWidget",
-        (BuildContext context) => buildPassValuesNavigatorWidget()),
-    Page("ReturningValuesWidget",
-        (BuildContext context) => buildReturningValuesWidget()),
+    Page("SimpleNavigator", (context) => buildSimpleNavigatorWidget()),
+    Page("PassValuesNavigator", (context) => buildPassValuesNavigatorWidget()),
+    Page("ReturningValues", (context) => buildReturningValuesWidget()),
     //net work
-    Page("HttpRequestingWidget",
-        (BuildContext context) => buildHttpRequestingWidget()),
-    Page("WebSocketWidget", (BuildContext context) => buildWebSocketWidget()),
-    Page("LoadingStatusWidget",
-        (BuildContext context) => buildLoadingStatusWidget()),
+    Page("HttpRequesting", (context) => buildHttpRequestingWidget()),
+    Page("WebSocket", (context) => buildWebSocketWidget()),
+    Page("LoadingStatus", (context) => buildLoadingStatusWidget()),
     //Lifecycle
-    Page("Lifecycle", (BuildContext context) => buildLifecyclePageWidget())
+    Page("Lifecycle", (context) => buildLifecyclePageWidget())
   ];
 }
 
@@ -127,36 +122,7 @@ class FlutterBasicWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: "Flutter Basic",
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text("Flutter Basic"),
-        ),
-        body: _buildBody(_buildRoutes()),
-      ),
+      home: buildListBody("Flutter Basic", context, _buildRoutes()),
     );
   }
-}
-
-class Page {
-  String name;
-  WidgetBuilder builder;
-
-  Page(this.name, this.builder);
-}
-
-_buildBody(List<Page> routes) {
-  return ListView.builder(
-      itemExtent: 50,
-      itemCount: routes.length,
-      itemBuilder: (BuildContext context, int index) {
-        return new ListTile(
-          title: new Text(routes[index].name),
-          trailing: new RaisedButton(
-              child: new Text("Go"),
-              onPressed: () {
-                Navigator.push(context,
-                    new MaterialPageRoute(builder: routes[index].builder));
-              }),
-        );
-      });
 }

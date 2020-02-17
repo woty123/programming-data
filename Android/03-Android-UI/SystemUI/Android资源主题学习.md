@@ -47,12 +47,14 @@ Android的ResurceType中的Style用于定义UI元素的外观和格式,包括如
 
 ```xml
 <resources>
-    <declare-styleable name="ViewGroup_Layout">//使用declare-styleable声明一个属性组，当然attr也可以单独声明。
-                <attr name="layout_width" format="dimension">//name表示属性名称，format表示属性的取值类型，如这里是一个枚举
-                    <enum name="fill_parent" value="-1" />
-                    <enum name="match_parent" value="-1" />
-                    <enum name="wrap_content" value="-2" />
-                </attr>
+    <!-- 使用declare-styleable声明一个属性组，当然attr也可以单独声明。 -->
+    <declare-styleable name="ViewGroup_Layout">
+        <!-- name表示属性名称，format表示属性的取值类型，如这里是一个枚举 -->
+        <attr name="layout_width" format="dimension">
+            <enum name="fill_parent" value="-1" />
+            <enum name="match_parent" value="-1" />
+            <enum name="wrap_content" value="-2" />
+        </attr>
      </declare-styleable>
 </resources>
 ```
@@ -86,7 +88,7 @@ Android的ResurceType中的Style用于定义UI元素的外观和格式,包括如
             <attr name="custom_attr_c" format="integer"/>
             <attr name="custom_attr_d" format="integer"/>
         </declare-styleable>
-    
+
          <com.loopeer.springheader.sample.view.CustomView
                         xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:layout_width="wrap_content"
@@ -96,7 +98,7 @@ Android的ResurceType中的Style用于定义UI元素的外观和格式,包括如
                         app:custom_attr_c="2"
                         app:custom_attr_d="3"/>
 ```
-    
+
 通过AttributeSet可以获取所有属性
 
 ```java
@@ -119,15 +121,14 @@ typedArray.recycle();
 
 打印结果分别是：
 
-```
+```java
     Name layout_width Value -2
     Name layout_height Value -2
     Name text Value 你好啊
     Name custom_attr_a Value 1
     Name custom_attr_c Value 2
     Name custom_attr_d Value 3
-    
-    
+
     typedArray.getInteger(R.styleable.CustomView_custom_attr_a): 1
     typedArray.getInteger(R.styleable.CustomView_custom_attr_c): 2
     typedArray.getInteger(R.styleable.CustomView_custom_attr_d): 3
@@ -135,37 +136,34 @@ typedArray.recycle();
 
 ### 获取声明的单个属性
 
-刚刚说到也可以定义单个属性，如何获取单个属性：
-
-
-同样在布局文集中定义，可以通过遍历 AttributeSet 获取使用的单个属性：
+刚刚说到也可以定义单个属性，那么如何获取单个属性？：
 
 ```xml
     <com.loopeer.springheader.sample.view.CustomView
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:single_attr="false"/>
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:single_attr="false"/>
 ```
 
-也可以下面方式获取属性：
+1. 同样在布局文集中定义，可以通过遍历 AttributeSet 获取使用的单个属性：
+2. 也可以下面方式获取属性：
 
 ```java
          //定义用于获取属性的数组
          public static final int[] mAttrs = {R.attr.single_attr};//定义数组存储属性集合
          ...
-         //方法中获取属性
+
+         //在方法中获取属性
          {
-            TypedArray typedArray1 = context.obtainStyledAttributes(attrs, mAttrs);
-            boolean aBoolean = typedArray1.getBoolean(0, false);//通过脚标获取属性
+            TypedArray typedArray = context.obtainStyledAttributes(attrs, mAttrs);
+            boolean aBoolean = typedArray.getBoolean(0, false);//通过脚标获取属性
             Log.d(TAG, "aBoolean:" + aBoolean);
         }
 
         //打印结果
         Name single_attr Value false
 ```
-
-
 
 可以看出只要布局文件中使用了属性，在被解析成对象时，都会这些属性封装到构造函数AttributeSet中，而通过typedArray可以更加方便的获取指定的属性。因为有时候属性可能是引用类型，直接从AttributeSet中获取的话会比较麻烦。
 
@@ -174,6 +172,7 @@ typedArray.recycle();
 刚刚在 CustomView 中使用了系统自带的`text`属性，表明系统属性也是可以复用的，但是如果我们的自定义控件使用了系统的属性，但是又没有在我们定义的attrs中找到，这样可读性就不搞了，于是可以在我们声明的`declare-styleable`中声明系统text属性，只是不要加format就行：
 
 声明：
+
 ```xml
      <declare-styleable name="CustomView">
             <attr name="custom_attr_a" format="integer"/>
@@ -182,7 +181,9 @@ typedArray.recycle();
             <attr name="android:text"/>
         </declare-styleable>
 ```
+
 使用：
+
 ```xml
      <com.loopeer.springheader.sample.view.CustomView
                         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -196,6 +197,7 @@ typedArray.recycle();
 ```
 
 获取：
+
 ```java
      typedArray.getString(R.styleable.CustomView_android_text)
 ```
@@ -220,14 +222,15 @@ context直接调用了getTheme的obtainStyledAttributes方法，可以看到这�
                     @StyleableRes int[] attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes)
 ```
 
--  第三个参数：`@AttrRes int defStyleAttr `：An attribute in the current theme that contains a reference to a style resource that supplies defaults values for the TypedArray.  Can be 0 to not look for defaults. 
--  第四个参数：`@StyleRes int defStyleRes` A resource identifier of a style resource that supplies default values for the TypedArray,used only if defStyleAttr is 0 or can not be found in the theme.  Can be 0 to not look for defaults.
+- 第三个参数：`@AttrRes int defStyleAttr`：An attribute in the current theme that contains a reference to a style resource that supplies defaults values for the TypedArray.  Can be 0 to not look for defaults.
+- 第四个参数：`@StyleRes int defStyleRes` A resource identifier of a style resource that supplies default values for the TypedArray,used only if defStyleAttr is 0 or can not be found in the theme.  Can be 0 to not look for defaults.
 
 这两个参数都可以用于设置默认的属性值
 
 #### defStyleRes的使用
 
 先定义一个style:
+
 ```xml
      <style name="DefCustomAttr">
             <item name="custom_attr_a">22</item>
@@ -235,19 +238,22 @@ context直接调用了getTheme的obtainStyledAttributes方法，可以看到这�
             <item name="custom_attr_d">44</item>
         </style>
 ```
+
 在布局中不使用添加属性
+
 ```xml
     <com.loopeer.springheader.sample.view.CustomView
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:single_attr="true"
-                        android:text="@string/app_name"/>
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:single_attr="true"
+        android:text="@string/app_name"/>
 ```
+
 在构造函数中获取属性，在第四个参数传入声明的DefCustomAttr：
 
 ```java
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomView,0,R.style.DefCustomAttr);
+    TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomView,0,R.style.DefCustomAttr);
 ```
 
 最后获取结果：
@@ -294,7 +300,7 @@ context直接调用了getTheme的obtainStyledAttributes方法，可以看到这�
         </style>
 ```
 
- 在构造函数获取属性时传入引用：
+在构造函数获取属性时传入引用：
 
 ```java
     TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.CustomView,R.attr.CustomStyleRef,0);
@@ -342,18 +348,17 @@ context直接调用了getTheme的obtainStyledAttributes方法，可以看到这�
         public CustomView(Context context) {
             this(context, null);
         }
-    
-    
+
         public CustomView(Context context, AttributeSet attrs) {
             this(context, attrs, 0);
         }
-    
+
         public CustomView(Context context, AttributeSet attrs, int defStyleAttr) {
             super(context, attrs, defStyleAttr);
         }
 ```
 
-但是如是Button就要注意了，这样写存在一定问题，因为`com.android.internal.R.attr.textViewStyle`将不会被使用到，就会照成一些默认属性的丢失。
+但是如是Button就要注意了，这样写存在一定问题，因为`com.android.internal.R.attr.textViewStyle`将不会被使用到，就会造成一些默认属性的丢失。
 
 >注意：只有defStyleAttr设置为0或者在当前的theme中没有找到相关属性时，才会去defStyleRes中读取，defStyleAttr的优先级比defStyleRes高。
 
@@ -410,16 +415,16 @@ Theme与Style使用同一个元素标签`<style>`，区别在于所包含的属�
 
 Android系统提供了多套主题，查看Android的[frameworks/base/core/res/res/values](https://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/core/res/res/values/themes.xml)目录，就会看到有以下几个文件(目前为止)：
 
-*   **themes.xml**：低版本的主题，目标API level一般为10或以下
-*   **themes_holo.xml**：从API level 11添加的主题
-*   **themes_device_defaults.xml**：从API level 14添加的主题
-*   **themes_material.xml**：从API level 21添加材料的主题
-*   **themes_micro.xml**：
-*   **themes_leanback.xml**：
+* **themes.xml**：低版本的主题，目标API level一般为10或以下
+* **themes_holo.xml**：从API level 11添加的主题
+* **themes_device_defaults.xml**：从API level 14添加的主题
+* **themes_material.xml**：从API level 21添加材料的主题
+* **themes_micro.xml**：
+* **themes_leanback.xml**：
 
 不过在实际应用中，因为大部分都采用兼容包的，一般都会采用兼容包提供的一套主题：**Theme.AppCompat**。**AppCompat**主题默认会根据不同版本的系统自动匹配相应的主题，比如在Android 5.0系统，它会继承Material主题。不过这也会导致一个问题，不同版本的系统使用不同主题，就会出现不同的体验。因此，为了统一用户体验，最好还是自定义主题。
 
-**一般我们在定义一个theme时会让其继承某一个系统已有的属性，**，如果直接在application或者activity中使用完全自定义的属性是会报错的，因为Activity或Application的需要很多的属性才能工作，
+**一般我们在定义一个theme时会让其继承某一个系统已有的属性**，如果直接在application或者activity中使用完全自定义的属性是会报错的，因为Activity或Application的需要很多的属性才能工作，
 比如现在新建项目默认都是继承的`Theme.AppCompat.Light.DarkActionBar`。使用Compat包中的属性，可以帮助我们做好各个系统的版本适配。
 
 ```xml
@@ -443,23 +448,23 @@ View某一个属性优先于View指定的Style，而View中的Style会优先于A
 
 ```xml
     <attr name="DefaultText" format="string"/>
-    
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-            <!-- Customize your theme here. -->
-            <item name="colorPrimary">@color/colorPrimary</item>
-            <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-            <item name="colorAccent">@color/colorAccent</item>
-            <item name="CustomStyleRef">@style/DefCustomAttr</item>
-            <item name="DefaultText">@string/app_name</item>
-        </style>
-    
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="CustomStyleRef">@style/DefCustomAttr</item>
+        <item name="DefaultText">@string/app_name</item>
+    </style>
+
     <com.loopeer.springheader.sample.view.CustomView
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:single_attr="true"
-                        android:textColor="?android:textColorSecondary"
-                        android:text="?com.loopeer.springheader.sample:attr/DefaultText"/>
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:single_attr="true"
+        android:textColor="?android:textColorSecondary"
+        android:text="?com.loopeer.springheader.sample:attr/DefaultText"/>
 ```
 
 获得一个Attr的方法，不同于普通资源使用`@`符号获得的方式，而是需要使用`?`符号来获得属性，整体的表达方式如下：

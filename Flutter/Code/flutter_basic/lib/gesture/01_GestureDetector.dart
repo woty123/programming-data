@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 
 Widget buildTapAbleWidget() {
-  return new MaterialApp(
-    title: "tap",
-    home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text("Process Tap"),
-        ),
-        body: Builder(builder: (BuildContext context) {
-          return new ListView(
-            children: _buildTapAbleChildren(context),
-          );
-        })),
-  );
+  return new Scaffold(
+      appBar: new AppBar(
+        title: new Text("Process Tap"),
+      ),
+      body: Builder(builder: (BuildContext context) {
+        return new ListView(
+          children: _buildTapAbleChildren(context),
+        );
+      }));
 }
 
 _buildTapAbleChildren(BuildContext context) {
   return [
+    new Container(height: 50),
     new Button(),
+    new Container(height: 50),
     new RaisedButton(
       onPressed: () {
         _showSnackbarCallback(context, "RaisedButton");

@@ -10,12 +10,7 @@ Widget buildInkWellWidget() {
 class InkWellWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final title = 'InkWell Demo';
-
-    return new MaterialApp(
-      title: title,
-      home: new HomePage(title: title),
-    );
+    return new HomePage(title: 'InkWell Demo');
   }
 }
 
