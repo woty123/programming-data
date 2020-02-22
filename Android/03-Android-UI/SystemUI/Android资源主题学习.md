@@ -236,7 +236,7 @@ context直接调用了getTheme的obtainStyledAttributes方法，可以看到这�
             <item name="custom_attr_a">22</item>
             <item name="custom_attr_c">33</item>
             <item name="custom_attr_d">44</item>
-        </style>
+    </style>
 ```
 
 在布局中不使用添加属性

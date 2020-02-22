@@ -23,9 +23,3 @@
 
 - 自定义错误处理器：FlutterError.onError
 - try-catch 捕获不到异步任务的异常，可以使用 `runZoned(...)`，这类似让任务运行在一个沙箱中，我们可以捕获沙箱中的任何异常信息。
-
-## 常用开源库学习
-
-- <https://pub.dev/packages/provider>
-- <https://pub.dev/packages/auto_size_text>
-- <https://api.flutter.dev/flutter/dart-core/DateTime-class.html>

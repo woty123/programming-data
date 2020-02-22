@@ -47,9 +47,15 @@ import 'package:flutter_basic/animation/02_animated_widget.dart';
 import 'package:flutter_basic/custom-view/draw-cake.dart';
 
 //导航
-import 'package:flutter_basic/navigator/01_simple_navigator.dart';
-import 'package:flutter_basic/navigator/02_pass_values.dart';
-import 'package:flutter_basic/navigator/03_return_values.dart';
+import 'package:flutter_basic/navigator/01_base-router.dart';
+import 'package:flutter_basic/navigator/02_base-roter-pass.dart';
+import 'package:flutter_basic/navigator/03_base-router-return.dart';
+import 'package:flutter_basic/navigator/04-named-router.dart';
+
+//传递数据
+import 'package:flutter_basic/passing-value/01-passing-value-by-inherrited.dart';
+import 'package:flutter_basic/passing-value/02-passing-value-by-notification.dart';
+import 'package:flutter_basic/passing-value/03-passing-value-by-eventbus.dart';
 
 //网络
 import 'package:flutter_basic/network/01_http.dart';
@@ -73,8 +79,10 @@ List<Page> _buildRoutes() {
     Page("Stateful", (context) => buildStatefulWidget()),
     Page("ShoppingCartList", (context) => buildShoppingCartList()),
     Page("Inherited", (context) => buildInheritedWidget()),
+
     //basic image
     Page("ImageList", (context) => buildImageList()),
+
     //basic list
     Page("SimpleList", (context) => buildSimpleList()),
     Page("HorizontalListView", (context) => buildHorizontalListView()),
@@ -84,6 +92,7 @@ List<Page> _buildRoutes() {
     Page("InfiniteListView", (context) => buildInfiniteListView()),
     Page("CustomScrollView", (context) => buildCustomScrollView()),
     Page("ScrollNotification", (context) => buildScrollNotificationWidget()),
+
     //basic gesture
     Page("Tapable", (context) => buildTapAbleWidget()),
     Page("InkWell", (context) => buildInkWellWidget()),
@@ -92,6 +101,7 @@ List<Page> _buildRoutes() {
     Page("TouchEventListener", (context) => buildTouchEventListenerWidget()),
     Page("Dragable", (context) => buildDragableWidget()),
     Page("RawGestureDetector", (context) => buildDoubleGestureWidget()),
+
     //layout
     Page("LayoutDemo", (context) => buildLayoutWidget()),
     Page("LayoutDemoInteractive", (context) => buildLayoutInteractiveWidget()),
@@ -99,19 +109,30 @@ List<Page> _buildRoutes() {
     Page("MaterialPager1", (context) => buildMaterialPagerWidget1()),
     Page("MaterialPager2", (context) => buildMaterialPagerWidget2()),
     Page("UpdateItem", (context) => buildUpdateItemWidget()),
+
     //Animation
     Page("ZoomInLogo", (context) => buildZoomInLogoWidget()),
     Page("ZoomInLogoAnimated", (context) => buildZoomInLogoAnimatedWidget()),
+
     //Custom View
     Page("CakeView", (context) => buildCustomCakeView()),
+
     //basic navigator
-    Page("SimpleNavigator", (context) => buildSimpleNavigatorWidget()),
-    Page("PassValuesNavigator", (context) => buildPassValuesNavigatorWidget()),
-    Page("ReturningValues", (context) => buildReturningValuesWidget()),
+    Page("BaseRouter", (context) => buildBaseRouterWidget()),
+    Page("BaseRouter PassValue", (context) => buildBaseRouterPassWidget()),
+    Page("BaseRouter ReturnValue", (context) => buildBaseRouterGetWidget()),
+    Page("NamedRouter", (context) => buildNamedRouterWidget()),
+
+    //passing value
+    Page("PassValue-Inherited", (context) => buildPassValueByInheritedWidget()),
+    Page("PassValue-Notification", (context) => buildPassValueByNotification()),
+    Page("PassValue-EventBus", (context) => buildPassValueByEventBus()),
+
     //net work
     Page("HttpRequesting", (context) => buildHttpRequestingWidget()),
     Page("WebSocket", (context) => buildWebSocketWidget()),
     Page("LoadingStatus", (context) => buildLoadingStatusWidget()),
+
     //Lifecycle
     Page("Lifecycle", (context) => buildLifecyclePageWidget())
   ];

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-Widget buildReturningValuesWidget() {
-  return new MaterialApp(
-    title: 'Returning Data',
-    home: new HomeScreen(),
-  );
-}
+/*
+*下面展示的是从打开的界面获取参数。
+*/
+
+Widget buildBaseRouterGetWidget() => HomeScreen();
 
 class HomeScreen extends StatelessWidget {
   @override

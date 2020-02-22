@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+/*
+*下面展示的是使用基本路由进行参数传递。 
+*/
+
 class Todo {
   final String title;
   final String description;
@@ -8,25 +12,25 @@ class Todo {
   Todo(this.title, this.description);
 }
 
-Widget buildPassValuesNavigatorWidget() {
+Widget buildBaseRouterPassWidget() {
   return new MaterialApp(
     title: 'Passing Data',
-    home: new _TodosScreen(
-      todos: new List.generate(
+    home: new _TodoScreen(
+      todoList: new List.generate(
         20,
         (i) => new Todo(
-              'Todo $i',
-              'A description of what needs to be done for Todo $i',
-            ),
+          'Todo $i',
+          'A description of what needs to be done for Todo $i',
+        ),
       ),
     ),
   );
 }
 
-class _TodosScreen extends StatelessWidget {
-  final List<Todo> todos;
+class _TodoScreen extends StatelessWidget {
+  final List<Todo> todoList;
 
-  _TodosScreen({Key key, @required this.todos}) : super(key: key);
+  _TodoScreen({Key key, @required this.todoList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +39,10 @@ class _TodosScreen extends StatelessWidget {
         title: new Text('Todos'),
       ),
       body: new ListView.builder(
-        itemCount: todos.length,
+        itemCount: todoList.length,
         itemBuilder: (context, index) {
           return new ListTile(
-            title: new Text(todos[index].title),
+            title: new Text(todoList[index].title),
             // When a user taps on the ListTile, navigate to the DetailScreen.
             // Notice that we're not only creating a new DetailScreen, we're
             // also passing the current todo through to it!
@@ -46,7 +50,8 @@ class _TodosScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 new MaterialPageRoute(
-                  builder: (context) => new _DetailScreen(todo: todos[index]),
+                  builder: (context) =>
+                      new _DetailScreen(todo: todoList[index]),
                 ),
               );
             },
