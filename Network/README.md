@@ -76,7 +76,3 @@
 - [《HTTPS权威指南》-TLS 协议](01-Basic/HTTPS权威指南03-TLS协议.md)
 - [《HTTPS权威指南》-PKI、证书](01-Basic/HTTPS权威指南04-PKI.md)
 - [《HTTPS权威指南》-OpenSSL&Keytool](01-Basic/HTTPS权威指南-OpenSSL&Keytool.md)
-
-### 图解密码技术
-
-- [《图解密码技术》第一部分](02-Encryption/图解密码技术-part01.md)

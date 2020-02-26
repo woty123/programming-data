@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-//基础组件
-import 'package:flutter_basic/widget/00_hello_world.dart';
-import 'package:flutter_basic/widget/01_basic_widget.dart';
-import 'package:flutter_basic/widget/02_material_widget.dart';
-import 'package:flutter_basic/widget/03_process_gesture.dart';
-import 'package:flutter_basic/widget/04_stateful_widget.dart';
-import 'package:flutter_basic/widget/05_shopping_cart.dart';
-import 'package:flutter_basic/widget/06_inherited_widget.dart';
+//入门
+import 'package:flutter_basic/getting-started/00_hello_world.dart';
+import 'package:flutter_basic/getting-started/01_basic_widget.dart';
+import 'package:flutter_basic/getting-started/02_material_widget.dart';
+import 'package:flutter_basic/getting-started/03_process_gesture.dart';
+import 'package:flutter_basic/getting-started/04_stateful_widget.dart';
+import 'package:flutter_basic/getting-started/05_shopping_cart.dart';
+import 'package:flutter_basic/getting-started/06_inherited_widget.dart';
 
 //图片展示
 import 'package:flutter_basic/image/01_display_images.dart';
@@ -58,13 +58,15 @@ import 'package:flutter_basic/passing-value/02-passing-value-by-notification.dar
 import 'package:flutter_basic/passing-value/03-passing-value-by-eventbus.dart';
 
 //网络
-import 'package:flutter_basic/network/01_http.dart';
-import 'package:flutter_basic/network/02_web_socket.dart';
-import 'package:flutter_basic/network/03_loading_status.dart';
+import 'package:flutter_basic/network/01_httpclient.dart';
+import 'package:flutter_basic/network/02_http_sample1.dart';
+import 'package:flutter_basic/network/07_web_socket.dart';
+import 'package:flutter_basic/network/02_http_sample2.dart';
 
 //生命周期
 import 'package:flutter_basic/lifecycle/LifecyclePage.dart';
 
+//基础库
 import 'common.dart';
 
 void main() => runApp(new FlutterBasicWidget());
@@ -129,9 +131,9 @@ List<Page> _buildRoutes() {
     Page("PassValue-EventBus", (context) => buildPassValueByEventBus()),
 
     //net work
-    Page("HttpRequesting", (context) => buildHttpRequestingWidget()),
-    Page("WebSocket", (context) => buildWebSocketWidget()),
-    Page("LoadingStatus", (context) => buildLoadingStatusWidget()),
+    Page("HttpClient", (context) => buildHttpClientWidget()),
+    Page("Http Sampe1", (context) => buildHttpSample1Widget()),
+    Page("Http Sampe2", (context) => buildHttpSample2Widget()),
 
     //Lifecycle
     Page("Lifecycle", (context) => buildLifecyclePageWidget())
@@ -142,8 +144,8 @@ class FlutterBasicWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: "Flutter Basic",
-      home: buildListBody("Flutter Basic", context, _buildRoutes()),
+      title: "Flutter 基础示例",
+      home: buildListBody("Flutter 基础示例", context, _buildRoutes()),
     );
   }
 }

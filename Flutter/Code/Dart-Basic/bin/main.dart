@@ -3,6 +3,7 @@ import 'package:Dart_Basic/02-function.dart' as function;
 import 'package:Dart_Basic/03-class.dart' as clazz;
 import 'package:Dart_Basic/04-operator.dart' as operation;
 import 'package:Dart_Basic/05-async.dart' as asyncTester;
+import 'package:Dart_Basic/06-http.dart' as httpTester;
 import 'package:Dart_Basic/geektime/dart_sample.dart' as geek_dart;
 
 void main(List<String> arguments) {
@@ -11,5 +12,6 @@ void main(List<String> arguments) {
 //  clazz.classSample();
 //  operation.operatorSample();
 //  geek_dart.test();
-  asyncTester.asyncFutureRule4();
+//  asyncTester.asyncFutureRule4();
+  httpTester.doRequest();
 }
