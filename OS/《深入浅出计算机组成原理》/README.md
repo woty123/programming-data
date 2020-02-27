@@ -1,4 +1,4 @@
-# [深入浅出计算机组成原理：带你掌握计算机体系全貌](https://time.geekbang.org/column/intro/170) 整理
+# 极客时间 [深入浅出计算机组成原理：带你掌握计算机体系全貌](https://time.geekbang.org/column/intro/170) 整理
 
 ## 1 入门篇
 

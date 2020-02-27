@@ -1,4 +1,4 @@
-# [《Flutter核心技术与实战》](https://time.geekbang.org/column/article/104040) 整理
+# 极客时间 [《Flutter核心技术与实战》](https://time.geekbang.org/column/article/104040) 整理
 
 课程源码 [flutter_core_demo](https://github.com/cyndibaby905/flutter_core_demo)。
 

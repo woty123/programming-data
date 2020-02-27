@@ -1,4 +1,4 @@
-# [Java并发编程实战——全面系统提升你的并发编程能力](https://time.geekbang.org/column/intro/159) 整理
+# 极客时间 [Java并发编程实战——全面系统提升你的并发编程能力](https://time.geekbang.org/column/intro/159) 整理
 
 ## 1 第一部分，并发理论基础
 
