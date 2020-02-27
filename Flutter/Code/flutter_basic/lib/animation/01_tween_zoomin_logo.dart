@@ -1,21 +1,21 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 
-
-Widget buildZoomInLogoWidget() {
-  return LogoApp();
+Widget buildTweenAnimationWidget() {
+  return Scaffold(
+    body: TweenAnimationWidget(),
+  );
 }
 
-class LogoApp extends StatefulWidget {
-
+class TweenAnimationWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _LogoAppState();
+    return _TweenAnimationWidgetState();
   }
-
 }
 
-class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
+class _TweenAnimationWidgetState extends State<TweenAnimationWidget>
+    with SingleTickerProviderStateMixin {
 
   Animation<double> animation;
   AnimationController animationController;
@@ -23,13 +23,14 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    animationController = AnimationController(
-        duration: const Duration(milliseconds: 2000),
-        vsync: this);
+    //控制器
+    animationController = AnimationController(duration: const Duration(milliseconds: 2000), vsync: this);
+    //动画
     animation = Tween(begin: 0.0, end: 300.0).animate(animationController)
       ..addListener(() {
         setState(() {});
       });
+    //开始动画
     animationController.forward();
   }
 
@@ -50,5 +51,4 @@ class _LogoAppState extends State<LogoApp> with SingleTickerProviderStateMixin {
       ),
     );
   }
-
 }

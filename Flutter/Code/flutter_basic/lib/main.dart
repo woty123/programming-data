@@ -40,8 +40,11 @@ import 'package:flutter_basic/layout/05_material_pager2.dart';
 import 'package:flutter_basic/layout/06_update-item.dart';
 
 //动画
-import 'package:flutter_basic/animation/01_zoomin_logo.dart';
-import 'package:flutter_basic/animation/02_animated_widget.dart';
+import 'package:flutter_basic/animation/01_tween_zoomin_logo.dart';
+import 'package:flutter_basic/animation/02_curve_animation.dart';
+import 'package:flutter_basic/animation/03_animated_widget.dart';
+import 'package:flutter_basic/animation/04_animation_builder.dart';
+import 'package:flutter_basic/animation/05_hero_animation.dart';
 
 //自定义View
 import 'package:flutter_basic/custom-view/draw-cake.dart';
@@ -60,8 +63,10 @@ import 'package:flutter_basic/passing-value/03-passing-value-by-eventbus.dart';
 //网络
 import 'package:flutter_basic/network/01_httpclient.dart';
 import 'package:flutter_basic/network/02_http_sample1.dart';
-import 'package:flutter_basic/network/07_web_socket.dart';
 import 'package:flutter_basic/network/02_http_sample2.dart';
+import 'package:flutter_basic/network/03-dio.dart';
+import 'package:flutter_basic/network/04-json-convert.dart';
+import 'package:flutter_basic/network/07_web_socket.dart';
 
 //生命周期
 import 'package:flutter_basic/lifecycle/LifecyclePage.dart';
@@ -113,11 +118,17 @@ List<Page> _buildRoutes() {
     Page("UpdateItem", (context) => buildUpdateItemWidget()),
 
     //Animation
-    Page("ZoomInLogo", (context) => buildZoomInLogoWidget()),
-    Page("ZoomInLogoAnimated", (context) => buildZoomInLogoAnimatedWidget()),
+    Page("TweenAnimation", (context) => buildTweenAnimationWidget()),
+    Page("CurveAnimate", (context) => buildCurveAnimateWidget()),
+    Page("AnimatedWidget", (context) => buildAnimatedWidgetDemo()),
+    Page("Animated Builder", (context) => buildAnimationBuilderWidget()),
+    Page("HeroAnimation", (context) => buildHeroAnimation()),
 
     //Custom View
     Page("CakeView", (context) => buildCustomCakeView()),
+
+    //Lifecycle
+    Page("Lifecycle", (context) => buildLifecyclePageWidget()),
 
     //basic navigator
     Page("BaseRouter", (context) => buildBaseRouterWidget()),
@@ -134,9 +145,8 @@ List<Page> _buildRoutes() {
     Page("HttpClient", (context) => buildHttpClientWidget()),
     Page("Http Sampe1", (context) => buildHttpSample1Widget()),
     Page("Http Sampe2", (context) => buildHttpSample2Widget()),
-
-    //Lifecycle
-    Page("Lifecycle", (context) => buildLifecyclePageWidget())
+    Page("Dio Sampe", (context) => buildDioDemoWidget()),
+    Page("Json Parse", (context) => buildJsonParsingDemo()),
   ];
 }
 
