@@ -19,7 +19,7 @@ Platform：
 
 - [Android](Android/README.md)
 - [Flutter](Flutter/README.md)
-- [JavaEE](JavaEE/README.md)
+- [Back-end](Back-end/README.md)
 - [Front-end](Front-end/README.md)
 
 Architecture：
