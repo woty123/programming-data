@@ -40,6 +40,7 @@ flutter 官方文档
 
 - [flutter 官网](https://flutter.dev/)
 - [flutter github](https://github.com/flutter/flutter)
+- [flutter wiki](https://github.com/flutter/flutter/wiki)
 - [flutter 中文网](http://doc.flutter-dev.cn/)
 - [flutter 中文官网](https://flutterchina.club/)
 - [flutter 中文社区](https://flutter-io.cn/)
@@ -48,6 +49,19 @@ flutter 入门体验
 
 - [Write Your First Flutter App, part 1](https://codelabs.developers.google.com/codelabs/first-flutter-app-pt1/#0)
 - [Write Your First Flutter App, part 2](https://codelabs.developers.google.com/codelabs/first-flutter-app-pt2/#1)
+
+flutter 版本升级记录与兼容：
+
+- [Flutter Changelog](https://github.com/flutter/flutter/wiki/Changelog)
+- [release-notes](https://flutter.dev/docs/development/tools/sdk/release-notes)
+- 1.12 版本
+  - [Flutter Interact 的 Flutter 1.12 大进化和回顾](https://juejin.im/post/5df2366b6fb9a016510da009)
+  - [Flutter Android 1.12 迁移指南](https://juejin.im/post/5def89b96fb9a016230abf7c#heading-0)
+
+教程：
+
+- 慕课网：[Flutter从入门到进阶：实战携程网App](https://coding.imooc.com/class/chapter/321.html)
+- 极客时间：[Flutter核心技术与实战](https://time.geekbang.org/column/intro/200)、[2019年最新Flutter学习全攻略](https://time.geekbang.org/column/article/106380)
 
 系列博客
 
@@ -68,11 +82,6 @@ flutter 入门体验
   - [带你快速掌握Flutter的视图(Widgets)](http://www.devio.org/2019/03/16/flutter-views/)
   - [两分钟带你快速掌握Flutter的项目结构、资源、依赖和本地化](http://www.devio.org/2019/04/02/flutter-project-structure-resources-dependencies-and-localization/)
   - [快速上手Flutter开发系列教程」之线程和异步UI](http://www.devio.org/2019/03/16/thread-and-asynchronous-ui/)
-
-视频教程：
-
-- 慕课网：[Flutter从入门到进阶：实战携程网App](https://coding.imooc.com/class/chapter/321.html)
-- 极客时间：[Flutter核心技术与实战](https://time.geekbang.org/column/intro/200)、[2019年最新Flutter学习全攻略](https://time.geekbang.org/column/article/106380)
 
 实例项目
 

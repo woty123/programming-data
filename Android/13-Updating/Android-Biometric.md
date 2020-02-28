@@ -37,11 +37,249 @@ androidx.biometric 库
 
 ## 2 实现指纹认证
 
+### 2.1 Api23-Api27
+
+在 Api23-Api27 上，我们应该使用 suport/androidx 中的 FingerprintManagerCompat，其对指纹验证做了封装，其主要功能包括：
+
+- 判断手机是否支持指纹验证：isHardwareDetected
+- 判断手机上是否录入的指纹：hasEnrolledFingerprints
+- 调用系统指纹验证功能：authenticate
+
+在发起指纹验证之前，首先我们应该使用 isHardwareDetected 和 hasEnrolledFingerprints 方法进行判断，如果不支持或者没有录入指纹，则对用户机械能相关提示，如果判断通过，则调用 authenticate 方法发起指纹验证调用，在 Api23-Api27 上，是没有系统级 UI 提示，我们需要开发 UI 提示相关功能。
+
+authenticate 方法：
+
+```java
+public void authenticate(
+        @Nullable CryptoObject crypto,
+        int flags,
+        @Nullable CancellationSignal cancel,
+        @NonNull AuthenticationCallback callback,
+        @Nullable Handler handler) {
+            ...
+}
+```
+
+该方法的作用注释以及说得很清楚：Request authentication of a crypto object. This call warms up the fingerprint hardware and starts scanning for a fingerprint. It terminates when AuthenticationCallback#onAuthenticationError(int, CharSequence)} or AuthenticationCallback#onAuthenticationSucceeded(AuthenticationResult)} is called, at which point the object is no longer valid. The operation can be canceled by using the provided cancel object.
+
+参考说明：
+
+- crypto 用于请求验证的对象，与安全相关。
+- flags 预留参数，传 0 即可。
+- cancel 用于取消请求，使用场景是比如在用户点击识别框上的“取消”按钮或者“密码验证”按钮后，就要及时取消扫描器的扫描操作。不及时取消的话，指纹扫描器就会一直扫描，直至超时。这会造成两个问题：
+  - 耗电。
+  - 在超时时间内，用户将无法再次调起指纹识别。
+- callback 用于接受验证结果。
+- handler 可选参数，用于发送发送指纹验证的事件。
+
+可见最重要的是 AuthenticationCallback 回调：
+
+```java
+    public static abstract class AuthenticationCallback {
+        public void onAuthenticationError(int errMsgId, CharSequence errString) { }
+        public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) { }
+        public void onAuthenticationSucceeded(AuthenticationResult result) { }
+        public void onAuthenticationFailed() { }
+    }
+```
+
+AuthenticationCallback 上定义的方法分别对应不同的验证结果：
+
+1. onAuthenticationError：表示此次指纹验证请求遇到了不可恢复的错误，这次请求已经完全结束，之后不会再有回调。errString 可用直接用来提示用户。
+2. onAuthenticationHelp：表示此次指纹验证请求遇到了可恢复的错误，这次请求还没有结束，用户还可以再次尝试指纹验证，helpString 可以用于直接提示用户当前出现了什么错误，比如指纹传感器脏了。
+3. onAuthenticationSucceeded：指纹验证成功，可以从 result 参数获取我们在调用 authenticate 方法时传入的 CryptoObject。
+4. onAuthenticationFailed：表示指纹被识别到了，但是与录入的指纹不匹配，用户还可以再次尝试指纹验证。
+
+### 2.2 Api28
+
+在 Api28 即以上，则使用 android.hardware.biometrics.BiometricPrompt 进行中指纹验证请求，此时系统已经统一了指纹验证 UI 提示，开发者不需要再做这方便工作，只需要在构建 BiometricPrompt 对象时，配置好相关文案即可：
+
+```java
+    BiometricPrompt.Builder builder = new BiometricPrompt.Builder(context)
+            .setTitle(title)
+            .setNegativeButton(cancelText, command -> {
+                }, (dialog, which) -> {
+            })
+            .setSubtitle(subTitle)
+            .setDescription(description)
+
+    //构建 BiometricPrompt
+    BiometricPrompt biometricPrompt = builder.build();
+```
+
+BiometricPrompt 类上也定义了 authenticate，其与 FingerprintManagerCompat 上定义的大同小异。
+
+### 2.3 CryptoObject 的作用
+
+CryptoObject 内部定义了以下三个成员：
+
+```java
+        private final Signature mSignature;
+        private final Cipher mCipher;
+        private final Mac mMac;
+```
+
+且同一时刻只能有一个是非 null，就像联合体一样。参考官方示例 [google-security-samples](https://github.com/android/security-samples)，使用的是 Cipher 对象来创建 CryptoObject：
+
+```kotlin
+
+    private lateinit var keyStore: KeyStore
+
+     /**
+     * Sets up KeyStore and KeyGenerator
+     */
+    private fun setupKeyStoreAndKeyGenerator() {
+        try {
+            keyStore = KeyStore.getInstance("AndroidKeyStore")
+        } catch (e: KeyStoreException) {
+            throw RuntimeException("Failed to get an instance of KeyStore", e)
+        }
+
+        try {
+            keyGenerator = KeyGenerator.getInstance(KEY_ALGORITHM_AES, ANDROID_KEY_STORE)
+        } catch (e: Exception) {
+            when (e) {
+                is NoSuchAlgorithmException,
+                is NoSuchProviderException ->
+                    throw RuntimeException("Failed to get an instance of KeyGenerator", e)
+                else -> throw e
+            }
+        }
+    }
+
+    /**
+     * Sets up default cipher and a non-invalidated cipher
+     */
+    private fun setupCiphers():Cipher {
+        val defaultCipher: Cipher
+        try {
+            val cipherString = "AES/CBC/PKCS7Padding"
+            defaultCipher = Cipher.getInstance(cipherString)
+        } catch (e: Exception) {
+            when (e) {
+                is NoSuchAlgorithmException,
+                is NoSuchPaddingException -> throw RuntimeException("Failed to get an instance of Cipher", e)
+                else -> throw e
+            }
+        }
+        return defaultCipher
+    }
+
+    /**
+     * Creates a symmetric key in the Android Key Store which can only be used after the user has
+     * authenticated with a fingerprint.
+     *
+     * @param keyName the name of the key to be created
+     * @param invalidatedByBiometricEnrollment if `false` is passed, the created key will not be
+     * invalidated even if a new fingerprint is enrolled. The default value is `true` - the key will
+     * be invalidated if a new fingerprint is enrolled.
+     */
+    override fun createKey(keyName: String, invalidatedByBiometricEnrollment: Boolean) {
+
+        // The enrolling flow for fingerprint. This is where you ask the user to set up fingerprint
+        // for your flow. Use of keys is necessary if you need to know if the set of enrolled
+        // fingerprints has changed.
+
+        try {
+            keyStore.load(null)
+
+            val keyProperties = KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+
+            val builder = KeyGenParameterSpec.Builder(keyName, keyProperties)
+                    .setBlockModes(BLOCK_MODE_CBC)
+                    .setUserAuthenticationRequired(true)
+                    .setEncryptionPaddings(ENCRYPTION_PADDING_PKCS7)
+                    .also {
+                        if (Build.VERSION.SDK_INT >= 24) {
+                            it.setInvalidatedByBiometricEnrollment(invalidatedByBiometricEnrollment)
+                        }
+                    }
+
+            keyGenerator.run {
+                init(builder.build())
+                generateKey()
+            }
+
+        } catch (e: Exception) {
+            when (e) {
+                is NoSuchAlgorithmException,
+                is InvalidAlgorithmParameterException,
+                is CertificateException,
+                is IOException -> throw RuntimeException(e)
+                else -> throw e
+            }
+        }
+    }
+
+    /**
+     * Initialize the [Cipher] instance with the created key in the [createKey] method.
+     *
+     * @param keyName the key name to init the cipher
+     * @return `true` if initialization succeeded, `false` if the lock screen has been disabled or
+     * reset after key generation, or if a fingerprint was enrolled after key generation.
+     */
+    private fun initCipher(cipher: Cipher, keyName: String): Boolean {
+        try {
+            keyStore.load(null)
+            cipher.init(Cipher.ENCRYPT_MODE, keyStore.getKey(keyName, null) as SecretKey)
+            return true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            when (e) {
+                is KeyPermanentlyInvalidatedException -> return false
+                is KeyStoreException,
+                is CertificateException,
+                is UnrecoverableKeyException,
+                is IOException,
+                is NoSuchAlgorithmException,
+                is InvalidKeyException -> throw RuntimeException("Failed to init Cipher", e)
+                else -> throw e
+            }
+        }
+    }
+
+    private fun createObj(){
+        setupKeyStoreAndKeyGenerator()
+        val DEFAULT_KEY_NAME = "a name of the key"
+        val cipher = setupCiphers()
+        createKey(DEFAULT_KEY_NAME)
+        initCipher(cipher, DEFAULT_KEY_NAME)
+        val object = BiometricPrompt.CryptoObject(cipher)
+    }
+```
+
+可以看到，为了创建 CryptoObject 对象，首先需创建一个 Cipher 对象，而在这里相比平时我们使用 Cipher 进行加解密操作，要复杂一些。
+
+>通常情况下 Cipher 的使用：
+
+```kotlin
+    //des加密
+    fun encrypt(input: String, password: String): String {
+        //1.创建cipher对象，学习查看api文档
+        val cipher = Cipher.getInstance(transformation)
+
+        //2.初始化cipher(参数1：加密/解密模式)
+        val kf = SecretKeyFactory.getInstance(algorithm)
+        val keySpec = DESKeySpec(password.toByteArray())
+
+        val key: Key = kf.generateSecret(keySpec)
+        val iv = IvParameterSpec(password.toByteArray())
+        // CBC模式需要额外参数
+        cipher.init(Cipher.ENCRYPT_MODE, key, iv)
+
+        //3.加密/解密
+        val encrypt = cipher.doFinal(input.toByteArray())
+        println("加密后字节数组长度=" + encrypt.size)//8
+        // base64编码解决乱码问题
+        return Base64.encode(encrypt)
+    }
+```
+
+复杂的地方在于密钥的使用，这里使用的是 Android 平台提供密钥保存机制：
+
 - [ ] todo
 
-### CryptoObject 的作用
-
-### 相关引用
+### 2.4 相关引用
 
 博客：
 
