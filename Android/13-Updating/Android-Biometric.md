@@ -242,18 +242,16 @@ CryptoObject 内部定义了以下三个成员：
         setupKeyStoreAndKeyGenerator()
         val DEFAULT_KEY_NAME = "a name of the key"
         val cipher = setupCiphers()
-        createKey(DEFAULT_KEY_NAME)
+        createKey(DEFAULT_KEY_NAME,true)
         initCipher(cipher, DEFAULT_KEY_NAME)
         val object = BiometricPrompt.CryptoObject(cipher)
     }
 ```
 
-可以看到，为了创建 CryptoObject 对象，首先需创建一个 Cipher 对象，而在这里相比平时我们使用 Cipher 进行加解密操作，要复杂一些。
-
->通常情况下 Cipher 的使用：
+与在 Java 平台的使用方式不同：
 
 ```kotlin
-    //des加密
+    //java 平台 des 加密
     fun encrypt(input: String, password: String): String {
         //1.创建cipher对象，学习查看api文档
         val cipher = Cipher.getInstance(transformation)
@@ -275,15 +273,48 @@ CryptoObject 内部定义了以下三个成员：
     }
 ```
 
-复杂的地方在于密钥的使用，这里使用的是 Android 平台提供密钥保存机制：
+这里使用的是 Android 平台提供密钥保存机制来生成密钥的：Android 的 Keystore 系统可以把密钥保持在一个难以从设备中取出数据的容器中。当密钥保存到Keystore之后，可以在不取出密钥的状态下进行私密操作。此外，它提供了限制何时以何种方式使用密钥的方法，比如使用密钥时需要用户认证或限制密钥只能在加密模式下使用。
 
-- [ ] todo
+关于 Android 平台提供密钥保存机制，具体参考：
+
+- [Android Keystore 系统](https://developer.android.com/training/articles/keystore.html)
+- [KeyGenParameterSpec](https://developer.android.com/reference/android/security/keystore/KeyGenParameterSpec)
+- [using-the-android-keystore-system-to-store-sensitive-information-3a56175a454b](https://medium.com/@josiassena/using-the-android-keystore-system-to-store-sensitive-information-3a56175a454b)
+
+关键的部分在于使用 KeyGenParameterSpec 创建 key 的过程：
+
+```kotlin
+            val builder = KeyGenParameterSpec.Builder(keyName, keyProperties)
+                    //必要设置
+                    .setBlockModes(BLOCK_MODE_CBC)
+                    .setEncryptionPaddings(ENCRYPTION_PADDING_PKCS7)
+                    //一般情况下不需要下面设置
+                    .setUserAuthenticationRequired(true)
+                    .also {
+                        if (Build.VERSION.SDK_INT >= 24) {
+                            it.setInvalidatedByBiometricEnrollment(invalidatedByBiometricEnrollment)
+                        }
+                    }
+```
+
+setUserAuthenticationRequired：设置是否只有用户身份认证后，key 才被授权使用。对应到我们请求指纹认证时，传入 CryptoObject，当用户指纹认证通过，CryptoObject 内部的 Cipher 对象所绑定的 key 会被授权，而只有 key 被授权了，绑定这个 key 的 Cipher 对象才能够进行正常的加解密操作。当指纹验证回调成功，我们可以在回调参数中获取传入的 CryptoObject，然后拿 CryptoObject 内部的 Cipher 尝试进行一次加密操作，如果能正常加密则说明此次指纹验证没有安全异常。
+
+setInvalidatedByBiometricEnrollment：设置当在有新的指纹录入时，是否这个 key 应该被至于无效。这个方法设置用于检测在验证指纹的过程中，有没有新的指纹录入系统，如果有，则这个 key 将会失效，此时调用 `cipher.init(Cipher.ENCRYPT_MODE, keyStore.getKey(keyName, null) as SecretKey)` 就会出现异常。
+
+可见，这两个配置都是出于安全考虑。那么**是否应该使用 CryptoObject 呢**？
+
+1. 可以不使用，这不影响整体的验证流程。
+2. 使用的 CryptoObject 会使我们的验证过程更加安全可靠。
+
+具体可以参考 [Android 受保护的确认](https://developer.android.com/training/articles/security-android-protected-confirmation)
 
 ### 2.4 相关引用
 
 博客：
 
 - [An Android Fingerprint Authentication Tutorial](https://www.techotopia.com/index.php/An_Android_Fingerprint_Authentication_Tutorial)
+- [指纹识别-Android](https://www.jianshu.com/p/ab148e3a6ffd)
+- [Android指纹识别，提升APP用户体验，从这里开始](https://cloud.tencent.com/developer/article/1474404)
 
 第三方库：
 

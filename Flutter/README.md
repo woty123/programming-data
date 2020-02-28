@@ -25,7 +25,7 @@
 学习路线：
 
 - 学习 Dart 语法
-- 浏览一遍 Flutter 官方文档
+- 浏览 Flutter 官方文档
 - 阅读 《Flutter实战》
 - 阅读 Flutter 开源项目
 
@@ -95,11 +95,15 @@ flutter 版本升级记录与兼容：
 - [flutter-go](https://github.com/alibaba/flutter-go)
 - [Awesome Flutter：带你从入门到进阶的 Flutter 指南](https://juejin.im/post/5b2869e66fb9a00e5f3e861f)
 - [超完整的Flutter项目，功能丰富，适合学习和日常使用。](https://github.com/CarGuo/GSYGithubAppFlutter)
-- [HistoryOfEverything](https://github.com/2d-inc/HistoryOfEverything)
 - [高仿书旗小说 Flutter版](https://github.com/huanxsd/flutter_shuqi)
+- [HistoryOfEverything](https://github.com/2d-inc/HistoryOfEverything)
+
+模板项目
+
 - [Best-Flutter-UI-Templates](https://github.com/mitesh77/Best-Flutter-UI-Templates)
-- [FlutterCandies](https://github.com/fluttercandies)
 - [本项目包括各种基本控件使用](https://github.com/shichunlei/flutter_app)
+- [FlutterCandies](https://github.com/fluttercandies)
+- [flutter_dojo](https://github.com/xuyisheng/flutter_dojo)
 
 Google
 
