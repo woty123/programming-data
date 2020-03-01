@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
+
+Widget buildMixManagingWidget() =>
+    Scaffold(
+      appBar: AppBar(title: Text("Mix Managing"),),
+      body: ParentWidgetC(),
+    );
+
+
 //---------------------------- ParentWidget ----------------------------
 
 class ParentWidgetC extends StatefulWidget {
+
   @override
   _ParentWidgetCState createState() => new _ParentWidgetCState();
+
 }
 
 class _ParentWidgetCState extends State<ParentWidgetC> {
+
   bool _active = false;
 
   void _handleTapboxChanged(bool newValue) {
@@ -24,11 +35,13 @@ class _ParentWidgetCState extends State<ParentWidgetC> {
       ),
     );
   }
+
 }
 
 //----------------------------- TapboxC ------------------------------
 
 class TapboxC extends StatefulWidget {
+
   TapboxC({Key key, this.active: false, @required this.onChanged})
       : super(key: key);
 
@@ -39,6 +52,7 @@ class TapboxC extends StatefulWidget {
 }
 
 class _TapboxCState extends State<TapboxC> {
+
   bool _highlight = false;
 
   void _handleTapDown(TapDownDetails details) {
@@ -91,4 +105,5 @@ class _TapboxCState extends State<TapboxC> {
       ),
     );
   }
+
 }

@@ -13,8 +13,10 @@ android-studio3.5
 android-studio4.0
 Android逆向助手_v2.2
 apache-ant-1.10.1-bin
+apache-jmeter-5.2
 apache-maven-3.5.2
 astah-community
+backup.groovy
 Cisco Packet Tracer 5.3
 Cisco Packet Tracer 7.1
 CLion 2019.1.3
@@ -24,7 +26,7 @@ Everything
 ffmpeg-20191019
 Fiddler2
 FileZilla FTP Client
-flutter_windows_v1.9.1+hotfix.6-stable
+flutter_windows_v1.12.13+hotfix.5-stable
 Git
 gradle-4.10
 gradle-5.0
@@ -34,7 +36,6 @@ HiJson
 IntelliJ IDEA 2019.2.1
 java
 LICEcap
-list
 Listary
 markman
 mat
@@ -42,12 +43,10 @@ Microsoft VS Code
 MinGW-64
 MySQL
 nodejs-8.11.3
-PowerDesigner
 PyCharm Edu 3.5
 python27
 Python34
 redisbin_x64
-Shadowsocks-4.0.6
 Source Insight 3
 SQLite Expert Professional
 SSTap

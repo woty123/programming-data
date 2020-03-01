@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 
+Widget buildSelfManagingWidget() =>
+    Scaffold(
+      appBar: AppBar(title: Text("Self Managing"),),
+      body: TapboxA(),
+    );
+
 class TapboxA extends StatefulWidget {
 
   TapboxA({Key key}) : super(key: key);
 
   @override
   _TapboxAState createState() => new _TapboxAState();
+
 }
 
 class _TapboxAState extends State<TapboxA> {
+
   bool _active = false;
 
   void _handleTap() {
@@ -35,4 +43,5 @@ class _TapboxAState extends State<TapboxA> {
       ),
     );
   }
+
 }

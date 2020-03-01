@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+Widget buildParentManagingWidget() =>
+    Scaffold(
+      appBar: AppBar(title: Text("Parent Managing"),),
+      body: ParentWidget(),
+    );
+
 //------------------------ ParentWidget --------------------------------
 
 class ParentWidget extends StatefulWidget {
@@ -30,6 +36,7 @@ class _ParentWidgetState extends State<ParentWidget> {
 //------------------------- TapboxB ----------------------------------
 
 class TapboxB extends StatelessWidget {
+
   TapboxB({Key key, this.active: false, @required this.onChanged})
       : super(key: key);
 

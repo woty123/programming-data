@@ -7,7 +7,7 @@
 - [高效 Tools 系列](https://jeffjade.com/tags/Toss/)
 - [少数派](https://sspai.com/topics)
 
-## IDE
+## IDE / Editor
 
 - IDEA
 - CLion
@@ -15,12 +15,11 @@
 - WebStorm
 - Pycharm
 - Visual Studio
-- Atom
-- Sublime Text3
-- VSCode
 - Eclipe
 - MyEclipse
-- NotePad++
+- VSCode
+- Typora
+- Sublime Text3
 - WeChat DevTools
 
 ## 数据库
@@ -53,13 +52,13 @@
 
 - Fiddler
 - Charles
-    - Registered Name: `https://zhile.io`
-    - License Key: `48891cf209c6d32bf4`
+  - Registered Name: `https://zhile.io`
+  - License Key: `48891cf209c6d32bf4`
 - Wireshark
 - netassist
 - Cisco Packet Tracer
 
-## 开发
+## 开发助手
 
 - WinHex：16进制编辑器
 - NodeJs + NVM
@@ -111,7 +110,6 @@
 ## 常用软件
 
 - ccleaner
-- 为知笔记
 - 笔记类
   - 有道云笔记
   - [VNote](https://vnote.readthedocs.io/zh_CN/latest/)
@@ -121,30 +119,33 @@
 - 分区助手
 - 完美解码
 - UltralSO 刻录
-- MPV.io
 - 鲁大师
 - Total Commander
 - video-converter
 - eagleget下载器
 - 百度云盘
+- Dism++
+- Spacesniffer
+- Windows install clean up
+- Memory Cleaner
 
 ## Windows
 
-- 微信
-- 网易云
-- 123看图器
-- Photo Editor
 - OneDrive
-- 商店：微软必应词典
-- 商店：Ditto 剪切板增强
-- 商店：QuickLook
-- 商店：TranslucentTB
-- Cortana搜索预览
 - Win + G 录屏
-- 云剪贴板：`“设置”→“系统”→“剪贴板”`
+- Win + V 云剪贴板
 - Windows ink 工作区
-- 强大的计算器
-- OneNote
+- 商店：
+  - 微软必应词典
+  - OneNote
+  - QuickLook
+  - TranslucentTB
+  - 123看图器
+  - Photo Editor
+  - 微信
+  - 网易云
+  - Snipaste
+  - Ubuntu
 
 ### 1 Sublime
 
@@ -221,7 +222,7 @@ files.autoGuessEncoding = true
 
 c-style
 
-```
+```json
 C_Cpp.clang_format_fallbackStyle
 { BasedOnStyle: Google, IndentWidth: 4 }
 ```
