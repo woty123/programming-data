@@ -116,6 +116,7 @@ Prefetch 功能在版本 25 之后自带的，且默认是开启的，里面有�
 - [flexbox-layout](https://github.com/google/flexbox-layout)
 - [turn-layout-manager](https://github.com/cdflynn/turn-layout-manager)
 - [GalleryLayoutManager](https://github.com/BCsl/GalleryLayoutManager)
+- [LayoutManager 实现花式表格](https://mp.weixin.qq.com/s/wSkFsHkXsLc5NhsHkwYdnw)
 
 ### 打造属于自己的 LayoutManager
 
