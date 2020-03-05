@@ -41,7 +41,6 @@ flutter 官方文档
 - [flutter 官网](https://flutter.dev/)
 - [flutter github](https://github.com/flutter/flutter)
 - [flutter wiki](https://github.com/flutter/flutter/wiki)
-- [flutter 中文网](http://doc.flutter-dev.cn/)
 - [flutter 中文官网](https://flutterchina.club/)
 - [flutter 中文社区](https://flutter-io.cn/)
 

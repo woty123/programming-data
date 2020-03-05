@@ -14,17 +14,22 @@ buildListBody(String title, BuildContext context, List<Page> pages) {
       ),
       body: GridView.builder(
         itemCount: pages.length,
+        padding: EdgeInsets.all(10),
         itemBuilder: (context, index) {
-          return RaisedButton(
-              child: Text(pages[index].name, style: TextStyle(fontSize: 10)),
-              onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: pages[index].builder));
-                print(
-                    "clicked-----------------------------------${pages[index].builder}");
-              });
+          return Container(
+            margin: EdgeInsets.all(5),
+            child: RaisedButton(
+                child: Text(pages[index].name),
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: pages[index]
+                      .builder));
+                  print("clicked-----------------------------------${pages[index]
+                      .builder}");
+                }),
+          );
         },
         gridDelegate:
-            new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+        new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
       ));
 }
