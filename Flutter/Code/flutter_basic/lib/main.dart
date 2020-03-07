@@ -6,7 +6,11 @@ import 'package:flutter_basic/storage/storage_pages.dart';
 import 'package:flutter_basic/platform-interact/platform_interact_pages.dart';
 import 'package:flutter_basic/state-managing/state-managing-pages.dart';
 import 'package:flutter_basic/state-managing/counter_model.dart';
+
 import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'generated/i18n.dart';
 
 void main() => runApp(new FlutterBasicWidget());
 
@@ -29,8 +33,22 @@ class FlutterBasicWidget extends StatelessWidget {
           ChangeNotifierProvider.value(value: CounterModel())
         ],
         child: MaterialApp(
-          title: "Flutter 基础示例",
-          home: buildListBody("Flutter 基础示例", context, _buildModulePages()),
+          localizationsDelegates: [
+            S.delegate,
+            // ... app-specific localization delegate[s] here
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+
+          supportedLocales: S.delegate.supportedLocales,
+          onGenerateTitle: (context) {
+            return S
+                .of(context)
+                .app_title;
+          },
+
+          home: buildListBody("Flutter", context, _buildModulePages()),
         ));
   }
 }

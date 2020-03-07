@@ -7,6 +7,7 @@ import 'package:flutter_basic/animation/02_curve_animation.dart';
 import 'package:flutter_basic/animation/03_animated_widget.dart';
 import 'package:flutter_basic/animation/04_animation_builder.dart';
 import 'package:flutter_basic/animation/05_hero_animation.dart';
+import 'package:flutter_basic/generated/i18n.dart';
 
 List<Page> _buildAnimationRoutes() {
   return [
@@ -19,4 +20,5 @@ List<Page> _buildAnimationRoutes() {
   ];
 }
 
-Widget buildAnimationPagesWidget(BuildContext context)=>buildListBody("动画示例", context, _buildAnimationRoutes());
+Widget buildAnimationPagesWidget(BuildContext context) =>
+    buildListBody(S.of(context).animation, context, _buildAnimationRoutes());
