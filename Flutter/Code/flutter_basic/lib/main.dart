@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'common.dart';
 
@@ -12,7 +14,30 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'generated/i18n.dart';
 
-void main() => runApp(new FlutterBasicWidget());
+void main() {
+  //重写错误处理
+  FlutterError.onError = (FlutterErrorDetails details) async {
+    // 转发至 Zone 中
+    Zone.current.handleUncaughtError(details.exception, details.stack);
+  };
+
+    //自定义错误界面
+  /*ErrorWidget.builder = (FlutterErrorDetails flutterErrorDetails){
+    print(flutterErrorDetails.toString());
+    return Scaffold(
+        body: Center(
+          child: Text("Custom Error Widget"),
+        )
+    );
+  };*/
+
+  //以沙盒机制运行 app
+  runZoned(() async {
+    runApp(new FlutterBasicWidget());
+  }, onError: (error) async {
+    print("error: $error");
+  });
+}
 
 List<Page> _buildModulePages() {
   return [
@@ -49,8 +74,9 @@ class FlutterBasicWidget extends StatelessWidget {
                 .of(context)
                 .app_title;
           },
-          //多视图叠加检测
+          //性能检测开关
           checkerboardOffscreenLayers: false,
+          checkerboardRasterCacheImages: false,
           //首页
           home: buildListBody("Flutter", context, _buildModulePages()),
         ));
