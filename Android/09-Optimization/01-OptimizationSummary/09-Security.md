@@ -76,8 +76,8 @@ dex 加固的主要流程：
 
 Dex 加固实战参考：
 
-- [DexEncipher1](../../00-Code/DNDexEncipher1/README.md)
-- [DexEncipher2](../../00-Code/DNDexEncipher2/README.md)
+- [DexEncipher1](../../Code/DNDexEncipher1/README.md)
+- [DexEncipher2](../../Code/DNDexEncipher2/README.md)
 
 ---
 ## 4 使用第三方加固

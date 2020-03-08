@@ -651,7 +651,7 @@ Lazy 和 Provider 注解同样适用于 multibinding。下面两种方式都是�
 具体如何使用？
 
 1. 参考[官方文档](https://dagger.dev/android)
-2. 参考我的[示例代码](../00-Code/Dagger2AndroidInjection-v2.24/README.md)
+2. 参考我的[示例代码](../Code/Dagger2AndroidInjection-v2.24/README.md)
 
 ---
 ## 11 注入 Nullable 对象

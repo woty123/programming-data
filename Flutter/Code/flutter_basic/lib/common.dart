@@ -12,6 +12,7 @@ buildListBody(String title, BuildContext context, List<Page> pages) {
       appBar: AppBar(
         title: Text(title),
       ),
+
       body: GridView.builder(
         itemCount: pages.length,
         padding: EdgeInsets.all(10),
@@ -19,17 +20,17 @@ buildListBody(String title, BuildContext context, List<Page> pages) {
           return Container(
             margin: EdgeInsets.all(5),
             child: RaisedButton(
-                child: Text(pages[index].name),
+                child: Text(pages[index].name, style: TextStyle(fontSize: 12),),
                 onPressed: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: pages[index]
+                  Navigator
+                      .push(context, MaterialPageRoute(builder: pages[index]
                       .builder));
                   print("clicked-----------------------------------${pages[index]
                       .builder}");
                 }),
           );
         },
-        gridDelegate:
-        new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+
+        gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
       ));
 }

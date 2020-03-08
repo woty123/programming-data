@@ -33,6 +33,7 @@ class FlutterBasicWidget extends StatelessWidget {
           ChangeNotifierProvider.value(value: CounterModel())
         ],
         child: MaterialApp(
+          //国际化翻译代理
           localizationsDelegates: [
             S.delegate,
             // ... app-specific localization delegate[s] here
@@ -40,14 +41,17 @@ class FlutterBasicWidget extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-
+          //设置支持的语言
           supportedLocales: S.delegate.supportedLocales,
+          //动态的设置title，便于国际化
           onGenerateTitle: (context) {
             return S
                 .of(context)
                 .app_title;
           },
-
+          //多视图叠加检测
+          checkerboardOffscreenLayers: false,
+          //首页
           home: buildListBody("Flutter", context, _buildModulePages()),
         ));
   }

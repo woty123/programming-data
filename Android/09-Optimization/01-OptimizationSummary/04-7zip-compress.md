@@ -72,5 +72,5 @@ include $(BUILD_STATIC_LIBRARY)
 
 ## 4 示例代码
 
-- [7ZipCompress](../../00-Code/DN7ZipCompress/README.md)
+- [7ZipCompress](../../Code/DN7ZipCompress/README.md)
 - 也可以参考 [Android使用7-zip库](https://www.jianshu.com/p/4d164d012336)
