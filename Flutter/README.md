@@ -1,4 +1,4 @@
-# Flutter
+# Flutter 学习资料
 
 ## Flutter 历史
 
@@ -105,14 +105,6 @@ Google
 - [Flutter 混合开发组件化与工程化架构 | 开发者说·DTalk](https://mp.weixin.qq.com/s/NK0RMuXM2_AJmAbnnvv9SA)
 - [Flutter 最新进展与未来展望](https://mp.weixin.qq.com/s/dC2C1jpDrQSsip6wjiejBw)
 - [深入理解 Flutter 多线程 | 开发者说·DTalk](https://mp.weixin.qq.com/s/1hsOv4vXOvt8c5l_4ZhOTQ)
-
-plugin
-
-- [OpenFlutter](https://github.com/OpenFlutter)
-- [fish-redux](https://github.com/alibaba/fish-redux)，[Flutter 应用框架 Fish Redux](https://mp.weixin.qq.com/s/JiCsU6qoIFJPct0FyYn8eA)
-- [flutter_boost](https://github.com/alibaba/flutter_boost)：新一代Flutter-Native混合解决方案。 FlutterBoost是一个Flutter插件，它可以轻松地为现有原生应用程序提供Flutter混合集成方案。
-- [best-flutter](https://github.com/best-flutter)一群热爱flutter的开发者，开源了许多插件。
-- [awesome-flutter](https://github.com/Solido/awesome-flutter)
 
 深入
 

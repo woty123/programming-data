@@ -55,3 +55,9 @@ FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
   - 使用 `flutter run` 运行程序。在这种模式下，Dart assert语句被启用，并且Flutter框架使用它来执行许多运行时检查来验证是否违反一些不可变的规则。
   - 使用 `flutter run --release` 运行程序，会关闭试模式并使用发布模式。
   - 使用 `flutter run --profile` 运行程序，会关闭除Observatory之外所有调试辅助工具。
+
+## Flutter工程结构
+
+![flutter-construct](images/02-flutter-construct.png)
+
+可以看出：Flutter 工程实际上就是一个同时内嵌了 Android 和 iOS 原生子工程的父工程。

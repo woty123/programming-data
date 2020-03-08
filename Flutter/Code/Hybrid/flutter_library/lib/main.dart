@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() => runApp(_widgetForRoute(window.defaultRouteName)); // 独立运行传入默认路由
+void main() {
+  runApp(_widgetForRoute(window.defaultRouteName)); // 独立运行传入默认路由
+
+  SharedPreferences.getInstance().then((sp) {
+    sp.setString("Key", "abc")
+        .then((value) {
+      print("flutter, value: ${ sp.getString("Key")}");
+    });
+  });
+}
 
 // 我们创建的 Widget 实际上是包在一个 switch-case 语句中的。
 // 这是因为封装的 Flutter 模块一般会有多个页面级 Widget，原生 App 代码则会通过传入路由标识字符串，告诉 Flutter 究竟应该返回何种 Widget。
