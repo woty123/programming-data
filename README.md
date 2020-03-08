@@ -10,7 +10,6 @@ Language：
 
 - [C&C++](C&CPP/README.md)
 - [Java](Java/README.md)
-- [RxJava](RxJava/README.md)
 - [Groovy](Groovy/README.md)
 - [Kotlin](Kotlin/README.md)
 - [Python](Python/README.md)
