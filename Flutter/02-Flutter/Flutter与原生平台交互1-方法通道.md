@@ -1,4 +1,4 @@
-# 26-在Dart层兼容Android与iOS平台特定实现1-方法通道
+# 极客时间 [《Flutter核心技术与实战》](https://time.geekbang.org/column/article/104040)：在Dart层兼容Android与iOS平台特定实现1-方法通道
 
 ## 1 Dart 层需要原生平台支持
 

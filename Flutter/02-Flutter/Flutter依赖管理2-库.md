@@ -1,4 +1,4 @@
-# 依赖管理2-库
+# 极客时间 [《Flutter核心技术与实战》](https://time.geekbang.org/column/article/104040)：依赖管理2-库
 
 除了管理这些资源外，pubspec.yaml 更为重要的作用是管理 Flutter 工程代码的依赖，比如第三方库、Dart 运行环境、Flutter SDK 版本都可以通过它来进行统一管理。
 

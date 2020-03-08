@@ -1,4 +1,4 @@
-# Flutter 中组件的生命周期
+# 极客时间 [《Flutter核心技术与实战》](https://time.geekbang.org/column/article/104040)：Flutter 中组件的生命周期
 
 通过父 Widget 初始化时传入的静态配置，StatelessWidget 就能完全控制其静态展示。而 StatefulWidget，还需要借助于 State 对象，在特定的阶段来处理用户的交互或其内部数据的变化，并体现在 UI 上。这些特定的阶段，就涵盖了**一个组件从加载到卸载的全过程，即生命周期**。
 

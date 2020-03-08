@@ -1,4 +1,4 @@
-# Dart 单线程模型
+# 极客时间 [《Flutter核心技术与实战》](https://time.geekbang.org/column/article/104040)：Dart 单线程模型
 
 支撑起这些复杂的能力背后，实际上是基于单线程模型的 Dart。
 

@@ -1,4 +1,4 @@
-# 29-混合开发-导航栈管理方案
+# 极客时间 [《Flutter核心技术与实战》](https://time.geekbang.org/column/article/104040)：混合开发-导航栈管理方案
 
 为了把 Flutter 引入到原生工程，我们需要把 Flutter 工程改造为原生工程的一个组件依赖，并以组件化的方式管理不同平台的 Flutter 构建产物，即 Android 平台使用 aar、iOS 平台使用 pod 进行依赖管理。这样我们就可以在 Android 工程中通过 FlutterView，iOS 工程中通过 FlutterViewController，为 Flutter 搭建应用入口，实现 Flutter 与原生的混合开发方式。
 

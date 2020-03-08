@@ -60,11 +60,11 @@ flutter 版本升级记录与兼容：
 教程：
 
 - 极客时间：[Flutter核心技术与实战](https://time.geekbang.org/column/intro/200)、[2019年最新Flutter学习全攻略](https://time.geekbang.org/column/article/106380)
+- [《Flutter 实战》](https://book.flutterchina.club/)
 - 慕课网：[Flutter从入门到进阶：实战携程网App](https://coding.imooc.com/class/chapter/321.html)
 
 系列博客
 
-- [Flutter 实战](https://book.flutterchina.club/)
 - [fidev](https://fidev.io/)
 - [Flutter 系列博客](https://juejin.im/user/5b5d45f4e51d453526175c06/posts)
 - [flutter-study](https://github.com/yang7229693/flutter-study)
@@ -73,14 +73,6 @@ flutter 版本升级记录与兼容：
 - [flutter专栏教程](http://blog.csdn.net/column/details/13593.html)
 - [日更的FlutterDemo合集](https://github.com/OpenFlutter/Flutter-Notebook)
 - [贾鹏辉的技术博客官网-Fluter](http://www.devio.org/tags/#Flutter)
-  - [一个很棒的Flutter学习资源列表](http://www.devio.org/2018/09/09/awesome-flutter/)
-  - [Flutter入门必备基础知识](http://www.imooc.com/article/282911)
-  - [Flutter开发之Dart必备基础知识](https://www.imooc.com/article/282910)
-  - [两分钟带你掌握Flutter的路由与导航](http://www.devio.org/2019/03/31/flutter-router-navigator/)
-  - [两分钟带你掌握Flutter的StatelessWidget与StatefulWidget](http://www.devio.org/2019/03/23/flutter-statelesswidget-statefulwidget/)
-  - [带你快速掌握Flutter的视图(Widgets)](http://www.devio.org/2019/03/16/flutter-views/)
-  - [两分钟带你快速掌握Flutter的项目结构、资源、依赖和本地化](http://www.devio.org/2019/04/02/flutter-project-structure-resources-dependencies-and-localization/)
-  - [快速上手Flutter开发系列教程」之线程和异步UI](http://www.devio.org/2019/03/16/thread-and-asynchronous-ui/)
 
 实例项目
 
@@ -97,10 +89,10 @@ flutter 版本升级记录与兼容：
 - [高仿书旗小说 Flutter版](https://github.com/huanxsd/flutter_shuqi)
 - [HistoryOfEverything](https://github.com/2d-inc/HistoryOfEverything)
 
-模板项目
+Widget 示例项目
 
-- [Best-Flutter-UI-Templates](https://github.com/mitesh77/Best-Flutter-UI-Templates)
 - [本项目包括各种基本控件使用](https://github.com/shichunlei/flutter_app)
+- [Best-Flutter-UI-Templates](https://github.com/mitesh77/Best-Flutter-UI-Templates)
 - [FlutterCandies](https://github.com/fluttercandies)
 - [flutter_dojo](https://github.com/xuyisheng/flutter_dojo)
 

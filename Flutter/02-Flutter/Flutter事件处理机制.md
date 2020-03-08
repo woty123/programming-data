@@ -1,4 +1,4 @@
-# 事件处理机制
+# 极客时间 [《Flutter核心技术与实战》](https://time.geekbang.org/column/article/104040)：事件处理机制
 
 Flutter 是如何监听和响应用户的手势操作的？手势操作在 Flutter 中分为两类：
 

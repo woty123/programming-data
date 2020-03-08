@@ -1,4 +1,4 @@
-# 27-在Dart层兼容Android与iOS平台特定实现2-平台视图
+# 极客时间 [《Flutter核心技术与实战》](https://time.geekbang.org/column/article/104040)：在Dart层兼容Android与iOS平台特定实现2-平台视图
 
 底层能力 + 应用层渲染，看似我们已经搞定了搭建一个复杂 App 的所有内容。但，真的是这样吗？
 

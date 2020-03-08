@@ -1,4 +1,4 @@
-# 检测并优化FlutterApp的整体性能表现
+# 极客时间 [《Flutter核心技术与实战》](https://time.geekbang.org/column/article/104040)：检测并优化FlutterApp的整体性能表现
 
 除了代码逻辑 Bug 和视觉异常这些功能层面的问题之外，移动应用另一类常见的问题是性能问题，比如滑动操作不流畅、页面出现卡顿丢帧现象等。
 

@@ -1,4 +1,4 @@
-# 28-混合开发-原生应用中混编Flutter工程
+# 极客时间 [《Flutter核心技术与实战》](https://time.geekbang.org/column/article/104040)：混合开发-原生应用中混编Flutter工程
 
 背景：
 
