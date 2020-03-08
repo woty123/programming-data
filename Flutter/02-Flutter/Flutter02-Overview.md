@@ -1,6 +1,6 @@
 # Flutter Arch
 
-## UI
+## 1 UI
 
 Widget 如何管理自己的状态
 
@@ -23,7 +23,7 @@ Flutter 动画——[Animation](https://flutter.dev/docs/development/ui/animatio
 - Hero 动画
 - Staggered Animation
 
-## 网络
+## 2 网络与存储
 
 Json 解析
 
@@ -33,7 +33,21 @@ Json 解析
 - 相关问题：
   - [How to Deserialize a list of objects from json in flutter](https://stackoverflow.com/questions/51053954/how-to-deserialize-a-list-of-objects-from-json-in-flutter)
 
-## Flutter In StackOverflow
+## 3 架构模式
+
+### 使用 Provider 进行状态管理
+
+- [Provider doc](https://pub.dev/documentation/provider/latest/)
+- [Flutter | 状态管理指南篇——Provider](https://juejin.im/post/5d00a84fe51d455a2f22023f)
+- [Flutter Provider 3.0实战教程](https://juejin.im/post/5d2c19c6e51d4558936aa11c)
+
+## 网络与存储
+
+- [ ] todo
+
+## 4 其他
+
+### Flutter In StackOverflow
 
 - [如何模拟 RelativeLayout 布局](https://stackoverflow.com/questions/44396075/equivalent-of-relativelayout-in-flutter)
 - [Where does the title of Material App used in flutter?](https://stackoverflow.com/questions/50615006/where-does-the-title-of-material-app-used-in-flutter)
@@ -42,7 +56,7 @@ Json 解析
 - [how-can-flutter-handle-dpi-text-and-image-size-differences](https://stackoverflow.com/questions/44173641/how-can-flutter-handle-dpi-text-and-image-size-differences)
 - [how-to-use-dependecy-injection-in-flutter](https://stackoverflow.com/questions/44131766/how-to-use-dependecy-injection-in-flutter)
 
-## Libraries
+### Libraries
 
 - <https://pub.dev/packages/provider>
 - <https://pub.dev/packages/auto_size_text>
@@ -52,11 +66,3 @@ Json 解析
 - [flutter_boost](https://github.com/alibaba/flutter_boost)：新一代Flutter-Native混合解决方案。 FlutterBoost是一个Flutter插件，它可以轻松地为现有原生应用程序提供Flutter混合集成方案。
 - [best-flutter](https://github.com/best-flutter)一群热爱flutter的开发者，开源了许多插件。
 - [awesome-flutter](https://github.com/Solido/awesome-flutter)
-
-## 架构模式
-
-- [ ] todo
-
-## 网络与存储
-
-- [ ] todo

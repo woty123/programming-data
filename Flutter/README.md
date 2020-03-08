@@ -14,20 +14,31 @@
 
 不管是 原生 Android、原生 IOS、RN 还是 Flutter，总是它们都是用来开发 App，App 需要有界面，有交互，界面用于呈现数据，获取数据需要网络通信，有些数据需要存储到本地，等等等，经过梳理，可以把一些必备的技能与基础组件总结如下：
 
-- UI 相关
-- 架构模式
-- 异步与并发
+- UI
+  - 基础控件
+  - 页面布局
+  - 手势与事件处理
+  - 自定义控件，包括组合控件和自绘控件
+  - 动画，包括组件动画和转场动画
 - 网络与缓存
-- 组件通讯
-- 第三方库
-- 平台交互
+- 异步模型
+- 架构模式
+  - 组件间通信交互
+  - 代码组织模式：MVC、MVVM
+- 第三方库集成
+- 与原生平台交互
+- 编译、调试、打包
+- 性能优化
+- 熟悉 Flutter Framework 原理
+  - 组件生命周期
+  - 组件绘制原理与流程
 
 学习路线：
 
 - 学习 Dart 语法
 - 浏览 Flutter 官方文档
 - 阅读 《Flutter实战》
-- 阅读 Flutter 开源项目
+- 阅读几个优质的 Flutter 开源项目
 
 ## References
 
@@ -74,27 +85,28 @@ flutter 版本升级记录与兼容：
 - [日更的FlutterDemo合集](https://github.com/OpenFlutter/Flutter-Notebook)
 - [贾鹏辉的技术博客官网-Fluter](http://www.devio.org/tags/#Flutter)
 
-实例项目
+教学项目
 
 - [flutter-official-examples](https://github.com/flutter/flutter/blob/master/examples/README.md)
 - [flutter-official-samples](https://github.com/flutter/samples)
 - [Simple basic isolated apps, for budding flutter devs.](https://github.com/nisrulz/flutter-examples)
 - [Basic Flutter apps, for flutter devs.](https://github.com/iampawan/FlutterExampleApps)
-- [Kotlin + MVP + Flutter ，让你可以在自己的项目中集成 Flutter 并使用](https://juejin.im/post/5b7cf52e51882542c963f0f1)
-- [Flutter版】玩安卓，非常适合学习，代码不多、注释多](https://github.com/yechaoa/wanandroid_flutter)
-- [Flutter豆瓣客户端](https://github.com/kaina404/FlutterDouBan)
-- [flutter-go](https://github.com/alibaba/flutter-go)
-- [Awesome Flutter：带你从入门到进阶的 Flutter 指南](https://juejin.im/post/5b2869e66fb9a00e5f3e861f)
-- [超完整的Flutter项目，功能丰富，适合学习和日常使用。](https://github.com/CarGuo/GSYGithubAppFlutter)
-- [高仿书旗小说 Flutter版](https://github.com/huanxsd/flutter_shuqi)
-- [HistoryOfEverything](https://github.com/2d-inc/HistoryOfEverything)
-
-Widget 示例项目
-
 - [本项目包括各种基本控件使用](https://github.com/shichunlei/flutter_app)
 - [Best-Flutter-UI-Templates](https://github.com/mitesh77/Best-Flutter-UI-Templates)
 - [FlutterCandies](https://github.com/fluttercandies)
 - [flutter_dojo](https://github.com/xuyisheng/flutter_dojo)
+
+实例项目
+
+- [WanAndroid-Flutter](https://github.com/xing16/WanAndroid-Flutter)
+- [Flutter版】玩安卓，非常适合学习，代码不多、注释多](https://github.com/yechaoa/wanandroid_flutter)
+- [Flutter豆瓣客户端](https://github.com/kaina404/FlutterDouBan)
+- [Awesome Flutter：带你从入门到进阶的 Flutter 指南](https://juejin.im/post/5b2869e66fb9a00e5f3e861f)
+- [超完整的Flutter项目，功能丰富，适合学习和日常使用。](https://github.com/CarGuo/GSYGithubAppFlutter)
+- [高仿书旗小说 Flutter版](https://github.com/huanxsd/flutter_shuqi)
+- [flutter-go](https://github.com/alibaba/flutter-go)
+- [gsy_github_app_flutter](https://github.com/CarGuo/gsy_github_app_flutter)
+- [HistoryOfEverything](https://github.com/2d-inc/HistoryOfEverything)
 
 Google
 
