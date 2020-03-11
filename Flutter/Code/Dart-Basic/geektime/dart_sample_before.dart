@@ -45,8 +45,12 @@ class ShoppingCart {
   }
 }
 
-void test() {
-  ShoppingCart sc = ShoppingCart('张三', '123456');
+void _test() {
+  var sc = ShoppingCart('张三', '123456');
   sc.bookings = [Item('苹果', 10.0), Item('鸭梨', 20.0)];
   print(sc.getInfo());
+}
+
+void main() {
+  _test();
 }

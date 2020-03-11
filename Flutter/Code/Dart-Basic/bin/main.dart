@@ -1,17 +1,12 @@
-import 'package:Dart_Basic/01-data_type.dart' as dart_type;
-import 'package:Dart_Basic/02-function.dart' as function;
-import 'package:Dart_Basic/03-class.dart' as clazz;
-import 'package:Dart_Basic/04-operator.dart' as operation;
-import 'package:Dart_Basic/05-async.dart' as asyncTester;
-import 'package:Dart_Basic/06-http.dart' as httpTester;
-import 'package:Dart_Basic/geektime/dart_sample.dart' as geek_dart;
-
+/*Dart Basic Learning*/
 void main(List<String> arguments) {
-//  dart_type.dataTypeSample();
-//  function.functionSample();
-//  clazz.classSample();
-//  operation.operatorSample();
-//  geek_dart.test();
-//  asyncTester.asyncFutureRule4();
-  httpTester.doRequest();
+  print('Learning Dart');
+  var num = 1 / 0;
+  String s;
+  Future.delayed(Duration(seconds: 1), () => print('num = ${num}'));
+  try {
+    print('num = ${s.substring(0)}');
+  } on NoSuchMethodError catch (e) {
+    print(e);
+  }
 }
