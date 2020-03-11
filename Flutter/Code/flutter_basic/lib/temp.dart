@@ -1,50 +1,45 @@
-
-
-
 //基础库
 import 'common.dart';
 
 //入门
-import 'package:flutter_basic/getting-started/00_hello_world.dart';
-import 'package:flutter_basic/getting-started/01_basic_widget.dart';
-import 'package:flutter_basic/getting-started/02_material_widget.dart';
-import 'package:flutter_basic/getting-started/03_process_gesture.dart';
-import 'package:flutter_basic/getting-started/04_stateful_widget.dart';
-import 'package:flutter_basic/getting-started/05_shopping_cart.dart';
-import 'package:flutter_basic/getting-started/06_inherited_widget.dart';
-
-//图片展示
-import 'package:flutter_basic/image/01_display_images.dart';
+import 'package:flutter_basic/widget_basic/00_hello_world.dart';
+import 'package:flutter_basic/widget_basic/01_basic_widget.dart';
+import 'package:flutter_basic/widget_basic/02_material_widget.dart';
+import 'package:flutter_basic/widget_basic/03_process_gesture.dart';
+import 'package:flutter_basic/widget_basic/04_stateful_widget.dart';
+import 'package:flutter_basic/widget_basic/05_shopping_cart.dart';
+import 'package:flutter_basic/widget_basic/06_inherited_widget.dart';
+import 'package:flutter_basic/widget_basic/01_display_images.dart';
 
 //列表
-import 'package:flutter_basic/list/01_simple_listview.dart';
-import 'package:flutter_basic/list/02_horizontal_listview.dart';
-import 'package:flutter_basic/list/03_long_listview.dart';
-import 'package:flutter_basic/list/04_multi_type_listview.dart';
-import 'package:flutter_basic/list/05_grid.dart';
-import 'package:flutter_basic/list/06_load_more_list.dart';
-import 'package:flutter_basic/list/07_sliver_scroll.dart';
-import 'package:flutter_basic/list/08_notification_listener.dart';
+import 'package:flutter_basic/widget_list_scroll/01_simple_listview.dart';
+import 'package:flutter_basic/widget_list_scroll/02_horizontal_listview.dart';
+import 'package:flutter_basic/widget_list_scroll/03_long_listview.dart';
+import 'package:flutter_basic/widget_list_scroll/04_multi_type_listview.dart';
+import 'package:flutter_basic/widget_list_scroll/05_grid.dart';
+import 'package:flutter_basic/widget_list_scroll/06_load_more_list.dart';
+import 'package:flutter_basic/widget_list_scroll/07_sliver_scroll.dart';
+import 'package:flutter_basic/widget_list_scroll/08_notification_listener.dart';
 
 //手势
-import 'package:flutter_basic/gesture/01_GestureDetector.dart';
-import 'package:flutter_basic/gesture/02_InkWell.dart';
-import 'package:flutter_basic/gesture/03_dismissible-item.dart';
-import 'package:flutter_basic/gesture/04_draw-signature.dart';
-import 'package:flutter_basic/gesture/05_listener.dart';
-import 'package:flutter_basic/gesture/06-dragable.dart';
-import 'package:flutter_basic/gesture/07-RawGestureDetector.dart';
+import 'package:flutter_basic/widget_gesture/01_GestureDetector.dart';
+import 'package:flutter_basic/widget_gesture/02_InkWell.dart';
+import 'package:flutter_basic/widget_gesture/03_dismissible-item.dart';
+import 'package:flutter_basic/widget_gesture/04_draw-signature.dart';
+import 'package:flutter_basic/widget_gesture/05_listener.dart';
+import 'package:flutter_basic/widget_gesture/06-dragable.dart';
+import 'package:flutter_basic/widget_gesture/07-RawGestureDetector.dart';
 
 //布局
-import 'package:flutter_basic/layout/01_layout.dart';
-import 'package:flutter_basic/layout/02_layout.dart';
-import 'package:flutter_basic/layout/03_constrained_box.dart';
-import 'package:flutter_basic/layout/04_material_pager1.dart';
-import 'package:flutter_basic/layout/05_material_pager2.dart';
-import 'package:flutter_basic/layout/06_update-item.dart';
+import 'package:flutter_basic/widget_layout/01_layout.dart';
+import 'package:flutter_basic/widget_layout/02_layout.dart';
+import 'package:flutter_basic/widget_layout/03_constrained_box.dart';
+import 'package:flutter_basic/widget_layout/04_material_pager1.dart';
+import 'package:flutter_basic/widget_layout/05_material_pager2.dart';
+import 'package:flutter_basic/widget_layout/06_update-item.dart';
 
 //自定义View
-import 'package:flutter_basic/custom-view/draw-cake.dart';
+import 'package:flutter_basic/widget_custom/draw-cake.dart';
 
 //导航
 import 'package:flutter_basic/navigator/01_base-router.dart';

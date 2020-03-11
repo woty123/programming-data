@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'common.dart';
 
-import 'package:flutter_basic/animation/animation_pages.dart';
+import 'package:flutter_basic/widget_animation/animation_pages.dart';
 import 'package:flutter_basic/storage/storage_pages.dart';
 import 'package:flutter_basic/platform-interact/platform_interact_pages.dart';
 import 'package:flutter_basic/state-managing/state-managing-pages.dart';
