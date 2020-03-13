@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_basic/common.dart';
 
 //动画
-import 'package:flutter_basic/state-managing/01_self_managing_state.dart';
-import 'package:flutter_basic/state-managing/02_parent_managing_state.dart';
-import 'package:flutter_basic/state-managing/03_mix_managing_state.dart';
-import 'package:flutter_basic/state-managing/04_provider.dart';
-import 'package:flutter_basic/state-managing/05_provder_customer.dart';
+import 'package:flutter_basic/state_managing/01_self_managing_state.dart';
+import 'package:flutter_basic/state_managing/02_parent_managing_state.dart';
+import 'package:flutter_basic/state_managing/03_mix_managing_state.dart';
+import 'package:flutter_basic/state_managing/04_provider.dart';
+import 'package:flutter_basic/state_managing/05_provder_customer.dart';
 
 List<Page> _buildRoutes() {
   return [

@@ -13,10 +13,9 @@ class HomeWidget extends StatefulWidget {
 
 class _HomeWidgetState extends State<HomeWidget>
     with SingleTickerProviderStateMixin {
+
   //定义一个globalKey, 由于GlobalKey要保持全局唯一性，我们使用静态变量存储
   static GlobalKey<ScaffoldState> _globalKey = new GlobalKey();
-
-  int _selectIndex = 1;
 
   //用于控制/监听Tab菜单切换。
   TabController _tabController; //需要定义一个Controller
@@ -29,14 +28,7 @@ class _HomeWidgetState extends State<HomeWidget>
     // 创建Controller
     _tabController = TabController(length: tabs.length, vsync: this);
     _tabController.addListener(() {
-      switch (_tabController.index) {
-      }
-    });
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectIndex = index;
+      print("_tabController.index = ${_tabController.index}");
     });
   }
 
@@ -59,6 +51,7 @@ class _HomeWidgetState extends State<HomeWidget>
       appBar: AppBar(
         //标题
         title: Text("Material Pager"),
+
         //导航栏最左侧Widget，常见为抽屉菜单按钮或返回按钮。
         leading: Builder(builder: (context) {
           return IconButton(
@@ -68,10 +61,12 @@ class _HomeWidgetState extends State<HomeWidget>
             },
           );
         }),
+
         // 导航栏右侧菜单
         actions: <Widget>[
           IconButton(icon: Icon(Icons.share), onPressed: () {})
         ],
+
         //生成Tab菜单
         bottom: TabBar(
           tabs: tabs.map((e) => Tab(text: e)).toList(),
@@ -82,19 +77,6 @@ class _HomeWidgetState extends State<HomeWidget>
       //抽屉
       drawer: _CustomDrawer(),
 
-      //底部导航栏
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text("Home")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.business), title: Text("Business")),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.school), title: Text("School")),
-        ],
-        currentIndex: _selectIndex,
-        fixedColor: Colors.blue,
-        onTap: _onItemTapped,
-      ),
       //浮动按钮
       floatingActionButton: FloatingActionButton(
         onPressed: _onAdd,
@@ -108,11 +90,9 @@ class _HomeWidgetState extends State<HomeWidget>
       //Material组件库也提供了一个PageView Widget，它和TabBarView功能相似。
       body: TabBarView(
           controller: _tabController,
-          children: tabs
-              .map((e) => Container(
-                  alignment: Alignment.center,
-                  child: Text(e, textScaleFactor: 5)))
-              .toList()),
+          children: tabs.map((e) =>
+              Container(alignment: Alignment
+                  .center, child: Text(e, textScaleFactor: 5))).toList()),
     );
   }
 }
