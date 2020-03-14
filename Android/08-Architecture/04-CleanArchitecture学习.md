@@ -4,7 +4,7 @@ Clean 架构由 uncle-bob 的 [这篇文章](https://8thlight.com/blog/uncle-bob
 
 架构图：
 
-![clean_architecture](index_files/clean_architecture.jpg)
+![clean_architecture](images/clean_architecture.jpg)
 
 ---
 ## 1 Presenter

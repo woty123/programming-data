@@ -11,18 +11,18 @@
 
 >如果仅仅是为了混淆，可以使用DexGuard
 
-ProGurad 由 Shrink、Optimize、Obfuscate、Preveirf y四个步骤组成，其中每个步骤都是可选的，可以通过脚本文件来配置。在此引入一个 EntryPoint 概念，EntryPoint 是在 ProGurad 过程中不被处理的类和方法。
+ProGurad 由 Shrink、Optimize、Obfuscate、Preveirfy 四个步骤组成，其中每个步骤都是可选的，可以通过脚本文件来配置。在此引入一个 EntryPoint 概念，EntryPoint 是在 ProGurad 过程中不被处理的类和方法。
 
 1. 在压缩阶段，ProGurad 从 EntryPoint 开始遍历，对于没有被使用的类和类成员会被丢弃。
 2. 在优化过程中，那些非 EntryPoint 类，方法都会被设置为 private，static 或 final，不使用的参数都会被移除，有些方法被标记为内联的。
 3. 在混淆的步骤中，对非 EntryPoint 的类和方法进行重命名
 
-![](images/9d777ebe-d23f-4a45-8a20-01cc91b805d0.png)
+![](images/progurad-process.png)
 
 ### 哪些类不能被混淆
 
 - 1 避免混淆泛型 `–keepattributes Signature`。
-- 2 排除反射、序列化相关的类。
+- 2 被反射的类，比如 Json 序列化相关的类。
 - 3 JNI 中调用的类。
 - 4 `AndroidManifest.xml` 中配置的类。
 
@@ -225,7 +225,7 @@ proguard-android-optimize.txt 已经配置的指令：
     -dontwarn android.support.**
 ```
 
-需要注意的是，这个文件的内容已经不再维护了，在 2.2+ 的 Android Gradle Plugin 后，这个文件内容是动态生成的。
+**注意**：这个文件的内容已经不再维护了，在 2.2+ 的 Android Gradle Plugin 后，这个文件内容是动态生成的。
 
 ### 配置 proguard-rules.pro
 
@@ -297,7 +297,7 @@ $用来分割内部类及其母类
     }
 ```
 
-### 对WebView的处理
+### 对 WebView 的处理
 
 ```shell
     -keepclassmembers class * extends android.webkit.WebViewClient{
@@ -309,30 +309,35 @@ $用来分割内部类及其母类
     }
 ```
 
-### 对JavaScript的处理
+### 对 JavaScript 的处理
 
 参考：[Android经验: proguard 阻碍 webview 正常工作](http://blog.csdn.net/span76/article/details/9065941)。
 
-### 对自定义View的保护
+### 对自定义 View 的保护
 
 在xml中使用的自定义View都不能进行混淆
 
 ### 第三方库
 
-在使用第三方库时，如果有需要，作者会提供相关混淆配置。
+有以下三种情况
+
+1. 作者发布的库中已经包含了相关的混淆文件，使用方不需要做任何配置。
+2. 作者发布的库中没有包含了相关的混淆文件，但作者会提供相关配置方法，我们将其添加到混淆文件中即可。
+3. 作者发布的库中没有包含了相关的混淆文件，也没有提供相关配置方法，此时我们需要自行研究添加。
 
 ## 4 相关资料
 
 官方文档：
 
 - [proguard文档](http://proguard.sourceforge.net/index.html#manual/usage.html)
+- [Google：缩减、混淆处理和优化您的应用](https://developer.android.com/studio/build/shrink-code?hl=zh-cn)
 
 博客：
 
 - [5分钟搞定android混淆](http://www.jianshu.com/p/f3455ecaa56e)
-- [Proguard拆分-方便管理](http://www.jianshu.com/p/6db109f87bb1)
 - [写给Android开发者的混淆使用手册](http://mp.weixin.qq.com/s?__biz=MzI4NTQ2OTI4MA==&mid=2247483651&idx=1&sn=85f0d6c6a0f6c4f2ece97429f423c51c&chksm=ebeafe0cdc9d771a31344d0d6861e3b864bfe36d46652770aa522631eb0115a754e1be579d3b&mpshare=1&scene=1&srcid=10237XVcZ8KD2jeI5xFTBvCw#rd)
 - [Android Proguard 最佳实践](https://mp.weixin.qq.com/s/sFPnK_nvNQOWRK3rd3XnZw)
+- [Proguard拆分-方便管理](http://www.jianshu.com/p/6db109f87bb1)
 
 Activity 组件混淆：
 

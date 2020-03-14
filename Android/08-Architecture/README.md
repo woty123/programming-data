@@ -1,6 +1,6 @@
 # Android Archtitecture References
 
-## AAC
+## Jetpack-AAC
 
 - [对Google的吐槽：2019年11月，分析Android原生开发的现状](https://mp.weixin.qq.com/s/4Z_Do6kC8WC5u5qnGgZNKw)
 - [viewmodels-and-livedata-patterns-antipatterns](https://medium.com/androiddevelopers/viewmodels-and-livedata-patterns-antipatterns-21efaef74a54)
