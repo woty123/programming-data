@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
 Widget buildMaterialWidget() {
-  return new MaterialApp(
-    title: "Materail Widget",
-    home: new TutorialHome(),
-  );
+  return new TutorialHome();
 }
 
 class TutorialHome extends StatelessWidget {

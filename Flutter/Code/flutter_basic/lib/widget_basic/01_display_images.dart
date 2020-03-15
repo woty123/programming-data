@@ -3,16 +3,13 @@ import 'package:transparent_image/transparent_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 Widget buildImageList() {
-  return new MaterialApp(
-    title: "Show Image",
-    home: new Scaffold(
+  return  new Scaffold(
       appBar: new AppBar(
         title: new Text("Imges"),
       ),
       body: new ListView(
         children: _createDifferentImages(),
       ),
-    ),
   );
 }
 

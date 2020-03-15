@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 Widget buildUpdateItemWidget() {
-  return MaterialApp(
-      title: "Update Item",
-      theme: ThemeData(
+  return Theme(
+      data: ThemeData(
         primaryColor: Colors.lightBlue[800], //主题色为蓝色
       ),
-      home: Scaffold(
+
+      child: Scaffold(
           appBar: AppBar(
             title: Text("Update Item"),
           ),
@@ -17,7 +17,7 @@ UpdatedItemModel _buildUpdatedItemModel() {
   return UpdatedItemModel(
       appIcon: "images/icon.png",
       appDescription:
-          "Thanks for using Google Maps! This release brings bug fixes that improve our product to help you discover new places and navigate to them.",
+      "Thanks for using Google Maps! This release brings bug fixes that improve our product to help you discover new places and navigate to them.",
       appName: "Google Maps - Transit & Fond",
       appSize: "137.2",
       appVersion: "Version 5.19",
@@ -32,13 +32,12 @@ class UpdatedItemModel {
   String appDescription;
   String appVersion;
 
-  UpdatedItemModel(
-      {this.appIcon,
-      this.appName,
-      this.appSize,
-      this.appDate,
-      this.appDescription,
-      this.appVersion});
+  UpdatedItemModel({this.appIcon,
+    this.appName,
+    this.appSize,
+    this.appDate,
+    this.appDescription,
+    this.appVersion});
 }
 
 class UpdatedItemWidget extends StatelessWidget {
@@ -95,7 +94,7 @@ class UpdatedItemWidget extends StatelessWidget {
                 color: Color(0xFF007AFE), fontWeight: FontWeight.bold),
           ),
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           onPressed: onPressed,
         ),
       )

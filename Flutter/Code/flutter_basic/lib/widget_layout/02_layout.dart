@@ -89,9 +89,7 @@ class LayoutApp extends StatelessWidget {
       ),
     );
 
-    return MaterialApp(
-      title: "Welcome to Flutter",
-      home: Scaffold(
+    return  Scaffold(
         appBar: AppBar(
           title: Text("Flutter layout Demo"),
         ),
@@ -108,7 +106,6 @@ class LayoutApp extends StatelessWidget {
             textSection
           ],
         ),
-      ),
     );
   }
 }

@@ -73,6 +73,34 @@
   - ClipRect：剪裁子组件到实际占用的矩形大小（溢出部分剪裁）
   - CustomClipper：自定义裁剪区域  
 
+**列表与滚动类组件**：当组件内容超过当前显示视口(ViewPort)时，如果没有特殊处理，Flutter 则会提示 Overflow 错误，这种情况下我们需要使用滚动布局：
+
+1. Scrollable 基础滚动组件实现。
+2. ScrollPhysics 用于配置边缘拉拽效果。
+3. Scrollbar 用于实现滚动条的组件。
+4. 基于 Sliver 的延迟构建与组合滑动。
+5. SingleChildScrollView 类似于 Android 中的 ScrollView，不支持基于 Sliver 的延迟实例化模型。
+6. ListView，构造方式：1 children；2 ListView.builder。
+7. GridView 表格布局，需要专注的参数是 SliverGridDelegate，即控制 GridView 子组件如何排列：
+   1. SliverGridDelegateWithFixedCrossAxisCount 横轴为固定数量子元素的layout算法
+   2. SliverGridDelegateWithMaxCrossAxisExtent 横轴子元素为固定最大长度的layout算法
+8. 复杂 Grid 布局实现可以使用 pub 上的 flutter_staggered_grid_view 库。
+9. CustomScrollView 可以使用Sliver来自定义滚动模型（效果）的组件。
+10. 滚动监听：
+    1. ScrollController 控制可滚动组件的滚动位置。
+    2. PageStorage 用于在特定情况下保存页面(路由)相关数据的组件。
+    3. ScrollPosition：ScrollController。
+    4. NotificationListener 另一个监听滚动的组件。
+
+**功能型 Widget**：不会影响UI布局及外观的Widget，它们通常具有一定的功能，如事件监听、数据存储等
+
+- WillPopScope
+- InheritedWidget
+
+理解部分 Widget 原理：
+
+- InheritedWidget
+
 ### Widget 如何管理自己的状态
 
 - 自己管理。

@@ -8,7 +8,6 @@ import 'package:flutter_basic/widget_basic/02_material_widget.dart';
 import 'package:flutter_basic/widget_basic/03_process_gesture.dart';
 import 'package:flutter_basic/widget_basic/04_stateful_widget.dart';
 import 'package:flutter_basic/widget_basic/05_shopping_cart.dart';
-import 'package:flutter_basic/widget_basic/06_inherited_widget.dart';
 import 'package:flutter_basic/widget_basic/01_display_images.dart';
 
 List<Page> _buildRoutes() {
@@ -20,7 +19,6 @@ List<Page> _buildRoutes() {
     Page("TapAbleButton", (context) => buildTapAbleButton()),
     Page("Stateful", (context) => buildStatefulWidget()),
     Page("ShoppingCartList", (context) => buildShoppingCartList()),
-    Page("Inherited", (context) => buildInheritedWidget()),
     Page("ImageList", (context) => buildImageList()),
   ];
 }

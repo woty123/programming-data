@@ -26,11 +26,26 @@ class LongListView extends StatelessWidget {
           itemCount: items.length,
           itemBuilder: (context, index) {
             return new ListTile(
-              title: new Text('${items[index]}'),
+              title: new _LogText('${items[index]}'),
             );
           },
         ),
       ),
     );
   }
+}
+
+class _LogText extends StatelessWidget {
+
+  final String text;
+
+  _LogText(this.text) {
+    print("create _LogText：$text");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Text(text);
+  }
+
 }

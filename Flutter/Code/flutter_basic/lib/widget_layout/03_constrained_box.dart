@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 Widget buildConstrainedBoxWidget() {
+
   Widget redBox = DecoratedBox(
     decoration: BoxDecoration(color: Colors.red),
   );

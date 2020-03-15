@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 
-Widget buildCustomScrollView()=>CustomScrollViewTestRoute();
-
-class CustomScrollViewTestRoute extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    //因为本路由没有使用Scaffold，为了让子级Widget(如Text)使用，Material Design 默认的样式风格，我们使用Material作为本路由的根。
-    return Material(
+Widget buildCustomScrollView() =>
+    Material(
       child: CustomScrollView(
         slivers: <Widget>[
+
           //AppBar，包含一个导航栏
           SliverAppBar(
             pinned: true,
@@ -20,7 +16,7 @@ class CustomScrollViewTestRoute extends StatelessWidget {
             ),
           ),
 
-           new SliverGrid( //Grid
+          new SliverGrid( //Grid
             gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2, //Grid按两列显示
               mainAxisSpacing: 10.0,
@@ -47,7 +43,7 @@ class CustomScrollViewTestRoute extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
           ),
           */
-          
+
           //List
           new SliverFixedExtentList(
             itemExtent: 50.0,
@@ -63,8 +59,7 @@ class CustomScrollViewTestRoute extends StatelessWidget {
                 childCount: 50 //50个列表项
             ),
           ),
+
         ],
       ),
     );
-  }
-}

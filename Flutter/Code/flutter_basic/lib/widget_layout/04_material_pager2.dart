@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget buildMaterialPagerWidget2() {
-  return MaterialApp(title: "Material Pager", home: HomeWidget());
-}
+Widget buildMaterialPagerWidget2() => HomeWidget();
 
 class HomeWidget extends StatefulWidget {
   @override

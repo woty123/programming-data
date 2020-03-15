@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-Widget buildSimpleList() {
-  final title = 'Basic List';
+Widget buildSimpleList() =>
+    Scaffold(
 
-  return new MaterialApp(
-    title: title,
-    home: new Scaffold(
       //顶部Bar
       appBar: new AppBar(
-        title: new Text(title),
+        title: new Text('Basic List'),
       ),
+
       //列表体
       body: new ListView(
         children: <Widget>[
+          // ListTile 是一个方便我们开始开发列表页面的简单列表 Item。
           new ListTile(
             leading: new Icon(Icons.map),
             title: new Text('Map'),
@@ -28,6 +27,5 @@ Widget buildSimpleList() {
           ),
         ],
       ),
-    ),
-  );
-}
+
+    );

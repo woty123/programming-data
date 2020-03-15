@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 Widget buildStatefulWidget() {
-  return new MaterialApp(
-    title: "buildStatefulWidget",
-    home: new Center(
+  return new Center(
       child: new Counter(),
-    ),
   );
 }
 
@@ -43,6 +40,7 @@ class _CounterState extends State<Counter> {
 }
 
 class CounterIncrementor extends StatelessWidget {
+
   CounterIncrementor({this.onPressed});
 
   final VoidCallback onPressed;

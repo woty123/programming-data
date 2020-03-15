@@ -33,7 +33,7 @@ class LayoutApp extends StatelessWidget {
           //first：column
           Expanded(
             child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               //top text
               Container(
                 padding: const EdgeInsets.only(bottom: 8),
@@ -67,7 +67,9 @@ class LayoutApp extends StatelessWidget {
       ),
     );
 
-    Color color = Theme.of(context).primaryColor;
+    Color color = Theme
+        .of(context)
+        .primaryColor;
 
     Widget buttonSection = Container(
       child: Row(
@@ -93,25 +95,22 @@ class LayoutApp extends StatelessWidget {
       ),
     );
 
-    return MaterialApp(
-      title: "Welcome to Flutter",
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Flutter layout Demo"),
-        ),
-        body: ListView(
-          children: [
-            Image.asset(
-              'images/lake.jpg',
-              width: 600,
-              height: 240,
-              fit: BoxFit.cover,
-            ),
-            titleSection,
-            buttonSection,
-            textSection
-          ],
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Flutter layout Demo"),
+      ),
+      body: ListView(
+        children: [
+          Image.asset(
+            'images/lake.jpg',
+            width: 600,
+            height: 240,
+            fit: BoxFit.cover,
+          ),
+          titleSection,
+          buttonSection,
+          textSection
+        ],
       ),
     );
   }

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-Widget buildShoppingCartList() => new MaterialApp(
-    title: "Shopping Center",
-    home: new ShoppingCartList(
+Widget buildShoppingCartList() =>new ShoppingCartList(
       products: [
         new Product(name: 'Eggs'),
         new Product(name: 'Flour'),
@@ -20,9 +18,10 @@ Widget buildShoppingCartList() => new MaterialApp(
         new Product(name: 'Game'),
         new Product(name: 'Chocolate chips'),
       ],
-    ));
+    );
 
 class ShoppingCartList extends StatefulWidget {
+
   final List<Product> products;
 
   /*
@@ -46,6 +45,7 @@ class ShoppingCartList extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => new _ShoppingCartListStatus();
+
 }
 
 class Product {
@@ -98,6 +98,7 @@ class _ShoppingCartListStatus extends State<ShoppingCartList> {
 typedef void CartChangedCallback(Product product, bool inCart);
 
 class ShoppingListItem extends StatelessWidget {
+
   final Product product;
   final bool inCart;
   final CartChangedCallback onCartChanged;

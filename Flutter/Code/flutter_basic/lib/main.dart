@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_basic/widget_tools/widget_tools_pages.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'generated/i18n.dart';
@@ -49,11 +50,12 @@ void main() {
 List<Page> _buildModulePages() {
   return [
     Page("基础组件", (context) => buildBasicWidgetPagesWidget(context)),
-    Page("动画", (context) => buildAnimationPagesWidget(context)),
-    Page("布局", (context) => buildLayoutPagesWidget(context)),
-    Page("列表", (context) => buildListPagesWidget(context)),
-    Page("手势", (context) => buildGesturePagesWidget(context)),
-    Page("绘制", (context) => buildCustomViewPagesWidget(context)),
+    Page("布局组件", (context) => buildLayoutPagesWidget(context)),
+    Page("列表组件", (context) => buildListPagesWidget(context)),
+    Page("动画组件", (context) => buildAnimationPagesWidget(context)),
+    Page("手势组件", (context) => buildGesturePagesWidget(context)),
+    Page("绘制组件", (context) => buildCustomViewPagesWidget(context)),
+    Page("功能组件", (context) => buildToolsPagesWidget(context)),
     Page("存储", (context) => buildStoragePagesWidget(context)),
     Page("平台交互", (context) => buildPlatformInteractPagesWidget(context)),
     Page("状态管理", (context) => buildStateManagingPagesWidget(context)),
