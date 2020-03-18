@@ -25,8 +25,8 @@
 - 使用全屏的主题
 - `getWindow().addFlag(WindowManager.LayoutParams.FLAG_FULLSCREEN);`
 
-
 示例代码：
+
 ```java
      private void setFullscreen(boolean on) {
             Window win = getWindow();
@@ -40,6 +40,7 @@
             win.setAttributes(winParams);
         }
 ```
+
 4.0 之前采用的全屏方式是无法隐藏 NavigationBar 的，因为 NavigationBar 是在 4.0 以后才引入。使用这种方式设置全屏的特点是，**离开了 App 后(按HOME返回桌面)再进入 App 时，依然处于全屏模式，只能清除掉全屏标志位才能退出全屏。**
 
 除此之外通过以下 Flag 也可以让使 Activity 的布局使用整个屏幕，但是 **状态栏会显示到 Activity 上方并遮盖部分布局**：
@@ -55,12 +56,12 @@
 
 ### 4.0 之后 SystemBar 相关 API 的一些变化
 
-- 在 3.0(API 11) 中，添加了一个重要的方法：`setSystemUiVisibility(int)`，用于控制包括 StatusBar 在内的一些窗口装饰元素的显示
+- 在 3.0(API 11) 中，添加了一个重要的方法：`setSystemUiVisibility(int)`，用于控制包括 StatusBar 在内的一些窗口装饰元素的显示。
 - 在 4.0(API 14) 中，Andorid 引入了 NavigationBar，并添加了一个 Flag：`SYSTEM_UI_FLAG_HIDE_NAVIGATION` 用于控制 Navigatoin Bar 的显示。
 
 另外还引入一些 Flag 用于调整 SystemBar：
 
-- `View.SYSTEM_UI_FLAG_LOW_PROFILE` api 14 引入：不会使Status Bar和Navigation Bar消失，而是会使它们变暗，降低它们对视觉的干扰，使用户可以专注于应用的内容，但仍可响应用户的交互，当和它们的交互发生时，会退出Low Profile的状态。
+- `View.SYSTEM_UI_FLAG_LOW_PROFILE` api 14 引入：不会使 StatusBar 和 NavigationBar 消失，而是会使它们变暗，降低它们对视觉的干扰，使用户可以专注于应用的内容，但仍可响应用户的交互，当和它们的交互发生时，会退出Low Profile的状态。
 - `View.SYSTEM_UI_FLAG_FULLSCREEN`  api 16 引入：控制 StatusBar 的显示
 - `View.SYSTEM_UI_FLAG_HIDE_NAVIGATION` api 14 引入：控制 NavigationBar 的显示
 - `View.SYSTEM_UI_FLAG_IMMERSIVE`   api 19 引入：用于设置沉浸模式
@@ -97,8 +98,8 @@
 
 ### 监听 SystemBar 的变化
 
-通常情况下我们需要能够控制 SystemBar 的显示与隐藏，这个时候就需要监听 SystemBar 的状态。
-通过 **OnSystemUiVisibilityChangeListener** 就可以对 SystemBar 的状态进行监听。
+通常情况下我们需要能够控制 SystemBar 的显示与隐藏，这个时候就需要监听 SystemBar 的状态。通过 **OnSystemUiVisibilityChangeListener** 就可以对 SystemBar 的状态进行监听。
+
 ```java
     protected void onCreate(Bundle savedInstance) {
         mDecorView.setOnSystemUiVisibilityChangeListener(new OnSystemUiVisibilityChangeListener() {
@@ -112,11 +113,12 @@
             }
     });
 ```
+
 与此方法有关的Flag是：
 
-*   FULLSCREEN（4）
-*   HIDE_NAVIGATION（2）
-*   LOW_PROFILE（1）
+- FULLSCREEN（4）
+- HIDE_NAVIGATION（2）
+- LOW_PROFILE（1）
 
 `onSystemUiVisibilityChange(int visibility)` 中的 `visibility` 是 `LOW_PROFILE、FULLSCREEN` 跟 `HIDE_NAVIGATION` 这三个值的和。
 
@@ -124,10 +126,12 @@
 ## 3 隐藏 ActionBar
 
 ActionBar 本身就有显示与隐藏的功能：
+
 ```java
     getActionBar().hide();
     getActionBar().show();
 ```
+
 **一般我们使用的AppCompatActivity，所以应该使用`getSupportActionBar()`**
 
 ---
