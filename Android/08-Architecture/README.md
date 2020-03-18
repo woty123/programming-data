@@ -1,11 +1,11 @@
 # Android Archtitecture References
 
-## AAC
+## Jetpack-AAC
 
 - [对Google的吐槽：2019年11月，分析Android原生开发的现状](https://mp.weixin.qq.com/s/4Z_Do6kC8WC5u5qnGgZNKw)
 - [viewmodels-and-livedata-patterns-antipatterns](https://medium.com/androiddevelopers/viewmodels-and-livedata-patterns-antipatterns-21efaef74a54)
-- [saving-ui-state-with-viewmodel-savedstate-and-dagger](https://proandroiddev.com/saving-ui-state-with-viewmodel-savedstate-and-dagger-f77bcaeb8b08#7f89)
-- [kotlin-architecture-components](https://github.com/satorufujiwara/kotlin-architecture-components)
+- Dagger2 自动注入：[kotlin-architecture-components](https://github.com/satorufujiwara/kotlin-architecture-components)
+- 使用 Dagger2 注入 SavedStateRegistryOwner 到 ViewModel 种：[saving-ui-state-with-viewmodel-savedstate-and-dagger](https://proandroiddev.com/saving-ui-state-with-viewmodel-savedstate-and-dagger-f77bcaeb8b08#7f89)
 
 ## 值得研究的项目
 

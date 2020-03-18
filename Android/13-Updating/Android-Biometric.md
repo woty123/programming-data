@@ -299,7 +299,7 @@ CryptoObject 内部定义了以下三个成员：
 
 setUserAuthenticationRequired：设置是否只有用户身份认证后，key 才被授权使用。对应到我们请求指纹认证时，传入 CryptoObject，当用户指纹认证通过，CryptoObject 内部的 Cipher 对象所绑定的 key 会被授权，而只有 key 被授权了，绑定这个 key 的 Cipher 对象才能够进行正常的加解密操作。当指纹验证回调成功，我们可以在回调参数中获取传入的 CryptoObject，然后拿 CryptoObject 内部的 Cipher 尝试进行一次加密操作，如果能正常加密则说明此次指纹验证没有安全异常。
 
-setInvalidatedByBiometricEnrollment：设置当在有新的指纹录入时，是否这个 key 应该被至于无效。这个方法设置用于检测在验证指纹的过程中，有没有新的指纹录入系统，如果有，则这个 key 将会失效，此时调用 `cipher.init(Cipher.ENCRYPT_MODE, keyStore.getKey(keyName, null) as SecretKey)` 就会出现异常。
+setInvalidatedByBiometricEnrollment：设置当在有新的指纹录入时，是否这个 key 应该被至于无效。这个方法设置用于检测在验证指纹的过程中，有没有新的指纹录入系统，如果有，则这个 key 将会失效，此时使用 key 初始化 Cipher 对象（调用 `cipher.init(Cipher.ENCRYPT_MODE, keyStore.getKey(keyName, null) as SecretKey)` ）就会出现 KeyPermanentlyInvalidatedException 异常。
 
 可见，这两个配置都是出于安全考虑。那么**是否应该使用 CryptoObject 呢**？
 
@@ -319,6 +319,7 @@ setInvalidatedByBiometricEnrollment：设置当在有新的指纹录入时，是
 第三方库：
 
 - [Fingerprint](https://github.com/OmarAflak/Fingerprint)
+- [FingerprintIdentify](https://github.com/uccmawei/FingerprintIdentify)
 
 ## 3 使用 androidx.biometric 库实现指纹认证
 

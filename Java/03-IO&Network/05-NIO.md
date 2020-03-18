@@ -1,6 +1,6 @@
 # NIO
 
-本笔记[示例代码](../00-Code/JavaIO/README.md)
+本笔记[示例代码](../Code/JavaIO/README.md)
 
 ---
 ## 1 什么是 IO

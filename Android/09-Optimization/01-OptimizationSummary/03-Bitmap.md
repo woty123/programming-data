@@ -30,7 +30,7 @@ bitmap 优化包括：
 
 1. 下载 libjpeg-turbo 源码
 2. 在 linux 下编译 libjpeg-turbo，获取对应的 `.so` 共享库或者 `.a` 静态库，下面是编译脚本。
-3. 在 Android 中使用 libjpeg-turbo，参考[ImageCompress](.././../00-Code/NDK/ImageCompressor/README.md)
+3. 在 Android 中使用 libjpeg-turbo，参考[ImageCompress](.././../Code/NDK/ImageCompressor/README.md)
 
 ## 4 图像处理引擎
 

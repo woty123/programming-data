@@ -28,6 +28,7 @@ Navigation 组件简化了 Android 应用程序中导航的实现。官方介绍
 3. 开始编辑 navigation，AndroidStudio3.2 开始支持 navigation 的图形编辑
 
 参考下面示例：
+
 ```xml
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -107,7 +108,7 @@ Navigation 组件简化了 Android 应用程序中导航的实现。官方介绍
 - navGraph属性用于关联一个 navigation xml
 - `defaultNavHost=true`：该属性可确保 NavHostFragment 拦截系统后退按钮。同时需要覆盖 `AppCompatActivity.onSupportNavigateUp（）`并调用 `NavController.navigateUp()`方法，该方法用于管理回退栈
 
-```
+```kotlin
 override fun onSupportNavigateUp()
         = findNavController(R.id.nav_host_fragment).navigateUp()
 ```
@@ -122,7 +123,7 @@ NavController 类提供导航控制的功能，可以从下面静态方法获取
 
 获取到 NavController 后可以调用其  `navigate()` 方法导航到一个 destination，navigate 方法接收一个 Resource Id，Resource Id 可以是在 xml 中定义的目标ID 或者是一个 Action。除此之外，还可以通过 transitions 进行导航。
 
-```
+```kotlin
 viewTransactionsButton.setOnClickListener { view ->
    view.findNavController().navigate(R.id.viewTransactionsAction)
 }
@@ -132,7 +133,7 @@ Android 维持着一个回退栈，包含最后一个可见的目标，navigate 
 
 对于 Button，还可以使用 `Navigation` 类的 `createNavigateOnClickListener()`便捷方法导航到目标：
 
-```
+```kotlin
 button.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.next_fragment, null))`
 ```
 
@@ -154,7 +155,7 @@ button.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.next_fra
 
 navigaton 组件包含一个 `NavigationUI` 类。这个类有几个静态方法，你可以使用这些方法连接菜单项和导航目的地。示例：
 
-```
+```kotlin
 //NavigationView代表应用程序的标准导航菜单。菜单内容可以由菜单资源文件填充，NavigationView通常放置在DrawerLayout中
 NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 NavigationUI.setupWithNavController(navigationView, navController);
@@ -181,7 +182,7 @@ tv.text = arguments.getString("amount")
 
 `navigation component` 有一个 Gradle 插件 `safeargs`，这个插件可以生成一些模板代码(简单对象和构建器)用于在不同的 destination 之间传递数据，我们只需要在 gradle 脚本中应用这个插件即可：
 
-```
+```groovy
 //插件地址
 classpath 'android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0-alpha01'
 //应用插件
@@ -271,14 +272,13 @@ public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
 导航到子图
 
-```
+```kotlin
 Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_sendMoneyGraph);
 ```
 
 ### 为 destination 分配 deep link
 
 `navigation component` 也对 deep link 提供了支持，可以直接导航到某个 Activity 中的 Fragment。
-
 
 ### 为 destinations 之间的转换创建动画
 
@@ -302,7 +302,6 @@ Navigation.findNavController(view).navigate(R.id.action_mainFragment_to_sendMone
  </fragment>
 ```
 
-
 ---
 ## 3 迁移到 `navigation component`
 
@@ -313,7 +312,7 @@ NavController及其导航图包含在单个 Activity 中。因此，在迁移现
 
 NavControllers 依赖一个或多个 Navigator 对象来执行导航操作。默认情况下，所有 NavController 支持通过使用 `ActivityNavigator` 及其嵌套的 `ActivityNavigator.Destination` 导航到另一个活动来离开导航图。为了能够导航到任何其他类型的 destination，必须将一个或多个附加的 Navigator 对象添加到 NavController中，例如，当使用 Fragment 作为 destination 时，NavHostFragment 自动将 FragmentNavigator 添加到其NavController。要将新的 Navigator 对象添加到 NavController，必须使用相应的 Navigator 类的`getNavigatorProvider()` 方法，然后使用该类的 `addNavigator()` 方法。
 
-```
+```kotlin
 CustomNavigator customNavigator = new CustomNavigator();
 navController.getNavigatorProvider().addNavigator(customNavigator);
 ```
@@ -368,5 +367,5 @@ viewTransactionsButton.setOnClickListener(new View.OnClickListener() {
 其他文章：
 
 - [The Navigation Architecture Component](https://developer.android.com/topic/libraries/architecture/navigation/)
-- [Android官方架构组件Navigation：大巧不工的Fragment管理框架](https://mp.weixin.qq.com/s?__biz=MzIwMTAzMTMxMg==&mid=2649492677&idx=1&sn=4d04f1045a01131d8bef185f625e2745&chksm=8eec873ab99b0e2cf8835f2a5b43f0c8aee4c7debb277895d850e8d12a3168a1cf2413d87161&scene=38#wechat_redirect)
 - [google codelabs](https://codelabs.developers.google.com/)，搜索 navigation 可查询 navigation 相关代码
+- [Android官方架构组件Navigation：大巧不工的Fragment管理框架](https://mp.weixin.qq.com/s?__biz=MzIwMTAzMTMxMg==&mid=2649492677&idx=1&sn=4d04f1045a01131d8bef185f625e2745&chksm=8eec873ab99b0e2cf8835f2a5b43f0c8aee4c7debb277895d850e8d12a3168a1cf2413d87161&scene=38#wechat_redirect)

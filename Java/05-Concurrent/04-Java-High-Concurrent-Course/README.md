@@ -8,4 +8,4 @@
 
 项目源码
 
-- [Java-HighConcurrency-Solutions](../00-Code/Java-HighConcurrency-Solutions/README.md)
+- [Java-HighConcurrency-Solutions](../Code/Java-HighConcurrency-Solutions/README.md)

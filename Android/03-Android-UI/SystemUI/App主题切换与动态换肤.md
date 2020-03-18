@@ -71,7 +71,7 @@ AppCompat 23.2.0 开始提供了主题切换的功能，应用这个模式，我
 
 ### 具体代码实现
 
-参考：[DNSkin](../../00-Code/DNSkin/README.md)
+参考：[DNSkin](../../Code/DNSkin/README.md)
 
 ## 4 第三方库
 

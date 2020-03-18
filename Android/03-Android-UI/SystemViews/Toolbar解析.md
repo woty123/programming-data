@@ -65,10 +65,10 @@ Theme.AppCompat.Light.NoActionBar`
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        //设置弹出菜单的样式
+        <!-- 设置弹出菜单的样式 -->
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-       //设置Toolbar的样式
-       app:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
+        <!-- 设置Toolbar的样式 -->
+        app:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
 ```
 
 ### 风格样式
@@ -84,7 +84,7 @@ Theme.AppCompat.Light.NoActionBar`
             <!-- 设置 toolbar 弹出菜单的字体大小和溢出菜单文字大小-->
           <item name="android:textSize">15sp</item>
         </style>
-    
+
         <style name="OverFlowIcon" parent="Widget.AppCompat.ActionButton.Overflow">
             <item name="android:src">@drawable/abc_ic_menu_moreoverflow_mtrl_alpha</item>
         </style>

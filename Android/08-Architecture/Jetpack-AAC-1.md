@@ -121,7 +121,7 @@ Repository作为抽象的单一数据源，但其内部一般包含另外三个�
 
 #### 2.3.5 最终加载架构
 
-![acc架构](index_files/acc.png "acc架构")
+![acc架构](images/acc.png "acc架构")
 
 ### 2.4 指导原则(Guiding principles)
 
@@ -174,7 +174,7 @@ public class Resource<T> {
 
 从磁盘中获取并显示数据同时再从网络获取数据是一种常见的用例。可以创建一个可以在多个地方使用的帮助类 `NetworkBoundResource`。下面是 NetworkBoundResource 的决策树:
 
-![](index_files/network-bound-resource.png)
+![](images/network-bound-resource.png)
 
 NetworkBoundResource内部封装了统一的流程，用于从数据库和网络加载数据，然后返回一个用LiveData包装的Resource对象，NetworkBoundResource定义了两个类型参数ResultType和RequestType。因为从API返回的数据类型可能与本地使用的数据类型不匹配。
 

@@ -651,7 +651,7 @@ Lazy 和 Provider 注解同样适用于 multibinding。下面两种方式都是�
 具体如何使用？
 
 1. 参考[官方文档](https://dagger.dev/android)
-2. 参考我的[示例代码](../00-Code/Dagger2AndroidInjection-v2.24/README.md)
+2. 参考我的[示例代码](../Code/Dagger2AndroidInjection-v2.24/README.md)
 
 ---
 ## 11 注入 Nullable 对象
@@ -836,6 +836,7 @@ public class UserPresenter implement IPresenter{
 
 - [Users-Guide](https://google.github.io/dagger/users-guide)
 - [API-Reference](https://google.github.io/dagger/api/latest/)
+- [dagger-basics](https://developer.android.com/training/dependency-injection/dagger-basics)
 - [让你的Daggers保持锋利](https://juejin.im/entry/5b8252d5e51d4538cd22834c)
 - [Android常用开源工具（1）-Dagger2入门](http://blog.csdn.net/duo2005duo/article/details/50618171)
 - [Android常用开源工具（2）-Dagger2进阶](http://blog.csdn.net/duo2005duo/article/details/50696166)

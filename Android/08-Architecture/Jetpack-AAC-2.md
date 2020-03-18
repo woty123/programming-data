@@ -263,7 +263,7 @@ public class MyActivity extends AppCompatActivity {
 
 ViewModel 对象的范围是在获取 ViewModel 时传递给 ViewModelProvider 类的 Lifecycle 决定的。直到Lifecycle 的范围永久消失之前。ViewModel 都会保留在内存中，一个Activivy的 `finish()`、一个Fragment的 `detached` 都表示一个 Lifecycle 的范围永久消失。
 
-![](index_files/viewmodel-lifecycle.png)
+![](images/viewmodel-lifecycle.png)
 
 >Activity 的 `recreate()` 方法不会导致 ViewModel 的销毁
 
@@ -418,7 +418,7 @@ Flowable<PagedList<Item>> pagedItems =
 
 ### 6.2 数据流
 
-![](index_files/paging-threading.gif)
+![](images/paging-threading.gif)
 >图片来自[官方文档](https://developer.android.com/topic/libraries/architecture/paging)
 
 PagingLibrary 组织来自后台线程生成器的数据流，并在UI线程中呈现。比如，当一个新的数据被插入到数据库中，之前的 DataSource 将会被废弃，`LiveData<PagedList>` 或 `Flowable<PagedList>`将会在工作线程创建一个新的 PagedList。新的 PagedList 被提交给 PagedListAdapter，PagedListAdapter 通过 DiffUtil 来计算列表条目的变化，然后调用 `notifyItemInserted()` 等方法来更新列表 UI。

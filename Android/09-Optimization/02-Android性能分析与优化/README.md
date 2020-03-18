@@ -9,4 +9,4 @@
 
 代码地址：
 
-[AndroidPerformance](../../00-Code/Android/AndroidPerformance/README.md)
+[AndroidPerformance](../../Code/Android/AndroidPerformance/README.md)
