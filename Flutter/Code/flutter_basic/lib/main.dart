@@ -98,6 +98,12 @@ class FlutterBasicWidget extends StatelessWidget {
           checkerboardOffscreenLayers: false,
           checkerboardRasterCacheImages: false,
 
+          /*配置App主题*/
+          theme: ThemeData(
+            //颜色模式，亮色、暗色
+              brightness: Brightness.dark
+          ),
+
           //首页
           home: buildListBody("Flutter", context, _buildModulePages()),
         ));

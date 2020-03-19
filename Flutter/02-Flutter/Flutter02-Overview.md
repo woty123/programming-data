@@ -94,12 +94,38 @@
 
 **功能型 Widget**：不会影响UI布局及外观的Widget，它们通常具有一定的功能，如事件监听、数据存储等
 
-- WillPopScope
-- InheritedWidget
+- WillPopScope 用于拦截返回键
+- InheritedWidget 用于共享数据
+- Theme 用于自定义主题样式
+- 异步加载：
+  - FutureBuilder
+  - StreamBuilder
+  
+**对话框与提示**：
 
-理解部分 Widget 原理：
+- Scaffold.of(context).showSnackBar(new SnackBar(content: new Text("$result"))); 用于弹出一个 SnackBar。
+- showDialog Material组件库提供的一个用于弹出Material风格对话框的方法
+- SimpleDialog Material组件库提供的对话框，它会展示一个列表，用于列表选择的场景。
+  - AlertDialog 和 SimpleDialog 中不能使用延迟加载模型的组件，比如 ListView、GridView 等。
+- Dialog：AlertDialog、SimpleDialog 都继承自 Dialog，它们三者是 Material 组件库提供的对话框，旨在帮助开发者快速构建出符合 Material 设计规范的对话框。
+- showDialog 方法中不一定就要返回 Dialog 类型的组件，其他 Widget 也可以。
+- showGeneralDialog：展示对话框的基础方法，showDialog 基于此封装。
+- 对话框状态管理
+  - 单独抽离出StatefulWidget
+  - StatefulBuilder
+  - context 即 Element
+- showModalBottomSheet
+- showBottomSheet 原理与 showModalBottomSheet 不同，依托于 Scaffold 组件。
+- Loading
+  - 使用 UnconstrainedBox 消除 showDialog 对框体 size 的限制
+- showDatePicker
+- showCupertinoModalPopup IOS 风格的底部对话框
 
-- InheritedWidget
+具体参考：
+
+1. [Widgets 目录](https://flutterchina.club/widgets/)
+2. [Widget catalog](https://flutter.dev/docs/development/ui/widgets)
+3. [widgets index](https://flutter.dev/docs/reference/widgets)
 
 ### Widget 如何管理自己的状态
 
