@@ -27,7 +27,9 @@ fun main() = runBlocking {
     val launch = launch {
 
         //订阅与取消都在同一个线程中，订阅后发射数据会阻塞取消动作
+        //这就相当于用在协程中不使用协程的 API 去做耗时操作，所以得不到想要的效果。
         val contributors = github.contributors("JetBrains", "Kotlin")
+                //.subscribeOn(Schedulers.io())
                 .doOnSubscribe {
                     println("up stream doOnSubscribe")
                 }
@@ -62,7 +64,7 @@ fun main() = runBlocking {
 
 }
 
-private fun rx() = runBlocking {
+private fun _main() = runBlocking {
     println("Making GitHub API request")
 
     val retrofit = Retrofit.Builder().apply {
@@ -72,7 +74,7 @@ private fun rx() = runBlocking {
     }.build()
 
     val github = retrofit.create(GitHubRx::class.java)
-    //订阅与取消都在不同一个线程中，订阅后发射数据不会阻塞取消动作
+    //订阅与取消都在不同线程中，订阅后发射数据不会阻塞取消动作
     val contributors = github.contributors("JetBrains", "Kotlin")
             .subscribeOn(Schedulers.io())
             .doOnSubscribe {

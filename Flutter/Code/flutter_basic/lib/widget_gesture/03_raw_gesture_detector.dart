@@ -8,15 +8,16 @@ class DoubleGestureWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: RawGestureDetector(
+
       gestures: {
         MultipleTapGestureRecognizer:
-            GestureRecognizerFactoryWithHandlers<MultipleTapGestureRecognizer>(
-          () => MultipleTapGestureRecognizer(),
-          (MultipleTapGestureRecognizer instance) {
+            GestureRecognizerFactoryWithHandlers<MultipleTapGestureRecognizer>(() => MultipleTapGestureRecognizer(),
+                  (MultipleTapGestureRecognizer instance) {
             instance.onTap = () => print('parent tapped ');
           },
         )
       },
+
       child: Container(
         color: Colors.pinkAccent,
         child: Center(
