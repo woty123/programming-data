@@ -11,13 +11,13 @@ Java Plugin 为项目中的每一个 source set 都添加了一个 JavaCompile �
 ### Compile properties
 
 - 文件集合
-    - classpath
-    - 默认值：`sourceSet.compileClasspath`
+  - classpath
+  - 默认值：`sourceSet.compileClasspath`
 - 文件树源：
-    - source
-    - 默认值: `sourceSet.java`，可以设置使用 [Understanding implicit conversion to file collections](https://docs.gradle.org/current/userguide/working_with_files.html#sec:specifying_multiple_files) 中描述的任何内容 
+  - source
+  - 默认值: `sourceSet.java`，可以设置使用 [Understanding implicit conversion to file collections](https://docs.gradle.org/current/userguide/working_with_files.html#sec:specifying_multiple_files) 中描述的任何内容 
 - 文件目标目录
-    - 默认值: `sourceSet.java.outputDir`
+  - 默认值: `sourceSet.java.outputDir`
 
 默认情况下，Java 编译器运行在 gradle 进程中，设置 options.fork 为 true 可以使用编译运行在另一个的进程，在 Ant javac 任务情况下， 这意味着每一个编译任务都会 fork 出一个新的进程，这回导致编译速度减慢，反过来，Gradle 继承编译器会尽可能的重用编译器进程，在这两种情况下，所有设置的 fork 选型就会被兑现。
 
@@ -61,6 +61,7 @@ Gradle 支持两个常见类别的注解处理器(`isolating隔离 和 aggregati
 #### 示例：注册一个增量注解处理器
 
 路径：`processor/src/main/resources/META-INF/gradle/incremental.annotation.processors`
+
 ```
 EntityProcessor,isolating
 ServiceRegistryProcessor,dynamic
@@ -84,7 +85,6 @@ public Set<String> getSupportedOptions() {
 - 它们必须使用[Filer API](https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Filer.html)生成特们的文件，使用其他任何方式写入文件都将导致延后的静默的失败，因为这些文件不会被正确的清理，如果你的处理器做了这样的事，将不能被增量处理。
 - 它们不能依赖类似 `com.sun.source.util.Trees` 编译器特定的 API，Gradle 包装了处理 API，所以试图去转换编译器特定的类型会失败，如果你的处理器做了这样的事，将不能被增量处理。除非你有一些后备机制。
 - 如果它们使用了 [Filer#createResource](https://docs.oracle.com/javase/8/docs/api/javax/annotation/processing/Filer.html#createResource(javax.tools.JavaFileManager.Location,java.lang.CharSequence,java.lang.CharSequence,javax.lang.model.element.Element...))，Gradle 将会重新编译所有的源文件，参考[gradle/issues/4702](https://github.com/gradle/gradle/issues/4702)
-
 
 ### "Isolating" annotation processors
 

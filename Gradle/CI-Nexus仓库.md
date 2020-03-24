@@ -12,8 +12,7 @@ nexus.bat install //安装服务
 nexus.bat start //启动nexus
 ```
 
-等待nexus启动之后可以在本地打开链接`http://127.0.0.1:8081/nexus/#welcome`,正常的话可以看到nexus的控制台了，然后需要登录，
-nexus默认的账户是`admin `,密码是`admin123`,登录之后的界面为：
+等待nexus启动之后可以在本地打开链接`http://127.0.0.1:8081/nexus/#welcome`,正常的话可以看到nexus的控制台了，然后需要登录，nexus默认的账户是`admin`,密码是`admin123`,登录之后的界面为：
 
 ![nexus_repository](images/nexus_repository.png)
 
