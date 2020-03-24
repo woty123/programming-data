@@ -14,17 +14,35 @@
 
 不管是 原生 Android、原生 IOS、RN 还是 Flutter，总是它们都是用来开发 App，App 需要有界面，有交互，界面用于呈现数据，获取数据需要网络通信，有些数据需要存储到本地，等等等，经过梳理，可以把一些必备的技能与基础组件总结如下：
 
-- UI
-  - 基础控件
-  - 页面布局
-  - 手势与事件处理
-  - 自定义控件，包括组合控件和自绘控件
-  - 动画，包括组件动画和转场动画
-- 网络与缓存
+**UI 控件**：
+  
+- 基础控件
+- 页面布局
+- 手势与事件处理
+- 自定义控件，包括组合控件和自绘控件
+- 动画，包括组件动画和转场动画
+  
+**通用页面封装**：
+
+- 基础功能：Loading、ShowMessage
+- 状态页面（Content、Error、Loading）
+- 列表页
+
+**网络与缓存**：
+
 - 异步模型
-- 架构模式
-  - 组件间通信交互
-  - 代码组织模式：MVC、MVVM
+- 如果执行网络请求
+- 请求结果解析
+- 网络异常处理
+- 数据如何存储
+
+**架构模式**：
+
+- 组件间通信交互
+- 代码组织模式：MVC、MVVM
+
+**其他**：
+
 - 第三方库集成
 - 与原生平台交互
 - 编译、调试、打包
@@ -83,7 +101,7 @@ flutter 版本升级记录与兼容：
 - [Flutter-learning](https://github.com/AweiLoveAndroid/Flutter-learning)
 - [flutter专栏教程](http://blog.csdn.net/column/details/13593.html)
 - [日更的FlutterDemo合集](https://github.com/OpenFlutter/Flutter-Notebook)
-- [贾鹏辉的技术博客官网-Fluter](http://www.devio.org/tags/#Flutter)
+- [贾鹏辉的技术博客-Fluter](http://www.devio.org/tags/#Flutter)
 
 教学项目
 

@@ -14,7 +14,7 @@ Libraries：
 Blogs：
 
 - [Porting Retrofit2 sample to koltin coroutines sample](https://medium.com/@raghunandan2005/retrofit2-and-koltin-coroutines-sample-938a6842b0a1)
-- [Kotlin xiec 如何实现 Retry](https://stackoverflow.com/questions/46872242/how-to-exponential-backoff-retry-on-kotlin-coroutines)
+- [Kotlin 协程如何实现 Retry](https://stackoverflow.com/questions/46872242/how-to-exponential-backoff-retry-on-kotlin-coroutines)
 
 Sample
 

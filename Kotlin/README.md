@@ -99,6 +99,8 @@ Collections：
 - [破解 Kotlin 协程(8) - Android 篇](https://juejin.im/post/5cfe1947e51d45105d63a4e3)
 - [破解 Kotlin 协程(9) - Channel 篇](https://juejin.im/post/5d80fa6b518825446d0d15bf)
 - [破解 Kotlin 协程 番外篇(1) - 协程为什么被称为『轻量级线程』？](https://juejin.im/post/5dbaeda8f265da4cfb51271b)
+- [破解 Kotlin 协程(10) - Select 篇](https://mp.weixin.qq.com/s/cEV7Xs_aVBpHm_jZYAfLuw)
+- [破解 Kotlin 协程(11) - Flow 篇](https://mp.weixin.qq.com/s/EkVdbbjbVVCMWjeL6XbfbA)
 
 Sample：
 

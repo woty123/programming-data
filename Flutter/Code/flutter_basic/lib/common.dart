@@ -34,3 +34,59 @@ buildListBody(String title, BuildContext context, List<Page> pages) {
         gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
       ));
 }
+
+class SampleWidget extends StatefulWidget {
+
+  final List<Choice> choices;
+  final String title;
+
+  const SampleWidget(this.choices, this.title, {Key key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return SampleWidgetState();
+  }
+}
+
+class Choice {
+  const Choice({this.title, this.builder});
+
+  final String title;
+  final Builder builder;
+}
+
+class SampleWidgetState extends State<SampleWidget> {
+
+  Builder _builder;
+
+  void _select(Choice choice) {
+    // Causes the app to rebuild with the new _selectedChoice.
+    setState(() {
+      _builder = choice.builder;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+          actions: <Widget>[
+            PopupMenuButton<Choice>(
+              onSelected: _select,
+              itemBuilder: (BuildContext context) {
+                return widget.choices.map((Choice choice) {
+                  return PopupMenuItem<Choice>(
+                    value: choice,
+                    child: Text(choice.title),
+                  );
+                }).toList();
+              },
+            ),
+          ],
+        ),
+        body: _builder ?? widget.choices[0].builder
+    );
+  }
+
+}

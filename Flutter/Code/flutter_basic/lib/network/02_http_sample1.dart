@@ -25,8 +25,7 @@ class Post {
 }
 
 Future<Post> fetchPost() async {
-  final response =
-      await http.get('https://jsonplaceholder.typicode.com/posts/1');
+  final response = await http.get('https://jsonplaceholder.typicode.com/posts/1');
 
   final responseJson = json.decode(response.body);
 
@@ -36,30 +35,30 @@ Future<Post> fetchPost() async {
 class HttpSample1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Fetch Data Example',
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text('Fetch Data Example'),
-        ),
-        body: new Center(
-          child: new FutureBuilder<Post>(
-            future: fetchPost(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return new Text(snapshot.data.title);
-              } else if (snapshot.hasError) {
-                return new Text("${snapshot.error}");
-              }
+    return Scaffold(
 
-              // By default, show a loading spinner
-              return new CircularProgressIndicator();
-            },
-          ),
+      appBar: new AppBar(
+        title: new Text('Fetch Data Example'),
+      ),
+
+      body: new Center(
+
+        child: new FutureBuilder<Post>(
+
+          future: fetchPost(),
+
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return new Text(snapshot.data.title);
+            } else
+            if (snapshot.hasError) {
+              return new Text("${snapshot.error}");
+            }
+            // By default, show a loading spinner
+            return new CircularProgressIndicator();
+          },
         ),
+
       ),
     );
   }

@@ -1,8 +1,8 @@
 # Flutter Arch
 
-## 1 UI
+## 1 UI 交互
 
-### Widget 概览
+### 1.1 Widget 概览
 
 **Widget 按功能分类：**
 
@@ -91,29 +91,66 @@
     2. PageStorage 用于在特定情况下保存页面(路由)相关数据的组件。
     3. ScrollPosition：ScrollController。
     4. NotificationListener 另一个监听滚动的组件。
+11. Pageview 类似 Android 中的 ViewPager。
 
 **功能型 Widget**：不会影响UI布局及外观的Widget，它们通常具有一定的功能，如事件监听、数据存储等
 
-- WillPopScope
-- InheritedWidget
+- WillPopScope 用于拦截返回键
+- InheritedWidget 用于共享数据
+- Theme 用于自定义主题样式
+- 异步加载：
+  - FutureBuilder
+  - StreamBuilder
+  
+**对话框与提示**：
 
-理解部分 Widget 原理：
+- Scaffold.of(context).showSnackBar(new SnackBar(content: new Text("$result"))); 用于弹出一个 SnackBar。
+- showDialog Material组件库提供的一个用于弹出Material风格对话框的方法
+- SimpleDialog Material组件库提供的对话框，它会展示一个列表，用于列表选择的场景。
+  - AlertDialog 和 SimpleDialog 中不能使用延迟加载模型的组件，比如 ListView、GridView 等。
+- Dialog：AlertDialog、SimpleDialog 都继承自 Dialog，它们三者是 Material 组件库提供的对话框，旨在帮助开发者快速构建出符合 Material 设计规范的对话框。
+- showDialog 方法中不一定就要返回 Dialog 类型的组件，其他 Widget 也可以。
+- showGeneralDialog：展示对话框的基础方法，showDialog 基于此封装。
+- 对话框状态管理
+  - 单独抽离出StatefulWidget
+  - StatefulBuilder
+  - context 即 Element
+- showModalBottomSheet
+- showBottomSheet 原理与 showModalBottomSheet 不同，依托于 Scaffold 组件。
+- Loading
+  - 使用 UnconstrainedBox 消除 showDialog 对框体 size 的限制
+- showDatePicker
+- showCupertinoModalPopup IOS 风格的底部对话框
 
-- InheritedWidget
+具体参考：
 
-### Widget 如何管理自己的状态
+1. [Widgets 目录](https://flutterchina.club/widgets/)
+2. [Widget catalog](https://flutter.dev/docs/development/ui/widgets)
+3. [widgets index](https://flutter.dev/docs/reference/widgets)
+
+### 1.2 Widget 如何管理自己的状态
 
 - 自己管理。
 - parent 管理。
 - 混合方式管理。
 - 全局状态管理。
 
-### 文字绘制
+### 1.3 触摸事件处理
+
+- 原始事件处理：Listener
+- 命中测试：HitTestBehavior
+- 语义化手势：GestureDetector
+- 手势识别器：GestureRecognizer
+- 自定义手势检测器：RawGestureDetector
+- 手势竞技场
+- 如果解决收拾冲突
+
+### 1.4 文字绘制
 
 - [How can I get the size of the Text Widget in flutter](https://stackoverflow.com/questions/52659759/how-can-i-get-the-size-of-the-text-widget-in-flutter)
 - [图解 TextPainter 与 TextSpan 小尝试](https://www.jianshu.com/p/0fd1eaea6269)
 
-### Flutter 动画——[Animation](https://flutter.dev/docs/development/ui/animations)
+### 1.5 Flutter 动画——[Animation](https://flutter.dev/docs/development/ui/animations)
 
 - Tween
 - AnimationController
@@ -121,6 +158,11 @@
 - AnimatedBuilder
 - Hero 动画
 - Staggered Animation
+
+## 1.6 UI 库
+
+- ViewPager 轮播图：[flutter_swiper](https://github.com/best-flutter/flutter_swiper)
+
 
 ## 2 网络与存储
 
@@ -134,17 +176,22 @@ Json 解析
 
 ## 3 架构模式
 
-### 使用 Provider 进行状态管理
+### 3.1 使用 Provider 进行状态管理
 
 - [Provider doc](https://pub.dev/documentation/provider/latest/)
 - [Flutter | 状态管理指南篇——Provider](https://juejin.im/post/5d00a84fe51d455a2f22023f)
 - [Flutter Provider 3.0实战教程](https://juejin.im/post/5d2c19c6e51d4558936aa11c)
 
-## 网络与存储
+## 3.2 网络与存储
 
 - [ ] todo
 
-## 4 其他
+## 4 掌握 Flutter 核心原理
+
+- [Flutter 核心原理](https://book.flutterchina.club/chapter14/)
+- [Flutter学习之视图体系](https://juejin.im/post/5c99ce54e51d455a3142aaa6)
+
+## 5 其他
 
 ### Flutter In StackOverflow
 
