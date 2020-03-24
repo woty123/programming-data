@@ -128,6 +128,7 @@
 - Spacesniffer
 - Windows install clean up
 - Memory Cleaner
+- Adobe Digital Editions 或者 neat reader
 
 ## Windows
 
