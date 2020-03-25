@@ -35,6 +35,8 @@ fetch breakpad
 
 ### 分析崩溃
 
+触发 native 崩溃后，breakpad 会生成 *.dmp 文件。
+
 ```bash
 # 根据 minidump 文件生成堆栈跟踪log
 ./minidump_stackwalk a9663bf9-2eff-40ca-2346cf9d-f30b238d.dmp > crashLog.txt
@@ -42,7 +44,7 @@ fetch breakpad
 
 得到信息如下：
 
-```log
+```shell
 Operating system: Android
                   0.0.0 Linux 4.9.111 #1 SMP PREEMPT Wed Apr 10 02:52:24 CST 2019 aarch64
 CPU: arm64
@@ -55,7 +57,7 @@ Crash address: 0x1000300020005
 Process uptime: not available
 
 Thread 0 (crashed)
- 0  libnative-lib.so + 0x550
+ 0  libnative-lib.so + 0x550 #注意这里的 0x550，下面需要用到
      x0 = 0x0001000300020005    x1 = 0x0000007fd55ce864
      x2 = 0x0000000012d995b0    x3 = 0x00000078b2a98e14
      x4 = 0x0000007fd55ce844    x5 = 0x0000000000000000
@@ -82,12 +84,12 @@ Thread 0 (crashed)
 
 ```bash
 # 输入命令，进入交互模式
-D:\dev_tools\android-ndk-r13b-windows-x86_64\android-ndk-r13b\toolchains\aarch64-linux-android-4.9\prebuilt\windows-x 86_64\bin\aarch64-linux-android-addr2line.exe -f -C -e D:\codes\github\Programming-Notes\00-Code\Android\AndroidAdvanceWithGeektime\Chapter01\app\build\intermediates\transforms\mergeJniLibs\debug\0\lib\arm64-v8a\libnative-lib.so
+D:\dev_tools\android-ndk-r13b-windows-x86_64\android-ndk-r13b\toolchains\aarch64-linux-android-4.9\prebuilt\windows-x 86_64\bin\aarch64-linux-android-addr2line.exe -f -C -e .\Geektime-AdvanceAndroid\Chapter01\app\build\intermediates\transforms\mergeJniLibs\debug\0\lib\arm64-v8a\libnative-lib.so
 
 # 输入地址，addr2line 会输出代码行号
 0x550
 Java_com_dodola_breakpad_MainActivity_makeCrash
-D:\codes\github\Programming-Notes\00-Code\Android\AndroidAdvanceWithGeektime\Chapter01\app\src\main\cpp/native-lib.cpp:8
+.\Geektime-AdvanceAndroid\Chapter01\app\src\main\cpp/native-lib.cpp:8
 ```
 
 至此可以定位到，我们的 bug 出现在 `native-lib.cpp` 第 8 行。
