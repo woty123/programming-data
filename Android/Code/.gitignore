@@ -25,7 +25,6 @@ app/backup
 *.mp4
 *.out
 *.aac
-*.txt
 .cxx
 
 # VisualStudio
