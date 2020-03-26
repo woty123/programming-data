@@ -48,6 +48,10 @@
 
 具体参考[专栏学得苦？可能你还需要一份配套学习书单](https://time.geekbang.org/column/article/78354)
 
+### 相关学习笔记
+
+- [Android 开发高手课 文章更新学习笔记](https://www.wanandroid.com/blog/show/2436)
+
 ## 3 专栏内容概要
 
 **一、高质量开发模块**：

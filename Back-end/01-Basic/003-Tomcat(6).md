@@ -5,13 +5,13 @@
 ---
 ## 1 Tomcat 简介
 
-Tomcat是在SUN公司(当时还没被收购)推出的小型Servlet/JSP调试工具的基础上发展起来的一个优秀的Servlet容器，Tomcat本身完全用Java语言编写。目前是Apache开源软件组织的一个软件项目，它的官方网址为`http://tomcat.apache.org`。得到了广大开源代码志愿者的大力支持，且可以和目前大部分的主流Web服务器(IIS、Apache服务器)一起工作，它运行稳定、可靠且高效。已成为目前开发企业JavaWeb应用的最佳Servlet容器选择之一。
+Tomcat是在SUN公司(当时还没被收购)推出的小型Servlet/JSP调试工具的基础上发展起来的一个优秀的Servlet容器，Tomcat本身完全用Java语言编写。目前是Apache开源软件组织的一个软件项目，它的官方网址为<http://tomcat.apache.org>。得到了广大开源代码志愿者的大力支持，且可以和目前大部分的主流Web服务器(IIS、Apache服务器)一起工作，它运行稳定、可靠且高效。已成为目前开发企业JavaWeb应用的最佳Servlet容器选择之一。
 
 ### 版本
 
 Tomcat的版本随着不断推出的Servlet/JSP规范不同而不同，基本上是Servlet每推出一个版本，Tomcat也会发行新的版本以适应新的规范。
 
-- tomcat6本身是基于JDK1.5的应用程序，因此在安装和使用之前必须先行安装1.5及以上版本的JDK(JRE)，其支持Servlet2.5规范
+- tomcat6本身是基于JDK1.5的应用程序，因此在安装和使用之前必须先行安装1.5及以上版本的JDK(JRE)，其支持Servlet2.5规范。
 
 具体Tomcat版本与Servlet版本对应可以参考[whichversion](http://tomcat.apache.org/whichversion.html)。
 
@@ -21,10 +21,9 @@ Tomcat的版本随着不断推出的Servlet/JSP规范不同而不同，基本上
 - CATALINA_HOME，如果要想在任意目录下都能启动Tomcat，就需要设置CATALINA_HOME环境变量，具体参考[这里](https://www.cnblogs.com/heshan664754022/archive/2013/03/27/2984357.html)
 - tomcat默认端口为8080，使用`netstat -ano`查看端口占用情况
 
-
 ### Tomcat 目录结构
 
-```
+```log
 bin：脚本目录
     启动脚本：startup.bat
     停止脚本：shutdown.bat
@@ -41,20 +40,18 @@ webapps：默认情况下发布WEB项目所存放的目录。
 work：tomcat处理JSP的工作目录。
 ```
 
-
 ---
 ## 2 JavaWEB 应用程序
 
 WEB应用程序指供浏览器访问的程序，通常也简称为web应用。
 
-一个web应用由多个静态web资源和动态web资源组成，如:html、css、js文件、Jsp文件、java程序、支持jar包、配置文件等等。
-
-Web应用开发好后，若想供外界访问，需要把web应用所在目录交给web服务器管理，这个过程称之为虚似目录的映射。
-
+- 一个web应用由多个静态web资源和动态web资源组成，如:html、css、js文件、Jsp文件、java程序、支持jar包、配置文件等等。
+- Web应用开发好后，若想供外界访问，需要把web应用所在目录交给web服务器管理，这个过程称之为虚似目录的映射。
 
 SUN公司的Servlet规范对JavaWeb应用作了这样的定义：**JavaWeb应用由一组Servlet/JSP、HTML文件、相关Java类以及其他可以绑定的资源构成，它可以在由各种供应商提供的符合Servlet规范的Servlet容器中运行**。
 
 在JavaWeb应用中可以包含以下内容：
+
 - Servlet组件：标准Servlet接口的实现类，运行在服务器端，包含了被Servlet容器动态调用的程序代码。
 - JSP组件：包含Java程序代码的HTML文档，运行在服务器端。当客户端请求访问JSP文件时，Servlet容器先把它编译成Servlet类，然后动态调用它的程序代码。
 - 相关的Java类：开发人员自定义的与Web应用相关的Java类。
@@ -62,7 +59,7 @@ SUN公司的Servlet规范对JavaWeb应用作了这样的定义：**JavaWeb应用
 - 客户端类：由客户端来运行的类。Applet是典型的客户端类。当客户请求访问Applet时，Servlet容器先从服务器上的本地文件系统中读取Applet的class类文件的数据，再把它发送到客户端，由客户端来运行Applet。
 - web.xml文件：JavaWeb应用的配置文件，采用XML格式。
 
-### JavaWEB应用的组成结构
+### JavaWEB 应用的组成结构
 
 开发web应用时，不同类型的文件有严格的存放规则，否则不仅可能会使web应用无法访问，还会导致web服务器启动报错。
 
@@ -80,6 +77,7 @@ SUN公司的Servlet规范对JavaWeb应用作了这样的定义：**JavaWeb应用
 4. 在tomcat的lib子目录下JAR的文件中查找MyClass.class文件。
 
 Tomcat6.x与Tomcat5.x的目录结构有所区别。在Tomcat5.x版本中，Tomcat允许在`server/lib`目录、`common/lib`和`shared/lib`目录下存放JAR文件，这3个目录的区别在于：
+
 - 在`server/lib`目录下的JAR文件只可被Tomcat访问。
 - 在`shared/lib`目录下的JAR文件可以被所有的JavaWeb应用访问，但不能被Tomcat访问。
 - 在`common/lib`目录下的JAR文件可以被Tomcat和所有JavaWeb应用访问。
@@ -93,13 +91,13 @@ Tomcat6.x与Tomcat5.x的目录结构有所区别。在Tomcat5.x版本中，Tomca
 - 方式一（推荐）：把自己的应用拷贝到Tomcat\webapps目录下即可
 - 方式二（war包）：把war拷贝到Tomcat\webapps目录下即可。Tomcat会自解压。
 
-
 ---
 ## 3 Tomcat 的组成结构与配置
 
 Tomcat本身由一系列可配置的组件构成，其中核心组件是Servelt容器组件，它是所有其他Tomcat组件的顶层容器。每个组件都可以在Tomcat安装目录`/conf/server.xml`文件中进行配置，每个Tomcat组件在server.xml文件中对应一种配置元素。
 
 tomcat默认的server.xml很简单(下面为6.0的精简版)：
+
 ```xml
 <?xml version='1.0' encoding='utf-8'?>
 <Server port="8005" shutdown="SHUTDOWN">
@@ -131,8 +129,8 @@ tomcat默认的server.xml很简单(下面为6.0的精简版)：
 
 Tomcat 4.x时，Servlet容器被重新设计，并被命名为Catalina。Tomcat的核心分为3个部分:
 
-- Web容器：处理静态页面；
-- Catalina：Servlet容器，处理Servlet;
+- Web容器：处理静态页面。
+- Catalina：Servlet容器，处理Servlet。
 - JSP解析器：把jsp页面翻译成一般的Servlet。
 
 ### Tomcat体系架构
@@ -147,7 +145,7 @@ Tomcat 4.x时，Servlet容器被重新设计，并被命名为Catalina。Tomcat�
 
 修改server.xml，在`<Host>`中添加如下内容(不建议的，需要重新启动Tomcat)：
 
-```
+```xml
   <Host name="localhost"  appBase="webapps" unpackWARs="true" autoDeploy="true" xmlValidation="false" xmlNamespaceAware="false">
         <Context path="/myapp" docBase="E:\MyAPP"/>
 </Host>
@@ -159,7 +157,8 @@ Tomcat 4.x时，Servlet容器被重新设计，并被命名为Catalina。Tomcat�
 #### 方式二
 
 在`Tomcat\conf\[enginname]\[hostname]`目录下建立一个xml文件，该**文件名就是虚拟目录名称**。内容如下（建议，不需要重新启动）：
-```
+
+```xml
 <?xml version="1.0"?>
 <Context docBase="e:\MyApp"/>
 ```
@@ -174,8 +173,8 @@ Tomcat6.x 提供了多种配置`<Context>`元素的途径。当其加载一个we
 
 1. 到Tomcat安装目录`/conf/context.xml`文件中查找`<Context>`元素。
 2. 到Tomcat安装目录`/conf/[enginename]/[hostname]/context.xml.default`文件中查找`<Context>`元素。
-  - `[enginename]`：表示`<Engine>`的name属性
-  - `[hostname]`：表示`<Host>`的name属性。
+   - `[enginename]`：表示`<Engine>`的name属性
+   - `[hostname]`：表示`<Host>`的name属性。
 3. 到Tomcat安装目录`/conf/[enginename]/[hostname]/[contextpath].xml`文件中查找`<Context>`元素。
 4. 到Web应用的`META-INF/context.xml`文件中查找`<Context>`元素。
 5. 到Tomcat安装目录`/conf/server.xml`文件中查找`<Context>`元素。只适用于单个Web应用
@@ -197,7 +196,7 @@ Context属性详解：
 
 在 tomcat 下的`conf/server.xml`中添加：
 
-```
+```xml
 <Context docBase="D:\develop\upload\temp" path="/pic" reloadable="false"/>
 ```
 
@@ -238,7 +237,6 @@ Context属性详解：
 - 尽管以上两个虚拟主机位于同一个主机，但是当客户通过两个不同虚拟主机名访问 Web 应用时，会感觉到这两个应用分别拥有独立的主机
 - 配置的主机(网站)要想被外部访问，必须在 DNS 服务器或 windows 系统中注册（修改 Windows 系统中的`C:\WINDOWS\system32\drivers\etc\hosts`）
 
-
 修改server.xml，在engine标签下添加host
 
 ```xml
@@ -270,10 +268,13 @@ SSL是一种保证网络上的两个节点进行安全通信的协议，建立�
 #### 使用 keytool 生成证书
 
 Java提供了制作证书的工具keytool。在JDK1.4以上版本中都包含了这一工具。通过这个工具生成证书的命令为:
-```
+
+```xml
 keytool -genkey -alias tomcat -keyalg RSA -keystore d:\.keystore
 ```
-以上命令将生成名为`.keystore`的文件。即包含一对非对称密钥和自我签名的证书，
+
+以上命令将生成名为`.keystore`的文件。即包含一对非对称密钥和自我签名的证书：
+
 - `-genkey`：生成一对非对称密钥。
 - `-alias`：指定密钥对的别名，该别名是公开的。
 - `-keyalg`：指定加密算法，此处采用通用的RSA算法。
@@ -295,39 +296,39 @@ keytool -genkey -alias tomcat -keyalg RSA -keystore d:\.keystore
 在配置tomcat的SSL双向握手中，由于6.0.33版本中默认启用了APR（APR是通过JNI访问的可移植库，可以提高Tomcat的性能和伸缩性），所以采用传统的配置方式（如下）会报异常。解决办法：
 
 ```xml
-<Connector     port="8443" protocol="org.apache.coyote.http11.Http11Protocol"
-               SSLEnabled="true"
-               maxThreads="150" 
-               scheme="https" 
-               secure="true"
-               clientAuth="false" 
-               sslProtocol="TLS"
-               keystoreFile="conf/keystore/.keystore"
-               keystorePass="123456" />  
+<Connector
+    port="8443" protocol="org.apache.coyote.http11.Http11Protocol"
+    SSLEnabled="true"
+    maxThreads="150" 
+    scheme="https" 
+    secure="true"
+    clientAuth="false" 
+    sslProtocol="TLS"
+    keystoreFile="conf/keystore/.keystore"
+    keystorePass="123456" />  
 ```
 
 Tomcat 的 Connector 支持两种协议，HTTP 和 AJP。通过配置不同的 protocol 属性，可以使用不同的 ProtocalHandler. 配置HTTP/1.1时，默认会使用`org.apache.coyote.http11.Http11NioProtocol`，也可以通过指定类名的方式来配置，比如`protocol=”org.apache.coyote.http11.Http11Nio2Protocol”`，针对 HTTP 和 AJP 两种协议，都有 BIO/NIO/NIO2/APR 四种处理方式。
 
 HTTP：
+
 - org.apache.coyote.http11.Http11Protocol
 - org.apache.coyote.http11.Http11NioProtocol
 - org.apache.coyote.http11.Http11Nio2Protocol
 - org.apache.coyote.http11.Http11AprProtocol
+
 AJP：
+
 - org.apache.coyote.http11.Ajp11Protocol
 - org.apache.coyote.http11.Ajp11NioProtocol
 - org.apache.coyote.http11.Ajp11Nio2Protocol
 - org.apache.coyote.http11.Ajp11AprProtocol
 
-
 配置好 HTTPS 后，可以通过访问 `https://localhost:8443` 来测试配置是否正确。
-
 
 ### Web应用的生命周期
 
-用Tomcat的管理平台管理Web应用的生命周期：
-
-Tomcat的管理平台是Tomcat本身的一个Web应用，管理平台对应manager应用，它位于Tomcat安装目录`/webapps/manager`目录下。manager应用会对用户进行安全验证。它要求用户具有manager角色。因此，应该先在Tomcat中添加具有manager角色的用户信息，方法为打开Tomcat安装目录`/conf/tomcat-users.xml`文件，在其中增加以下内容：
+用Tomcat的管理平台管理Web应用的生命周期：Tomcat的管理平台是Tomcat本身的一个Web应用，管理平台对应manager应用，它位于Tomcat安装目录`/webapps/manager`目录下。manager应用会对用户进行安全验证。它要求用户具有manager角色。因此，应该先在Tomcat中添加具有manager角色的用户信息，方法为打开Tomcat安装目录`/conf/tomcat-users.xml`文件，在其中增加以下内容：
 
 ```xml
 <tomcat-users>
@@ -341,4 +342,3 @@ Tomcat的管理平台是Tomcat本身的一个Web应用，管理平台对应manag
 
 - IOS8859-1：Tomcat6、Tomcat7
 - UTF-8：Tomcat8及以后
-
