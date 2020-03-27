@@ -30,6 +30,7 @@ public class RegisterServlet extends HttpServlet {
         LogUtils.LOG.debug(Charset.defaultCharset().toString());
         System.out.println("defaultCharset = " + Charset.defaultCharset().displayName());
         System.out.println("file.encoding = " + System.getProperty("file.encoding"));
+        response.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=UTF-8");
         response.getWriter().write("注册成功，2秒后自动转向登录页面");
         //response.setHeader("Refresh", "10;URL=http://www.google.cn");
