@@ -28,7 +28,6 @@ public class ResponseEncode1Servlet extends HttpServlet {
         test2(response);
     }
 
-
     private void test4(HttpServletResponse response) throws IOException {
         int data = 97;
         ServletOutputStream out = response.getOutputStream();
@@ -63,7 +62,6 @@ public class ResponseEncode1Servlet extends HttpServlet {
         ServletOutputStream out = response.getOutputStream();
         out.write(b);
     }
-
 
     //字节流输出字符：字符用默认编码，没有乱码
     private void test1(HttpServletResponse response) throws IOException {

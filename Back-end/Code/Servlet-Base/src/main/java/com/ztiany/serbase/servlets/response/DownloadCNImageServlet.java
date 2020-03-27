@@ -47,4 +47,5 @@ public class DownloadCNImageServlet extends HttpServlet {
         }
         //不需要关闭out，会自动关闭
     }
+
 }

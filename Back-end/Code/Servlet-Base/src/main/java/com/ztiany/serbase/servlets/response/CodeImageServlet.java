@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CodeImageServlet extends HttpServlet {
 
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
@@ -63,4 +62,5 @@ public class CodeImageServlet extends HttpServlet {
         OutputStream out = response.getOutputStream();
         ImageIO.write(image, "jpg", out);
     }
+
 }

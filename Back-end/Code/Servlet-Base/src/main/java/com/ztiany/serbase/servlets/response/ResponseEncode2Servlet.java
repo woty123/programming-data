@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ResponseEncode2Servlet extends HttpServlet {
 
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         doGet(request, response);
     }
