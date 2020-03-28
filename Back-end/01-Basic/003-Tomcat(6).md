@@ -299,10 +299,10 @@ keytool -genkey -alias tomcat -keyalg RSA -keystore d:\.keystore
 <Connector
     port="8443" protocol="org.apache.coyote.http11.Http11Protocol"
     SSLEnabled="true"
-    maxThreads="150" 
-    scheme="https" 
+    maxThreads="150"
+    scheme="https"
     secure="true"
-    clientAuth="false" 
+    clientAuth="false"
     sslProtocol="TLS"
     keystoreFile="conf/keystore/.keystore"
     keystorePass="123456" />  

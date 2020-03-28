@@ -38,5 +38,4 @@ public class User {
                 + Arrays.toString(password) + ", age=" + age + "]";
     }
 
-
 }

@@ -9,16 +9,12 @@ Servlet是用于开发动态web资源的技术。JavaEE中提供了一个Servlet
 2. 把开发好的Java类部署到web服务器中。
 
 Servlet的含义：
-1. Servlet是一套规范，Java中开发动态web资源的技术
-2. Servlet是运行在服务器端的一段小程序，由服务器调用
-```
-void service(ServletRequest req,ServletResponse resp);
-void init(ServletConfig scfg)
-```
+
+1. Servlet是一套规范，Java中开发动态web资源的技术。
+2. Servlet是运行在服务器端的一段小程序，由服务器调用。
 
 ---
 ## 2 Servlet的入门案例(手动编写)
-
 
 Servlet在web应用中的位置，下图中mail表示一个web应用的根目录，JavaWeb应用都要遵守这个目录布局：
 
@@ -56,7 +52,7 @@ Servlet在web应用中的位置，下图中mail表示一个web应用的根目录
 </web-app>
 ```
 
-- 4、部署应用到服务器，访问地址：http://localhost:8080/myapp/hello
+- 4、部署应用到服务器，访问地址：<http://localhost:8080/myapp/hello>
 
 这样我们就在不借助任何IDE的情况下，徒手编写了一个JavaWeb应用。
 
@@ -77,13 +73,13 @@ Servlet在web应用中的位置，下图中mail表示一个web应用的根目录
 
 Servlet是一个供其他Java程序（Servlet引擎）调用的Java类，它不能独立运行，它的运行完全由Servlet引擎来控制和调度。针对客户端的多次Servlet请求，通常情况下，服务器只会创建一个Servlet实例对象，也就是说Servlet实例对象一旦创建，它就会驻留在内存中，为后续的其它请求服务，直至web容器退出，servlet实例对象才会销毁。在Servlet的整个生命周期内，Servlet的init方法只被调用一次。而对一个Servlet的每次访问请求都导致Servlet引擎调用一次servlet的service方法(service的调度线程是不确定的)。对于每次访问请求，Servlet引擎都会创建一个新的HttpServletRequest请求对象和一个新的HttpServletResponse响应对象，然后将这两个对象作为参数传递给它调用的Servlet的service()方法，service方法再根据请求方式分别调用doXXX方法。
 
-
 1. 用户第一次访问该Servlet时，就会由容器进行实例化，并且调用`init(ServletConfig cfg)`方法,只有一次。该Servlet实例就驻留内存
 2. 针对用户的每次请求(单独的线程)，容器都会调用`service(ServletRequest req, ServletResponse resp)`为客户端服务
 3. 当应用被卸载，或者Tomcat停止了，会调用`destory()`方法
 
 如果希望在服务器启动时就完成Servlet的实例化和初始化工作，可以在web.xml中配置值为自然整数的`load-on-startup`标签，其值越小优先级越高，一般不要设置为1，因为Tomcat容器的DefaultServlet已经使用了。
-```
+
+```xml
     <servlet>
         <servlet-name>invoker</servlet-name>
         <servlet-class>
@@ -92,8 +88,8 @@ Servlet是一个供其他Java程序（Servlet引擎）调用的Java类，它不�
         <load-on-startup>2</load-on-startup>
     </servlet>
 ```
-从提高Servlet容器运行性能的角度出发，Servlet规范为Servlet规定了不同的初始化情形。如果有些Servlet专门负责在web应用启动阶段为web应用完成一些初始化操作，则可以让它们在web应用启动时就被初始化。对于大多数Servlet，只需当客户端首次请求访问时才被初始化。假设所有的Servlet都在web应用启动时被初始化，那么会大大增加Servlet容器启动web应用的负担，而且Servlet容器有可能加载一些永远不会被客户访问的Servlet，白白浪费容器的资源。
 
+从提高Servlet容器运行性能的角度出发，Servlet规范为Servlet规定了不同的初始化情形。如果有些Servlet专门负责在web应用启动阶段为web应用完成一些初始化操作，则可以让它们在web应用启动时就被初始化。对于大多数Servlet，只需当客户端首次请求访问时才被初始化。假设所有的Servlet都在web应用启动时被初始化，那么会大大增加Servlet容器启动web应用的负担，而且Servlet容器有可能加载一些永远不会被客户访问的Servlet，白白浪费容器的资源。
 
 ----
 ## 5 Servlet接口实现类
@@ -109,7 +105,7 @@ Servlet是一个供其他Java程序（Servlet引擎）调用的Java类，它不�
 ### 路径映射
 
 - 由于客户端是通过URL地址访问web服务器中的资源，所以Servlet程序若想被外界访问，必须把servlet程序映射到一个URL地址上，这个工作在web.xml文件中使用`<servlet>`元素和`<servlet-mapping>`元素完成。
-- `<servlet>`元素用于注册Servlet，它包含有两个主要的子元素：`<servlet-name>`和`<servlet-class>`，分别用于设置Servlet的注册名称和Servlet的完整类名。 
+- `<servlet>`元素用于注册Servlet，它包含有两个主要的子元素：`<servlet-name>`和`<servlet-class>`，分别用于设置Servlet的注册名称和Servlet的完整类名。
 - 一个`<servlet-mapping>`元素用于映射一个已注册的Servlet的一个对外访问路径，它包含有两个子元素：`<servlet-name>`和`<url-pattern>`，分别用于指定Servlet的注册名称和Servlet的对外访问路径。例如：
 ```xml
 <web-app>
@@ -147,7 +143,7 @@ Servlet是一个供其他Java程序（Servlet引擎）调用的Java类，它不�
     <url-pattern>
         /action/*
     </url-pattern>
-</servlet-mapping>    
+</servlet-mapping>
 ```
 
 ### 路径匹配优先级
@@ -168,7 +164,6 @@ Servlet是一个供其他Java程序（Servlet引擎）调用的Java类，它不�
 - 当请求URL为`“/xxx/yyy/a.do”`时，`“/*”`和`“*.do”`都匹配，Servlet引擎将调用Servlet2。
 
 规则为：**绝对匹配最高；`”/”`优先级其次；`”*”`最低**
-
 
 ### 默认Servlet
 
@@ -232,9 +227,7 @@ ServletContext应用：
 - ResourceBundle专门读取类路径中的properties文件。可以用在非web环境
 - 类加载器专门读取类路径中的任何文件（文件不宜太大）。可以用在非web环境
 
-
 ---
 ## 10 Servlet核心类库
 
-
-![](index_files/servlet_class.jpg)
+![servlet_class](index_files/servlet_class.jpg)

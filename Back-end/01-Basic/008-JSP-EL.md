@@ -1,5 +1,7 @@
 # EL表达式
 
+具体参考[菜鸟：JSP 表达式语言](https://www.runoob.com/jsp/jsp-expression-language.html)
+
 ---
 ## 1 EL简介
 
@@ -9,7 +11,6 @@ JSP EL(JSP表达式语言)使得访问存储在JavaBean中的数据变得非常�
 - **执行运算**：利用EL表达式可以在JSP页面中执行一些基本的关系运算、逻辑运算和算术运算，以在JSP页面中完成一些简单的逻辑运算。${user==null}
 - **获取web开发常用对象**：EL表达式定义了一些隐式对象，利用这些隐式对象，web开发人员可以很轻松获得对web常用对象的引用，从而获得这些对象中的数据。
 - **调用Java方法**：EL表达式允许用户开发自定义EL函数，以在JSP页面中通过EL表达式调用Java类的方法。
-
 
 ---
 ## 2 EL表达式语法
@@ -22,7 +23,7 @@ EL表达式语句在执行时，会调用`pageContext.findAttribute`方法，用
 
 EL表达式也可以很轻松获取JavaBean的属性，或获取数组、Collection、Map类型集合的数据，例如：
 
-```
+```jsp
 ${user.address.city} 访问JavaBean的属性
 ${user.list[0]} 访问有序集合某个位置的元素
 ${map.key} 获得map集合中指定key的值
@@ -33,18 +34,20 @@ ${map.["key"]} 如果map的key不符合java命名，则用[]方式
 - `[]`运算符：`${p.name}=${p[‘name’]}=${p[“name”]}`
 
 
-
 ### 2.2 运算符
 
 语法：`${运算表达式}`，EL表达式支持如下运算符：
 
 关系运算符：
+
 ![](index_files/20c47d55-d25f-4299-a682-c6957d231954.jpg)
 
 逻辑运算符：
+
 ![](index_files/cd5eb62c-2a30-4810-b4a2-ad1c68d4bab1.jpg)
 
 内置关键字：
+
 ![](index_files/81be7058-5022-4682-b52e-8994e527eee8.png)
 
 - empty运算符：检查对象是否为null或“空”
@@ -56,7 +59,6 @@ ${map.["key"]} 如果map的key不符合java命名，则用[]方式
 ### 2.3 获得web开发常用对象
 
 EL表达式语言中定义了11个隐含对象，使用这些隐含对象可以很方便地获取web开发中的一些常见对象，并读取这些对象的数据，语法：`${隐式对象名称}`：获得对象的引用。
-
 
 11个隐式对象（**注意一定要和JSP的隐式对象分开**）
 
@@ -76,7 +78,7 @@ initParam | java.util.Map | 没有 | key:全局参数的name，value就是全局
 
 示例，EL获取普通类的属性：
 
-```
+```jsp
         向域中放入对象
         <%
         Person p1 = new Person();
@@ -107,7 +109,6 @@ initParam | java.util.Map | 没有 | key:全局参数的name，value就是全局
 - 操作headerValues时，如果头里面有`-`，例`Accept-Encoding`，则要`headerValues[“Accept-Encoding”]`
 - 操作cookie时，例`${cookie.key}`取的是cookie对象，如访问cookie的名称和值，须`${cookie.key.name}`或`${cookie.key.value}`
 
-
 ### 2.4 使用EL调用Java方法(自定义EL函数)
 
 EL表达式语法允许开发人员开发自定义函数，以调用Java类的方法。示例：`${prefix：method(params)}`
@@ -121,6 +122,7 @@ EL表达式语法允许开发人员开发自定义函数，以调用Java类的�
 1. 在JSP页面中导入和使用自定义函数
 
 示例：小写转大写：
+
 ```java
 //step 1 定义静态方法
 package com.test;
@@ -130,7 +132,6 @@ public class MyFunctions {
         return s.toUpperCase();
     }
 }
-
 
 
 //step 2，WEB-INF/mfn.tld下，模块可以参照tomcat/webapp/example应用
@@ -154,13 +155,13 @@ public class MyFunctions {
 </taglib>
 
 
-
 //step 3 jsp中引入使用
 <%@ taglib uri="http://www.test.com/functions" prefix="mfn"%>
 ${mfn:toUppercase(s)}
 ```
 
 开发EL Function注意事项：
+
 - 编写完标签库描述文件后，需要将它放置到`<web应用>\WEB-INF`目录中或WEB-INF目录下的除了classes和lib目录之外的任意子目录中。
 - TLD文件中的`<uri>` 元素用指定该TLD文件的URI，在JSP文件中需要通过这个URI来引入该标签库描述文件。
 `<function>`元素用于描述一个EL自定义函数，其中：
@@ -168,7 +169,6 @@ ${mfn:toUppercase(s)}
  `<function-class>`子元素用于指定完整的Java类名，
  `<function-signature>`子元素用于指定Java类中的静态方法的签名，方法签名必须指明方法的返回值类型及各个参数的类型，各个参数之间用逗号分隔。
 - EL表达式是`JSP 2.0`规范中的一门技术 。因此，若想正确解析EL表达式，需使用支持Servlet2.4/JSP2.0技术的WEB服务器。
-
 
 ### 2.5 总结
 

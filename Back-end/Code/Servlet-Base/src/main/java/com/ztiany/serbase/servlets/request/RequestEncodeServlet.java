@@ -46,8 +46,8 @@ public class RequestEncodeServlet extends HttpServlet {
 
     /*
     get请求正文编码解决方案，get方式请求参数放在url连接后面：
-    tomcat 6 iso-8859-1
-    tomcat 7 utf-8
+    tomcat 6/tomcat7 iso-8859-1
+    tomcat 8 utf-8
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         System.out.println(request.getContentType());//可能为null
@@ -58,4 +58,5 @@ public class RequestEncodeServlet extends HttpServlet {
         username = new String(b, "UTF-8");
         System.out.println(username);
     }
+
 }

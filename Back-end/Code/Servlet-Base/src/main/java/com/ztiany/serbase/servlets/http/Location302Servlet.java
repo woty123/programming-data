@@ -23,4 +23,5 @@ public class Location302Servlet extends HttpServlet {
         //设置响应消息头
         response.setHeader("Location", "/ServletBase/servlet/gzipServlet");
     }
+
 }

@@ -28,36 +28,35 @@
 
 #### 用PrintWriter(字符流)发送数据
 
-```
+```java
 //用PrintWriter(字符流)发送数据，有没有乱码？
-response.getWriter().write(“中国” );
+response.getWriter().write(“中国”);
 ```
 
 答案是有，因为以默认编码发送数据ISO-8859-1（没有中国二字编码），此时会发生乱码。
 
 解决办法：
+
 ```java
 response.setCharacterEncoding(“UTF-8”);//更改编码为UTF-8
 response.setHead(“Context-type”,”text/html;charset=UTF-8”);//告诉客户端编码方式
 ```
 
-由于经常改动编码，**response提供了一种更简单的方式**：`response. setContentType(“text/html;charset=UTF-8”);`，其作用相当于以上两条代码。即更改字符流使用的码表为UTF-8并且通知浏览器用UTF-8进行显示
-
+由于经常改动编码，**response提供了一种更简单的方式**：`response.setContentType(“text/html;charset=UTF-8”);`，其作用相当于以上两条代码。即更改字符流使用的码表为UTF-8并且通知浏览器用UTF-8进行显示
 
 #### 响应头的字段需要使用URL编码
 
 示例：
-```
-//通知浏览器以下载的方式打开，中文文件名文件下载有问题：如果不使用URL编码文件名没有了
-        response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(filename, "UTF-8"));
-        response.setContentType("application/octet-stream");
-```
 
-
+```java
+//通知浏览器以下载的方式打开，中文文件名文件下载有问题：如果不使用URL编码文件名会乱码
+response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(filename, "UTF-8"));
+response.setContentType("application/octet-stream");
+```
 
 ### 1.2 response控制缓存
 
-```
+```java
 //控制客户端不要缓存
 response.setHeader("Expires", "-1");
 response.setHeader("Cache-Control", "no-cache");
@@ -67,11 +66,10 @@ response.setHeader("Pragma", "no-cache");
 response.setDateHeader("Expires", System.currentTimeMillis()+1*60*60*1000);//单位是毫秒值，相对于当前时间的一个时间
 ```
 
-
 ### 1.3 response细节
 
 - getOutputStream和getWriter方法分别用于得到输出二进制数据、输出文本数据的ServletOuputStream、Printwriter对象。
-- getOutputStream和getWriter这两个方法互相排斥，调用了其中的任何一个方法后，就不能再调用另一方法。  会抛异常。
+- getOutputStream和getWriter这两个方法互相排斥，调用了其中的任何一个方法后，就不能再调用另一方法，会抛异常。
 - Servlet程序向ServletOutputStream或PrintWriter对象中写入的数据将被Servlet引擎从response里面获取，Servlet引擎将这些数据当作响应消息的正文，然后再与响应状态行和各响应头组合后输出到客户端。
 - Serlvet的service方法结束后，Servlet引擎将检查getWriter或getOutputStream方法返回的输出流对象是否已经调用过close方法，如果没有，Servlet引擎将调用close方法关闭该输出流对象。
 
@@ -84,7 +82,7 @@ response.setDateHeader("Expires", System.currentTimeMillis()+1*60*60*1000);//单
 3. 当浏览器端接收到这种响应结果后，再立即自动请求访问另一个web组件
 4. 浏览器端接收到来自另一个web组件的响应结果。
 
-```
+```java
 方式1
 response.setStatus(302);//设置响应码
 response.setHeader("Location", "http://www.google.cn");
@@ -93,16 +91,15 @@ response.setHeader("Location", "http://www.google.cn");
 response.sendRedirect("http://www.itcast.cn");
 ```
 
-
 特点：
 
-- Servlet源组件生成的响应结果不会被发送到客户端。`response.sendRedirect(String location)`方法一律返回状态码为302的响应结果。原理为使用302/307状态码和location头即可实现重定向
+- Servlet源组件生成的响应结果不会被发送到客户端。`response.sendRedirect(String location)`方法一律返回状态码为302的响应结果。原理为使用302/307状态码和location头即可实现重定向。
 - 如果源组件在进行重定向之前，已经提交了响应结果，会抛出IllegalStateException。为了避免异常，不应该在源组件中提交响应结果。
-- 在Servlet源组件重定向语句后面的代码也会执行。
+- 在Servlet源组件中执行重定向，重定向语句后面的代码也会执行。
 - 源组件和目标组件不共享同一个ServletRequest对象。
-- 对于`sendRedirect(String location)`方法的参数，如果以“/”开头，表示相对于当前服务器根路径的URL。以“http"//”开头，表示一个完整路径。
+- 对于`sendRedirect(String location)`方法的参数，如果以`“/”`开头，表示相对于当前服务器根路径的URL。以`http://`开头，表示一个完整路径。
 - 目标组件不必是同一服务器上的同一个web应用的组件，它可以是任意一个有效网页。
-- 浏览器地址栏会变，并发送2次请求，增加服务器负担
+- 浏览器地址栏会变，并发送2次请求，增加服务器负担。
 
 ---
 ## 2 Request
@@ -111,27 +108,27 @@ HttpServletRequest对象代表客户端的请求，当客户端通过HTTP协议�
 
 ### 2.1 获得客户机信息
 
-```
-getRequestURL方法返回客户端发出请求时的完整URL。
-getRequestURI方法返回请求行中的资源名部分。
-getQueryString 方法返回请求行中的参数部分。
-getRemoteAddr方法返回发出请求的客户机的IP地址
-getRemoteHost方法返回发出请求的客户机的完整主机名
-getRemotePort方法返回客户机所使用的网络端口号
-getLocalAddr方法返回WEB服务器的IP地址。
-getLocalName方法返回WEB服务器的主机名
-getMethod得到客户机请求方式
+```java
+getRequestURL() 返回客户端发出请求时的完整URL。
+getRequestURI() 返回请求行中的资源名部分。
+getQueryString() 返回请求行中的参数部分。
+getRemoteAddr() 返回发出请求的客户机的IP地址
+getRemoteHost() 法返回发出请求的客户机的完整主机名
+getRemotePort() 法返回客户机所使用的网络端口号
+getLocalAddr() 返回WEB服务器的IP地址。
+getLocalName() 返回WEB服务器的主机名
+getMethod() 得到客户机请求方式
 
 //获得客户机请求头
-getHead(name)方法 
-getHeaders(String name)方法 
-getHeaderNames方法 
+getHead(name)
+getHeaders(String name)
+getHeaderNames()
 
 //获得客户机请求参数(客户端提交的数据)
-getParameter(name)方法
-getParameterValues（String name）方法
-getParameterNames方法 
-getParameterMap方法  //做框架用，非常实用
+getParameter(name)
+getParameterValues(String name)
+getParameterNames()
+getParameterMap()
 ```
 
 ### 2.2 请求乱码问题
@@ -142,21 +139,23 @@ getParameterMap方法  //做框架用，非常实用
 
 请求参数在请求正文中，首先尝试从Request对象获取编码，然后根据获取的值设置查询的码表：
 
-```
+```java
 request.getContentType();//可能为null
 request.getCharacterEncoding();//可能为null
 ```
+
 但是这两个方法可能返回null，所以不应该以此作为依据，如果不设置编码，服务器就会以服务器默认的编码读取数据(Tomcat 6/7 默认编码为ISO-8859-1)，可行的解决方法为在response中告知浏览器服务器使用的编码，然后浏览器默认就会以什么编码传输数据。假如response默认全都使用UTF-8，则对于post方式的请求，设置request使用UTF-8的码表即可：
 
-```
-request.setCharacterEncoding(“UTF-8”);对POST方式有效
+```java
+// 对POST方式有效
+request.setCharacterEncoding("UTF-8");
 ```
 
 #### GET
 
-GET的请求参数放在URL中，浏览器会对其进行URL编码，`request.setCharacterEncoding`方法是针对请求正文设置的，同样，如果不设置编码，服务器就会以服务器默认的编码读取数据(Tomcat 6/7 默认编码为ISO-8859-1)，因此解决方案是先根据默认码表查出字符串，再重新以UTF-8编码：
+GET的请求参数放在URL中，浏览器会对其进行URL编码，`request.setCharacterEncoding()`方法是针对请求正文设置的，同样，如果不设置编码，服务器就会以服务器默认的编码读取数据(Tomcat 6/7 默认编码为ISO-8859-1)，因此解决方案是先根据默认码表查出字符串，再重新以UTF-8编码：
 
-```
+```java
 String username = request.getParameter("username");//ISO-8859-1
 byte b[] = username.getBytes("ISO-8859-1");
 username = new String(b, "UTF-8");
@@ -164,8 +163,7 @@ username = new String(b, "UTF-8");
 
 #### 更改服务器的默认编码
 
-更改Tomcat的配置解决URL编码问题：`<Connector URIEncoding=“UTF-8”/>`，但是这样仅仅是针对Tomcat，而我们编写的应用应该是适用于其他服务器的，所以不建议使用此种方式。
-
+更改Tomcat的配置解决URL编码问题：`<Connector URIEncoding=“UTF-8”/>`，该方式对 Post 和 Get 都起作用，但是这样仅仅是针对Tomcat，而我们编写的应用应该是适用于其他服务器的，所以不建议使用此种方式。
 
 ### 2.3 request常见应用
 
@@ -177,10 +175,9 @@ username = new String(b, "UTF-8");
   - removeAttribute方法
   - getAttributeNames方法
 
-
 ### 2.4 转发和包含
 
-一个Servlet对象无法获得另一个Servelt对象的引用；如果需要多个Servet组件共同协作(数据传递)，只能使用Servelt规范为我们提供的两种方式：
+一个Servlet对象无法获得另一个Servelt对象的引用；如果需要多个Servet组件共同协作(数据传递)，只能使用“Servelt规范”为我们提供的两种方式：
 
 - 请求转发：Servlet(源组件)先对客户请求做一些预处理操作，然后把请求转发给其他web组件(目标组件)来完成包括生成响应结果在内的后续操作。
 - 包含：Servelt(源组件)把其他web组件(目标组件)生成的响应结果包含到自身的响应结果中。
@@ -194,6 +191,7 @@ username = new String(b, "UTF-8");
 #### RequestDispather
 
 表示请求分发器，它有两个方法：
+
 ```java
 //forward():把请求转发给目标组件
 public void forward(ServletRequest request,ServletResponse response)
@@ -206,9 +204,8 @@ public void include(ServletRequest request,ServletResponse response)
 
 得到RequestDispatcher对象，RequestDispatcher的转发时的路径(假设应用根路径为`/ServletBase`)：
 
-1. `ServletContext对象的getRequestDispather(String path)`：path必须用绝对路径，即以`/`开头，若用相对路径会抛出异常IllegalArgumentException。，表示当前应用`/ServletBase`（绝对路径）
+1. `ServletContext对象的getRequestDispather(String path)`：path必须用绝对路径，即以`/`开头，若用相对路径会抛出 IllegalArgumentException 异常。`/` 表示当前应用 `/ServletBase`（绝对路径）
 2. `ServletRequest对象的getRequestDispatcher(String path)`：path可以用绝对路径也可以用相对路径，若以绝对路径等作用与方式1等效。如使用相对则相对于当前Servlet的路径
-
 
 #### 转发
 
@@ -216,9 +213,9 @@ public void include(ServletRequest request,ServletResponse response)
 
 特点：
 
-1. 由于forward()方法先清空用于存放响应正文数据的缓冲区，因此源组件生成的响应结果不会被发送到客户端，只有目标组件生成的响应结果才会被送到客户端。
+1. 由于`forward()`方法先清空用于存放响应正文数据的缓冲区，因此源组件生成的响应结果不会被发送到客户端，只有目标组件生成的响应结果才会被送到客户端。
 2. 如果源组件在进行请求转发之前，已经提交了响应结果（如调用了response的flush或close方法），那么`forward()`方法会抛出IllegalStateException。为了避免该异常，不应该在源组件中提交响应结果。
-3. 源组件与目标组件的request不是同一个对象，但是可以通过setAttribute来传递数据
+3. 源组件与目标组件的request不是同一个对象，但是可以通过`setAttribute()`来传递数据
 
 #### 包含
 
@@ -230,7 +227,6 @@ public void include(ServletRequest request,ServletResponse response)
 2. 在目标组件中对响应状态代码或者响应头所做的修改都会被忽略。
 3. 源组件与目标组件的response不是同一个对象
 
-
 ### 2.5 生命周期
 
 ServletRequest对象的生命周期：用户发出请求时创建，响应结束销毁。
@@ -240,7 +236,6 @@ ServletRequest对象的生命周期：用户发出请求时创建，响应结束
 - **web应用范围**内的共享数据作为ServeltContext对象的属性而存在(setAttribute)，只要共享ServletContext对象也就共享了其数据。
 - **请求范围**内的共享数据作为ServletRequest对象的属性而存在(setAttribute)，只要共享ServletRequest对象也就共享了其数据。
 
-
 ---
 ## 3 路径的写法
 
@@ -248,11 +243,22 @@ ServletRequest对象的生命周期：用户发出请求时创建，响应结束
 
 - 相对路径
 - 绝对路径（建议）
-- 使用绝对路径时，什么时候要加上项目名称？地址给客户端用的就要加
+- 使用绝对路径时，什么时候要加上项目名称？地址给客户端用的就要加。
 
 ---
 ## 4 乱码问题总结
 
 以上乱码问题主要针对Tomcat6，因为：
+
 - Tomcat6和Tomcat7使用的默认编码为IOS8859-1
 - Tomcat8以后使用默认编码为UTF-8
+
+如果从 Tomcat6/Tomcat7 迁移到 Tomcat8，需要注意编码问题，不做处理的话肯定会出现乱码，处理方式：
+
+1. 沿袭之前的编码：在Tomcat8的server.xml配置Connector节点添加属性URIEncoding="ISO-8859-1"。
+2. 修改代码。
+
+具体参考
+
+- <https://tomcat.apache.org/tomcat-7.0-doc/config/http.html>
+- <https://tomcat.apache.org/tomcat-8.0-doc/config/http.html>

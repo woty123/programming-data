@@ -1,5 +1,7 @@
 # JSTL
 
+具体参考[菜鸟：JSP 标准标签库（JSTL）](https://www.runoob.com/jsp/jsp-jstl.html)
+
 ---
 ## 1 简介
 
@@ -23,8 +25,6 @@ SQL标签库 | sql | `http://java.sun.com/jsp/jstl/sql`
 XML标签库 | xml | `http://java.sun.com/jsp/jstl/xml`
 函数标签库 | fn | `http://java.sun.com/jsp/jstl/functions`
 
-
-
 ---
 ## 2 自定义标签
 
@@ -37,7 +37,7 @@ XML标签库 | xml | `http://java.sun.com/jsp/jstl/xml`
 
 直接或间接实现javax.servlet.jsp.tagext.SimpleTag接口。一般继承javax.servlet.jsp.tagext.SimpleTagSupport 。
 
-```
+```java
 package com.sample.taglib.ShowRemoteIpSimpleTag;
 
 public class ShowRemoteIpSimpleTag extends SimpleTagSupport {
@@ -50,6 +50,7 @@ public class ShowRemoteIpSimpleTag extends SimpleTagSupport {
     }
 }
 ```
+
 容器框架会自动调用SimpleTagSupport的一些方法，为其设置一些需要用到的对象：
 
 - setJspContext：设置PageContext对象
@@ -59,7 +60,7 @@ public class ShowRemoteIpSimpleTag extends SimpleTagSupport {
 
 在WEB-INF目录下定义一个扩展名为tld（Tag Libary Definition）的xml文件
 
-```
+```html
 <?xml version="1.0" encoding="UTF-8"?>
 <taglib xmlns="http://java.sun.com/xml/ns/j2ee"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -79,15 +80,15 @@ public class ShowRemoteIpSimpleTag extends SimpleTagSupport {
 ```
 
 3、在JSP中使用
+
 `<%@ taglib uri="http://www.sample.com/jsp/taglib" prefix="itheima"%>`
 
-```
+```jsp
 <%@ taglib uri="http://www.itheima.com/jsp/taglib" prefix="sample"%>
 
  您的地址是：
     <sample:showRemoteIp/>
 ```
-
 
 ### 2.2 自定义标签细节
 
@@ -115,7 +116,7 @@ public class ShowRemoteIpSimpleTag extends SimpleTagSupport {
 
 然后对于的标签类中要有对应字段的setter方法：
 
-```
+```java
 public class IfSimpleTag extends SimpleTagSupport {
     private boolean test;
 
@@ -132,7 +133,6 @@ public class IfSimpleTag extends SimpleTagSupport {
 }
 ```
 
-
 #### 标签内容
 
 通过body-content来限制内容，body-content支持以下四个取值：
@@ -142,16 +142,15 @@ public class IfSimpleTag extends SimpleTagSupport {
 - empty:没有主体内容
 - tagdependent：把主体内容当做普通文本
 
-
 #### 不输出任何内容的标签
 
-```
+```java
 public class Demo2SimpleTag extends SimpleTagSupport {
-    
+
     public void doTag() throws JspException, IOException {
         throw new SkipPageException();
     }
-    
+
 }
 ```
 
@@ -169,7 +168,7 @@ public class Demo2SimpleTag extends SimpleTagSupport {
 
 配置属性
 
-```
+```properties
 hello=hello good morning
 jsp.login.title=User Login
 jsp.login.username=Username
@@ -184,7 +183,8 @@ jsp.login.submit=\u63D0\u4EA4
 ```
 
 读取
-```
+
+```java
         //读默认的资源消息包：根据地区
         ResourceBundle rb = ResourceBundle.getBundle("com.ztiany.jspbase.resources.msg");
         String hello = rb.getString("hello");
@@ -201,19 +201,18 @@ jsp.login.submit=\u63D0\u4EA4
 
 DateFormat
 
-```
+```log
 显示：Date->String
 String format(Date d);
 存储：String---------->Date
 Date parse(String s);
 ```
 
-
 ### 4.3 数字（通用阿拉伯数字）：货币符号
 
 NumberFormat
 
-```
+```log
 显示：Number------>String
 String format(Number n);
 存储：String---------->Number

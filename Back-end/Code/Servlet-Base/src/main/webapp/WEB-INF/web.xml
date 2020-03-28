@@ -46,8 +46,8 @@
         <servlet-class>com.ztiany.serbase.servlets.generic.PrintLifecycleServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UnSafeServlet</servlet-name>
-        <servlet-class>com.ztiany.serbase.servlets.basic.UnSafeServlet</servlet-class>
+        <servlet-name>UnsafeServlet</servlet-name>
+        <servlet-class>com.ztiany.serbase.servlets.basic.UnsafeServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ServletConfigSampleServlet</servlet-name>
@@ -152,8 +152,8 @@
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>UnSafeServlet</servlet-name>
-        <url-pattern>/servlet/UnSafeServlet</url-pattern>
+        <servlet-name>UnsafeServlet</servlet-name>
+        <url-pattern>/servlet/UnsafeServlet</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  * Email ztiany3@gmail.com
  * Date 18.4.15 0:23
  */
-public class UnSafeServlet extends HttpServlet {
+public class UnsafeServlet extends HttpServlet {
 
     private int num = 0;
 
@@ -31,4 +31,5 @@ public class UnSafeServlet extends HttpServlet {
         }
         System.out.println(num);
     }
+
 }

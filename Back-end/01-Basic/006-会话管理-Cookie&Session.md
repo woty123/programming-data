@@ -27,16 +27,16 @@ Cookie的属性如下：
 - version(可选)：版本号
 - comment(可选)：注释说明
 
-如何唯一确定一个Cookie：`domain+path+name`，关于Cookie对用的Path有如下规则：比如servlet的路径是`http://localhost:8080/app/servlet/ShowLastAccessTimeServlet`，则默认路径是：`/app/servlet/`，如果当前访问的URL地址.startWith(已存Cookie的path)，是则客户端会把Cookie带给服务器。
+如何唯一确定一个Cookie：`domain+path+name`，关于Cookie的Path有如下规则：比如servlet的路径是`http://localhost:8080/app/servlet/ShowLastAccessTimeServlet`，则默认路径是：`/app/servlet/`，如果当前访问的URL地址`.startWith(已存Cookie的path)`，是则客户端会把Cookie带给服务器。
 
 Cookie针对其属性提供了操作的方法，Cookie常用方法如下：
 
 - `Cookie(String name,String value)`：构造方法
 - `setValue()`与`getValue()`方法：
-- `setMaxAge()`与`getMaxAge()`方法： 设置Cookie的有效时间，(单位为秒)
+- `setMaxAge()`与`getMaxAge()`方法：设置Cookie的有效时间，(单位为秒)
 - `setPath()`与`getPath方法()`：设置/获取Cookie对用的Path
-- `setDomain()`与`getDomain()`方法：
-- `getName()`方法：
+- `setDomain()`与`getDomain()`方法
+- `getName()`方法
 
 ### Cookie细节
 
@@ -46,7 +46,6 @@ Cookie针对其属性提供了操作的方法，Cookie常用方法如下：
 - 如果创建了一个cookie，并将它发送到浏览器，默认情况下它是一个会话级别的cookie（即存储在浏览器的内存中），用户退出浏览器之后即被删除。若希望浏览器将该cookie存储在磁盘上，则需要使用maxAge，并给出一个以秒为单位的时间。将最大时效设为0则是命令浏览器删除该cookie。
 - 注意，删除cookie时，path必须绝对一致，否则不会删除
 - cookie中不能存中文数据
-
 
 ---
 ## 2 Session
@@ -63,7 +62,7 @@ Session对象由服务器创建，开发人员可以调用request对象的getSes
 
 ### session实现原理
 
-session相当于一个会话(IE浏览器可以新建一个会话，那么同一个浏览器的两个会话，他们的session也是不同的)。
+session相当于一个会话(IE浏览器可以新建一个会话，那么同一个浏览器的两个会话，它们的session也是不同的)。
 
 ![](index_files/0ca855e8-49b5-4a11-85ad-224f05e4c246.png)
 
@@ -87,7 +86,7 @@ cookie规范有两个不同的版本，cookie版本0(有时候被称为Netscape 
 
 最初的cookie规范是由网景公司定义的。这些"版本0"的cookie定义了Set-Cookie响应首部，cookie请求首部以及用于控制cookie的字段。版本0的cookie看起来如下所示：
 
-```
+```log
 Set-Cookie：name=value[;expires=date][;path=path][;domain=domain][;secure]
 Cookie:name1=value1[;name2=value2]...
 ```
@@ -98,12 +97,12 @@ RFC 2965定义了一个cookie的扩展版本。这个版本1标准引入了Set-C
 
 RFC2965Cookie的主要改动包括下列内容：
 
-*   允许在浏览器退出时，不考虑过期时间，将Cookie强制销毁。
-*   用相对秒数，而不是绝对日期来表示Cookie的Max-Age。
-*   通过URL端口号，而不仅仅是域和路径来控制Cookie的能力。
-*   通过Cookie首部回送域，端口和路径过滤器。
-*   为实现互操作性使用的版本号。
-*   在Cookie首部从名字中区分出附加关键字的$前缀。
+- 允许在浏览器退出时，不考虑过期时间，将Cookie强制销毁。
+- 用相对秒数，而不是绝对日期来表示Cookie的Max-Age。
+- 通过URL端口号，而不仅仅是域和路径来控制Cookie的能力。
+- 通过Cookie首部回送域，端口和路径过滤器。
+- 为实现互操作性使用的版本号。
+- 在Cookie首部从名字中区分出附加关键字的$前缀。
 
 如果客户端从同一个响应中既获得了Set-Cookie首部，又获得了Set-Cookie2首部，就会忽略老的Set-Cookie首部。如果客户端既支持版本0又支持版本1的cookie，但从服务器获得的是版本0的Set-Cookie首部，就会带着版本0的Set-Cookie首部发送cookie。但客户端还应该发送Cookie2:$Version="1"来告知服务器它是可以升级的。
 
@@ -115,10 +114,13 @@ RFC2965Cookie的主要改动包括下列内容：
 客户端禁用Cookie后，HttpSession就没有用了。
 
 解决方案：
+
 - 方案一（很多网站都用）：文字提示，请不要禁用您的Cookie
 - 方案二：URL重写
- - `response.encodeURL(url);`能实现URL重写。此时要注意必须对所有的地址都重写才可以。该方法自动判断用户的浏览器是否禁用Cookie，没有禁用则不重写URL
- - 在重写url之前要主动获取session
+  - `response.encodeURL(url);`能实现URL重写。此时要注意必须对所有的地址都重写才可以。该方法自动判断用户的浏览器是否禁用Cookie，没有禁用则不重写URL
+  - 在重写url之前要主动获取session
+
+具体参考 [Servlet之会话（Session）以及会话追踪技术（Cookie），（URL重写）和（隐藏表单域）](https://www.cnblogs.com/nm666/p/7967261.html)
 
 ---
 ## 5 Session的状态转换

@@ -7,7 +7,9 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-//演示生命周期
+/**
+ * 演示生命周期
+ */
 public class PrintLifecycleServlet extends GenericServlet {
 
     public PrintLifecycleServlet() {
@@ -18,8 +20,7 @@ public class PrintLifecycleServlet extends GenericServlet {
         System.out.println("调用了初始化方法");
     }
 
-    public void service(ServletRequest req, ServletResponse res)
-            throws IOException {
+    public void service(ServletRequest req, ServletResponse res) throws IOException {
         System.out.println("调用了服务方法");
         res.getOutputStream().write("SHEN ZHEN".getBytes());
     }
@@ -27,4 +28,5 @@ public class PrintLifecycleServlet extends GenericServlet {
     public void destroy() {
         System.out.println("调用了销毁方法");
     }
+
 }
