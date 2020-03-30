@@ -290,17 +290,30 @@ which ls
 
 用户是 Unix/Linux 系统工作中重要的一环，用户管理包括用户与组账号的管理。在 Unix/Linux 系统中，不论是由本机或是远程登录系统，每个系统都必须拥有一个账号，并且对于不同的系统资源拥有不同的使用权限。Unix/Linux 系统中的 root 账号通常用于系统的维护和管理，它对 Unix/Linux 操作系统的所有部分具有不受限制的访问权限。在 Unix/Linux 安装的过程中，系统会自动创建许多用户账号，而这些默认的用户就称为“标准用户”。在大多数版本的 Unix/Linux 中，都不推荐直接使用 root 账号登录系统。
 
-### 查看系统信息：uname
+### 查看 Linux 内核版本命令
 
 ```shell
+# 方式1
+cat /proc/version
+
+# 方式2
 uname -a
 ```
 
-### 查看发行版本：lsb_release
+### 查看 Linux 发行版本：lsb_release
 
 ```shell
+# 这个命令适用于所有的Linux发行版，包括Redhat、SuSE、Debian…等发行版。
 lsb_release -a
+
+# 这种方法只适合Redhat系的Linux
+cat /etc/redhat-release
+
+# 此命令也适用于所有的Linux发行版。
+cat /etc/issue
 ```
+
+参考[如何查看LINUX发行版的名称及其版本号](https://www.qiancheng.me/post/coding/show-linux-issue-version)
 
 ### 查看当前用户：whoami
 

@@ -109,7 +109,7 @@
 
 ## 常用软件
 
-- ccleaner
+- CCleaner
 - 笔记类
   - 有道云笔记
   - [VNote](https://vnote.readthedocs.io/zh_CN/latest/)
