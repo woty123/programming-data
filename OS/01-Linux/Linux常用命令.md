@@ -1,7 +1,217 @@
 # Linux 常用命令
 
----
-## 1 文件管理
+## 1 用户、权限管理
+
+用户是 Unix/Linux 系统工作中重要的一环，用户管理包括用户与组账号的管理。在 Unix/Linux 系统中，不论是由本机或是远程登录系统，每个系统都必须拥有一个账号，并且对于不同的系统资源拥有不同的使用权限。Unix/Linux 系统中的 root 账号通常用于系统的维护和管理，它对 Unix/Linux 操作系统的所有部分具有不受限制的访问权限。在 Unix/Linux 安装的过程中，系统会自动创建许多用户账号，而这些默认的用户就称为“标准用户”。在大多数版本的 Unix/Linux 中，都不推荐直接使用 root 账号登录系统。
+
+### 查看 Linux 内核版本命令
+
+```shell
+# 方式1
+cat /proc/version
+
+# 方式2
+uname -a
+```
+
+### 查看 Linux 发行版本
+
+```shell
+# 这个命令适用于所有的Linux发行版，包括Redhat、SuSE、Debian…等发行版。
+lsb_release -a
+
+# 这种方法只适合Redhat系的Linux
+cat /etc/redhat-release
+
+# 此命令也适用于所有的Linux发行版。
+cat /etc/issue
+```
+
+参考[如何查看LINUX发行版的名称及其版本号](https://www.qiancheng.me/post/coding/show-linux-issue-version)
+
+### 查看当前用户：whoami
+
+whoami该命令用户查看当前系统当前账号的用户名。可通过`cat /etc/passwd`查看系统用户信息。
+
+### 查看登录用户：who
+
+who命令用于查看当前所有登录系统的用户信息。
+
+选项
+
+- -m 或 am i 只显示运行who命令的用户名、登录终端和登录时间
+- -q 或 --count 只显示用户的登录账号和登录用户的数量
+- -u 或 --heading 显示列标题
+
+### 显示用户信息：id
+
+Print user and group information for the specified USER。
+
+```shell
+id root
+```
+
+### 添加用户账号：useradd
+
+在Unix/Linux中添加用户账号可以使用adduser或useradd命令，因为adduser命令是指向useradd命令的一个链接，因此，这两个命令的使用格式完全一样。
+
+参数：
+
+- -d 指定用户登录系统时的主目录，如果不使用该参数，系统自动在/home目录下建立与用户名同名目录为主目录。
+- -m 自动建立目录。
+- -g 指定组名称。
+
+相关说明：
+
+- Linux每个用户都要有一个主目录，主目录就是第一次登陆系统，用户的默认当前目录(/home/用户)。
+- 每一个用户必须有一个主目录，所以用useradd创建用户的时候，一定给用户指定一个主目录。
+- 用户的主目录一般要放到根目录的home目录下，用户的主目录和用户名是相同的。
+- 如果创建用户的时候，不指定组名，那么系统会自动创建一个和用户名一样的组名。
+- 创建的用户会被记录在 `/etc/passwd` 文件中以及 `etc/shadow`（用户密码相关） 文件中。
+
+```shell
+useradd -d/home/abc abc -m创建abc用户，如果/home/abc目录不存在，就自动创建这个目录，同时用户属于abc组
+
+useradd -d/home/a a -g test-m创建一个用户名字叫a，主目录在/home/a，如果主目录不存在，就自动创建主目录，同时用户属于test组
+
+cat /etc/passwd查看系统当前用户名
+```
+
+### 设置用户密码：passwd
+
+超级用户可以使用passwd命令为普通用户设置或修改用户口令。用户也可以直接使用该命令来修改自己的口令，而无需在命令后面使用用户名
+
+```shell
+passwd username
+```
+
+### 删除用户：userdel
+
+```shell
+userdel abc(用户名)删除abc用户，但不会自动删除用户的主目录
+userdel -r abc(用户名)删除用户，同时删除用户的主目录
+```
+
+### 修改用户属性：usermod
+
+```shell
+# 修改用户所在组
+usermod -g 用户组 用户名
+```
+
+为创建的普通用户添加sudo权限，新创建的用户，默认不能sudo，需要进行一下操作
+
+```shell
+sudo usermod -a -G adm 用户名
+sudo usermod -a -G sudo 用户名
+```
+
+### 修改用户属性：chage
+
+chage命令是用来修改帐号和密码的有效期限。
+
+### 查看有哪些用户组
+
+```shell
+# 方法一
+cat /etc/group
+# 方法二
+groupmod +二次tab键
+```
+
+### 添加、删除组账号：groupadd、groupdel
+
+```shell
+# 新建组账号
+groupadd
+
+# 组账号
+groupdel
+
+# 查看用户组
+cat /etc/group
+```
+
+### 查看用户在哪些组：groups
+
+```shell
+groups username
+```
+
+### 切换用户：su、sudo
+
+可以通过su命令切换用户，su后面可以加“-”。`su`和`su –`命令不同之处在于，`su -`切换到对应的用户时会将当前的工作目录自动转换到切换后的用户主目录：
+
+注意：如果是ubuntu平台，需要在命令前加“sudo”，如果在某些操作需要管理员才能操作，ubuntu无需切换到root用户即可操作，只需加“sudo”即可。sudo是ubuntu平台下允许系统管理员让普通用户执行一些或者全部的root命令的一个工具，减少了 root 用户的登陆和管理时间，提高了安全性。
+
+```shell
+su 切换到root用户su root切换到root用户
+su - 切换到root用户，同时切换目录到/root
+su - root 切换到root用户，同时切换目录到/root
+su 普通用户切换到普通用户
+su - 普通用户切换到普通用户，同时切换普通用户所在的目录
+sudo -s 切换到root用户(ubantu)
+visudo 用于配置用户可以执行的管理员命令
+```
+
+### 获取 root 权限
+
+Ubuntu 的默认 root 密码是随机的，即每次开机都有一个新的 root 密码，我们可以在终端输入命令 `sudo passwd`，然后根据提示设置设置 root 密码。修改成功后，输入命令 `su root`，再输入新的密码就ok了。
+
+### 用户和用户组的配置文件
+
+Linux `/etc/group` 文件与 `/etc/passwd` 和 `/etc/shadow` 文件都是有关于系统管理员对用户和用户组管理时相关的文件。
+
+- `etc/passwd`，配置用户，格式：`用户名:是否需要密码进行验证:uid:gid:注释:home目录:命令解释器`。
+- `etc/shadow`，配置用户密码，格式：`用户名:加密过的秘密`。
+- `etc/group`，用户组配置，格式：`组名称:是否需要密码进行验证:gid:组内用户列表`。
+
+### 修改文件权限：chmod
+
+chmod 修改文件权限有两种使用格式：字母法与数字法。
+
+字母法：`chmod u/g/o/a +/-/= rwx 文件`
+
+- `u`： user 表示该文件的所有者
+- `g`： group 表示与该文件的所有者属于同一组( group )者，即用户组
+- `o`： other 表示其他以外的人
+- `a`： all 表示这三者皆是
+- `[ +-= ]`的含义：+增加权限、-撤销权限、=设定权限
+- `r`：read 表示可读取，对于一个目录，如果没有r权限，那么就意味着不能通过ls查看这个目录的内容。
+- `w`：write 表示可写入，对于一个目录，如果没有w权限，那么就意味着不能在目录下创建新的文件。
+- `x`：excute 表示可执行，对于一个目录，如果没有x权限，那么就意味着不能通过cd进入这个目录。
+
+数字法：`“rwx” 这些权限也可以用数字来代替`
+
+- r读取权限，数字代号为 "4"
+- w写入权限，数字代号为 "2"
+- x执行权限，数字代号为 "1"
+- -不具任何权限，数字代号为 "0"
+
+执行：`chmod u=rwx,g=rx,o=r filename` 就等同于：`chmod u=7,g=5,o=4 filename` 或者 `chmod 754 filename`。如果想递归所有目录加上相同权限，需要加上参数`-R`。如：`chmod 777 test/ -R` 递归 test 目录下所有文件加 777 权限。
+
+### 修改文件所有者：chown
+
+```shell
+sudo chown username filename
+
+#将这个目录的所有者和组分别改为xxx和组xxx
+sudo chown username:group filename
+```
+
+### 修改文件所属组：chgrp
+
+```shell
+sudo chgrp username filename
+```
+
+### 退出登录账户：exit
+
+- 如果是图形界面，退出当前终端；
+- 如果是使用ssh远程登录，退出登陆账户；
+- 如果是切换后的登陆用户，退出则返回上一个登陆账号。
+
+## 2 文件管理
 
 ### 查看文件信息：ls
 
@@ -62,7 +272,7 @@ ls > test.txt ( test.txt如果不存在，则创建，存在则覆盖其内容)
 
 ### 分屏显示：more
 
-查看内容时，在信息过⻓无法在一屏上显示时，会出现快速滚屏，使得用户无法看清文件的内容，此时可以使用more命令，每次只显示一⻚，按下空格键可以显示下一⻚，按下q键退出显示，按下h键可以获取帮助。
+查看内容时，在信息过⻓无法在一屏上显示时，会出现快速滚屏，使得用户无法看清文件的内容，此时可以使用 more 命令，每次只显示一⻚，按下空格键可以显示下一⻚，按下 q 键退出显示，按下h键可以获取帮助。
 
 ### 管道：|
 
@@ -124,7 +334,7 @@ ln 源文件链接文件
 ln -s 源文件链接文件
 ```
 
-### 查看或者合并文件内容：cat和tac
+### 查看或者合并文件内容：cat 和 tac
 
 ```shell
 # 查看
@@ -285,227 +495,142 @@ tar这个命令并没有压缩的功能，它只是一个打包的命令，但�
 which ls
 ```
 
----
-## 2 用户、权限管理
-
-用户是 Unix/Linux 系统工作中重要的一环，用户管理包括用户与组账号的管理。在 Unix/Linux 系统中，不论是由本机或是远程登录系统，每个系统都必须拥有一个账号，并且对于不同的系统资源拥有不同的使用权限。Unix/Linux 系统中的 root 账号通常用于系统的维护和管理，它对 Unix/Linux 操作系统的所有部分具有不受限制的访问权限。在 Unix/Linux 安装的过程中，系统会自动创建许多用户账号，而这些默认的用户就称为“标准用户”。在大多数版本的 Unix/Linux 中，都不推荐直接使用 root 账号登录系统。
-
-### 查看 Linux 内核版本命令
-
-```shell
-# 方式1
-cat /proc/version
-
-# 方式2
-uname -a
-```
-
-### 查看 Linux 发行版本：lsb_release
-
-```shell
-# 这个命令适用于所有的Linux发行版，包括Redhat、SuSE、Debian…等发行版。
-lsb_release -a
-
-# 这种方法只适合Redhat系的Linux
-cat /etc/redhat-release
-
-# 此命令也适用于所有的Linux发行版。
-cat /etc/issue
-```
-
-参考[如何查看LINUX发行版的名称及其版本号](https://www.qiancheng.me/post/coding/show-linux-issue-version)
-
-### 查看当前用户：whoami
-
-whoami该命令用户查看当前系统当前账号的用户名。可通过`cat /etc/passwd`查看系统用户信息。
-
-### 查看登录用户：who
-
-who命令用于查看当前所有登录系统的用户信息。
-
-选项
-
-- -m 或 am i 只显示运行who命令的用户名、登录终端和登录时间
-- -q 或 --count 只显示用户的登录账号和登录用户的数量
-- -u 或 --heading 显示列标题
-
-### 退出登录账户：exit
-
-- 如果是图形界面，退出当前终端；
-- 如果是使用ssh远程登录，退出登陆账户；
-- 如果是切换后的登陆用户，退出则返回上一个登陆账号。
-
-### 显示用户信息：id
-
-Print user and group information for the specified USER。
-
-```shell
-id root
-```
-
-### 添加用户账号：useradd
-
-在Unix/Linux中添加用户账号可以使用adduser或useradd命令，因为adduser命令是指向useradd命令的一个链接，因此，这两个命令的使用格式完全一样。
-
-参数：
-
-- -d 指定用户登录系统时的主目录，如果不使用该参数，系统自动在/home目录下建立与用户名同名目录为主目录。
-- -m 自动建立目录。
-- -g 指定组名称。
-
-相关说明：
-
-- Linux每个用户都要有一个主目录，主目录就是第一次登陆系统，用户的默认当前目录(/home/用户)。
-- 每一个用户必须有一个主目录，所以用useradd创建用户的时候，一定给用户指定一个主目录。
-- 用户的主目录一般要放到根目录的home目录下，用户的主目录和用户名是相同的。
-- 如果创建用户的时候，不指定组名，那么系统会自动创建一个和用户名一样的组名。
-- 创建的用户会被记录在 `/etc/passwd` 文件中以及 `etc/shadow`（用户密码相关） 文件中。
-
-```shell
-useradd -d/home/abc abc -m创建abc用户，如果/home/abc目录不存在，就自动创建这个目录，同时用户属于abc组
-
-useradd -d/home/a a -g test-m创建一个用户名字叫a，主目录在/home/a，如果主目录不存在，就自动创建主目录，同时用户属于test组
-
-cat /etc/passwd查看系统当前用户名
-```
-
-### 设置用户密码：passwd
-
-超级用户可以使用passwd命令为普通用户设置或修改用户口令。用户也可以直接使用该命令来修改自己的口令，而无需在命令后面使用用户名
-
-```shell
-passwd username
-```
-
-### 删除用户：userdel
-
-```shell
-userdel abc(用户名)删除abc用户，但不会自动删除用户的主目录
-userdel -r abc(用户名)删除用户，同时删除用户的主目录
-```
-
-### 修改用户属性：usermod
-
-```shell
-# 修改用户所在组
-usermod -g 用户组 用户名
-```
-
-为创建的普通用户添加sudo权限，新创建的用户，默认不能sudo，需要进行一下操作
-
-```shell
-sudo usermod -a -G adm 用户名
-sudo usermod -a -G sudo 用户名
-```
-
-### 修改用户属性：chage
-
-chage命令是用来修改帐号和密码的有效期限。
-
-### 查看有哪些用户组
-
-```shell
-# 方法一
-cat /etc/group
-# 方法二
-groupmod +二次tab键
-```
-
-### 添加、删除组账号：groupadd、groupdel
-
-```shell
-# 新建组账号
-groupadd
-
-# 组账号
-groupdel
-
-# 查看用户组
-cat /etc/group
-```
-
-### 查看用户在哪些组：groups
-
-```shell
-groups username
-```
-
-### 切换用户：su、sudo
-
-可以通过su命令切换用户，su后面可以加“-”。`su`和`su –`命令不同之处在于，`su -`切换到对应的用户时会将当前的工作目录自动转换到切换后的用户主目录：
-
-注意：如果是ubuntu平台，需要在命令前加“sudo”，如果在某些操作需要管理员才能操作，ubuntu无需切换到root用户即可操作，只需加“sudo”即可。sudo是ubuntu平台下允许系统管理员让普通用户执行一些或者全部的root命令的一个工具，减少了 root 用户的登陆和管理时间，提高了安全性。
-
-```shell
-su 切换到root用户su root切换到root用户
-su - 切换到root用户，同时切换目录到/root
-su - root 切换到root用户，同时切换目录到/root
-su 普通用户切换到普通用户
-su - 普通用户切换到普通用户，同时切换普通用户所在的目录
-sudo -s 切换到root用户(ubantu)
-visudo 用于配置用户可以执行的管理员命令
-```
-
-### 用户和用户组的配置文件
-
-Linux `/etc/group` 文件与 `/etc/passwd` 和 `/etc/shadow` 文件都是有关于系统管理员对用户和用户组管理时相关的文件。
-
-- `etc/passwd`，配置用户，格式：`用户名:是否需要密码进行验证:uid:gid:注释:home目录:命令解释器`。
-- `etc/shadow`，配置用户密码，格式：`用户名:加密过的秘密`。
-- `etc/group`，用户组配置，格式：`组名称:是否需要密码进行验证:gid:组内用户列表`。
-
-### 修改文件权限：chmod
-
-chmod 修改文件权限有两种使用格式：字母法与数字法。
-
-字母法：`chmod u/g/o/a +/-/= rwx 文件`
-
-- `u`： user 表示该文件的所有者
-- `g`： group 表示与该文件的所有者属于同一组( group )者，即用户组
-- `o`： other 表示其他以外的人
-- `a`： all 表示这三者皆是
-- `[ +-= ]`的含义：+增加权限、-撤销权限、=设定权限
-- `r`：read 表示可读取，对于一个目录，如果没有r权限，那么就意味着不能通过ls查看这个目录的内容。
-- `w`：write 表示可写入，对于一个目录，如果没有w权限，那么就意味着不能在目录下创建新的文件。
-- `x`：excute 表示可执行，对于一个目录，如果没有x权限，那么就意味着不能通过cd进入这个目录。
-
-数字法：`“rwx” 这些权限也可以用数字来代替`
-
-- r读取权限，数字代号为 "4"
-- w写入权限，数字代号为 "2"
-- x执行权限，数字代号为 "1"
-- -不具任何权限，数字代号为 "0"
-
-执行：`chmod u=rwx,g=rx,o=r filename` 就等同于：`chmod u=7,g=5,o=4 filename` 或者 `chmod 754 filename`。如果想递归所有目录加上相同权限，需要加上参数`-R`。如：`chmod 777 test/ -R` 递归 test 目录下所有文件加 777 权限。
-
-### 修改文件所有者：chown
-
-```shell
-sudo chown username filename
-
-#将这个目录的所有者和组分别改为xxx和组xxx
-sudo chown username:group filename
-```
-
-### 修改文件所属组：chgrp
-
-```shell
-sudo chgrp username filename
-```
-
----
 ## 3 系统管理
 
-### 查看当前日历：cal
+### 3.1 网络管理
+
+- 网络状态查看
+- 网络配置
+- 路由命令
+- 网络故障排除
+- 网络服务管理
+- 常用网络配置文件
+
+#### 网络状态查看
+
+net-tools(CentOS7前) 和 iprote(CentOS7后)
+
+net-tools：
+
+- ifconfig
+- route
+- netstat
+
+iproute2:
+
+- ip
+- ss
+
+##### ifconfig
+
+- eth0 第一块网卡(网络接口)
+- 你的第一个网络接口可能叫做下面的名字
+  - eno1 板载网卡
+  - ens33 PCI-E 网卡
+  - enp0s3 无法获取物理信息的PCI-E网卡
+  - CentOS7 使用了一致性网络设备命名，以上都不匹配则使用 eth0
 
 ```shell
-cal
-call 2017
+# 第一块网卡
+eth1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        # ip、掩码、广播地址
+        inet 172.17.251.129  netmask 255.255.255.240  broadcast 172.17.251.143
+        inet6 fe80::a556:e4e7:6cce:f4e5  prefixlen 64  scopeid 0xfd<compat,link,site,host>
+        # mac地址
+        ether 00:15:5d:b9:a6:b5  (Ethernet)
+        # 收到的包
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        # 发送的包
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+# 本地回环
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 1500
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0xfe<compat,link,site,host>
+        loop  (Local Loopback)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+
+...
 ```
 
-### 显示或设置时间：date
+网络接口命名修改：恢复 CentOS7 之前的 eth0 命名方式：
 
-### 查看进程信息：ps
+1. 网卡命名规则受 biosdevname 和 net.ifnames 两个参数影响。
+2. 编辑`/etc/default/grub`文件，增加`biosdevname=0 net.ifnames=0`更新grub。
+3. 更新 grub：`grub2-mkconfig-o /boot/grub2/grub.cfg`。（`/etc/default/grub`是给用户编辑的，`/boot/grub2/grub.cfg`是系统启动时真正运行的，这个命令将修改转化到 `/boot/grub2/grub.cfg` 中）
+4. 重启PC。
+
+![net-card-name](images/net-card-name.png)
+
+##### nii-tool
+
+查看网卡物理连接情况
+
+```shell
+mil-tool eth0
+```
+
+##### 查看网关：route
+
+- route -n
+- 使用 -n 参数不解析主机名（速度快）
+
+```shell
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+172.17.251.128  0.0.0.0         255.255.255.240 U     256    0        0 eth1
+172.17.251.129  0.0.0.0         255.255.255.255 U     256    0        0 eth1
+172.17.251.143  0.0.0.0         255.255.255.255 U     256    0        0 eth1
+224.0.0.0       0.0.0.0         240.0.0.0       U     256    0        0 eth1
+255.255.255.255 0.0.0.0         255.255.255.255 U     256    0        0 eth1
+127.0.0.0       0.0.0.0         255.0.0.0       U     256    0        0 lo
+127.0.0.1       0.0.0.0         255.255.255.255 U     256    0        0 lo
+127.255.255.255 0.0.0.0         255.255.255.255 U     256    0        0 lo
+224.0.0.0       0.0.0.0         240.0.0.0       U     256    0        0 lo
+255.255.255.255 0.0.0.0         255.255.255.255 U     256    0        0 lo
+```
+
+#### 网络配置命令
+
+网络配置命令1：
+
+- 设置网卡 ip 地址：`ifconfig <接口> <IP地址> [netmask 子网掩码]`
+- 开启网卡：`ifup <接口>`, `ifconfig <接口> up`
+- 关闭网卡：`ifdown <接口>`
+- 添加网关
+  - `route add default gw <网关ip>`
+  - `route add -host <指定ip> gw <网关ip>`
+  - `route add -net <指定网段> netmask <子网掩码> gw <网关ip>`
+
+网络配置命令2：（用 ip 命令可以实现上述所有功能）
+
+- ip addr ls
+  - ifconfig
+- ip link set dev etho up
+  - ifup etho
+- ip addr add 10.0.0.1/24 dev eth1
+  - ifconfig eth1 10.0.0.1 netmask 255.255.255.0
+- ip route add 10.0.0/24 via 192.168.0.1
+  - route add-net 10.0.0.0 netmask 255.255.255.0 gw 192.168.0.1
+
+修改网关的步骤：
+
+1. 先删除默认网关 `route del default gw .....`
+2. 再添加默认网关 `route add default gw .....`
+
+#### 测试远程主机连通性：ping
+
+```shell
+ping www.baidu.com
+```
+
+### 3.2 进程管理
+
+#### 查看进程信息：ps
 
 进程是一个具有一定独立功能的程序，它是操作系统动态执行的基本单元。ps命令可以查看进程的详细状况。
 
@@ -517,7 +642,7 @@ call 2017
 - -w显示加宽，以便显示更多的信息
 - -r只显示正在运行的进程
 
-### 动态显示进程：top
+#### 动态显示进程：top
 
 top命令用来动态显示运行中的进程。top命令能够在运行后，在指定的时间间隔更新显示信息。可以在使用top命令时加上-d 来指定显示信息更新的时间间隔。
 
@@ -530,7 +655,7 @@ top命令用来动态显示运行中的进程。top命令能够在运行后，�
 - q退出
 - h获得帮助
 
-### 终止进程：kill
+#### 终止进程：kill
 
 kill命令指定进程号的进程，需要配合`ps`使用
 
@@ -540,7 +665,7 @@ kill [-signal] pid
 signal值从0到15，其中9为绝对终止，可以处理一般信号无法终止的进程。
 ```
 
-### 关机重启：reboot、shutdown、init
+#### 关机重启：reboot、shutdown、init
 
 ```shell
 reboot重新启动操作系统
@@ -553,7 +678,9 @@ init 0关机
 init 6重启
 ```
 
-### 检测磁盘空间：df
+### 磁盘管理
+
+#### 检测磁盘空间：df
 
 df命令用于检测文件系统的磁盘空间占用和空余情况，可以显示所有文件系统对节点和磁盘块的使用情况。
 
@@ -564,7 +691,7 @@ df命令用于检测文件系统的磁盘空间占用和空余情况，可以显
 - -t显示各指定文件系统的磁盘空间使用情况
 - -T显示文件系统
 
-### 检测目录所占磁盘空间：du
+#### 检测目录所占磁盘空间：du
 
 du命令用于统计目录或文件所占磁盘空间的大小，该命令的执行结果与df类似，du更侧重于磁盘的使用状况。
 
@@ -575,25 +702,20 @@ du命令用于统计目录或文件所占磁盘空间的大小，该命令的执
 - -b以字节为单位显示磁盘占用情况
 - -l计算所有文件大小，对硬链接文件计算多次
 
-### 查看或配置网卡信息：ifconfig
-
-```shell
-ifconfig，它会显示所有网卡的信息
-sudo ifconfig ens33 192.168.0.1 修改ens33的ip地址
-```
-
-### 测试远程主机连通性：ping
-
-```shell
-ping www.baidu.com
-```
-
-### 获取root权限
-
-Ubuntu的默认root密码是随机的，即每次开机都有一个新的root密码，我们可以在终端输入命令`sudo passwd`，然后根据提示设置设置root密码。修改成功后，输入命令`su root`，再输入新的密码就ok了。
-
----
 ## 4 其他
+
+### 查看当前日历：cal
+
+```shell
+cal
+call 2017
+```
+
+### 显示或设置时间：date
+
+```shell
+date
+```
 
 ### echo
 
