@@ -156,7 +156,7 @@
 import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())
 ```
 
-解决windows下文件夹名为方框：
+解决 windows 下文件夹名为方框：
 
 1. 打开 Preference->Settings
 2. 最外层 json 加入 `"dpi_scale": 1.0`
@@ -191,18 +191,23 @@ import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.
 
 - Auto Close Tag
 - AutoRename Tag
-- Bracket Pair Colorizer
-- Code Runner
 - Include Autocomplete
 - IntelliJ IDEA Keybindings
+- Bracket Pair Colorizer
 - Markdown All In One
 - Markdown Preview Enhanced
 - Markdown Shortcuts
 - Markdownlint
 - Material Icon Theme
-- Material Theme
 - On Dark Pro
-- VSCode Icon
+- Indent-Rainbow
+- Rainbow Braskets
+- Pigment
+- SettingsSync
+- ProjectManager
+- Rest Client
+- Remote-WSL
+- Code Runner
 
 markdown：
 
