@@ -560,15 +560,13 @@ lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 1500
 网络接口命名修改：恢复 CentOS7 之前的 eth0 命名方式：
 
 1. 网卡命名规则受 biosdevname 和 net.ifnames 两个参数影响。
-2. 编辑`/etc/default/grub`文件，增加`biosdevname=0 net.ifnames=0`更新grub。
+2. 编辑`/etc/default/grub`文件，增加`biosdevname=0 net.ifnames=0`。`grub` 文件是系统启动时读取的文件。
 3. 更新 grub：`grub2-mkconfig-o /boot/grub2/grub.cfg`。（`/etc/default/grub`是给用户编辑的，`/boot/grub2/grub.cfg`是系统启动时真正运行的，这个命令将修改转化到 `/boot/grub2/grub.cfg` 中）
 4. 重启PC。
 
 ![net-card-name](images/net-card-name.png)
 
-##### nii-tool
-
-查看网卡物理连接情况
+##### 查看网卡物理连接情况：nii-tool
 
 ```shell
 mil-tool eth0
@@ -608,24 +606,170 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 
 网络配置命令2：（用 ip 命令可以实现上述所有功能）
 
-- ip addr ls
-  - ifconfig
-- ip link set dev etho up
-  - ifup etho
-- ip addr add 10.0.0.1/24 dev eth1
-  - ifconfig eth1 10.0.0.1 netmask 255.255.255.0
-- ip route add 10.0.0/24 via 192.168.0.1
-  - route add-net 10.0.0.0 netmask 255.255.255.0 gw 192.168.0.1
+- `ip addr ls` = `ifconfig`
+- `ip link set dev etho up` = `ifup etho`
+- `ip addr add 10.0.0.1/24 dev eth1` = `ifconfig eth1 10.0.0.1 netmask 255.255.255.0`
+- `ip route add 10.0.0/24 via 192.168.0.1` = `route add-net 10.0.0.0 netmask 255.255.255.0 gw 192.168.0.1`
 
 修改网关的步骤：
 
 1. 先删除默认网关 `route del default gw .....`
 2. 再添加默认网关 `route add default gw .....`
 
-#### 测试远程主机连通性：ping
+```shell
+# 修改默认网关
+route del default gw ip_address
+route add default gw ip_address
+
+# 为某个id设定网关
+route add -host ip_address gw gw_address
+```
+
+#### 网络故障排除
+
+##### 测试远程主机连通性：ping
 
 ```shell
 ping www.baidu.com
+```
+
+##### 检测当前主机到目标主机的网络状况：traceroute
+
+```shell
+# w 表示等待，1 表示等待 1 秒。
+traceroute -w 1 www.baidu.com
+```
+
+##### 检测当前主机到目标主机的网络状况：mtr
+
+```shell
+mtr
+```
+
+##### 通过域名查看 ip：nslookup
+
+```shell
+nslookup www.baidu.com
+```
+
+##### 检测端口连接状态：telnet
+
+```shell
+telnet www.baidu.com 80
+```
+
+##### 数据包分析：tcpdump
+
+```shell
+# 抓取所有网卡、-n 解析成 ip、port 指定端口
+tcpdump -i any -n port 80
+# host 指定主机
+tcpdump -i any -n host 10.0.0.1
+# -w 保存到文件
+tcpdump -i any -n host 10.0.0.1 and port 80 -w /temp/filename
+```
+
+##### 查看服务监听地址：netstat
+
+```shell
+# n 显示ip、t 查看tcp协议的、p 表示展示进程、l 表示 listen 状态
+netstat -ntpl
+```
+
+##### 查看服务监听地址：ss
+
+```shell
+ss -ntpl
+```
+
+##### 网络服务管理与常用网络配置文件
+
+>上面网配置命令所进行的网络都是临时的，如果系统重启或者网络服务重启，这些配置就会丢失，如果需要将配置持久化，就需要操作网络配置文件。
+
+**网络服务管理程序分为两种**：
+
+- SysV：Ubuntu 6.10 及以前版本使用 Sysvinit，其主要就是一个 Shell 脚本，并且是放置在 `/etc/init.d` 文件夹下。然后通过 `update-rc.d` 命令进行运行级别的操作来达到服务的启动，对应命令 `service`，
+- Systemd：Ubuntu 15.04 开始预设使用 Systemd，其包含是一组命令，涉及到系统管理的方方面面。主命令就是 systemctl。
+
+关于 SysV 和 systemd，参考
+
+- [[Linux]systemd和sysV 的历史](https://www.cnblogs.com/aaronLinux/p/10654523.html)
+- [Systemd 入门教程：命令篇](http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html)
+- [Linux 服务管理两种方式service和systemctl](https://www.cnblogs.com/shijingjing07/p/9301590.html)
+- [systemctl 命令完全指南](https://linux.cn/article-5926-1.html)
+
+**网络服务管理相关命令**：
+
+- `service network start|stop|restart` (CentOS)
+- `service networking start|stop|restart` (Ubuntu)
+- `service network-manager start|stop|restart`
+- `chkconfig -list network` (CentOS)
+- `systemctl list-unit-files NetworkManager.service`
+- `systemctl start|stop|restart NetworkManger`
+- `systemctl enable|disable NetworkManger`
+
+命令说明：
+
+- systemctl 是系统服务管理器指令，它实际上将 service 和 chkconfig 这两个命令组合到一起。
+- service 命令是 Redhat Linux 兼容的发行版中用来控制系统服务的实用工具，它以启动、停止、重新启动和关闭系统服务，还可以显示所有系统服务的当前状态。
+- chkconfig命令检查、设置系统的各种服务。这是 Red Hat 公司遵循 GPL 规则所开发的程序，它可查询操作系统在每一个执行等级中会执行哪些系统服务，其中包括各类常驻服务。chkconfig 在 ubuntu 中已经被不可用了，可以使用 `systemctl`, `sysv-rc-conf` 代替。具体参考[how-do-i-install-chkconfig-on-ubuntu](https://stackoverflow.com/questions/20680050/how-do-i-install-chkconfig-on-ubuntu)。
+
+**`network` 和 `NetworkManager`**：
+
+Linux 中有两套网络服务脚本：`network` 和 `NetworkManager`，不建议同时使用，选定一个时，可以关掉另一个。
+
+- 在个人电脑上建议使用`NetworkManager`，NetworkManager 主要用于图形化环境。
+- 服务器开发建议继续使用`network`，network 主要用于命令行环境。
+
+```shell
+# 查看网络状态(centos)
+service network status
+# 查看网络状态(ubuntu)
+service network-manager status
+# 重启（重置配置）
+service network restart
+
+# 查看 NetworkManager 服务是否可用
+systemctl list-unit-files NetworkManager.service
+# 关掉 NetworkManager
+systemctl disable NetworkManager
+# 开启 NetworkManager
+systemctl enbale NetworkManager
+
+# 查看 network 开启状态
+chkconfig --list network
+# 关掉 network，参考文档可了解 2345 所指的意义
+chkconfig --level 2345 network off
+# 开启 network
+chkconfig --level 2345 network on
+```
+
+**网络服务读取的配置文件**：
+
+- 网卡文件：
+  - `/etc/sysconfig/network-scripts`（CentOS），包含`ifcfg-eth0`、`ifcfg-eth1`...`ifcfg-ethn`等。
+  - `/etc/network/interfaces`（debain），参考[where-is-the-equivalent-of-etc-sysconfig-networking-devices-directory-in-ubunt](https://askubuntu.com/questions/320537/where-is-the-equivalent-of-etc-sysconfig-networking-devices-directory-in-ubunt)
+- 主机名配置文件：`/etc/hosts`
+
+```shell
+# 修改完配置文件后，需要重启才能生效
+service netowrk restart
+systemctl restart NetworkManager.service
+```
+
+修改主机名：
+
+```shell
+# 展示主机名，主机名分为主机名称和域名
+hostname
+# 修改主机名
+host xxxx
+# 永久修改
+hostnamectl set-hostname xxxx
+
+# 修改了主机名后，由于很多服务需要依赖主机名进行工作，因此需要在 hosts 中加上新主机名与 127.0.0.1 的对应关系
+vim /etc/hosts
+# 加上 127.0.0.1 xxxx
 ```
 
 ### 3.2 进程管理
@@ -678,7 +822,7 @@ init 0关机
 init 6重启
 ```
 
-### 磁盘管理
+### 3.3 磁盘管理
 
 #### 检测磁盘空间：df
 
