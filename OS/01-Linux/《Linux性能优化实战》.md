@@ -251,8 +251,12 @@ pidstat -u 5 1
 ### 2.5 扩展学习
 
 - 掌握 uptime 和 top 命令使用与分析。
+  - [了解你服务器的心情——top命令详解](https://www.jianshu.com/p/aae6ee900d2e)
+  - [top命令详解](https://www.jianshu.com/p/078ed7895b0f)
 - 掌握 stress 或 [stress-ng](https://kernel.ubuntu.com/~cking/stress-ng/) 工具的使用。
   - [Linux 压力测试软件 Stress 使用指南](https://www.hi-linux.com/posts/59095.html)
+  - [压力测试神器stress-ng](https://cloud.tencent.com/developer/article/1513544)
+  - 这些工具主要用于模拟系统过载的情况，可用于验证我们的系统过载预警机制是否有效。
 - 掌握 sysstat 工具的使用，掌握 mpstat 和 pidstart 命令的使用。
   - [sysstat github](https://github.com/sysstat/sysstat)
   - [sysstat性能监控工具包中20个实用命令](https://linux.cn/article-4028-1.html)
