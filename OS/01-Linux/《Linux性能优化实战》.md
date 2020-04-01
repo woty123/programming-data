@@ -1,5 +1,7 @@
 # [《Linux性能优化实战》](https://time.geekbang.org/column/intro/140) 主要知识点整理
 
+---
+
 ## 1 如何学习 Linux 性能优化
 
 性能问题并没有你想像得那么难，只要你理解了应用程序和系统的少数几个基本原理，再进行大量的实战练习，建立起整体性能的全局观，大多数性能问题的优化就会水到渠成。
@@ -43,6 +45,8 @@
 2. 边学边实践，通过大量的案例演习掌握 Linux 性能的分析和优化。
 3. 勤思考，多反思，善总结，多问为什么。
 
+---
+
 ## 2 基础篇：系统变慢——平均负载
 
 ### 2.1 什么是平均负载
@@ -76,7 +80,7 @@ uptime
 - 直观理解：单位时间内的活跃进程数。
 - 实质上：活跃进程数的指数衰减平均值，简单理解为`活跃进程数的平均值`。
 
-**平均负载指数解读**：要根据 CPU 的核数来解读平均负载数，比如当平局负载数为 1 时：
+**平均负载指数解读**：要根据 CPU 的核数来解读平均负载数（这里的 CPU 的核数是指逻辑核数），比如当平局负载数为 1 时：
 
 1. 在只有 2 个 CPU 的系统上，意味着所有的 CPU 都刚好被完全占用。
 2. 在 4 个 CPU 的系统上，意味着 CPU 有 50% 的空闲。
@@ -86,7 +90,7 @@ uptime
 
 最理想的情况：平均负载是等于 CPU 个数。太高了表示有进程获取不到 CPU 资源，太低了表示 CPU 利用率不高。
 
-**获取CPU核数**：
+**获取CPU 逻辑核数**：
 
 1. `grep 'model name' /proc/cpuinfo | wc -l`
 2. top 命令
@@ -124,46 +128,141 @@ uptime
 
 #### CPU 密集型
 
-1. 记录压测前的 `uptime` 数据。
+1 记录压测前的 `uptime` 数据。
+
 ```shell
 uptime
+
 # 结果
-16:11:04 up  1:37,  3 users,  load average: 0.01, 0.01, 0.00
+16:47:19 up  2:14,  3 users,  load average: 0.22, 0.12, 0.15
 ```
-2. 在第一个终端运行 stress 命令，模拟一个 CPU 使用率 100% 的场景。
+
+2 在第一个终端运行 stress 命令，模拟一个 CPU 使用率 100% 的场景。
+
 ```shell
 stress --cpu 1 --timeout 600
 ```
-3. 在第二个终端运行 uptime 查看平均负载的变化情况。
+
+3 在第二个终端运行 uptime 查看平均负载的变化情况。
+
 ```shell
 # `-d` 参数表示高亮显示变化的区域。
 watch -d uptime
+
 # 结果，经过一段时间，平均负载数接近 1
-16:17:04 up  1:37,  3 users,  load average: 0.98, 0.38, 0.20
+16:49:14 up  2:16,  3 users,  load average: 0.91, 0.42, 0.26
 ```
-4. 在第三个终端运行 mpstat 查看 CPU 使用率的变化情况。
+
+4 在第三个终端运行 mpstat 查看 CPU 使用率的变化情况。
+
 ```shell
 # -P ALL 表示监控所有 CPU，后面数字 5 表示间隔 5 秒后输出一组数据
 mpstat -P ALL 5
-# 输出结果
-04:14:52 PM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
-04:14:57 PM  all   99.40    0.00    0.40    0.00    0.00    0.20    0.00    0.00    0.00    0.00
-04:14:57 PM    0   99.40    0.00    0.40    0.00    0.00    0.20    0.00    0.00    0.00    0.00
 
-04:14:57 PM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
-04:15:02 PM  all   99.40    0.00    0.60    0.00    0.00    0.00    0.00    0.00    0.00    0.00
-04:15:02 PM    0   99.40    0.00    0.60    0.00    0.00    0.00    0.00    0.00    0.00    0.00
-
-# 结果分析：有一个 CPU 的使用率为 99.4%，但它的 iowait 只有 0。这说明，平均负载的升高正是由于 CPU 使用率为 100% 。
+# 如果有一个进程的 CPU 使用率为很高，但它的 iowait 很低。这说明，平均负载的升高正是由于 CPU 使用率为太高 。
 ```
-5. pidstat 来查询哪个进程导致了 CPU 使用率为 100% 
+
+5 pidstat 来查询哪个进程导致了 CPU 使用率为 100%。
+
 ```shell
 # 间隔 5 秒后输出一组数据
 pidstat -u 5 1
-# 输出
-04:15:58 PM   UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command
-04:16:03 PM   500      1394   98.60    0.00    0.00    1.40   98.60     0  stress
-04:16:03 PM     0      1447    0.00    0.20    0.00    0.00    0.20     0  barad_agent
-04:16:03 PM   500      1450    0.00    0.20    0.00    0.00    0.20     0  watch
-04:16:03 PM     0      1487    0.00    0.20    0.00    0.00    0.20     0  YDLive
 ```
+
+#### IO 密集型
+
+1 记录压测前的 `uptime` 数据。
+
+```shell
+uptime
+```
+
+2 在第一个终端运行 stress 命令，模拟 I/O 压力，即不停地执行 sync。
+
+```shell
+stress -i 1 --timeout 600
+```
+
+>stress 模拟 io 密集型任务原理：stress使用的是 `sync()` 系统调用，它的作用是刷新缓冲区内存到磁盘中。对于新安装的虚拟机，缓冲区可能比较小，无法产生大的 IO 压力，这样大部分就都是系统调用的消耗了。所以，你会看到只有系统 CPU 使用率升高。解决方法是使用 stress 的下一代 `stress-ng`，它支持更丰富的选项，比如 `stress-ng -i 1 --hdd 1 --timeout 600`（--hdd表示读写临时文件）。
+
+3 在第二个终端运行 uptime 查看平均负载的变化情况。
+
+```shell
+# `-d` 参数表示高亮显示变化的区域。
+watch -d uptime
+
+# 经过一段时间，可以发现平均负载数会升高到接近 1
+```
+
+4 在第三个终端运行 mpstat 查看 CPU 使用率的变化情况。
+
+```shell
+# -P ALL 表示监控所有 CPU，后面数字 5 表示间隔 5 秒后输出一组数据，数字 20 表示观察 20 次。
+mpstat -P ALL 5 20
+
+# 分析结果：如果有一个进程的 CPU 使用率较高，而且它的 iowait 也很高。这说明，很有可能平均负载的升高是由于 iowait 的升高引起的。
+```
+
+5 pidstat 来查询哪个进程的 io_wait 高。
+
+```shell
+# 间隔 5 秒后输出一组数据
+pidstat -u 5 1
+
+# 或者直接查看 io 情况
+pidstat -d
+```
+
+#### 大量进程的场景
+
+1 记录压测前的 `uptime` 数据。
+
+```shell
+uptime
+```
+
+2 在第一个终端运行 stress 命令，模拟的是 8 个进程。
+
+```shell
+stress -c 8 --timeout 600
+```
+
+3 在第二个终端运行 uptime 查看平均负载的变化情况。
+
+```shell
+# `-d` 参数表示高亮显示变化的区域。
+watch -d uptime
+
+# 经过一段时间，可以发现，由于系统中的 8 个进程明显比 CPU 核数要多得多，因而，系统的 CPU 处于严重过载状态
+16:54:23 up  2:21,  3 users,  load average: 4.82, 1.53, 0.67
+```
+
+4 在第三个终端运行 pidstat 来看一下进程的情况
+
+```shell
+# 间隔 5 秒后输出一组数据
+pidstat -u 5 1
+
+# 分析结果：8 个进程在争抢 CPU，每个进程等待 CPU 的时间（也就是 %wait 列）会变得很高。这些超出 CPU 计算能力的进程，最终导致 CPU 过载。
+```
+
+>如果 pidstat 输出中没有 %wait 项，是因为 CentOS 默认的 sysstat 稍微有点老，源码或者 RPM 升级到 11.5.5 版本以后就可以看到了。而 Ubuntu 的包一般都比较新，没有这个问题。
+
+### 2.5 扩展学习
+
+- 掌握 uptime 和 top 命令使用与分析。
+- 掌握 stress 或 [stress-ng](https://kernel.ubuntu.com/~cking/stress-ng/) 工具的使用。
+  - [Linux 压力测试软件 Stress 使用指南](https://www.hi-linux.com/posts/59095.html)
+- 掌握 sysstat 工具的使用，掌握 mpstat 和 pidstart 命令的使用。
+  - [sysstat github](https://github.com/sysstat/sysstat)
+  - [sysstat性能监控工具包中20个实用命令](https://linux.cn/article-4028-1.html)
+  - [mpstat 使用介绍和输出参数详解](https://wsgzao.github.io/post/mpstat/)
+  - [Linux pidstat命令详解](https://www.jellythink.com/archives/444)
+
+其分析法方案：
+
+1. atop 命令
+2. htop 命令
+3. 一些公司的服务器安全级别较高，无法安装 sysstat 工具，此时可使用 top、ps、lsof 命令分析。
+
+扩展阅读：[Linux Load Averages: Solving the Mystery](http://www.brendangregg.com/blog/2017-08-08/linux-load-averages.html)
