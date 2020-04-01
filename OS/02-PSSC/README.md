@@ -4,6 +4,8 @@ Programmer's-self-cultivation: link load library
 
 ## 笔记
 
+1. [基础知识回顾](01-基础知识回顾.md)
+
 ## 推荐阅读
 
 - 《Linkers and Loaders 》，John R. Levine
@@ -11,4 +13,4 @@ Programmer's-self-cultivation: link load library
 - 《Linux内核源代码情景分析》，毛德操，胡希明。
 - 《深入理解计算机系统》（Computer Systems A Programmer’s Perspective，Randal E. Bryant和David O’Hallaron著）。
 - 《深入解析Windows操作系统，第4版——Microsoft Windows Server 2003/Windows XP/Windows 2000技术内幕》，Mark E.Russinovich（著），潘爱民（译）。
-- 《Advanced Programming in the UNIX Environment,Second Edition》，W.Richard Stevens，Stephen A.Rago。
+- 《Advanced Programming in the UNIX Environment, Second Edition》，W.Richard Stevens，Stephen A.Rago。
