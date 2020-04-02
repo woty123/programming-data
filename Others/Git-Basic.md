@@ -12,10 +12,10 @@
 
 提交流程：工作区(编辑文件)-->缓冲区(add)-->本地仓库(commit)-->远程仓库(push)
 
-    master：表示默认的开发分支
-    origin：默认的远程仓库名称
-    HEAD：指向的是当前分支
-    HEAD^：Head的父提交
+- master：表示默认的开发分支
+- origin：默认的远程仓库名称
+- HEAD：指向的是当前分支
+- HEAD^：Head的父提交
 
 ## 配置
 
@@ -135,7 +135,6 @@ git init
 `git branch -d <name>` |        删除
 `git branch -D <name>`     |    强行删除未合并的分支
 
----
 ## 合并
 
 命令|说明
@@ -312,6 +311,20 @@ git push //推送到forked的仓库
 ```shell
 git remote set-url origin [url]
 ```
+
+## 解决 windows pwershell 乱码
+
+参考[PowerShell | git log 中文乱码问题解决](https://blog.csdn.net/FollowGodSteps/article/details/96271359)
+
+```shell
+git config --global core.quotepath false
+git config --global gui.encoding utf-8
+git config --global i18n.commit.encoding utf-8
+git config --global i18n.logoutputencoding utf-8
+$env:LESSCHARSET='utf-8'
+```
+
+LESSCHARSET 可以配置到环境变量中，`$env:LESSCHARSET='utf-8'`只是临时的配置。
 
 ## 资料
 

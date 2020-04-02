@@ -2,39 +2,37 @@
 
 ## 1 Windows常用的快捷键
 
-```bash
-*   WIN+D：显示桌面，再按一次还原桌面；
-*   WIN+R：打开运行，输入命令可以执行相应操作
-*   WIN+E：打开资源管理器；
-*   CTRL+ALT+Delete：程序不响应时用这一招结束不响应的程序，xp下用得比较多；
-*   WIN+L：锁屏；
-*   WIN+Tab：切换程序；
-*   ALT+SHIFT+TAB：切换程序；
-*   CTRL+W：关闭资源管理器；
-*   CTRL+Home：跳转到文件最开头，直接按Home跳转到行头；
-*   CTRL+End：跳转到文件尾部，直接按End跳转到行尾；
-*   CTRL+PageUP/PageDown：切换文档TAB
-*   ALT+双击：查看文件属性；
-*   WIN+数字键：启动任务栏上的程序；
-*   在桌面或者任何文件夹下，SHIFT+鼠标右键，可以在当前路径下打开DOS命令窗口；
-*   在桌面或者任何文件夹下，CTRL+鼠标左键，拖动文件、文件夹都可以立马生成文件对应的副本；
-*   新建只有扩展名的文件的方法：”.suffix.”，比如创建.gitignore，正常情况下windows是不允许创建的，但在扩展名后面加点，即.gitignore.就可以正常创建了；
-*   CTRL+SHIFT+ESC：打开进程管理器；
-*   WIN+左箭头：当前窗口缩放为屏幕的一半，靠屏幕左侧显示；
-*   WIN+右箭头：当前窗口缩放为屏幕的一半，靠屏幕右侧显示；
-*   WIN+上箭头：最大化当前窗口；
-*   WIN+下箭头：还原和最小化当前窗口；
-*   在桌面上，右键任何一个程序，鼠标定位到快捷键一栏，为该应用设置启动快捷键，然后你就可以通过这个这个快捷键来启动该程序啦；
-*   WIN+R，输入“msconfig”，弹出系统设置界面，可设置禁止、允许进程开机自启动；
-*   WIN+Home：最小化所有窗口，除了当前激活窗口；
-*   WIN+M：最小化所有窗口；
-*   WIN+SHIFT+M：还原最小化窗口到桌面上；
-*   WIN+P：选择一个演示文稿显示模式；
-*   WIN+Pause：显示系统属性对话框；
-*   WIN+F：打开windows帮助中心；
-*   WIN+T：切换任务栏上的程序；
-*   WIN+ALT+数字：让位于任务栏指定位置（按下的数字作为序号）的程序，显示跳转清单；
-```
+- WIN+D：显示桌面，再按一次还原桌面。
+- WIN+R：打开运行，输入命令可以执行相应操作。
+- WIN+E：打开资源管理器。
+- CTRL+ALT+Delete：程序不响应时用这一招结束不响应的程序，xp下用得比较多。
+- WIN+L：锁屏。
+- WIN+Tab：切换程序。
+- ALT+SHIFT+TAB：切换程序。
+- CTRL+W：关闭资源管理器。
+- CTRL+Home：跳转到文件最开头，直接按Home跳转到行头。
+- CTRL+End：跳转到文件尾部，直接按End跳转到行尾。
+- CTRL+PageUP/PageDown：切换文档TA。
+- ALT+双击：查看文件属性。
+- WIN+数字键：启动任务栏上的程序。
+- 在桌面或者任何文件夹下，SHIFT+鼠标右键，可以在当前路径下打开DOS命令窗口。
+- 在桌面或者任何文件夹下，CTRL+鼠标左键，拖动文件、文件夹都可以立马生成文件对应的副本。
+- 新建只有扩展名的文件的方法：”.suffix.”，比如创建.gitignore，正常情况下windows是不允许创建的，但在扩展名后面加点，即.gitignore.就可以正常创建了。
+- CTRL+SHIFT+ESC：打开进程管理器。
+- WIN+左箭头：当前窗口缩放为屏幕的一半，靠屏幕左侧显示。
+- WIN+右箭头：当前窗口缩放为屏幕的一半，靠屏幕右侧显示。
+- WIN+上箭头：最大化当前窗口。
+- WIN+下箭头：还原和最小化当前窗口。
+- 在桌面上，右键任何一个程序，鼠标定位到快捷键一栏，为该应用设置启动快捷键，然后你就可以通过这个这个快捷键来启动该程序啦。
+- WIN+R，输入“msconfig”，弹出系统设置界面，可设置禁止、允许进程开机自启动。
+- WIN+Home：最小化所有窗口，除了当前激活窗口。
+- WIN+M：最小化所有窗口。
+- WIN+SHIFT+M：还原最小化窗口到桌面上。
+- WIN+P：选择一个演示文稿显示模式。
+- WIN+Pause：显示系统属性对话框。
+- WIN+F：打开windows帮助中心。
+- WIN+T：切换任务栏上的程序。
+- WIN+ALT+数字：让位于任务栏指定位置（按下的数字作为序号）的程序，显示跳转清单。
 
 ## 2 清理
 
@@ -56,7 +54,7 @@
 - IE右键：`HKEY_CURRENT_USER\Software\Microsoft\Internet Explorer\MenuExt`
 - 右键：`HKEY_CLASSES_ROOT\Directory\Background\shellex\ContextMenuHandlers`
 
-## 3 Windows与Unix换行符号转换
+## 3 Windows 与 Unix 换行符号转换
 
 由于两个系统的换行符不一样，有时候在Windows中的配置的类Unix运行shell脚本时就会出现问题。比如语法错误。
 
@@ -95,7 +93,7 @@
 
 查看文件 hash
 
-```
+```shell
 certutil -hashfile filename MD5
 certutil -hashfile filename SHA1
 certutil -hashfile filename SHA256
@@ -111,19 +109,25 @@ certutil -hashfile filename SHA256
 
 ### 4 实用技巧
 
-当前目录创建a.txt文件
+当前目录创建 `a.txt` 文件
 
 ```bash
-    cd .>a.txt
+cd .>a.txt
 ```
 
 过滤字符
 
 ```bash
-    findstr "你要搜索的内容"  file.txt
-    Select-String -path file.txt -Pattern  "你要搜索的内容"(powershell命令)
+# cmd
+findstr "你要搜索的内容"  file.txt
+# powershell命令
+Select-String -path file.txt -Pattern  "你要搜索的内容"
 ```
 
 ## 引用
 
 - [Windows 有哪些你相见恨晚的奇技淫巧？](http://www.zhihu.com/question/27721113)
+- [windows-commands](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/windows-commands)
+- [Windows 命令行基础](https://blog.henix.info/blog/windows-cmdbasic/)
+- [PowerShell 在线教程](https://www.pstips.net/)
+- [table-of-basic-powershell-commands/](https://devblogs.microsoft.com/scripting/table-of-basic-powershell-commands/)
