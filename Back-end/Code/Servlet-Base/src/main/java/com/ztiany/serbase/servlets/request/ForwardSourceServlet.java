@@ -26,6 +26,7 @@ public class ForwardSourceServlet extends HttpServlet {
      * ServletRequest.getRequestDispatcher(String uri);
      *
      * 区别在于参数uri的写法上面：
+     *
      *  ServletContext.getRequestDispatcher(String uri);URI地址必须以"/"开头，表示当前应用“/ServletBase”（绝对路径）
      *
      *  ServletRequest.getRequestDispatcher(String uri);    URI如果以"/"开头，表示当前应用“/ServletBase”（绝对路径）

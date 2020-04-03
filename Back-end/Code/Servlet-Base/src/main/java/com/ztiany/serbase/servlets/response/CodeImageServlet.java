@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * 随机生成验证码。
+ *
  * @author Ztiany
  * Email ztiany3@gmail.com
  * Date 18.4.15 23:34

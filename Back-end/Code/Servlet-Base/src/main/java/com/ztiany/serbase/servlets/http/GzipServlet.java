@@ -32,7 +32,7 @@ public class GzipServlet extends HttpServlet {
         byte b[] = data.getBytes();
         System.out.println("压缩前大小：" + b.length);
 
-        //用gzip压缩数据
+        //用gzip压缩数据，这里没有检测客户端是否能接收 gzip 的数据。
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();//内存字节缓存流
         GZIPOutputStream gout = new GZIPOutputStream(byteArrayOutputStream);//用GZIPOutputStream写的数据，会被压缩到指定的流中
         gout.write(b);

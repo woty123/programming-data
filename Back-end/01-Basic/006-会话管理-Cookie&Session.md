@@ -7,6 +7,7 @@
 由于**HTTP是无状态的通讯**，需要使用会话技术保存用户操作产生的数据，会话技术包括：Cookie和Session。
 
 ---
+
 ## 1 Cookie
 
 Cookie是客户端技术，程序把每个用户的数据以cookie的形式写给用户各自的浏览器。当用户使用浏览器再去访问服务器中的web资源时，就会带着各自的数据去。这样，web资源处理的就是用户各自的数据了。
@@ -48,6 +49,7 @@ Cookie针对其属性提供了操作的方法，Cookie常用方法如下：
 - cookie中不能存中文数据
 
 ---
+
 ## 2 Session
 
 Session是服务器端技术，利用这个技术，服务器在运行时可以为每一个用户的浏览器创建一个其独享的HttpSession对象，由于session为用户浏览器独享，所以用户在访问服务器的web资源时，可以把各自的数据放在各自的session中，当用户再去访问服务器中的其它web资源时，其它web资源再从用户各自的session中取出数据为用户服务。
@@ -78,6 +80,7 @@ session相当于一个会话(IE浏览器可以新建一个会话，那么同一�
 - `request.getSession(false)`如果没有找到session，不会创建session，而是返回null
 
 ---
+
 ## 3 cookie版本
 
 cookie规范有两个不同的版本，cookie版本0(有时候被称为Netscape cookies)和cookies版本1(RFC 2965)。cookie版本1是对cookies版本0的扩展，应用不如后者广泛。
@@ -109,6 +112,7 @@ RFC2965Cookie的主要改动包括下列内容：
 参考[Cookie 知多少](https://github.com/fwon/blog/issues/11)
 
 ---
+
 ## 4 客户端禁用Cookie后的会话数据保持：URL重写
 
 客户端禁用Cookie后，HttpSession就没有用了。
@@ -123,6 +127,7 @@ RFC2965Cookie的主要改动包括下列内容：
 具体参考 [Servlet之会话（Session）以及会话追踪技术（Cookie），（URL重写）和（隐藏表单域）](https://www.cnblogs.com/nm666/p/7967261.html)
 
 ---
+
 ## 5 Session的状态转换
 
 ![](index_files/e4213232-a866-40ef-a6c5-c683c7549cb3.png)

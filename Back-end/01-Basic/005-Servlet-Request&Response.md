@@ -4,6 +4,7 @@
 - request和response对象即然代表请求和响应，那我们要获取客户机提交过来的数据，只需要找request对象就行了。要向容器输出数据，只需要找response对象就行了。
 
 ---
+
 ## 1 Response
 
 - HttpServletResponse对象代表服务器的响应。这个对象中封装了向客户端发送数据、发送响应头，发送响应状态码的方法。
@@ -102,6 +103,7 @@ response.sendRedirect("http://www.itcast.cn");
 - 浏览器地址栏会变，并发送2次请求，增加服务器负担。
 
 ---
+
 ## 2 Request
 
 HttpServletRequest对象代表客户端的请求，当客户端通过HTTP协议访问服务器时，HTTP请求头中的所有信息都封装在这个对象中，开发人员通过这个对象的方法，可以获得客户这些信息。
@@ -237,6 +239,7 @@ ServletRequest对象的生命周期：用户发出请求时创建，响应结束
 - **请求范围**内的共享数据作为ServletRequest对象的属性而存在(setAttribute)，只要共享ServletRequest对象也就共享了其数据。
 
 ---
+
 ## 3 路径的写法
 
 路径的写法总结：
@@ -246,6 +249,7 @@ ServletRequest对象的生命周期：用户发出请求时创建，响应结束
 - 使用绝对路径时，什么时候要加上项目名称？地址给客户端用的就要加。
 
 ---
+
 ## 4 乱码问题总结
 
 以上乱码问题主要针对Tomcat6，因为：

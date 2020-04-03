@@ -30,4 +30,5 @@ public class ServletContextSample2Servlet extends HttpServlet {
         RequestDispatcher rd = sc.getRequestDispatcher("/servlet/gzipServlet");
         rd.forward(request, response);
     }
+
 }

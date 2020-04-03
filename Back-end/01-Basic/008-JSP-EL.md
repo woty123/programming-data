@@ -33,7 +33,6 @@ ${map.["key"]} 如果map的key不符合java命名，则用[]方式
 - `.`运算符：`${p.name}===p.getName()`
 - `[]`运算符：`${p.name}=${p[‘name’]}=${p[“name”]}`
 
-
 ### 2.2 运算符
 
 语法：`${运算表达式}`，EL表达式支持如下运算符：
@@ -64,7 +63,7 @@ EL表达式语言中定义了11个隐含对象，使用这些隐含对象可以�
 
 EL隐式对象的名称 | 表示的类型 | JSP的隐式对象 | 备注
 ---|---|---|---
-pageContext | javax.servlet.jsp.PageContext | <%pageContext%> | 一样的，对应于JSP页面中的pageContext对象（注意：取的是pageContext对象。）
+pageContext | javax.servlet.jsp.PageContext | `<%pageContext%>` | 一样的，对应于JSP页面中的pageContext对象（注意：取的是pageContext对象。）
 pageScope | java.util.Map | 没有 | 代表page域中用于保存属性的Map对象
 requestScope | java.util.Map | 没有 | 代表request域中用于保存属性的Map对象
 sessionScope | java.util.Map | 没有 | 代表session域中用于保存属性的Map对象
@@ -79,29 +78,30 @@ initParam | java.util.Map | 没有 | key:全局参数的name，value就是全局
 示例，EL获取普通类的属性：
 
 ```jsp
-        向域中放入对象
-        <%
-        Person p1 = new Person();
-        pageContext.setAttribute("p", p1);
-        %>
+向域中放入对象
 
-        //获取域中的对象，并输出
-        ${p}<br/>
-        <%--模拟原理
-        Object obj = pageContext.findAttribute("p1");//从page、request、session、application范围中找名称为p1的那个对象
-        out.write(obj);
-        --%>
+<%
+Person p1 = new Person();
+pageContext.setAttribute("p", p1);
+%>
 
-        //获取域中对象的属性
-        ${p.name}=${p['name']}=${p["name"]}<br/>
-        ${p.class}<br/>
-        ${p.birthday}<br/><!-- EL表达式如果打印的值是null，则什么都不显示 -->
-        ${p.birthday.time}<br/><!-- EL表达式中没有空指针异常 -->
+//获取域中的对象，并输出
+${p}<br/>
+<%--模拟原理
+Object obj = pageContext.findAttribute("p1");//从page、request、session、application范围中找名称为p1的那个对象
+out.write(obj);
+--%>
 
-        //访问不存在的属性会报错
-        <%--
-        ${p.province}<br/><!-- 如果属性不存在，会报错 -->
-        --%>
+//获取域中对象的属性
+${p.name}=${p['name']}=${p["name"]}<br/>
+${p.class}<br/>
+${p.birthday}<br/><!-- EL表达式如果打印的值是null，则什么都不显示 -->
+${p.birthday.time}<br/><!-- EL表达式中没有空指针异常 -->
+
+//访问不存在的属性会报错
+<%--
+${p.province}<br/><!-- 如果属性不存在，会报错 -->
+--%>
 ```
 
 **注意事项**：

@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * 处理注册的 Servlet，演示中文编码问题。
+ *
  * @author Ztiany
  * Email ztiany3@gmail.com
  * Date 18.4.15 23:49

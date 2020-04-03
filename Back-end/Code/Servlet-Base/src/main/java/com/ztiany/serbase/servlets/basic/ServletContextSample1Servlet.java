@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 通过ServletContext获取全局配置参数和设置参数，并读取配置文件属性
+ * 通过ServletContext获取全局配置参数和设置参数，并读取配置文件属性。
  *
  * @author Ztiany
  * Email ztiany3@gmail.com
@@ -32,22 +32,54 @@ public class ServletContextSample1Servlet extends HttpServlet {
     }
 
     private void readConfigFile() throws IOException {
-        System.out.println("---------readConfig1---------");
-        readConfig1();
-        System.out.println("---------readConfig2---------");
-        readConfig2();
-//        System.out.println("---------readConfig3---------");
-//        readConfig3();
-//        System.out.println("---------readConfig4---------");
-//        readConfig4();
-        System.out.println("---------readConfig5---------");
-        readConfig5();
-//        System.out.println("---------readConfig6---------");
-//        readConfig6();
-        System.out.println("---------readConfig7---------");
-        readConfig7();
+        try {
+            System.out.println("---------readConfig1---------");
+            readConfig1();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        //使用IDEA都不到c.properties
+        try {
+            System.out.println("---------readConfig2---------");
+            readConfig2();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            System.out.println("---------readConfig3---------");
+            readConfig3();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            System.out.println("---------readConfig4---------");
+            readConfig4();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            System.out.println("---------readConfig5---------");
+            readConfig5();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            System.out.println("---------readConfig6---------");
+            readConfig6();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            System.out.println("---------readConfig7---------");
+            readConfig7();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void readConfig7() throws IOException {
@@ -125,4 +157,5 @@ public class ServletContextSample1Servlet extends HttpServlet {
         //设置一个全局参数
         getServletContext().setAttribute("global_key2", "global_value2");
     }
+
 }

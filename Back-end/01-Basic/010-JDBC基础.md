@@ -1,6 +1,7 @@
 # JDBC
 
 ----
+
 ## 1 简介
 
 Sun公司为简化数据库开发，定义了一套jdbc接口，这套接口由数据库厂商去实现，这样，开发人员只需要学习jdbc接口，并通过jdbc加载具体的驱动，就可以操作数据库。简单点就是用Java语言来操作数据库。
@@ -13,50 +14,61 @@ JDBC是接口，而JDBC驱动才是接口的实现，没有驱动无法完成数
 
 ![](index_files/e3ecd360-8bb5-4253-823e-54a788f418e6.png)
 
-
 JDBC使用流程：
 
 - １、注册驱动，SUM公司定义了JDBC只是一些接口，用户要想操作数据库，需要先把数据库的驱动，也就是JDBC的实现类拿到程序里来，这个操作称之为注册驱动。Sun公司定义了DriveManager类用于完成驱动程序的注册，示例：
-```
+
+```java
 DriverManager.registerDrive(new com.jdbc.mysql.Driver());
 ```
 
 - 2、驱动注册后，就可以创建与数据库的连接了。
-```
+
+```java
 Connection connection = DriverManager.getConnection();
 ```
 
 - 3、获得连接后，就可以在此连接上创建一条ＳＱＬ语句，并发送给数据库
-```
+
+```java
 Statement st = connection.createStatement();
-ResultSet set = St.excute(“select * from user”);
+ResultSet set = St.excute("select * from user");
 ```
 
 ----
+
 ## 2 JDBC详解
 
 ### 第一个JDBC程序
 
 程序开发流程：
-```
-一、搭建实验环境 ：
-    1、在mysql中创建一个库，并创建user表和插入表的数据。
-    2、新建一个Java工程，并导入数据驱动。
-    
-二、编写程序，在程序中加载数据库驱动
+
+- 一、搭建实验环境：
+  - 1、在mysql中创建一个库，并创建user表和插入表的数据。
+  - 2、新建一个Java工程，并导入数据驱动。
+
+- 二、编写程序，在程序中加载数据库驱动
+  
+```java
     DriverManager. registerDriver(Driver driver) 
-    
-三、建立连接(Connection)
+```
+
+- 三、建立连接(Connection)
+
+```java
     Connection conn = DriverManager.getConnection(url,user,pass); 
-    
-四、创建用于向数据库发送SQL的Statement对象，并发送sql
+```
+
+- 四、创建用于向数据库发送SQL的Statement对象，并发送sql
+
+```java
     Statement st = conn.createStatement();
     ResultSet rs = st.excuteQuery(sql);
-    
-五、从代表结果集的ResultSet中取出数据，打印到命令行窗口
-
-六、断开与数据库的连接，并释放相关资源
 ```
+
+- 五、从代表结果集的ResultSet中取出数据，打印到命令行窗口
+
+- 六、断开与数据库的连接，并释放相关资源
 
 ### 程序详解—DriverManager
 
@@ -70,17 +82,15 @@ Jdbc程序中的DriverManager用于加载驱动，并创建与数据库的链接
 1. 查看Driver的源代码可以看到，如果采用此种方式，会导致驱动程序注册两次，也就是在内存中会有两个Driver对象。
 2. 程序依赖mysql的api，脱离mysql的jar包，程序将无法编译，将来程序切换底层数据库将会非常麻烦。
 
-
 推荐方式：`Class.forName(“com.mysql.jdbc.Driver”);`，采用此种方式不会导致驱动对象在内存中重复出现，并且采用此种方式，程序仅仅只需要一个字符串，不需要依赖具体的驱动，使程序的灵活性更高。
 
 同样，在开发中也不建议采用具体的驱动类型指向getConnection方法返回的connection对象。
-
 
 ### 数据库URL
 
 URL用于标识数据库的位置，程序员通过URL地址告诉JDBC程序连接哪个数据库，URL的写法为：
 
-```
+```java
    jdbc:mysql:［］//localhost:3306/test ?参数名=参数值
 ```
 
@@ -88,7 +98,7 @@ URL用于标识数据库的位置，程序员通过URL地址告诉JDBC程序连�
 
 常用数据库URL地址的写法：
 
-```
+```java
 Oracle写法：jdbc:oracle:thin:@localhost:1521:sid
 
 SqlServer—jdbc:microsoft:sqlserver://localhost:1433; DatabaseName=sid
@@ -96,14 +106,12 @@ SqlServer—jdbc:microsoft:sqlserver://localhost:1433; DatabaseName=sid
 MySql—jdbc:mysql://localhost:3306/sid
 
 Mysql的url地址的简写形式： jdbc:mysql:///sid
-
 ```
 
 常用属性：`useUnicode=true&characterEncoding=UTF-8`
 
 - useUnicode指定连接这个数据库的过程中使用的字节是Unicode
 - characterEncoding指定Java程序连接数据库的过程中，使用的字节编码为UTF-8，注意，MySQL中指定UTF-8编码是给出的UTF8，而不是UTF-8
-
 
 ### 程序详解—Connection
 
@@ -123,9 +131,9 @@ Jdbc程序中的Statement对象用于向数据库发送SQL语句， Statement对
 - `executeQuery(String sql)` ：用于向数据发送查询语句。
 - `executeUpdate(String sql)`：用于向数据库发送insert、update或delete语句
 - `execute(String sql)`：用于向数据库发送任意sql语句
- - 执行select语句返回true，执行其他语句返回false
- - 返回true需要使用getResultSet()获取结果
- - 返回false需要使用getUpdateCount()获取影响行数
+  - 执行select语句返回true，执行其他语句返回false
+  - 返回true需要使用getResultSet()获取结果
+  - 返回false需要使用getUpdateCount()获取影响行数
 - `addBatch(String sql)` ：把多条sql语句放到一个批处理中。
 - `executeBatch()`：向数据库发送一批sql语句执行。
 - `clearBatch()`
@@ -168,14 +176,15 @@ resultSetConcurrency的可选值：
 - CONCUR_UPDATABLE：结果集是可更新的，对结果集的更新可以反向影响数据库。
 
 获取滚动结果集的代码如下
-```
+
+```java
 Connection con = …
 Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, CONCUR_READ_ONLY);
 String sql = …//查询语句
 ResultSet rs = stmt.executeQuery(sql);//这个结果集是可滚动的
 ```
 
-####  ResultSet之获取列数据
+#### ResultSet之获取列数据
 
 可以通过next()方法使ResultSet的游标向下移动，当游标移动到你需要的行时，就需要来获取该行的数据了，ResultSet提供了一系列的获取列数据的方法：
 
@@ -189,26 +198,25 @@ ResultSet rs = stmt.executeQuery(sql);//这个结果集是可滚动的
 
 上面方法中，参数columnIndex表示列的索引，列索引从1开始，而不是0，这第一点与数组不同。如果你清楚当前列的数据类型，那么可以使用getInt()之类的方法来获取，如果你不清楚列的类型，那么你应该使用getObject()方法来获取。
 
-
 ### 程序详解—释放资源
 
 - Jdbc程序运行完后，切记要释放程序在运行过程中，创建的那些与数据库进行交互的对象，这些对象通常是ResultSet, Statement和Connection对象。
 - 特别是Connection对象，它是非常稀有的资源，用完后必须马上释放，如果Connection不能及时、正确的关闭，极易导致系统宕机。Connection的使用原则是尽量晚创建，尽量早的释放。
 - 为确保资源释放代码能运行，资源释放代码也一定要放在finally语句中。
 
-
 ### 常用数据类型转换表
 
 ![](index_files/database_type.png)
 
-
 ----
+
 ## 3 使用JDBC对数据库进行CRUD
 
 Jdbc中的statement对象用于向数据库发送SQL语句，想完成对数据库的增删改查，只需要通过这个对象向数据库发送增删改查语句即可。
 
 - Statement对象的executeUpdate方法，用于向数据库发送增、删、改的sql语句，executeUpdate执行完后，将会返回一个整数(即增删改语句导致了数据库几行数据发生了变化)。
-```
+
+```java
     //插入
     Statement st = conn.createStatement();
     String sql = "insert into user(….) values(…..) ";
@@ -224,11 +232,13 @@ Jdbc中的statement对象用于向数据库发送SQL语句，想完成对数据�
         System.out.println(“删除成功！！！");
     }
 ```
+
 - Statement.executeQuery方法用于向数据库发送查询语句，executeQuery方法返回代表查询结果的ResultSet对象。
-```
+
+```java
     Statement st = conn.createStatement();
 
-    String sql = “select * from user where id=1; 
+    String sql = “select * from user where id=1;
 
     ResultSet rs = st.executeUpdate(sql);
 
@@ -250,7 +260,6 @@ statement就存在sql注入攻击问题，例如登陆用户名采用`' or 1=1 o
 - 分步校验！先使用用户名来查询用户，如果查找到了，再比较密码；
 - 使用PreparedStatement。
 
-
 ### PreparedStatement
 
 PreparedStatement叫预编译声明，PreperedStatement是Statement的子类，它的实例对象可以通过调`Connection.preparedStatement()`方法获得，相对于Statement对象而言：
@@ -259,12 +268,10 @@ PreparedStatement叫预编译声明，PreperedStatement是Statement的子类，�
 - Statement会使数据库频繁编译SQL，可能造成数据库缓冲区溢出。PreparedStatement 可对SQL进行预编译，从而提高数据库的执行效率。
 - 并且PreperedStatement对于sql中的参数，允许使用占位符的形式进行替换，简化sql语句的编写。
 
+注意PreparedStatement对象独有的executeQuery()方法是没有参数的，而Statement的executeQuery()是需要参数（SQL语句）的。因为在创建PreparedStatement对象时已经让它与一条SQL模板绑定在一起了，所以在调用它的executeQuery()和executeUpdate()方法时就不再需要参数了。PreparedStatement最大的好处就是在于重复使用同一模板，给予其不同的参数来重复的使用它。这才是真正提高效率的原因。所以在开发中，一般都去使用PreparedStatement，而不是使用Statement。
 
-注意PreparedStatement对象独有的executeQuery()方法是没有参数的，而Statement的executeQuery()是需要参数（SQL语句）的。因为在创建PreparedStatement对象时已经让它与一条SQL模板绑定在一起了，所以在调用它的executeQuery()和executeUpdate()方法时就不再需要参数了。
-PreparedStatement最大的好处就是在于重复使用同一模板，给予其不同的参数来重复的使用它。这才是真正提高效率的原因。所以在开发中，一般都去使用PreparedStatement，而不是使用Statement。
+----
 
-
----
 ## 4 大存储数据处理
 
 ### 使用JDBC处理大数据
@@ -282,7 +289,8 @@ PreparedStatement最大的好处就是在于重复使用同一模板，给予其
 ### 使用JDBC处理大文本
 
 对于MySQL中的Text类型，可调用如下方法设置：
-```
+
+```java
 PreparedStatement stmt = conn.prepareStatement("insert into t2 values(?,?)");
 stmt.setInt(1, 1);
 File file = new File("src/jpm.txt");
@@ -294,7 +302,8 @@ stmt.executeUpdate();
 ```
 
 对MySQL中的Text类型，可调用如下方法获取：
-```
+
+```java
 reader = resultSet. getCharacterStream(i);
 Reader reader = resultSet.getClob(i).getCharacterStream();
 ```
@@ -302,7 +311,8 @@ Reader reader = resultSet.getClob(i).getCharacterStream();
 ### 使用JDBC处理二进制数据
 
 对于MySQL中的BLOB类型，可调用如下方法设置
-```
+
+```java
 PreparedStatement stmt = conn.prepareStatement("insert into t3 values(?,?)");
 stmt.setInt(1, 1);
 InputStream in = new FileInputStream("src/26.jpg");
@@ -311,25 +321,27 @@ stmt.executeUpdate();
 ```
 
 对MySQL中的BLOB类型，可调用如下方法获取：
-```
+
+```java
 InputStream in  = resultSet.getBinaryStream(i);
 InputStream in  = resultSet.getBlob(i).getBinaryStream();
 ```
 
 >对于从ResultSet获取到达流，需要手动关闭
 
----
-## 5 使用JDBC进行批处理
+----
 
+## 5 使用JDBC进行批处理
 
 业务场景：当需要向数据库发送一批SQL语句执行时，应避免向数据库一条条的发送执行，而应采用JDBC的批处理机制，以提升执行效率。实现批处理有两种方式
 
-###  批处理的第一种方式：`Statement.addBatch(sql)`
+### 批处理的第一种方式：`Statement.addBatch(sql)`
 
-```
+```java
 Connection conn = null;
 Statement st = null;
 ResultSet rs = null;
+
 try {
     conn = JdbcUtil.getConnection();
     String sql1 = "insert into user(name,password,email,birthday) 
@@ -348,14 +360,15 @@ try {
 - clearBatch()方法：清除批处理命令
 
 总结
+
 - 优点：可以向数据库发送多条不同的ＳＱＬ语句。
 - 缺点：
- - SQL语句没有预编译。
- - 当向数据库发送多条语句相同，但仅参数不同的SQL语句时，需重复写上很多条SQL语句。
+  - SQL语句没有预编译。
+  - 当向数据库发送多条语句相同，但仅参数不同的SQL语句时，需重复写上很多条SQL语句。
 
 ### 批处理的第二种方式：`PreparedStatement.addBatch()`
 
-```
+```java
 conn = JdbcUtil.getConnection();
 String sql = "insert into user(name,password,email,birthday) values(?,?,?,?)";
 st = conn.prepareStatement(sql);
@@ -378,15 +391,16 @@ st.executeBatch();
 ```
 
 总结：
+
 - 优点：发送的是预编译后的SQL语句，执行效率高。
 - 缺点：只能应用在SQL语句相同，但参数不同的批处理中。因此此种形式的批处理经常用于在同一个表中批量插入数据，或批量更新表的数据。
 - 注意内存溢出问题
 
+----
 
----
-##  6 获得数据库自动生成的主键
+## 6 获得数据库自动生成的主键
 
-```
+```java
 Connection conn = JdbcUtil.getConnection();
 
 String sql = "insert into user(name,password,email,birthday)  values('abc','123','abc@sina.com','1978-08-08')";
@@ -402,14 +416,13 @@ if(rs.next()){
 
 此参数仅对insert操作有效。
 
----
+----
+
 ## 7 JDBC调用存储过程
 
 存储程序和函数是用`CREATE PROCEDURE`和`CREATE FUNCTION`语句创建的子程序。一个子程序要么是一个程序要么是一个函数。使用CALL语句来调用程序，程序只能用输出变量传回值。就像别其它函数调用一样，函数可以被从语句外调用（即通过引用函数名），函数能返回标量值。存储子程序也可以调用其它存储子程序。
 
-
-
-```
+```java
 delimiter $$//把sql的语句结束符从;改为$$，这个设置使临时的
 
 //demoSp为程序名称，IN表示输入变量，INOUT表示输入输出变量。
@@ -422,30 +435,36 @@ delimiter ;//改回来
 ```
 
 编写存储过程（参看mysql文档）得到CallableStatement，并调用存储过程：
-```
+
+```java
 CallableStatement cStmt = conn.prepareCall("{call demoSp(?, ?)}");
 ```
+
 设置参数，注册返回值，得到输出
-```
+
+```java
 cStmt.setString(1, "abcdefg");
 cStmt.registerOutParameter(2, Types.VARCHAR);
 cStmt.execute();
 System.out.println(cStmt.getString(2));
 ```
 
----
+----
+
 ## 8 事务
 
 事务的概念，事务指逻辑上的一组操作，组成这组操作的各个单元，要么全部成功，要么全部不成功。
 
 例如：A——B转帐，对应于如下两条sql语句：
-```
+
+```java
 update account set money=money-100 where name=‘a’;
 update account set money=money+100 where name=‘b’;
 ```
 
 数据库开启事务命令
-```
+
+```java
 start transaction  开启事务
 rollback  回滚事务
 commit   提交事务
@@ -456,20 +475,24 @@ commit   提交事务
 当Jdbc程序向数据库获得一个Connection对象时，默认情况下这个Connection对象会自动向数据库提交在它上面发送的SQL语句。若想关闭这种默认提交方式，让多条SQL在一个事务中执行，可使用下列语句：
 
 JDBC控制事务语句
-```
+
+```java
 Connection.setAutoCommit(false); //start transaction
 Connection.rollback();  rollback
 Connection.commit();  commit
 ```
+
 设置事务回滚点
-```
+
+```java
 Savepoint sp = conn.setSavepoint();
 conn.rollback(sp);
 conn.commit();   //回滚后必须要提交
 ```
 
 示例
-```
+
+```java
         Connection conn = null;
         PreparedStatement stmt = null;
         try{
@@ -494,7 +517,6 @@ conn.commit();   //回滚后必须要提交
         }
 ```
 
-
 ### 事务的特性(ACID)
 
 - 原子性（Atomicity）：原子性是指事务是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。
@@ -502,19 +524,19 @@ conn.commit();   //回滚后必须要提交
 - 隔离性（Isolation）：事务的隔离性是多个用户并发访问数据库时，数据库为每一个用户开启的事务，不能被其他事务的操作数据所干扰，多个并发事务之间要相互隔离。
 - 持久性（Durability）：持久性是指一个事务一旦被提交，它对数据库中数据的改变就是永久性的，接下来即使数据库发生故障也不应该对其有任何影响
 
-
 ### 事务隔离性的
 
 多个线程开启各自事务操作数据库中数据时，数据库系统要负责隔离操作，以保证各个线程在获取数据时的准确性。如果不考虑隔离性，可能会引发如下问题：
 
 - **脏读**（dirty reads）：一个事务读取了另一个未提交的并行事务写的数据。
-- **不可重复读**（non-repeatable reads）：一个事务重新读取前面读取过的数据， 发现该数据已经被另一个已提交的事务修改过。一个线程中的事务读到了另外一个线程事务中提交的update数据。
-- **幻读**（phantom read）：一个事务重新执行一个查询，返回一套符合查询条件的行， 发现这些行因为其他最近提交的事务而发生了改变。一个线程中的事务读到了另外一个线程事务中提交的insert数据。
+- **不可重复读**（non-repeatable reads）：一个事务重新读取前面读取过的数据，发现该数据已经被另一个已提交的事务修改过。一个线程中的事务读到了另外一个线程事务中提交的update数据。
+- **幻读**（phantom read）：一个事务重新执行一个查询，返回一套符合查询条件的行，发现这些行因为其他最近提交的事务而发生了改变。一个线程中的事务读到了另外一个线程事务中提交的insert数据。
 
 #### 脏读
 
 **指一个事务读取了另外一个事务未提交的数据**。这是非常危险的，假设Ａ向Ｂ转帐100元，对应sql语句如下所示：
-```
+
+```java
 1.update account set money=money-100 while name=‘a’;
 2.update account set money=money+100 while name=‘b’;
 ```
@@ -533,7 +555,6 @@ conn.commit();   //回滚后必须要提交
 
 同一张表前后不一样记录数，**是指在一个事务内读取到了别的事务插入的数据**，导致前后读取不一致。如丙存款100元未提交，这时银行做报表统计account表中所有用户的总额为500元，然后丙提交了，这时银行再统计发现帐户为600元了，造成虚读同样会使银行不知所措，到底以哪个为准。
 
-
 #### 设置事务隔离级别
 
 数据库共定义了四种隔离级别：
@@ -543,7 +564,7 @@ conn.commit();   //回滚后必须要提交
 - **read committed**：可避免脏读情况发生。而不可重复读、虚读有可能发生(Oracle默认的)
 - **read uncommitted**：最低级别，以上情况均无法保证。(读未提交)
 
-```
+```java
 SELECT @@TX_ISOLATION; //查看当前事务的隔离级别
 SET TRANSATION ISOLATION LEVEL xxx事务级别 （一定要在开启事务之前）
 ```
@@ -563,7 +584,6 @@ t8 | select * from account where name=’aaa’;发现账户1100块  |  |    此
 t9 |  | insert into account values(4,’ddd’,1000);   |
 t10 | select * from account;发现4条，原来是3条 |  | 此时发生虚读
 t11 | commit；|  |
-
 
 ### 丢失更新
 
@@ -589,18 +609,11 @@ t6 |`id=1,name=aaa,money=2000`|  |   | 提交，此时服务器|
 - 修改数据：INSERT DELETE UPDATE，自动加排他锁
 - 查询：`SELECT * FROM T4 FOR UPDATE；`加上 FOR UPDATE表示在查询的时候使用排它锁
 
+----
 
-
-
-
-
-
-
----
 ## 9 使用数据库连接池优化程序性能
 
 应用程序直接获取链接的缺点，用户每次请求都需要向数据库获得链接，而数据库创建连接通常需要消耗相对较大的资源，创建时间也较长。假设网站一天10万访问量，数据库服务器就需要创建10万次连接，极大的浪费数据库的资源，并且极易造成数据库服务器内存溢出、拓机。
-
 
 ### 实现自己的连接池
 
@@ -625,7 +638,7 @@ t6 |`id=1,name=aaa,money=2000`|  |   | 提交，此时服务器|
 
 拓展，包装设计模式的步骤：
 
-```
+```java
 包装设计模式：
 1、定义一个类，实现与被增强对象所实现的接口
 2、定义一个变量，引用被增强对象
@@ -640,25 +653,23 @@ t6 |`id=1,name=aaa,money=2000`|  |   | 提交，此时服务器|
 
 DBCP 是 Apache 软件基金组织下的开源连接池实现，Tomcat的连接池正是采用该连接池来实现的。该数据库连接池既可以与应用服务器整合使用，也可由应用程序独立使用。
 
-
 #### C3P0
 
 c3p0使用xml配置
 
----
+----
+
 ## 10 JNDI技术简介
 
 JNDI(Java Naming and Directory Interface)，Java命名和目录接口，它对应于J2SE中的javax.naming包，这套API的主要作用在于：它可以把Java对象放在一个容器中（JNDI容器），并为容器中的java对象取一个名称，以后程序想获得Java对象，只需通过名称检索即可。其核心API为Context，它代表JNDI容器，其lookup方法为检索容器中对应名称的对象。
 
-
-#### Tomcat中如何利用JNDI管理数据源
+### Tomcat中如何利用JNDI管理数据源
 
 - 1 配置Tomcat管理的数据源
+  - a、把数据库驱动拷贝到`Tomcat\lib`目录下
+  - b、在Web应用的META-INF目录下建立一个名字为`context.xml`的配置文件，内容如下：
 
-a、把数据库驱动拷贝到`Tomcat\lib`目录下
-b、在Web应用的META-INF目录下建立一个名字为`context.xml`的配置文件，内容如下：
-
-```
+```java
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
     <Resource name="jdbc/sqlbase" auth="Container" type="javax.sql.DataSource"
@@ -674,7 +685,7 @@ b、在Web应用的META-INF目录下建立一个名字为`context.xml`的配置�
 
 - 3 利用JNDI的API获取绑定的对象
 
-```
+```java
 //JNDI的API存在JDK：javax.naming.*
 
 import java.sql.Connection;
@@ -694,7 +705,8 @@ public class DataSourceUtil {
 }
 ```
 
----
+----
+
 ## 11 编写自己的JDBC框架
 
 元数据包括：
@@ -708,9 +720,9 @@ JDBC中的元数据类
 - ParameterMetaData
 - ResultSetMetaData
 
-
 ### DataBaseMetaData
-```
+
+```java
 Connection.getMetaData()用于获取DataBaseMetaData对象
 
 DataBaseMetaData方法：
@@ -722,16 +734,20 @@ getDriverName()：返回驱动驱动程序的名称。
 getDriverVersion()：返回驱动程序的版本号。
 isReadOnly()：返回一个boolean值，指示数据库是否只允许读操作。
 ```
+
 ### getParameterMetaData
-```
+
+```java
 PreparedStatement.getParameterMetaData()用于获得代表PreparedStatement元数据的ParameterMetaData对象。
 
 ParameterMetaData对象方法：
 getParameterCount()获得指定参数的个数
 getParameterType(int param)获得指定参数的sql类型（驱动可能不支持）
 ```
+
 ### ResultSetMetaData
-```
+
+```java
 ResultSet. getMetaData()用于获得代表ResultSet对象元数据的ResultSetMetaData对象。
 
 ResultSetMetaData对象方法：
@@ -739,6 +755,7 @@ getColumnCount()返回resultset对象的列数
 getColumnName(int column)获得指定列的名称
 getColumnTypeName(int column)获得指定列的类型 java.sql.Types
 ```
+
 ### 使用元数据简化JDBC代码
 
 系统中所有实体对象都涉及到基本的CRUD操作：
@@ -746,8 +763,8 @@ getColumnTypeName(int column)获得指定列的类型 java.sql.Types
 - 所有实体的CUD操作代码基本相同，仅仅发送给数据库的SQL语句不同而已，因此可以把CUD操作的所有相同代码抽取到工具类的一个update方法中，并定义参数接收变化的SQL语句。
 - 实体的R操作，除SQL语句不同之外，根据操作的实体不同，对ResultSet的映射也各不相同，因此可义一个query方法，除以参数形式接收变化的SQL语句外，可以使用策略模式由qurey方法的调用者决定如何把ResultSet中的数据映射到实体对象中。
 
+----
 
----
 ## 12 O-R Mapping简介
 
 ORM框架：Object Relation Mapping
@@ -764,7 +781,7 @@ ORM框架：Object Relation Mapping
 
 DbUtils ：提供如关闭连接、装载JDBC驱动程序等常规工作的工具类，里面的所有方法都是静态的。主要方法如下：
 
-```
+```java
 public static void close(…) throws java.sql.SQLException：　DbUtils类提供了三个重载的关闭方法。这些方法检查所提供的参数是不是NULL，如果不是的话，它们就关闭Connection、Statement和ResultSet。
 
 public static void closeQuietly(…): 这一类方法不仅能在Connection、Statement和ResultSet为NULL情况下避免关闭，还能隐藏一些在程序中抛出的SQLEeception。
@@ -776,7 +793,7 @@ public static boolean loadDriver(java.lang.String driverClassName)：这一方�
 
 QueryRunner类，该类简单化了SQL查询，它与ResultSetHandler组合在一起使用可以完成大部分的数据库操作，能够大大减少编码量。
 
-```
+```java
 public Object query(Connection conn, String sql, Object[] params, ResultSetHandler rsh) throws SQLException：执行一个查询操作，在这个查询中，对象数组中的每个元素值被用来作为查询语句的置换参数。该方法会自行处理 PreparedStatement 和 ResultSet 的创建和关闭。
 
 public Object query(String sql, Object[] params, ResultSetHandler rsh) throws SQLException:　几乎与第一种方法一样；唯一的不同在于它不将数据库连接提供给方法，并且它是从提供给构造方法的数据源(DataSource) 或使用的setDataSource 方法中重新获得 Connection。
@@ -790,7 +807,7 @@ public int update(Connection conn, String sql) throws SQLException：用来执�
 
 ResultSetHandler接口，该接口用于处理 java.sql.ResultSet，将数据按要求转换为另一种形式。
 
-```
+```java
 ArrayHandler：把结果集中的第一行数据转成对象数组。
 ArrayListHandler：把结果集中的每一行数据都转成一个数组，再存放到List中。
 BeanHandler：将结果集中的第一行数据封装到一个对应的JavaBean实例中。
@@ -801,8 +818,8 @@ MapHandler：将结果集中的第一行数据封装到一个Map里，key是列�
 MapListHandler：将结果集中的每一行数据都封装到一个Map里，然后再存放到List
 ```
 
+----
 
----
 ## 13 JDBC开发实践
 
 - 使用ThreadLocal实现线程访问域内的数据共享。

@@ -17,14 +17,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 借助BeanUtils框架，User的password数据参数如何解决
+ * 借助BeanUtils框架，User的password数据参数如何解决。
  *
  * @author Ztiany
  * Email ztiany3@gmail.com
  * Date 18.4.16 0:28
  */
 public class BeanUtilsServlet extends HttpServlet {
-
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
@@ -155,4 +154,5 @@ public class BeanUtilsServlet extends HttpServlet {
         String password = request.getParameter("password");
         System.out.println(username + ":" + password);
     }
+
 }

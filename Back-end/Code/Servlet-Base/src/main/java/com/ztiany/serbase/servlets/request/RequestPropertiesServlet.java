@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * 获取请求属性。
+ *
  * @author Ztiany
  * Email ztiany3@gmail.com
  * Date 18.4.16 0:24
