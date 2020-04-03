@@ -27,8 +27,7 @@
 
 >UEFI 模式需要单独分一个 200M 左右的区给 EFI，格式为 FAT32，然后把 grub 安装在这个分区。不然会出现错误提示『无法将grub-eif-amd64-signed软件包安装到/target/中』。具体参考[UEFI 模式安装 Win10 + Ubuntu 18.04](https://maajiaa.wordpress.com/2018/05/16/installing-win10-ubuntu-in-uefi/)
 
----
-## 2 ubuntu环境搭建与相关配置
+## 2 ubuntu 相关配置
 
 ### 配置源
 
@@ -46,7 +45,7 @@ sudo apt install gnome-tweak-tool
 2：Gnome-shell Extensions
 
 1. 用 firefox 打开 <https://extensions.gnome.org>，按照提示安装插件
-2. udo apt install chrome-gnome-shell
+2. sudo apt install chrome-gnome-shell
 3. 安装以下扩展
    1. User Themes
    2. Dash to Dock
@@ -107,128 +106,124 @@ sudo apt-get install zsh
 
 具体参考[oh-my-zsh,让你的终端从未这么爽过](https://www.jianshu.com/p/d194d29e488c)
 
-### vim 配置
-
-```shell
-sudo apt-get install vim-gtk
-```
-
-`vim /etc/vim/vimrc` 编辑配置文件，加入以下配置
-
-```shell
-set nu
-set tabstop
-set cursorline
-set ruler
-```
-
 ### dos2unix
 
 ```shell
 sudo apt-get install dos2unix
 ```
 
-### Tomcat
-
-从官网下载tomcat，然后解压即可，远程连接时要开放对应的端口。
-
-```shell
-# 创建tomcat存放目录，比如 /usr/local 目录下
-cd /usr/local
-mkdir tomcat
-
-# 下载tomcat
-wget http://mirrors.shu.edu.cn/apache/tomcat/tomcat-8/v8.5.31/bin/apache-tomcat-8.5.31.tar.gz
-
-# 解压
-tar -xvf apache-tomcat-8.5.31.tar.gz
-
-# 启动tomcat(记得开放8080端口)
-./startup.sh
-./shutdown.sh
-```
-
-### MySQL
-
-```shell
-apt-get update
-apt-get install mysql-server mysql-client
-测试是否安装成功：netstat -tap | grep mysql
-
-启动MySQL服务：service mysql start
-停止MySQL服务：service mysql stop
-服务状态：service mysql status
-修改 MySQL 的管理员密码：mysqladmin -u root password newpassword
-
-正常情况下，mysql占用的3306端口只是在IP 127.0.0.1上监听，拒绝了其他IP的访问（通过netstat可以查看到）取消本地监需要修改 my.cnf 文件：
-
-  1 vim /etc/mysql/my.cnf，把 bind-address = 127.0.0.1注释掉，如果配置文件中没有bind-address = 127.0.0.1，则添加下面内容：
-       [mysqld]
-       bind-address = 0.0.0.0
-  2 重启MySQL服务器
-  3 重新登录 mysql -uroot -p
-  4 在mysql命令行中运行下面两个命令
-  grant all privileges on *.* to 'root'@'%' identified by '远程登录的密码';
-    flush privileges;
-  5 检查MySQL服务器占用端口 netstat -nlt|grep 3306
-
-数据库存放目录： /var/lib/mysql/
-相关配置文件存放目录：/usr/share/mysql
-相关命令存放目录：/usr/bin(mysqladmin mysqldump等命令
-启动脚步存放目录：/etc/rc.d/init.d/
-```
-
-sql授权说明
-
-语法：`grant 权限1,权限2, ... 权限n on 数据库名称.表名称 to 用户名@用户地址 identified by '连接口令';`
-
-- `权限1，权限2，... 权限n` 代表 `select、insert、update、delete、create、drop、index、alter、grant、references、reload、shutdown、process、file` 等14个权限。
-- 当`权限1，权限2，... 权限n` 被 `all privileges` 或者 `all` 代替时，表示赋予用户全部权限。
-- 当 `数据库名称.表名称` 被 `*.*` 代替时，表示赋予用户操作服务器上所有数据库所有表的权限。
-- 用户地址可以是localhost，也可以是IP地址、机器名和域名。也可以用 `'%'` 表示从任何地址连接。
-- '连接口令'，远程连接时使用的密码，不能为空，否则创建失败。
-
->privileges 即特权的意思。
-
-### 开放端口号
-
-1. Ubuntu 默认有装 iptables，可通过 `which iptables` 确认
-2. Ubuntu 默认没有 iptables 配置文件，可通过`iptables-save > /etc/iptables.up.rules`生成
-3. 读取配置并生效可以通过  `iptables-restore < /etc/iptables.up.rules`
-
-```shell
-#查看哪些端口被打开  
-netstat -anp
-#查看当前防火墙配置并显示规则行号
-iptables -L --line-numbers
-
-#关闭端口号（DROP表示关闭）：
-iptables -I INPUT -p tcp --dprop 端口号 -j DROP
-iptables -I OUTPUT -p tcp --dport 端口号 -j DROP
-
-#打开端口号（ACCEPT 表示打开）：
-iptables -I INPUT -ptcp --dport  端口号 -j ACCEPT
-#将修改永久保存到防火墙中：
-iptables-save
-
-#关闭/打开防火墙（需要重启系统）
-  #开启：
-  chkconfig iptables on
-  #关闭：
-  chkconfig iptables off
-```
-
-配置开机启动：vim  `/etc/network/interfaces` 增加
-
-```shell
-#启动时应用防火墙  
-pre-up iptables-restore < /etc/iptables.up.rules
-#关闭时保存防火墙设置,以便下次启动时使用
-post-down iptables-save > /etc/iptables.up.rules
-```
-
----
 ## 引用
 
 - [ss 的安装与配置](https://github.com/Shadowsocks-Wiki/shadowsocks/blob/master/6-linux-setup-guide-cn.md)
 - [how-to-install-visual-studio-code-on-ubuntu-18-04/](https://linuxize.com/post/how-to-install-visual-studio-code-on-ubuntu-18-04/)
+
+## 3 ubuntu 下搭建 Android 开发环境
+
+### gradle
+
+```bash
+sudo add-apt-repository ppa:cwchien/gradle
+sudo apt-get update
+sudo apt-get install gradle
+
+export GRADLE_HOME=/opt/gradle-4.2.1
+export PATH=$GRADLE_HOME/bin:$PATH
+```
+
+### SDK
+
+配置SDK环境变量
+
+```bash
+# 下载
+wget http://dl.google.com/android/android-sdk_r24.2-linux.tgz
+tar -xvf android-sdk_r24.2-linux.tgz
+cd android-sdk-linux/tools
+# 执行 .android 打开图形化界面更新AndroidSDK
+
+# 配置环境变量
+export ANDROID_HOME=$HOME/android-sdk-linux
+export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
+```
+
+### AndroidStudio
+
+1. 官网下载linux版本的AndroidStudio
+2. 解压到文件夹下(放在HOME目录下即可)
+3. 导航至`android-studio/bin/` 目录，并执行 `. studio.sh`。启动AndroidStudio，之后AndroidStudio设置向导将指导您完成余下的设置，包括下载开发所需的AndroidSDK组件
+
+如果运行 AndroidStudio 构建项目时遇到问题
+
+```bash
+# 在Android Studio文件夹下执行下面命令
+sudo chmod 777 * -R
+```
+
+如果运行的是64位版本Ubuntu，则需要使用以下命令安装一些32位库
+
+```bash
+# 执行下面命令
+sudo apt-get install lib32z1 lib32ncurses5 lib32bz2-1.0 lib32stdc++6`
+apt-get install libbz2-1.0
+apt-get install lib32z1 lib32ncurses5 lib32stdc++6
+# 或者上门运行错误的话执行下面命令
+sudo apt-get install -y libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 lib32z1
+# 或者上门运行错误的话执行下面命令
+# adb
+sudo apt-get install libc6:i386 libstdc++6:i386
+# aapt
+sudo apt-get install zlib1g:i386
+```
+
+### 安装字体
+
+```bash
+apt-get install msttcorefonts
+
+字体将会被安装到 /usr/share/fonts/truetype/msttcorefonts
+
+　　分别是：
+　　Andale Mono, Arial, Comic Sans MS, Courier New, Georgia
+　　Impact, Times New Roman, Trebuchet MS, Verdana, Webdings
+```
+
+### 设置环境变量
+
+按变量的生存周期来划分，Linux变量可分为两类：
+
+1. 永久的：需要修改配置文件，变量永久生效。
+2. 临时的：使用export命令声明即可，变量在关闭shell时失效。
+
+配置方式：
+
+- 1 在`/etc/profile`文件中添加变量【对所有用户生效(永久的)】
+
+```bash
+vim /etc/profile
+添加环境变量：
+    export PATH=$PATH:你的路径
+退出后：
+source /etc/profile
+```
+
+- 2 在用户目录下编辑`.bashrc`文件【对单一用户生效(永久的)】
+
+```bash
+vim ~/.bashrc #编辑配置文件
+# 添加环境变量：
+       export YOURPATH=xxx/xxx
+       export PATH=$PATH:$YOURPATH
+# 退出后
+source ~/.bashrc #更新环境变量
+```
+
+- 3 直接运行export命令定义变量【只对当前shell(BASH)有效(临时的)】
+
+```bash
+# 该变量只在当前的shell(BASH)或其子shell(BASH)下是有效的，shell关闭了，变量也就失效了，再打开新shell时就没有这个变量，需要使用的话还需要重新定义
+export PATH=$PATH:你的路径
+```
+
+### 参考
+
+- [ubuntu-for-Android](https://github.com/gaoneng102/ubuntu-for-Android)

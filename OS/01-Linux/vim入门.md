@@ -120,7 +120,22 @@ set number 显示行号
 
 - 分窗口：`:split`，`:vsplit`
 
-## 4 教程
+## 4 vim 配置
+
+```shell
+sudo apt-get install vim-gtk
+```
+
+`vim /etc/vim/vimrc` 编辑配置文件，加入以下配置
+
+```shell
+set nu
+set tabstop
+set cursorline
+set ruler
+```
+
+## 5 教程
 
 - [Linux vi/vim](http://www.runoob.com/linux/linux-vim.html)
 - [Vim入门级基础配置](https://segmentfault.com/a/1190000016330314)
