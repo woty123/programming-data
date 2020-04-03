@@ -5,6 +5,7 @@
    1. [2 平均负载](#2-平均负载)
    2. [3 什么是上下文切换](#3-什么是上下文切换)
    3. [4 上下文切换调优](#4-上下文切换调优)
+   4. [5 CPU使用率](#5-CPU使用率)
 
 ---
 
@@ -647,8 +648,204 @@ CPU 使用率 = 1 - (空闲时间/总 CPU 时间)
 
 **单独进程的运行统计信息**：`/proc/stat` 中统计的是系统 CPU 的运行信息，如果要单独查看进行的运行信息，可以查看 `/proc/pid/stat` 中的数据，其提供了多达 52 项数据，可以参考在线文档 <http://man7.org/linux/man-pages/man5/proc.5.html>，搜索 `/proc/[pid]/stat` 可以快速定位到。
 
+总计：**性能分析工具给出的都是间隔一段时间的平均 CPU 使用率，所以要注意间隔时间的设置**。
+
+- top 默认使用 3 秒时间间隔来计算。
+- ps 使用进程的整个生命周期计算。
+
 ### 5.3 如何查看 CPU 使用率
 
-### 5.4 CPU 使用率过高如果解决
+1 **top 命令**：
+
+- top 可以查看系统总体的 CPU 和内存使用情况，以及各个进程的资源使用情况。默认每 3 秒刷新一次。
+- top 默认显示的是所有 CPU 的平均值，按下数字 1 ，可以切换到每个 CPU 的使用率。
+- top 没有细分进程的用户态 CPU 和内核态 CPU。
+
+```shell
+# 负载情况
+top - 11:19:49 up 1 day, 20:46,  1 user,  load average: 0.05, 0.02, 0.00
+# 任务队列
+Tasks:  87 total,   1 running,  49 sleeping,   0 stopped,   0 zombie
+# cpu 使用率
+%Cpu(s):  0.7 us,  0.3 sy,  0.0 ni, 98.7 id,  0.3 wa,  0.0 hi,  0.0 si,  0.0 st
+# 内存信息
+KiB Mem :  1877076 total,    96460 free,   128912 used,  1651704 buff/cache
+KiB Swap:        0 total,        0 free,        0 used.  1555560 avail Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND
+ 1161 root      20   0  644612  18020   6812 S  0.3  1.0   3:25.13 YDService
+23840 ubuntu    20   0   41012   3820   3276 R  0.3  0.2   0:00.03 top
+    1 root      20   0   78060   9012   6560 S  0.0  0.5   0:07.49 systemd
+    2 root      20   0       0      0      0 S  0.0  0.0   0:00.01 kthreadd
+    4 root       0 -20       0      0      0 I  0.0  0.0   0:00.00 kworker/0:0H
+    6 root       0 -20       0      0      0 I  0.0  0.0   0:00.00 mm_percpu_wq
+    7 root      20   0       0      0      0 S  0.0  0.0   0:04.74 ksoftirqd/0
+    8 root      20   0       0      0      0 I  0.0  0.0   0:13.04 rcu_sched
+    9 root      20   0       0      0      0 I  0.0  0.0   0:00.00 rcu_bh
+   10 root      rt   0       0      0      0 S  0.0  0.0   0:00.00 migration/0
+   11 root      rt   0       0      0      0 S  0.0  0.0   0:00.37 watchdog/0
+   12 root      20   0       0      0      0 S  0.0  0.0   0:00.00 cpuhp/0
+   13 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kdevtmpfs
+   14 root       0 -20       0      0      0 I  0.0  0.0   0:00.00 netns
+   15 root      20   0       0      0      0 S  0.0  0.0   0:00.00 rcu_tasks_kthre
+   16 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kauditd
+   17 root      20   0       0      0      0 S  0.0  0.0   0:00.03 khungtaskd
+   18 root      20   0       0      0      0 S  0.0  0.0   0:00.00 oom_reaper
+   19 root       0 -20       0      0      0 I  0.0  0.0   0:00.00 writeback
+   20 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kcompactd0
+   21 root      25   5       0      0      0 S  0.0  0.0   0:00.00 ksmd
+   22 root      39  19       0      0      0 S  0.0  0.0   0:00.00 khugepaged
+   23 root       0 -20       0      0      0 I  0.0  0.0   0:00.00 crypto
+   24 root       0 -20       0      0      0 I  0.0  0.0   0:00.00 kintegrityd
+   25 root       0 -20       0      0      0 I  0.0  0.0   0:00.00 kblockd
+   26 root       0 -20       0      0      0 I  0.0  0.0   0:00.00 ata_sff
+   27 root       0 -20       0      0      0 I  0.0  0.0   0:00.00 md
+   28 root       0 -20       0      0      0 I  0.0  0.0   0:00.00 edac-poller
+   29 root       0 -20       0      0      0 I  0.0  0.0   0:00.00 devfreq_wq
+```
+
+cpu 使用率参数说明：
+
+- `us` 用户进程占用 cpu 百分率
+- `sy` 系统占用 cpu 百分率
+- `ni` 用户进程空间内改变过优先级的进程占用 CPU 百分比
+- `id` cpu 空闲率
+- `wa` 等待 IO 的 CPU 时间百分比
+- `hi` 硬中断（Hardware IRQ）占用 CPU 的百分比
+- `si` 软中断（Software Interrupts）占用 CPU 的百分比
+
+各个进程的资源使用情况参考说明：
+
+- `PID` 进程 ID
+- `USER` 进程创建者
+- `PR` 进程优先级
+- `NI` nice值，越小优先级越高，最小-20，最大20（用户设置最大19）
+- `VIRT` 进程使用的虚拟内存总量，单位kb
+- `RES` 进程使用的、未被换出的物理内存大小，单位kb
+- `SHR` 共享内存大小，单位kb
+- `S` 进程状态：D=不可中断的睡眠状态 R=运行 S=睡眠 T=跟踪/停止 Z=僵尸进程
+- `%CPU` 进程占用cpu百分比，是用户态和内核态 CPU 使用率的总和，包括进程用户空间使用的 CPU、通过系统调用执行的内核空间 CPU 、以及在就绪队列等待运行的 CPU。在虚拟化环境中，它还包括了运行虚拟机占用的 CPU。
+- `%MEN` 进程占用内存百分比
+- `TIME+` 进程运行时间
+- `COMMAND` 进程名称
+
+各个参数具体含义，参考下面链接：
+
+- [了解你服务器的心情——top命令详解](https://www.jianshu.com/p/aae6ee900d2e)
+- [top命令详解](https://www.jianshu.com/p/078ed7895b0f)
+
+2 **ps 命令**：
+
+3 **pidstat 命令**：
+
+- pidstat 可以查看每个进程的详细情况。
+
+```shell
+pidstat 1 5
+
+Linux 4.15.0-88-generic (VM-0-7-ubuntu) 	04/03/2020 	_x86_64_	(1 CPU)
+
+11:47:03 AM   UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command
+11:47:04 AM     0     24264    0.00    1.00    0.00    0.00    1.00     0  kworker/u2:0
+
+11:47:04 AM   UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command
+11:47:05 AM   500     23828    0.00    0.99    0.00    0.00    0.99     0  sshd
+
+11:47:05 AM   UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command
+11:47:06 AM     0      1447    0.00    1.01    0.00    0.00    1.01     0  barad_agent
+
+11:47:06 AM   UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command
+11:47:07 AM   500     27406    0.00    1.00    0.00    0.00    1.00     0  pidstat
+
+11:47:07 AM   UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command
+11:47:08 AM     0      1161    0.00    1.02    0.00    0.00    1.02     0  YDService
+11:47:08 AM     0      1447    2.04    0.00    0.00    0.00    2.04     0  barad_agent
+11:47:08 AM   500     27406    1.02    0.00    0.00    0.00    1.02     0  pidstat
+
+# 上面 5 组数据的平均值
+Average:      UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command
+Average:        0      1161    0.00    0.20    0.00    0.00    0.20     -  YDService
+Average:        0      1447    0.40    0.20    0.00    0.00    0.60     -  barad_agent
+Average:      500     23828    0.00    0.20    0.00    0.00    0.20     -  sshd
+Average:        0     24264    0.00    0.20    0.00    0.00    0.20     -  kworker/u2:0
+Average:      500     27406    0.20    0.20    0.00    0.00    0.40     -  pidstat
+```
+
+各个参数说明：
+
+- `%usr` 用户态 CPU 使用率
+- `%system` 内核态 CPU 使用率
+- `%guest` 运行虚拟机 CPU 使用率
+- `%wait` 等待 CPU 使用率
+- `%CPU` 总的 CPU 使用率
+- `CPU` 所在 CPU
+- `Command` 进程名
+
+### 5.4 CPU 使用率过高如何找到问题源头
+
+1. **使用 GDB（The GNU Project Debugger）**：但是 GDB 并不适合在性能分析的早期应用，因为线上程序一般不允许调试，GDB 用于在利用其他工具找到大致的问题返回后，在线下进行调试，从而精确定位问题所在。
+2. **使用 perf 性能分析工具**：perf 是 Linux2.6.31 以后内置的性能分析工具。它以性能事件采样为基础，不仅可以分析系统的各种事件和内核性能，还可以用来分析指定应用程序的性能问题。
+
+使用 perf 分析 CPU 性能问题，有两种常用的方法：
+
+1. perf top：可以实时显示占用 CPU 时钟最多的函数或者指令，因此可以用来查找热点函数，但是其并不保存数据，无法用于离线或后续分析。
+2. perf record：提供了保存数据的功能，后期可以使用 perf record 解析展示。
+
+**perf top 数据**：
+
+```shell
+# 第一行包含三个数据：
+# Samples：采样数、event：件类型、Event count：件总数量
+Samples: 288  of event 'cycles', Event count (approx.): 19207476
+
+# 注意，如果上面采样数过少，则下面排序没有太多意义
+#     Overhead：该符号的性能事件在所有采样中的比例，用百分比来表示。
+#     Shared：该函数或指令所在的动态共享对象（Dynamic Shared Object），如内核、进程名、动态链接库名、内核模块名等。
+#     Object：动态共享对象的类型。比如 [.] 表示用户空间的可执行程序、或者动态链接库，而 [k] 则表示内核空间。
+#     Symbol：符号名，也就是函数名。当函数名未知时，用十六进制的地址来表示。
+Overhead  Shared                 Object          Symbol
+   7.02%  [kernel]               [k] update_blocked_averages
+   3.29%  perf                   [.] map__process_kallsym_symbol
+   2.76%  [kernel]               [k] kallsyms_expand_symbol.constprop.1
+   2.23%  perf                   [.] rb_next
+   2.11%  perf                   [.] hex2u64
+   2.07%  python                 [.] PyEval_EvalFrameEx
+   1.91%  [kernel]               [k] pvclock_clocksource_read
+   1.89%  [kernel]               [k] memcpy
+   1.83%  [kernel]               [k] __schedule
+   1.62%  [kernel]               [k] native_write_msr
+   1.26%  python                 [.] meth_dealloc
+   1.07%  [kernel]               [k] switch_mm_irqs_off
+   1.04%  [kernel]               [k] kfree
+   1.01%  [kernel]               [k] update_curr
+   0.99%  [kernel]               [k] async_page_fault
+   0.98%  [kernel]               [k] rcu_cblist_dequeue
+   0.98%  [kernel]               [k] kvm_clock_get_cycles
+   0.95%  [kernel]               [k] perf_event_task_tick
+   0.94%  [kernel]               [k] arch_cpu_idle_exit
+   0.87%  libbfd-2.30-system.so  [.] 0x00000000000f509e
+   0.87%  [kernel]               [k] set_next_entity
+   0.86%  [kernel]               [k] dequeue_task_fair
+   0.85%  [kernel]               [k] update_load_avg
+   0.85%  [kernel]               [k] mutex_unlock
+   0.83%  python                 [.] vgetargs1
+   0.83%  [kernel]               [k] vunmap_page_range
+   0.82%  [kernel]               [k] pick_next_task_fair
+   0.81%  [kernel]               [k] irq_exit
+```
+
+从上面数据可以看出，整体上占用 CPU 最高的也只有 7%，不存在性能问题。
+
+**perf record 数据**：
+
+```shell
+# 第一步：采集数据（Ctrl+C 终止采集）
+perf record
+
+# 第二步：展开报告
+perf report
+```
 
 ### 5.5 案例分析
+
+todo
