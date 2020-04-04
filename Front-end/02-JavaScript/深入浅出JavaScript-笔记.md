@@ -7,12 +7,12 @@
 - typeof：适用于函数对象和基本类型，遇到null失效
 - instanceof：基于原型链，不同Window和iframe间是适用于instanceof
 - `Object.prototype.toString`方法
-    - `[object Array]`
-    - `[object Function]`
-    - `[object Null]`
-    - `[object Undefined]`
-    - `[object Object]`
-    - IE6、7、8中，Null和Undefined的toString都返回`[object Object]`
+  - `[object Array]`
+  - `[object Function]`
+  - `[object Null]`
+  - `[object Undefined]`
+  - `[object Object]`
+  - IE6、7、8中，Null和Undefined的toString都返回`[object Object]`
 - constructor
 - duck type：鸭子辩型，不关心对象具体是什么类型，只关心对象是否具有某种功能。
 
@@ -85,6 +85,7 @@ delete ohNo;//true
 - AO，arguments object
 
 VO的顺序填充：
+
 1. 函数参数
 2. 函数声明
 3. 变量声明，初始化值为undefined
@@ -106,7 +107,7 @@ AO(test) = {
     a:10，
     b:undefined，
     b:undefined，
-    d:<ref to func "d">    
+    d:<ref to func "d">
     e:undefined
 }
 ```

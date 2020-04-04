@@ -22,7 +22,7 @@
 2 WEB 前端相关技术
 
 1. AJAX-Base：ajax 演示。
-2. Servlet-Project-Mall：基础部分综合实战项目。
+2. Servlet-Project-BookMall：基础部分综合练习项目。
 
 3 数据库
 
