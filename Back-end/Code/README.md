@@ -1,4 +1,11 @@
-# 项目说明
+# JaveEE学习项目
+
+## 缓解说明
+
+- IDEA
+- Tomcat8：启动时添加`-Dfile.encoding=UTF-8`参数
+
+## 项目说明
 
 1 基础
 

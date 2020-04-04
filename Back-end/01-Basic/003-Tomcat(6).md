@@ -3,17 +3,18 @@
 本笔记基于 tomcat 6.0 版本。
 
 ---
+
 ## 1 Tomcat 简介
 
 Tomcat是在SUN公司(当时还没被收购)推出的小型Servlet/JSP调试工具的基础上发展起来的一个优秀的Servlet容器，Tomcat本身完全用Java语言编写。目前是Apache开源软件组织的一个软件项目，它的官方网址为<http://tomcat.apache.org>。得到了广大开源代码志愿者的大力支持，且可以和目前大部分的主流Web服务器(IIS、Apache服务器)一起工作，它运行稳定、可靠且高效。已成为目前开发企业JavaWeb应用的最佳Servlet容器选择之一。
 
 ### 版本
 
-Tomcat的版本随着不断推出的Servlet/JSP规范不同而不同，基本上是Servlet每推出一个版本，Tomcat也会发行新的版本以适应新的规范。
+Tomcat的版本随着不断推出的Servlet/JSP规范不同而不同，基本上是Servlet每推出一个版本，Tomcat也会发行新的版本以适应新的规范。，tomcat6本身是基于JDK1.5的应用程序，因此在安装和使用之前必须先行安装1.5及以上版本的JDK(JRE)，其支持Servlet2.5规范。
 
-- tomcat6本身是基于JDK1.5的应用程序，因此在安装和使用之前必须先行安装1.5及以上版本的JDK(JRE)，其支持Servlet2.5规范。
+具体Tomcat版本与Servlet版本对应可以参考[whichversion](http://tomcat.apache.org/whichversion.html)。目前使用比较广泛是 `7.0`和`8.0`。
 
-具体Tomcat版本与Servlet版本对应可以参考[whichversion](http://tomcat.apache.org/whichversion.html)。
+>Servlet程序从2.5版本是现在世面使用最多的版本（xml配置），到了Servlet3.0之后。就是注解版本的Servlet使用。
 
 ### 环境配置
 
@@ -36,11 +37,12 @@ logs：日志文件.
     localhost_access_log.*.txt tomcat记录用户访问信息，星*表示时间。
     例如：localhost_access_log.2016-02-28.txt
 temp：临时文件目录，文件夹内内容可以任意删除。
-webapps：默认情况下发布WEB项目所存放的目录。
-work：tomcat处理JSP的工作目录。
+webapps：默认情况下发布WEB项目所存放的目录，一个目录代表一个工程。
+work：是Tomcat工作时的目录，用来存放Tomcat运行时jsp翻译为Servlet的源码，和Session钝化的目录。。
 ```
 
 ---
+
 ## 2 JavaWEB 应用程序
 
 WEB应用程序指供浏览器访问的程序，通常也简称为web应用。
@@ -88,10 +90,11 @@ Tomcat6.x与Tomcat5.x的目录结构有所区别。在Tomcat5.x版本中，Tomca
 
 ### 部署应用到服务器上
 
-- 方式一（推荐）：把自己的应用拷贝到Tomcat\webapps目录下即可
-- 方式二（war包）：把war拷贝到Tomcat\webapps目录下即可。Tomcat会自解压。
+- 方式一（推荐）：把自己的应用拷贝到`Tomcat\webapps`目录下即可
+- 方式二（war包）：把war拷贝到`Tomcat\webapps`目录下即可。Tomcat会自解压。
 
 ---
+
 ## 3 Tomcat 的组成结构与配置
 
 Tomcat本身由一系列可配置的组件构成，其中核心组件是Servelt容器组件，它是所有其他Tomcat组件的顶层容器。每个组件都可以在Tomcat安装目录`/conf/server.xml`文件中进行配置，每个Tomcat组件在server.xml文件中对应一种配置元素。
@@ -280,7 +283,7 @@ keytool -genkey -alias tomcat -keyalg RSA -keystore d:\.keystore
 - `-keyalg`：指定加密算法，此处采用通用的RSA算法。
 - `-keystore`：指定生成证书的目录，如果不指定则生成的证书包含保存在操作系统的用户目录
 
-#### 配置SSL连接器
+#### 配置 Connector SSL连接器
 
 在Tomcat的servlet.xml文件中，已经提供了现成的配置SSL连接器的代码，只要把注释去掉即可
 
@@ -293,7 +296,7 @@ keytool -genkey -alias tomcat -keyalg RSA -keystore d:\.keystore
 - keystoreFile：指定keystore文件的存放位置，可以指定绝对路经。如果此项没有设定，在默认情况下，Tomcat将从当前操作系统用户的用户名目录下读取名为`.keystore`的文件。
 - keystorePass：指定keystore的密码，如果此项没有设定，在默认情况下，Tomcat将使用**changeit**密码。
 
-在配置tomcat的SSL双向握手中，由于6.0.33版本中默认启用了APR（APR是通过JNI访问的可移植库，可以提高Tomcat的性能和伸缩性），所以采用传统的配置方式（如下）会报异常。解决办法：
+在配置tomcat的SSL双向握手中，由于6.0.33版本中默认启用了APR（APR是通过JNI访问的可移植库，可以提高Tomcat的性能和伸缩性），所以采用传统的配置方式会报异常 `org.apache.coyote.http11.Http11AprProtocol init`。解决办法是将 `protocol="HTTP/1.1"` 改为 `protocol="org.apache.coyote.http11.Http11Protocol"`。
 
 ```xml
 <Connector
@@ -338,6 +341,7 @@ AJP：
 ```
 
 ---
+
 ## 4 Tomcat的默认编码
 
 - IOS8859-1：Tomcat6、Tomcat7

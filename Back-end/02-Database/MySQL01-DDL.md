@@ -26,13 +26,13 @@
 ### 常用语句
 
 - 查看所有的数据库: `show databases`
-- 创建数据库：`create database database_name；`
-- 选择数据库：`use database_name；`
+- 创建数据库：`create database database_name;`
+- 选择数据库：`use database_name;`
 - 查看正在使用的数据块：`select database();`
-- 查看数据库创建细节：`show create database database_name；`
-- 创建一个字符集为gbk的数据库：`create database  database_name character set gbk；`
-- 创建一个使用 utf8字符集，并带校对规则的 mydb3 数据库：`create database database_name character set utf-8 collate utf8_general_ci；`utf8_general_ci时默认规则。
-- 删除前面创建的数据库：`drop database [IF EXISTS] database_name；`
+- 查看数据库创建细节：`show create database database_name;`
+- 创建一个字符集为gbk的数据库：`create database  database_name character set gbk;`
+- 创建一个使用 utf8字符集，并带校对规则的 mydb3 数据库：`create database database_name character set utf-8 collate utf8_general_ci;`utf8_general_ci时默认规则。
+- 删除前面创建的数据库：`drop database [IF EXISTS] database_name;`
 - 查看服务器的数据库并修改数据库的字符集：`show databass; alter database database_name character set 字符集名;`
 - 查看字符集：`show variables like 'character%';`
 - 修改表的字符串：`alter table 表名 character set 编码`
@@ -43,7 +43,7 @@
     create database IF NOT EXISTS user;//如果user表已经存在，不加IF NOT EXISTS则会报错
 
     2 切换到user数据库
-    use user；
+    use user;
 ```
 
 关于校对规则，校对规则是在字符集内用于比较字符的一套规则，可以控制select 查询时where 条件大小写是否敏感的规则，如字段 col 在表中的值为 (abc，ABC，AbC) 在不同的校对规则下，where col='ABC'会有不同的结果。ci是case insensitive的缩写，意思是大小写不敏感；相对的是cs，即case sensitive，大小写敏感；还有一种是utf8_bin，是将字符串中的每一个字符用二进制数据存储，区分大小写。如果建表的时候选择的是区别大小写的规则而查询的时候又暂时不想区别， 可以用类似 WHERE column_name COLLATE utf8_general_ci = 'xxx' 的写法改变查询使用的校对规则，新建数据 库时一般选用utf8_general_ci就可以了。
@@ -221,12 +221,12 @@ DFAULT|字段默认值
 
 #### 常用语句
 
-- 修改一个属性的数据类型：`alter table 表格名 modify 属性名 new数据类型；`
-- 删除一列：`alter table 表格名 drop 字段名；`
-- 修改表格的字符集：`alter table 表格名 character set 字符集名；`
-- 修改列名：`alter table 表格名 change oldName newName 数据类型；`
-- 修改表名：`rename table oldName to newName；`
-- 添加一列：`alter table 表格名 add 字段名 类型；`
+- 修改一个属性的数据类型：`alter table 表格名 modify 属性名 new数据类型;`
+- 删除一列：`alter table 表格名 drop 字段名;`
+- 修改表格的字符集：`alter table 表格名 character set 字符集名;`
+- 修改列名：`alter table 表格名 change oldName newName 数据类型;`
+- 修改表名：`rename table oldName to newName;`
+- 添加一列：`alter table 表格名 add 字段名 类型;`
 
 ---
 ## 4 DDL语句示例
