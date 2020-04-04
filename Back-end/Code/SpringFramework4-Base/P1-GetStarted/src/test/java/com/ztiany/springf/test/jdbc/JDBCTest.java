@@ -14,14 +14,14 @@ import javax.annotation.Resource;
 
 //演示JDBC模板
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:jdbc.xml")
+@ContextConfiguration("classpath:spring_jdbc.xml")
 public class JDBCTest {
 
     @Resource(name = "userDao")
     private UserDao mUserDao;
 
     @Test
-    public void testJdbcTemplate() throws Exception {
+    public void manualJdbcTemplate() throws Exception {
         //准备连接池
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
         dataSource.setDriverClass("com.mysql.jdbc.Driver");
@@ -34,7 +34,7 @@ public class JDBCTest {
         jdbcTemplate.setDataSource(dataSource);
 
         //2 书写sql,并执行
-        String sql = "INSERT INTO springf_test_user VALUES(NULL,'rose') ";
+        String sql = "INSERT INTO spring_framework_test_user VALUES(NULL,'jordan') ";
         jdbcTemplate.update(sql);
     }
 

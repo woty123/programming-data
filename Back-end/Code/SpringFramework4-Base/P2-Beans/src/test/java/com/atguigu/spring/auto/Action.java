@@ -1,4 +1,4 @@
-package com.atguigu.spring.reflect;
+package com.atguigu.spring.auto;
 
 public class Action {
 

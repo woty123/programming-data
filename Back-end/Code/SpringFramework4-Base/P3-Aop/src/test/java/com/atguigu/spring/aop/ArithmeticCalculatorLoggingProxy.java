@@ -5,6 +5,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
 
+/**
+ * Java Proxy 代理打日志。
+ */
 public class ArithmeticCalculatorLoggingProxy {
 
     //要代理的对象

@@ -1,4 +1,4 @@
-package com.atguigu.spring.tx.xml;
+package com.atguigu.spring.transaction.xml;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 

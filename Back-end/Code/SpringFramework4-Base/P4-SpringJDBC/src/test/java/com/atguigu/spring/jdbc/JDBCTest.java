@@ -1,13 +1,5 @@
 package com.atguigu.spring.jdbc;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.sql.DataSource;
-
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -18,142 +10,149 @@ import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
 public class JDBCTest {
-	
-	private ApplicationContext ctx = null;
-	private JdbcTemplate jdbcTemplate;
-	private EmployeeDao employeeDao;
-	private DepartmentDao departmentDao;
-	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-	
-	{
-		ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-		jdbcTemplate = (JdbcTemplate) ctx.getBean("jdbcTemplate");
-		employeeDao = ctx.getBean(EmployeeDao.class);
-		departmentDao = ctx.getBean(DepartmentDao.class);
-		namedParameterJdbcTemplate = ctx.getBean(NamedParameterJdbcTemplate.class);
-	}
-	
-	/**
-	 * Ê¹ÓÃ¾ßÃû²ÎÊıÊ±, ¿ÉÒÔÊ¹ÓÃ update(String sql, SqlParameterSource paramSource) ·½·¨½øĞĞ¸üĞÂ²Ù×÷
-	 * 1. SQL Óï¾äÖĞµÄ²ÎÊıÃûºÍÀàµÄÊôĞÔÒ»ÖÂ!
-	 * 2. Ê¹ÓÃ SqlParameterSource µÄ BeanPropertySqlParameterSource ÊµÏÖÀà×÷Îª²ÎÊı. 
-	 */
-	@Test
-	public void testNamedParameterJdbcTemplate2(){
-		String sql = "INSERT INTO employees(last_name, email, dept_id) "
-				+ "VALUES(:lastName,:email,:dpetId)";
-		
-		Employee employee = new Employee();
-		employee.setLastName("XYZ");
-		employee.setEmail("xyz@sina.com");
-		employee.setDpetId(3);
-		
-		SqlParameterSource paramSource = new BeanPropertySqlParameterSource(employee);
-		namedParameterJdbcTemplate.update(sql, paramSource);
-	}
-	
-	/**
-	 * ¿ÉÒÔÎª²ÎÊıÆğÃû×Ö. 
-	 * 1. ºÃ´¦: ÈôÓĞ¶à¸ö²ÎÊı, Ôò²»ÓÃÔÙÈ¥¶ÔÓ¦Î»ÖÃ, Ö±½Ó¶ÔÓ¦²ÎÊıÃû, ±ãÓÚÎ¬»¤
-	 * 2. È±µã: ½ÏÎªÂé·³. 
-	 */
-	@Test
-	public void testNamedParameterJdbcTemplate(){
-		String sql = "INSERT INTO employees(last_name, email, dept_id) VALUES(:ln,:email,:deptid)";
-		
-		Map<String, Object> paramMap = new HashMap<>();
-		paramMap.put("ln", "FF");
-		paramMap.put("email", "ff@atguigu.com");
-		paramMap.put("deptid", 2);
-		
-		namedParameterJdbcTemplate.update(sql, paramMap);
-	}
-	
-	@Test
-	public void testDepartmentDao(){
-		System.out.println(departmentDao.get(1));
-	}
-	
-	@Test
-	public void testEmployeeDao(){
-		System.out.println(employeeDao.get(1));
-	}
-	
-	/**
-	 * »ñÈ¡µ¥¸öÁĞµÄÖµ, »ò×öÍ³¼Æ²éÑ¯
-	 * Ê¹ÓÃ queryForObject(String sql, Class<Long> requiredType) 
-	 */
-	@Test
-	public void testQueryForObject2(){
-		String sql = "SELECT count(id) FROM employees";
-		long count = jdbcTemplate.queryForObject(sql, Long.class);
-		
-		System.out.println(count);
-	}
-	
-	/**
-	 * ²éµ½ÊµÌåÀàµÄ¼¯ºÏ
-	 * ×¢Òâµ÷ÓÃµÄ²»ÊÇ queryForList ·½·¨
-	 */
-	@Test
-	public void testQueryForList(){
-		String sql = "SELECT id, last_name lastName, email FROM employees WHERE id > ?";
-		RowMapper<Employee> rowMapper = new BeanPropertyRowMapper<>(Employee.class);
-		List<Employee> employees = jdbcTemplate.query(sql, rowMapper,5);
-		
-		System.out.println(employees);
-	}
-	
-	/**
-	 * ´ÓÊı¾İ¿âÖĞ»ñÈ¡Ò»Ìõ¼ÇÂ¼, Êµ¼ÊµÃµ½¶ÔÓ¦µÄÒ»¸ö¶ÔÏó
-	 * ×¢Òâ²»ÊÇµ÷ÓÃ queryForObject(String sql, Class<Employee> requiredType, Object... args) ·½·¨!
-	 * ¶øĞèÒªµ÷ÓÃ queryForObject(String sql, RowMapper<Employee> rowMapper, Object... args)
-	 * 1. ÆäÖĞµÄ RowMapper Ö¸¶¨ÈçºÎÈ¥Ó³Éä½á¹û¼¯µÄĞĞ, ³£ÓÃµÄÊµÏÖÀàÎª BeanPropertyRowMapper
-	 * 2. Ê¹ÓÃ SQL ÖĞÁĞµÄ±ğÃûÍê³ÉÁĞÃûºÍÀàµÄÊôĞÔÃûµÄÓ³Éä. ÀıÈç last_name lastName
-	 * 3. ²»Ö§³Ö¼¶ÁªÊôĞÔ. JdbcTemplate µ½µ×ÊÇÒ»¸ö JDBC µÄĞ¡¹¤¾ß, ¶ø²»ÊÇ ORM ¿ò¼Ü
-	 */
-	@Test
-	public void testQueryForObject(){
-		String sql = "SELECT id, last_name lastName, email, dept_id as \"department.id\" FROM employees WHERE id = ?";
-		RowMapper<Employee> rowMapper = new BeanPropertyRowMapper<>(Employee.class);
-		Employee employee = jdbcTemplate.queryForObject(sql, rowMapper, 1);
-		
-		System.out.println(employee);
-	}
-	
-	/**
-	 * Ö´ĞĞÅúÁ¿¸üĞÂ: ÅúÁ¿µÄ INSERT, UPDATE, DELETE
-	 * ×îºóÒ»¸ö²ÎÊıÊÇ Object[] µÄ List ÀàĞÍ: ÒòÎªĞŞ¸ÄÒ»Ìõ¼ÇÂ¼ĞèÒªÒ»¸ö Object µÄÊı×é, ÄÇÃ´¶àÌõ²»¾ÍĞèÒª¶à¸ö Object µÄÊı×éÂğ
-	 */
-	@Test
-	public void testBatchUpdate(){
-		String sql = "INSERT INTO employees(last_name, email, dept_id) VALUES(?,?,?)";
-		
-		List<Object[]> batchArgs = new ArrayList<>();
-		
-		batchArgs.add(new Object[]{"AA", "aa@atguigu.com", 1});
-		batchArgs.add(new Object[]{"BB", "bb@atguigu.com", 2});
-		batchArgs.add(new Object[]{"CC", "cc@atguigu.com", 3});
-		batchArgs.add(new Object[]{"DD", "dd@atguigu.com", 3});
-		batchArgs.add(new Object[]{"EE", "ee@atguigu.com", 2});
-		
-		jdbcTemplate.batchUpdate(sql, batchArgs);
-	}
-	
-	/**
-	 * Ö´ĞĞ INSERT, UPDATE, DELETE
-	 */
-	@Test
-	public void testUpdate(){
-		String sql = "UPDATE employees SET last_name = ? WHERE id = ?";
-		jdbcTemplate.update(sql, "Jack", 5);
-	}
-	
-	@Test
-	public void testDataSource() throws SQLException {
-		DataSource dataSource = ctx.getBean(DataSource.class);
-		System.out.println(dataSource.getConnection());
-	}
+
+    private ApplicationContext ctx;
+    private JdbcTemplate jdbcTemplate;
+    private EmployeeDao employeeDao;
+    private DepartmentDao departmentDao;
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    {
+        ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        jdbcTemplate = (JdbcTemplate) ctx.getBean("jdbcTemplate");
+
+        employeeDao = ctx.getBean(EmployeeDao.class);
+        departmentDao = ctx.getBean(DepartmentDao.class);
+        namedParameterJdbcTemplate = ctx.getBean(NamedParameterJdbcTemplate.class);
+    }
+
+    /**
+     * ä½¿ç”¨å…·åå‚æ•°æ—¶, å¯ä»¥ä½¿ç”¨ update(String sql, SqlParameterSource paramSource) æ–¹æ³•è¿›è¡Œæ›´æ–°æ“ä½œ
+     *
+     * 1. SQL è¯­å¥ä¸­çš„å‚æ•°åå’Œç±»çš„å±æ€§ä¸€è‡´!
+     * 2. ä½¿ç”¨ SqlParameterSource çš„ BeanPropertySqlParameterSource å®ç°ç±»ä½œä¸ºå‚æ•°.
+     */
+    @Test
+    public void testNamedParameterJdbcTemplate2() {
+        String sql = "INSERT INTO employees(last_name, email, dept_id) " + "VALUES(:lastName,:email,:dpetId)";
+
+        Employee employee = new Employee();
+        employee.setLastName("XYZ");
+        employee.setEmail("xyz@sina.com");
+        employee.setDpetId(3);
+
+        SqlParameterSource paramSource = new BeanPropertySqlParameterSource(employee);
+        namedParameterJdbcTemplate.update(sql, paramSource);
+    }
+
+    /**
+     * å¯ä»¥ä¸ºå‚æ•°èµ·åå­—.
+     *
+     * 1. å¥½å¤„: è‹¥æœ‰å¤šä¸ªå‚æ•°, åˆ™ä¸ç”¨å†å»å¯¹åº”ä½ç½®, ç›´æ¥å¯¹åº”å‚æ•°å, ä¾¿äºç»´æŠ¤
+     * 2. ç¼ºç‚¹: è¾ƒä¸ºéº»çƒ¦.
+     */
+    @Test
+    public void testNamedParameterJdbcTemplate() {
+        String sql = "INSERT INTO employees(last_name, email, dept_id) VALUES(:ln,:email,:deptid)";
+
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("ln", "FF");
+        paramMap.put("email", "ff@atguigu.com");
+        paramMap.put("deptid", 2);
+
+        namedParameterJdbcTemplate.update(sql, paramMap);
+    }
+
+    @Test
+    public void testDepartmentDao() {
+        System.out.println(departmentDao.get(1));
+    }
+
+    @Test
+    public void testEmployeeDao() {
+        System.out.println(employeeDao.get(1));
+    }
+
+    /**
+     * è·å–å•ä¸ªåˆ—çš„å€¼, æˆ–åšç»Ÿè®¡æŸ¥è¯¢
+     * ä½¿ç”¨ queryForObject(String sql, Class<Long> requiredType)
+     */
+    @Test
+    public void testQueryForObject2() {
+        String sql = "SELECT count(id) FROM employees";
+        long count = jdbcTemplate.queryForObject(sql, Long.class);
+        System.out.println(count);
+    }
+
+    /**
+     * æŸ¥åˆ°å®ä½“ç±»çš„é›†åˆï¼Œæ³¨æ„è°ƒç”¨çš„ä¸æ˜¯ queryForList æ–¹æ³•
+     */
+    @Test
+    public void testQueryForList() {
+        String sql = "SELECT id, last_name lastName, email FROM employees WHERE id > ?";
+        RowMapper<Employee> rowMapper = new BeanPropertyRowMapper<>(Employee.class);
+        List<Employee> employees = jdbcTemplate.query(sql, rowMapper, 5);
+        System.out.println(employees);
+    }
+
+    /**
+     * ä»æ•°æ®åº“ä¸­è·å–ä¸€æ¡è®°å½•, å®é™…å¾—åˆ°å¯¹åº”çš„ä¸€ä¸ªå¯¹è±¡
+     * æ³¨æ„ä¸æ˜¯è°ƒç”¨ queryForObject(String sql, Class<Employee> requiredType, Object... args) æ–¹æ³•!
+     * è€Œéœ€è¦è°ƒç”¨ queryForObject(String sql, RowMapper<Employee> rowMapper, Object... args)
+     *
+     * 1. å…¶ä¸­çš„ RowMapper æŒ‡å®šå¦‚ä½•å»æ˜ å°„ç»“æœé›†çš„è¡Œ, å¸¸ç”¨çš„å®ç°ç±»ä¸º BeanPropertyRowMapper
+     * 2. ä½¿ç”¨ SQL ä¸­åˆ—çš„åˆ«åå®Œæˆåˆ—åå’Œç±»çš„å±æ€§åçš„æ˜ å°„. ä¾‹å¦‚ last_name lastName
+     * 3. ä¸æ”¯æŒçº§è”å±æ€§. JdbcTemplate åˆ°åº•æ˜¯ä¸€ä¸ª JDBC çš„å°å·¥å…·, è€Œä¸æ˜¯ ORM æ¡†æ¶
+     */
+    @Test
+    public void testQueryForObject() {
+        String sql = "SELECT id, last_name lastName, email, dept_id as \"department.id\" FROM employees WHERE id = ?";
+        RowMapper<Employee> rowMapper = new BeanPropertyRowMapper<>(Employee.class);
+        Employee employee = jdbcTemplate.queryForObject(sql, rowMapper, 1);
+        System.out.println(employee);
+    }
+
+    /**
+     * æ‰§è¡Œæ‰¹é‡æ›´æ–°: æ‰¹é‡çš„ INSERT, UPDATE, DELETE
+     * æœ€åä¸€ä¸ªå‚æ•°æ˜¯ Object[] çš„ List ç±»å‹: å› ä¸ºä¿®æ”¹ä¸€æ¡è®°å½•éœ€è¦ä¸€ä¸ª Object çš„æ•°ç»„, é‚£ä¹ˆå¤šæ¡ä¸å°±éœ€è¦å¤šä¸ª Object çš„æ•°ç»„å—
+     */
+    @Test
+    public void testBatchUpdate() {
+        String sql = "INSERT INTO employees(last_name, email, dept_id) VALUES(?,?,?)";
+
+        List<Object[]> batchArgs = new ArrayList<>();
+
+        batchArgs.add(new Object[]{"AA", "aa@atguigu.com", 1});
+        batchArgs.add(new Object[]{"BB", "bb@atguigu.com", 2});
+        batchArgs.add(new Object[]{"CC", "cc@atguigu.com", 3});
+        batchArgs.add(new Object[]{"DD", "dd@atguigu.com", 3});
+        batchArgs.add(new Object[]{"EE", "ee@atguigu.com", 2});
+
+        jdbcTemplate.batchUpdate(sql, batchArgs);
+    }
+
+    /**
+     * æ‰§è¡Œ INSERT, UPDATE, DELETE
+     */
+    @Test
+    public void testUpdate() {
+        String sql = "UPDATE employees SET last_name = ? WHERE id = ?";
+        jdbcTemplate.update(sql, "Jack", 5);
+    }
+
+    @Test
+    public void testDataSource() throws SQLException {
+        DataSource dataSource = ctx.getBean(DataSource.class);
+        System.out.println(dataSource.getConnection());
+    }
 
 }

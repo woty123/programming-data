@@ -1,28 +1,28 @@
 package com.atguigu.spring.jdbc;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
+
 /**
- * ²»ÍÆ¼öÊ¹ÓÃ JdbcDaoSupport, ¶øÍÆ¼öÖ±½ÓÊ¹ÓÃ JdbcTempate ×÷Îª Dao ÀàµÄ³ÉÔ±±äÁ¿
+ * ä¸æ¨èä½¿ç”¨ JdbcDaoSupport, è€Œæ¨èç›´æ¥ä½¿ç”¨ JdbcTemplate ä½œä¸º Dao ç±»çš„æˆå‘˜å˜é‡
  */
 @Repository
-public class DepartmentDao extends JdbcDaoSupport{
+public class DepartmentDao extends JdbcDaoSupport {
 
-	@Autowired
-	public void setDataSource2(DataSource dataSource){
-		setDataSource(dataSource);
-	}
+    @Autowired
+    public void setDataSource2(DataSource dataSource) {
+        setDataSource(dataSource);
+    }
 
-	public Department get(Integer id){
-		String sql = "SELECT id, dept_name name FROM departments WHERE id = ?";
-		RowMapper<Department> rowMapper = new BeanPropertyRowMapper<>(Department.class);
-		return getJdbcTemplate().queryForObject(sql, rowMapper, id);
-	}
-	
+    public Department get(Integer id) {
+        String sql = "SELECT id, dept_name name FROM departments WHERE id = ?";
+        RowMapper<Department> rowMapper = new BeanPropertyRowMapper<>(Department.class);
+        return getJdbcTemplate().queryForObject(sql, rowMapper, id);
+    }
+
 }

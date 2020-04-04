@@ -42,12 +42,12 @@
     </bean>
 
     <!-- Dao放入Spring容器中-->
-    <bean name="accountDao" class="com.ztiany.springf.test.tx.AccountDaoImpl">
+    <bean name="accountDao" class="com.ztiany.springf.test.transaction.AccountDaoImpl">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
     <!-- Service放入Spring容器中-->
-    <bean name="accountService" class="com.ztiany.springf.test.tx.AccountServiceImpl2">
+    <bean name="accountService" class="com.ztiany.springf.test.transaction.AccountServiceImpl2">
         <property name="accountDao" ref="accountDao"/>
     </bean>
 
@@ -86,7 +86,7 @@
     <aop:config>
 
         <!-- 配置切点表达式 -->
-        <aop:pointcut expression="execution(* com.ztiany.springf.test.tx.AccountServiceImpl2.*(..))"
+        <aop:pointcut expression="execution(* com.ztiany.springf.test.transaction.AccountServiceImpl2.*(..))"
                       id="txPc"/>
 
         <!-- 配置切面 : 通知+切点

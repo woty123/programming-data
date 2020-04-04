@@ -1,4 +1,4 @@
-package com.ztiany.springf.test.tx;
+package com.ztiany.springf.test.transaction;
 
 /*由xml配置事务，这里不需要任何配置*/
 public class AccountServiceImpl2 implements AccountService {

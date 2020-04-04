@@ -1,15 +1,14 @@
 # 多表关系
 
----
 ## 1 数据完整性
 
-**数据完整性是为了保证插入到数据中的数据是正确的，它防止了用户可能的输入错误。**
+**数据完整性是为了保证插入到数据中的数据是正确的，它防止了用户可能的输入错误**。
 
 数据完整性主要分为以下三类：
 
- - 实体完整性：规定表的一行（即每一条记录）在表中是唯一的实体。实体完整性通过表的主键来实现
- - 域完整性：指数据库表的列（即字段）必须符合某种特定的数据类型或约束。比如NOT NULL。
- - 参照完整性：保证一个表的外键和另一个表的主键对应。主表中不能删除从表中已引用的数据。
+- 实体完整性：规定表的一行（即每一条记录）在表中是唯一的实体。实体完整性通过表的主键来实现。
+- 域完整性：指数据库表的列（即字段）必须符合某种特定的数据类型或约束。比如NOT NULL。
+- 参照完整性：保证一个表的外键和另一个表的主键对应。主表中不能删除从表中已引用的数据。
 
 定义表的约束：
 
@@ -23,7 +22,8 @@
 - 撤销外键：`alter table tablename foreign key fk_name;`
 
 定义外键：
-```
+
+```sql
 //Persons表
 CREATE TABLE Persons(
    Id_P int NOT NULL,
@@ -59,19 +59,18 @@ ALTER TABLE Orders ADD FOREIGN KEY (Id_P) REFERENCES Persons(Id_P)
 ALTER TABLE Orders ADD CONSTRAINT fk_PerOrders FOREIGN KEY (Id_P) REFERENCES Persons(Id_P)
 ```
 
-###  实体完整性
+### 实体完整性
 
 使用关键字：primary key 主键唯一且不能为空；
 
 - 逻辑主键：与具体业务无关（推荐）
 - 业务主键：与业务有关。比如身份证号码。
 
+### 域的完整性
 
-###  域的完整性
+指定数据库中一列(字段)必须符合某种特定的数据类型或约束。比如`not null` 或 `unique`。
 
-指定数据库中一列(字段)必须符合某种特定的数据类型或约束。比如not null 或 unique
-
-```
+```sql
     非空约束：notnull
     CREATE TABLE t4(
            id int,
@@ -101,13 +100,13 @@ ALTER TABLE Orders ADD CONSTRAINT fk_PerOrders FOREIGN KEY (Id_P) REFERENCES Per
 
 方式一：按照外键关联：
 
-```
+```sql
     create table person(
          id int primary key,
          name varchar(100),
          address varchar(100)
     );
-    
+
     create table id_card(
          id int primary key,
          num varchar(100),
@@ -118,7 +117,8 @@ ALTER TABLE Orders ADD CONSTRAINT fk_PerOrders FOREIGN KEY (Id_P) REFERENCES Per
 ```
 
 方式二：按照主键关联：
-```
+
+```sql
     CREATE TABLE person(
            id int PRIMARY KEY,
            name varchar(100),
@@ -134,7 +134,7 @@ ALTER TABLE Orders ADD CONSTRAINT fk_PerOrders FOREIGN KEY (Id_P) REFERENCES Per
 
 图示：
 
-![](index_files/7ce3b76f-e12b-46ea-85a1-a7d03bf4ebc7.png)
+![](images/7ce3b76f-e12b-46ea-85a1-a7d03bf4ebc7.png)
 
 #### 一对多的关系
 
@@ -142,11 +142,11 @@ ALTER TABLE Orders ADD CONSTRAINT fk_PerOrders FOREIGN KEY (Id_P) REFERENCES Per
 
 图示：
 
-![](index_files/0514a115-bb36-4f8f-bddb-43ad12ce6d46.png)
+![](images/0514a115-bb36-4f8f-bddb-43ad12ce6d46.png)
 
 一对多的关系包括单向一对多、单向多对一。
 
-```
+```sql
 CREATE TABLE department(
     id int PRIMARY KEY,
     name varchar(100),
@@ -165,10 +165,9 @@ CREATE TABLE employee(
 
 #### 多对多的关系
 
-比如 一个老师对应着多个学生，而一个学生也有很多个老师。
+比如 一个老师对应着多个学生，而一个学生也有很多个老师。需要创建一张表来存储 学生表 和 老师表的 对应关系 即联合主键。
 
-需要创建一张表来存储 学生表 和 老师表的 对应关系 即联合主键
-```
+```sql
     //教师表：
     CREATE TABLE teacher(
            id int PRIMARY KEY,
@@ -196,22 +195,21 @@ CREATE TABLE employee(
          t_id int,
          s_id int
     );
-    
+
     alter table teacter_student add primary key (t_id, s_id);
     alter table teacter_student add constraint teacter_student_t_fk foreign key (t_id) references teacher(id);
     alter table teacter_student add constraint teacter_student_s_fk foreign key (s_id) references student(id);
 ```
+
 图示：
 
-![](index_files/0d52e79c-15a3-4f8d-903b-b6d03032e616.png)
-
+![](images/0d52e79c-15a3-4f8d-903b-b6d03032e616.png)
 
 ### 主从表数据更新问题
 
 当两张表没有建立任何关系的时候，那么可以随意删除其中任何一张表中的任何记录，但是一旦把两张表建立了关系(主外键约束)之后，那么不能删除主表中的数据(这些数据内容在从表中有关联关系的数据)，另外，从表也不能添加主表中不存在的数据。
 
 要想删除主表中与从表有关联关系的数据，可以这么做：
+
 1. 解除主从表的约束关系
 2. 先删除从表中与主表有关系的数据，再删除主表中的数据。
-
-

@@ -4,9 +4,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserDao {
-	
-	public void save(){
-		System.out.println("±£´æĞÂÓÃ»§");
-	}
-	
+
+    public void save() {
+        System.out.println("ä¿å­˜æ–°ç”¨æˆ·");
+    }
+
 }

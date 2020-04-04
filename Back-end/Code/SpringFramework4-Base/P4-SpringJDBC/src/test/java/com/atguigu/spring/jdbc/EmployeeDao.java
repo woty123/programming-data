@@ -8,15 +8,14 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class EmployeeDao {
-	
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
-	
-	public Employee get(Integer id){
-		String sql = "SELECT id, last_name lastName, email FROM employees WHERE id = ?";
-		RowMapper<Employee> rowMapper = new BeanPropertyRowMapper<>(Employee.class);
-		Employee employee = jdbcTemplate.queryForObject(sql, rowMapper, id);
-		
-		return employee;
-	}
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    public Employee get(Integer id) {
+        String sql = "SELECT id, last_name lastName, email FROM employees WHERE id = ?";
+        RowMapper<Employee> rowMapper = new BeanPropertyRowMapper<>(Employee.class);
+        return jdbcTemplate.queryForObject(sql, rowMapper, id);
+    }
+
 }

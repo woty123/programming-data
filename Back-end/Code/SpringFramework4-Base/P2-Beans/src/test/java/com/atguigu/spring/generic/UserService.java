@@ -1,8 +1,8 @@
-package com.atguigu.spring.annotation.generic;
+package com.atguigu.spring.generic;
 
 import org.springframework.stereotype.Service;
 
-//Èô×¢½âÃ»ÓĞÖ¸¶¨ bean µÄ id, ÔòÀàÃûµÚÒ»¸ö×ÖÄ¸Ğ¡Ğ´¼´Îª bean µÄ id
+//è‹¥æ³¨è§£æ²¡æœ‰æŒ‡å®š bean çš„ id, åˆ™ç±»åç¬¬ä¸€ä¸ªå­—æ¯å°å†™å³ä¸º bean çš„ id
 @Service
 public class UserService extends BaseService<User>{
 

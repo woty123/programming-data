@@ -1,4 +1,4 @@
-package com.ztiany.springf.test.basic.domain;
+package com.ztiany.springf.test.bean.domain;
 
 public class Car {
 
@@ -25,6 +25,5 @@ public class Car {
     public String toString() {
         return "Car [name=" + name + ", color=" + color + "]";
     }
-
 
 }

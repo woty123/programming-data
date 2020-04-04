@@ -1,50 +1,48 @@
 package com.atguigu.spring.jdbc;
 
 public class Employee {
-	
-	private Integer id;
-	private String lastName;
-	private String email;
-	
-	private Integer dpetId;
 
-	public Integer getId() {
-		return id;
-	}
+    private Integer id;
+    private String lastName;
+    private String email;
+    private Integer dpetId;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public Integer getDpetId() {
-		return dpetId;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setDpetId(Integer dpetId) {
-		this.dpetId = dpetId;
-	}
+    public Integer getDpetId() {
+        return dpetId;
+    }
 
-	@Override
-	public String toString() {
-		return "Employee [id=" + id + ", lastName=" + lastName + ", email="
-				+ email + ", dpetId=" + dpetId + "]";
-	}
+    public void setDpetId(Integer dpetId) {
+        this.dpetId = dpetId;
+    }
 
-	
+    @Override
+    public String toString() {
+        return "Employee [id=" + id + ", lastName=" + lastName + ", email="
+                + email + ", dpetId=" + dpetId + "]";
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.ztiany.springf.test.tx;
+package com.ztiany.springf.test.transaction;
 
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;

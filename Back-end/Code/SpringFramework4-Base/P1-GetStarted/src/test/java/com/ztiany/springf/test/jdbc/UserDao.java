@@ -22,4 +22,5 @@ public interface UserDao {
 
     //查
     List<User> getAll();
+
 }

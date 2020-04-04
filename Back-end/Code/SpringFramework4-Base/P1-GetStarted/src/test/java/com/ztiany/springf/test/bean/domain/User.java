@@ -1,7 +1,6 @@
-package com.ztiany.springf.test.basic.domain;
+package com.ztiany.springf.test.bean.domain;
 
 public class User {
-
 
     public User() {
         System.out.println("User对象空参构造方法");

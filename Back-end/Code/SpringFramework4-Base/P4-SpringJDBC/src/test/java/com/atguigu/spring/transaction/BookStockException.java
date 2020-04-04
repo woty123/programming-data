@@ -1,4 +1,4 @@
-package com.atguigu.spring.tx;
+package com.atguigu.spring.transaction;
 
 public class BookStockException extends RuntimeException {
 

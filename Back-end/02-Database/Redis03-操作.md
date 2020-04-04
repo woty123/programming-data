@@ -1,5 +1,7 @@
 # Redis数据存储
 
+---
+
 ## 1 数据类型介绍
 
 Redis是一种高级的key-value存储系统，支持以下数据类型：
@@ -17,6 +19,8 @@ Redis是一种高级的key-value存储系统，支持以下数据类型：
 - key不要太长，最好不要超过1024个字节，这不仅仅会消耗内存，还会降低查询效率
 - key的命名要具有可读性
 - 在项目中，key最好有一个统一的命名规范
+
+---
 
 ## 2 数据操作
 
@@ -36,6 +40,7 @@ Redis是一种高级的key-value存储系统，支持以下数据类型：
 - `append key value` 字符串，如果key不存在，则创建一个，key为value
 
 ---
+
 ### 2.2 存储Hash
 
 Redis中Hash类型可以看成具有String Key和String Value的map容器，该类型非常适合存储值对象的信息，如果Hash中保存很少的字段，那么该类型的数据也将占据很少的内存，每个Hash可以存储4294967295个键值对。
@@ -54,7 +59,6 @@ Redis中Hash类型可以看成具有String Key和String Value的map容器，该�
 - `hkeys key` 获取key中所有的field
 - `havls key` 获取key中所有的value
 
-
 ### 存储List
 
 在Redis中，List类型是按照插入顺序排序的字符串链表。和数据结构中的普通链表一样，我们可以在其头部(left)和尾部(right)添加新的元素。在插入时，如果该键并不存在，Redis将为该键创建一个新的链表。与此相反，如果链表中所有的元素均被移除，那么该键也将会被从数据库中删除。List中可以包含的最大元素数量是4294967295。
@@ -66,7 +70,6 @@ Redis Lists用linked list实现的原因是：对于数据库系统来说，至�
 如果快速访问集合元素很重要，建议使用可排序集合(sorted sets)。
 
 #### 常用命令
-
 
 - `lpush key value1 [value2 ...]` 在链表的左边添加value，虽然可以一次添加多个value，但value都是从头部一个一个插入的，所以最前面的value到最后反而被挤到最后面了
 - `rpush key value1 [value2 ...]` 在链表的右边添加value
@@ -80,7 +83,6 @@ Redis Lists用linked list实现的原因是：对于数据库系统来说，至�
 - `lset key index value` 设置链表中的index的脚标的元素值，0代表头元素，-1代表尾元素，脚标不存在则抛出异常
 - `linsert key before|after pivot value` 在pivot元素前|后插入value
 - `rpoplpush resource destination` 将resource链表中的尾部元素弹出并添加到destination链表的头部，返回弹出的元素
-
 
 #### rpoplpush的使用场景
 
@@ -116,7 +118,6 @@ Redis链表经常会被用于消息队列的服务，以完成多程序之间的
 
 Sorted-Set和Set类型极为相似，它们都是字符串的集合，都不允许重复的成员出现在一个Set 中。它们之间的主要差别是Sorted-Set中的每一个成员都会有一个分数(score)与之关联，Redis正是通过分数来为集合中的成员进行从小到大的排序。然而需要额外指出的是，尽管Sorted-Set中的成员必须是唯一的，但是分数(score)却是可以重复的。 在Sorted-Set中添加、删除或更新一个成员都是非常快速的操作，其时间复杂度为集合中成员数量的对数。由于Sorted-Set中的成员在集合中的位置是有序的，因此，即便是访问位于集合中部 的成员也仍然是非常高效的。事实上，Redis所具有的这一特征在很多其它类型的数据库中是很难实 现的，换句话说，在该点上要想达到和Redis同样的高效，在其它数据库中进行建模是非常困难的。例如：游戏排名、微博热点话题等使用场景。
 
-
 #### 常用命令
 
 - `zadd key score member score2 member2 score2 [...]` 将所有成员以及所有成员对应的分数存放到sorted-set中，**如果该元素已存在则会用新的分数替换原来的分数**。返回值是新添加到集合中元素的个数。
@@ -132,13 +133,11 @@ Sorted-Set和Set类型极为相似，它们都是字符串的集合，都不允�
 - `zrank key member` 返回成员在集合中的排名(小到大)
 - `zrevrank key member` 返回成员在结合中的排名(大到小)
 
-
 #### 应用场景
 
 1. 可以用于一个大型在线游戏的积分排行榜。每当玩家的分数发生变化时，可以执行ZADD命令更新玩家的分数，此后再通过ZRANGE命令获取积分TOPTEN的用户信息。当然我们也可以利用ZRANK命令通过usemame来获取玩家的排行信息。最后我们将组合使用ZRANGE和ZRANK命令快速的获取 和某个玩家积分相近的其他用户的信息。
 2. Sorted-Set类型还可用于构建索引数据。
 
-----
 ### 通用的key操作
 
 - `keys pattern` 获取所有的与pattern匹配的key，返回所有与该key匹配的keys，`*`表示任意一个或多个字符，`?`表示任意一个字符
@@ -149,7 +148,8 @@ Sorted-Set和Set类型极为相似，它们都是字符串的集合，都不允�
 - `ttl key` 获取只当key所剩的超时时间，如果key不存在则返回-2，如果key没有超时时间则返回-1
 - `type key` 获取指定key的类型，该命令以字符串的形式返回：string、list、set、hash、zset，如果key不存在则返回none
 
-----
+---
+
 ## 3 Redis特性
 
 ### 3.1 多数据库
@@ -159,7 +159,8 @@ Sorted-Set和Set类型极为相似，它们都是字符串的集合，都不允�
 一个Redis实例最多可以提供16个数据库，下标从0到15，客户端默认连接第0号数据库，也可以通过`select`选择连接哪个数据库。比如：`select 1`。
 
 不同数据库间可以移植数据，比如将newkey移植到1号库：
-```
+
+```sql
 move myset 1
 ```
 
@@ -180,7 +181,6 @@ move myset 1
 - psubscribe channel* 批量订阅频道，比如`psubscribe s*`，订阅所有s开头的频道
 - publish channel content 在指定的频道中发布消息，比如`publish mychat 'today is a newday'`
 
-
 ### 3.4 事务
 
 和众多其他数据库一样，Redis作为NoSQL数据库也同样提供了事务机制，在Redis中，`MULTI、EXEC、DISCARD`这三个命令是使用事务的基石。
@@ -200,7 +200,8 @@ Redis事务特性
 - `exec` 提交事务，类似ij关系型数据库中的：commit 
 - `discard` 事务回滚，类似勹关系型数据库巾的：rollback
 
-----
+---
+
 ## 4 持久化
 
 Redis的高性能是由于其将所有数据都存储在了内存中，为了使Redis在重启之后仍能保证数据不丢失，需要将数据从内存中冋步到硬盘中，这一过程就是持久化。
@@ -220,7 +221,6 @@ Redis支持两种方式的持久化，一种是RDB方式，一种是AOF方式。
 3. 性能最大化。对于Redis的服务进程而言，在开始持久化时，它唯一需要做的只是fork(分叉)出子进程，之后再由子进程完成这些持久化的工作，这样就可以极大的避免服务进程执行I/O操作了。
 4. 相比于A0F机制，如果数据集很大，RDB的启动效率会更高。
 
-
 #### 劣势
 
 1、如果你想保证数据的髙可用性，即最大限度的避免数据丢失，那么RDB将不是一个很好的选择。因为系统一旦在定时持久化之前出现宕机现象，此前没有来得及写入磁盘的数据都将丢失。
@@ -238,7 +238,7 @@ dbfilename dump.db #快照文件名
 dir ./ #快照保存位置
 ```
 
-###  4.2 AOF
+### 4.2 AOF
 
 #### 优势
 
@@ -268,8 +268,7 @@ appendfilename appendonly.aof # AOF文件名
 
 重写AOF：如果不满足重写条件时，可以手动重写，命令：`bgrewriteaof`
 
----
-## 提问
+## 5 疑问
 
 - 为什么要有缓存？
 - 缓存和应用程序是在一个进程内还是不同的进程？

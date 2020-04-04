@@ -1,4 +1,4 @@
-package com.ztiany.springf.test.tx;
+package com.ztiany.springf.test.transaction;
 
 
 public interface AccountDao {

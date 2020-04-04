@@ -1,4 +1,4 @@
-package com.ztiany.springf.test.tx;
+package com.ztiany.springf.test.transaction;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,9 +9,9 @@ import javax.annotation.Resource;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:tx3.xml")
+@ContextConfiguration("classpath:transaction3.xml")
 
-public class Tx3Test {
+public class Transaction3Test {
 
     @Resource(name = "accountService")
     private AccountService as;
@@ -20,4 +20,5 @@ public class Tx3Test {
     public void fun1() {
         as.transfer(1, 2, 100d);
     }
+
 }

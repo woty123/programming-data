@@ -1,4 +1,4 @@
-# 学习路线
+**学习路线**：
 
 第1部分：Spring 框架的核心知识。
 
@@ -31,9 +31,6 @@
 - Spring 对 Java 管理扩展（Java Management Extensions，JMX）功能的支持
 - Spring Boot
 
->第一部分：1-4章：Spring的核心
-
----
 # 第一章：Spring 之旅
 
 Spring 是一个开源框架，最早由 Rod Johnson 创建，并在《Expert One-on-One：J2EE Design andDevelopment》这本著作中进行了介绍。Spring 是为了解决企业级应用开发的复杂性而创建的，**使用Spring可以让简单的 JavaBean 实现之前只有 EJB 才能完成的事情**。但 Spring 不仅仅局限于服务器端开发，任何 Java 应用都能在简单性、可测试性和松耦合等方面从 Spring 中获益。Spring 最根本的使命：**简化Java开发**.
@@ -112,7 +109,7 @@ Spring 自带了多种类型的应用上下文。常见的如下列表：
 
 正确理解 Spring bean 的生命周期非常重要，因为你或许要利用 Spring 提供的扩展点来自定义 bean 的创建过程。下图展示了bean在Spring容器中从创建到销毁经历了若干阶段：
 
-![](images/d931c354-a976-48c0-a6c0-a959461d4cd2.jpg)
+![](images/spring-bean-init.jpg)
 
 在bean准备就绪之前，bean工厂执行了若干启动步骤：
 
@@ -131,7 +128,7 @@ Spring 自带了多种类型的应用上下文。常见的如下列表：
 
 在 Spring 框架之外还存在一个构建在核心框架之上的庞大生态圈，它将 Spring 扩展到不同的领域，例如 Web 服务、REST、移动开发以及 NoSQL。Spring 有着诸多的扩展模块，这些模块依据其所属的功能可以划分为6类不同的功能：
 
-![](images/86dc2e5d-fe4d-4350-82c6-1837256f0024.jpg)
+![](images/spring-all.jpg)
 
 - **Spring 核心容器**：容器是 Spring 框架最核心的部分，它管理着Spring 应用中 bean 的创建、配置和管理。在该模块中，包括了 Spring bean 工厂，它为 Spring提供了 DI 的功能。
 - Context 模块：提供了多种 Spring 应用上下文的实现，每一种都提供了配置 Spring 的不同方式。

@@ -1,4 +1,4 @@
-package com.ztiany.springf.test.tx;
+package com.ztiany.springf.test.transaction;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,8 +11,8 @@ import javax.annotation.Resource;
  * 测试使用 TransactionTemplate
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:tx1.xml")
-public class Tx1Test {
+@ContextConfiguration("classpath:transaction1.xml")
+public class Transaction1Test {
 
     @Resource(name = "accountService")
     private AccountService as;
@@ -21,4 +21,5 @@ public class Tx1Test {
     public void fun1() {
         as.transfer(1, 2, 100D);
     }
+
 }

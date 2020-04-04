@@ -1,7 +1,7 @@
-package com.atguigu.spring.tx.xml;
+package com.atguigu.spring.transaction.xml;
 
-import com.atguigu.spring.tx.xml.service.BookShopService;
-import com.atguigu.spring.tx.xml.service.Cashier;
+import com.atguigu.spring.transaction.xml.service.BookShopService;
+import com.atguigu.spring.transaction.xml.service.Cashier;
 
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;

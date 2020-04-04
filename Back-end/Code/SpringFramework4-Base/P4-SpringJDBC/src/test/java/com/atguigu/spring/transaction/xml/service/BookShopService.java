@@ -1,7 +1,7 @@
-package com.atguigu.spring.tx.xml.service;
+package com.atguigu.spring.transaction.xml.service;
 
 public interface BookShopService {
-	
-	public void purchase(String username, String isbn);
-	
+
+    void purchase(String username, String isbn);
+
 }

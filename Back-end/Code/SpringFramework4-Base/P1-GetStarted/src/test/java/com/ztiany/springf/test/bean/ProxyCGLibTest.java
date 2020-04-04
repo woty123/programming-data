@@ -10,7 +10,7 @@ import java.util.Arrays;
 /**
  * 演示 Proxy 和 CGLib 代理
  */
-public class ProxyTest {
+public class ProxyCGLibTest {
 
     public interface FakeService {
         void save(String name);

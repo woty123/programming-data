@@ -41,7 +41,7 @@ SQL：Structured Query Language的缩写，结构化查询语言， 作用是一
 - 事务处理语言：TPL。
 - 指针控制语言：CCL。
 
-## 教程
+## MySQL 教程
 
 - [w3school-sql](http://www.w3school.com.cn/sql/index.asp)
 - 《SQL必知必会》

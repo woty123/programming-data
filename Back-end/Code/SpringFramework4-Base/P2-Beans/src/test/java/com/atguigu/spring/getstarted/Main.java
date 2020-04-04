@@ -1,4 +1,4 @@
-package com.atguigu.spring.helloworld;
+package com.atguigu.spring.getstarted;
 
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

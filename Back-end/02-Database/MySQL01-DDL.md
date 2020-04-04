@@ -2,20 +2,19 @@
 
 常用关键字：`CREATE ,ALTER ,DROP, TRUNCATE`
 
----
 ## 1 创建数据库
 
 ### 语法
 
-```
-    CREATE {DATABASE | SCHEMA} [IF NOT EXISTS] db_name
-        [create_specification [, create_specification] ...]
+```sql
+CREATE {DATABASE | SCHEMA} [IF NOT EXISTS] db_name
+    [create_specification [, create_specification] ...]
 
 `create_specification`选项用于指定数据库的特性。
 
-    create_specification:
-        [DEFAULT] CHARACTER SET charset_name //指定字符集
-      | [DEFAULT] COLLATE collation_name  //指定数据库字符集的比较方式
+create_specification:
+    [DEFAULT] CHARACTER SET charset_name //指定字符集
+    | [DEFAULT] COLLATE collation_name  //指定数据库字符集的比较方式
 ```
 
 - CHARACTER SET子句用于指定默认的数据库字符集
@@ -38,7 +37,8 @@
 - 修改表的字符串：`alter table 表名 character set 编码`
 
 实例：
-```
+
+```sql
     1 创建一个user数据库
     create database IF NOT EXISTS user;//如果user表已经存在，不加IF NOT EXISTS则会报错
 
@@ -48,14 +48,13 @@
 
 关于校对规则，校对规则是在字符集内用于比较字符的一套规则，可以控制select 查询时where 条件大小写是否敏感的规则，如字段 col 在表中的值为 (abc，ABC，AbC) 在不同的校对规则下，where col='ABC'会有不同的结果。ci是case insensitive的缩写，意思是大小写不敏感；相对的是cs，即case sensitive，大小写敏感；还有一种是utf8_bin，是将字符串中的每一个字符用二进制数据存储，区分大小写。如果建表的时候选择的是区别大小写的规则而查询的时候又暂时不想区别， 可以用类似 WHERE column_name COLLATE utf8_general_ci = 'xxx' 的写法改变查询使用的校对规则，新建数据 库时一般选用utf8_general_ci就可以了。
 
----
 ## 2 创建表
 
 表在数据库中是一个独立的单元，代笔某些实体类型，表有行类列组成，每一行代表一项数据，每一列代表一个数据。表与表之间可以进行关联，形成一定的关系网，这样可以将数据拆分到不同的数据表中，减少单表提交并提升操作速度。
 
 ### 语法
 
-```
+```sql
     CREATE [TEMPORARY] TABLE [IF NOT EXISTS] tbl_name (字段1 数据类型约束，... ，字段n 数据类型约束);
 ```
 
@@ -74,8 +73,7 @@
 - `show create table user;`显示一个表的创建语句
 - `desc database_name;`查看表的结构
 
-![](index_files/5c57c751-4af3-4af4-b4d1-bbda5aa4ba83.png)
-
+![](images/5c57c751-4af3-4af4-b4d1-bbda5aa4ba83.png)
 
 ### 数据类型
 
@@ -83,7 +81,7 @@
 
 #### 数值类型
 
-![](index_files/cbd1907c-d866-4043-aacd-d5ad1b32819d.jpg)
+![](images/cbd1907c-d866-4043-aacd-d5ad1b32819d.jpg)
 
 数据类型|说明
 ---|---
@@ -98,7 +96,7 @@ DOUBLE[(M,D)] [UNSIGNED] [ZEROFILL]  | 表示比float精度更大的小数
 
 #### 文本、二进制类型
 
-![](index_files/68af5ad0-74a1-456e-bf0d-22ceac361f77.jpg)
+![](images/68af5ad0-74a1-456e-bf0d-22ceac361f77.jpg)
 
 数据类型|说明
 ---|---
@@ -111,7 +109,7 @@ VARCHAR、BLOB和TEXT类是变长类型。每个类型的存储需求取决于�
 
 #### 时间和日期
 
-![](index_files/bb3a5185-b1b8-4bf4-bf0f-468a42b4567e.jpg)
+![](images/bb3a5185-b1b8-4bf4-bf0f-468a42b4567e.jpg)
 
 数据类型|说明
 ---|---
@@ -124,7 +122,6 @@ DATE/DATETIME/TimeStamp|日期类型`(YYYY-MM-DD) ，(YYYY-MM-DD HH：MM:SS)`，
 #### 类型长度限制
 
 在定义整数字段时，常常想当然通过，如 `int(3)`，来限制整数的有效长度，然而这样仅仅只是指定了**显示宽度**。选择有效长度不同的整数，需要使用 `tinyint（1个字节）、smallint（2个字节）、mediumint（3个字节）、int（4个字节）或bigint（8个字节）`
-
 
 ### 数据类型约束
 
@@ -151,21 +148,20 @@ DFAULT|字段默认值
 
 定义外键的格式如下：
 
-```
+```sql
 [CONSTRAINT symbol] FOREIGN KEY [id] (index_col_name, ...)
         REFERENCES tbl_name (index_col_name, ...)
         [ON DELETE {RESTRICT | CASCADE | SET NULL | NO ACTION}]
         [ON UPDATE {RESTRICT | CASCADE | SET NULL | NO ACTION}]
 ```
 
-- `ON DELETE`和`ON UPDATE `表示父表中记录被删除或者更新子表中对于的操作，在后面会展开学习。
+- `ON DELETE`和`ON UPDATE`表示父表中记录被删除或者更新子表中对于的操作，在后面会展开学习。
 
 > constraint 约束， foreign key 外键，references 引用，symbol 符号
 
-
 示例：
 
-```
+```sql
     1 创建一个员工表：
     create table employee (
 
@@ -191,33 +187,42 @@ DFAULT|字段默认值
 
 >关于主键和外键在后面的数据完整性还会介绍
 
-
----
 ## 3 修改表
 
-表被创建之后是可以被修改或删除的，使用` ALTER TABLE `语句追加, 修改, 或删除列的语法.
+表被创建之后是可以被修改或删除的，使用`ALTER TABLE`语句追加, 修改, 或删除列的语法.
 
 #### 添加字段
 
+```sql
     ALTER TABLE table_name
     ADD           (column datatype [DEFAULT expr]
                [, column datatype]...);
+```
+
 #### 修改字段
 
+```sql
     ALTER TABLE table_name
     MODIFY column datatype [DEFAULT expr] [, column datatype]...;
+```
 
 #### 删除字段
 
+```sql
     ALTER TABLE table_name DROP (column);
+```
 
 #### 修改表的名称
 
+```sql
     rename table 表名 to 新表名
+```
 
 #### 修改表的字符集
 
+```sql
     alter table student character set utf8;
+```
 
 #### 常用语句
 
@@ -228,12 +233,11 @@ DFAULT|字段默认值
 - 修改表名：`rename table oldName to newName;`
 - 添加一列：`alter table 表格名 add 字段名 类型;`
 
----
 ## 4 DDL语句示例
 
-###     数据库相关
+### 数据库相关
 
-```
+```sql
     创建一个名称为mydb1的数据库。
     mysql>CREATE DATABASE mydb1;(编码用的是数据库程序的编码，校对规则用的是编码默认的校对规则)
 
@@ -256,9 +260,9 @@ DFAULT|字段默认值
     mysql>ALTER DATABASE mydb3 CHARACTER SET gbk;
 ```
 
-###  表结构相关
+### 表结构相关
 
-```
+```sql
     创建一个员工表
     mysql>USE mydb1;
     mysql>CREATE TABLE employee(
@@ -274,40 +278,28 @@ DFAULT|字段默认值
 
     查看当前库中有哪些表
     mysql>SHOW TABLES;
-    
+
     查看表的结构
     mysql>DESC employee;
-    
+
     查看表的创建细节
     mysql>SHOW CREATE TABLE employee;
-    
+
     在上面员工表的基本上增加一个image列。
     mysql>ALTER TABLE employee ADD image blob;
-    
+
     修改job列，使其长度为60。
     mysql>ALTER TABLE employee MODIFY job varchar(60);
-    
+
     删除image列。
     mysql>ALTER TABLE employee DROP image;
-    
+
     表名改为user。
     mysql>RENAME TABLE employee TO user;
-    
+
     修改表的字符集为gbk
     mysql>ALTER TABLE user CHARACTER SET gbk;
-    
+
     列名name修改为username
     mysql>ALTER TABLE user CHANGE name username varchar(100);
 ```
-
-
-
-
-
-
-
-
-
-
-
-

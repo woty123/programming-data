@@ -17,8 +17,8 @@ import static org.junit.Assert.assertNotNull;
 //创建容器
 @RunWith(SpringJUnit4ClassRunner.class)
 //指定创建容器时使用哪个配置文件
-@ContextConfiguration(locations = "classpath:basic_config.xml")
-public class JUnitSpringTest {
+@ContextConfiguration(locations = "classpath:bean_config.xml")
+public class SpringAnnotationTest {
 
     //将名为user的对象注入到mUser变量中
     @Resource(name = "user1")

@@ -117,7 +117,6 @@ AspectJ指示器 | 描述
 execution(* demo.Deme.doSomething()) and !bean('beanId')
 ```
 
-
 ---
 ## 3 使用注解创建切面
 
@@ -179,7 +178,6 @@ AOP配置元素|用途
 `<aop:config>` | 顶层的AOP配置元素。大多数的 `<aop:*>` 元素必须包含在 `<aop:config>` 元素内
 `<aop:declare-parents>` | 以透明的方式为被通知的对象引入额外的接口
 `<aop:pointcut>` | 定义一个切点
-
 
 ---
 ## 5 注入 AspectJ 切面

@@ -5,13 +5,13 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class UserAction {
-	
-	@Autowired
-	private UsreService usreService;
-	
-	public void execute(){
-		System.out.println("Ω” ‹«Î«Û");
-		usreService.addNew();
-	}
-	
+
+    @Autowired
+    private UserService mUserService;
+
+    public void execute() {
+        System.out.println("Êé•ÂèóËØ∑Ê±Ç");
+        mUserService.addNew();
+    }
+
 }

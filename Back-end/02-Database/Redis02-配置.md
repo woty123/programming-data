@@ -2,7 +2,7 @@
 
 Redis支持命令行配置，语法：
 
-```
+```shell
 获取配置的变量
 CONFIG GET 配置key
 示例：CONFIG GET loglevel

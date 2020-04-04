@@ -1,7 +1,7 @@
 # Reids
 
-
 ---
+
 ## 1 NoSQL简介
 
 NoSQL的意思是Not Only SQL，即不仅仅是SQL，是一项全新的数据库理念，泛指非关系型数据库。
@@ -10,20 +10,19 @@ NoSQL的意思是Not Only SQL，即不仅仅是SQL，是一项全新的数据库
 
 随着互联Mweb2.〇M站的兴起，非关系型的数据库现在成了一个极其热门的新领域，非关系数据库产品的发展非常迅速。而传统的关系数据库在应付**web2.0**网站，特别是超大规模和高并发的SNS类型的web2.0纯动态M站己经显得力不从心，暴露了很多难以克服的问题，例如：
 
-**1、Highperformance-对数据库高并发读写的需求**
+**1、Highperformance-对数据库高并发读写的需求**：
 
 web2.0网站要根据用户个性化信息来实时生成动态页而和提供动态信息，所以基本上无法使用动态页面静态化技术，因此数据库并发负载非常高，往往要达到每秒上万次读写请求。关系数据库应付上万次SQL查询还勉强顶得住，但是应付上万次SQL写数据请求，硬盘10就己经无法承受了。其实对于普通的BBSM站，往往也存在对高并发写请求的需求，例如M站的实时统计在线用户状态，记录热门帖子的点击次数，投票计数等，因此这是一个相当普遍的需求。
 
-**2、HugeStorage-对海M数据的高效率存储和访问的需求**
+**2、HugeStorage-对海M数据的高效率存储和访问的需求**：
 
 类似Facebook，twitter，Friendfeed这样的SNS网站，每天用户产生海量的用户动态，以Friendfeed为例，一个月就达到了2.5亿条用户动态，对于关系数据库来说，在一张2.5亿条记录的表里面进行SQL查询，效率是极其低下乃至不讨忍受的。再例如大型web网站的用户登录系统，例如腾讯，盛大，动辄数以亿计的帐号，关系数据库也很难应付。
 
-**3、HighScalability和HighAvailability-对数据库的高可扩展性和高可用性的需求**
+**3、HighScalability和HighAvailability-对数据库的高可扩展性和高可用性的需求**：
 
 在基于web的架构当中，数据库是最难进行横向扩M的，当一个应用系统的用户量和访问量与曰俱增的时候，你的数据库却没有办法像webserver和appserver那样简单的通过添加更多的硬件和服务节点来扩展性能和负载能力。对于很多需要提供24小时不间断服务的网站来说，对数据库系统进行升级和扩展是非常痛苦的事情，往往需要停机维护和数据迁移，为什么数据库不能通过不断的添加服务器节点来实现扩展呢？
 
 **NoSQL数据库的产生就是为了解决大规模数据集合多重数据种类带来的挑战，尤其是大数据应用难题。**
-
 
 ### NoSQL产品
 
@@ -39,7 +38,6 @@ web2.0网站要根据用户个性化信息来实时生成动态页而和提供�
 - 数据模型：一系列键值对
 - 优势：快速查询
 - 劣势：存储的数据缺少结构化
-
 
 列存储数据库
 
@@ -65,7 +63,6 @@ web2.0网站要根据用户个性化信息来实时生成动态页而和提供�
 - 优势：利用图结构相关筧法。
 - 劣势：要对整个图做计算才能得出结果，不容易做分布式的集群方案。
 
-
 ### NoSQL特点
 
 在大数据存取上具备关系型数据库无法比拟的性能优势，例如：
@@ -77,20 +74,16 @@ web2.0网站要根据用户个性化信息来实时生成动态页而和提供�
 
 综上所述，NoSQL的非关系特性使其成为/后Web2.0时代的宠儿，助力大型Web2.0网站的再次起飞，是一项全新的数据库革命性运动。
 
-
 ---
 ## 2 Redis简介
 
 ### Redis由来
 
-2008年，意大利的一家创业公司Merzia推出了一款基于MySQL的M站实时统计系统LLOOGG，然而没过多久该公司的创始人Salvatore Sanfilippo便对MySQL的性能感到失望，于是他决定亲自为LLOOGG童身定做一个数据库，并于2009年开发完成，这个数据库就是Redis。
-不过Salvatore Sanfilippo并不满足只将Redis用于LLOOGG这一款产品，而是希望更多的人使用它，于是在同一年Salvatore Sanfilippo将Redis开源发布，并开始和Redis的另一名主要的代码贡献者Pieter Noordhuis一起继续着Redis的开发，直到今天。
+2008年，意大利的一家创业公司Merzia推出了一款基于MySQL的M站实时统计系统LLOOGG，然而没过多久该公司的创始人Salvatore Sanfilippo便对MySQL的性能感到失望，于是他决定亲自为LLOOGG童身定做一个数据库，并于2009年开发完成，这个数据库就是Redis。不过Salvatore Sanfilippo并不满足只将Redis用于LLOOGG这一款产品，而是希望更多的人使用它，于是在同一年Salvatore Sanfilippo将Redis开源发布，并开始和Redis的另一名主要的代码贡献者Pieter Noordhuis一起继续着Redis的开发，直到今天。
 
 Salvatore Sanfilippo自己也没有想到，短短的儿年时间，Redis就拥有了庞大的用户群体。Hacker News在2012年发布了一份数据库的使用情况调查，结果显示有近12%的公司在使用Redis。国内如新浪微博、街旁网、知乎网，闽外如GitHub、StackOverflow、Flickr等都是Redis的用户。VMware公司从2010年开始赞助Redis的开发，Salvatore Sanfilippo和Pieter Noordhuis也分别在3月和5月力口入VMware，全职开发Redis
 
-
 ### 什么是Redis
-
 
 Redis是用C语言开发的一个开源的高性能键值对（key-value)数据库。它通过提供多种键值数据类型来适应不同场景下的存储需求，它通常被称为数据结构服务器，目前为止Redis支持的键值数据类型如下：
 
@@ -121,36 +114,34 @@ Redis是用C语言开发的一个开源的高性能键值对（key-value)数据�
 - 分布式集群架构中的session分离。
 
 ---
+
 ## 3 安装Reids
 
 环境ubuntu，[参考文章](http://blog.topspeedsnail.com/archives/4967)。
 
 ### 安装依赖
 
-```
+```shell
 - sudo apt-get update
 - sudo apt-get install build-essential tcl
 ```
 
 ### 下载编译并安装
 
-```
-- curl -O http://download.redis.io/redis-stable.tar.gz //下载地址可以从官网获取最新的
+- `curl -O http://download.redis.io/redis-stable.tar.gz` //下载地址可以从官网获取最新的
 - tar xzvf redis-stable.tar.gz
 - cd redis的解压目录
 - make
 - make test
 - make install
-```
 
 ### 常规配置
 
 redis的配置可以通过修改配置文件修改(需要重启服务)，也可以通过redis提供的命令进行修改。
 
-
 拷贝解压的redis文件中的redis.conf到etc/redis目录下，并编辑
 
-```
+```shell
 #设置日志文件路径(稍后要添加权限)
 logfile /var/log/redis/redis.log
 
@@ -165,7 +156,7 @@ bind 127.0.0.1
 
 使用redis-server启动redis时，Reids默认以前台服务启动，以后台服务的方式启动redis的方法为：
 
-```
+```shell
 #配置文件中，打开后台运行选项
 daemonize yes
 
@@ -176,13 +167,15 @@ redis-server /etc/redis/redis.conf
 ### 把Redis配置成系统服务
 
 编辑配置文件
-```
+
+```shell
 #supervised改为systemd
 supervised systemd
 ```
 
 创建systemd Unit文件
-```
+
+```shell
 vim /etc/systemd/system/redis.service
 
 #redis.service中的内容
@@ -202,7 +195,8 @@ WantedBy=multi-user.target
 ```
 
 创建用户组并设置权限(**根据上面redis.service中的内容创建用户**)
-```
+
+```shell
 sudo adduser --system --group --no-create-home redis
 mkdir /var/lib/redis
 
@@ -216,7 +210,8 @@ chmod 770 /var/log/redis/redis.log
 ```
 
 以系统服务的方式启动redis
-```
+
+```shell
 启动服务：systemctl start redis
 重启服务：systemctl restart redis
 
@@ -228,7 +223,7 @@ chmod 770 /var/log/redis/redis.log
 
 ### 查看状态
 
-```
+```shell
 #命令行客户端连接Redis服务：
 redis-cli
 redis-cli --raw //自动转码(查看中文)
@@ -242,14 +237,14 @@ redis-cli -h host -p port -a password //连接远程redis服务
 
 如需远程连接redis，需配置redis端口6379在linux防火墙中开放
 
-```
+```shell
 /sbin/iptables -I INPUT -p tcp --dport 6379 -j ACCEPT
 iptables-save
 ```
 
 ### 测试
 
-```
+```shell
 使用客户端命令行连接redis
 redis-cli
 
@@ -263,21 +258,24 @@ get a
 ### jedis连接redis
 
 redis默认没有启动密码，但是开启了保护模型，要让jedis连接到redis需要为redis设置密码：
-```
+
+```shell
 打开配置文件，找到requirepass，关闭注释
 requurepass 201314
 ```
+
 jedis连接到redis
-```
-        //1、获得连接对象
-        Jedis jedis = new Jedis("39.108.56.76", 6379);
-        jedis.auth("201314");
 
-        //2、获得数据
-        String username = jedis.get("username");
-        System.out.println(username);
+```shell
+//1、获得连接对象
+Jedis jedis = new Jedis("39.108.56.76", 6379);
+jedis.auth("201314");
 
-        //3、存储
-        jedis.set("address", "北京");
-        System.out.println(jedis.get("address"));
+//2、获得数据
+String username = jedis.get("username");
+System.out.println(username);
+
+//3、存储
+jedis.set("address", "北京");
+System.out.println(jedis.get("address"));
 ```

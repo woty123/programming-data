@@ -1,4 +1,4 @@
-package com.atguigu.spring.annotation.generic;
+package com.atguigu.spring.generic;
 
 public class User {
 

@@ -2,6 +2,9 @@ package com.atguigu.spring.aop;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * 使用 Spring AOP
+ */
 @Component("arithmeticCalculator")
 public class ArithmeticCalculatorImpl implements ArithmeticCalculator {
 

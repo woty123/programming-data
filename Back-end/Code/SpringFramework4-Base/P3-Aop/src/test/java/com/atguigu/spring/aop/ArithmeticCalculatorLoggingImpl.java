@@ -1,5 +1,8 @@
 package com.atguigu.spring.aop;
 
+/**
+ * 手动日志
+ */
 public class ArithmeticCalculatorLoggingImpl implements ArithmeticCalculator {
 
     @Override

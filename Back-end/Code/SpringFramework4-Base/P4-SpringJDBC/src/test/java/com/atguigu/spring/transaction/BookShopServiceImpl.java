@@ -1,4 +1,4 @@
-package com.atguigu.spring.tx;
+package com.atguigu.spring.transaction;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

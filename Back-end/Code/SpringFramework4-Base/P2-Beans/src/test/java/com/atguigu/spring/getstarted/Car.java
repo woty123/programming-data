@@ -1,4 +1,4 @@
-package com.atguigu.spring.helloworld;
+package com.atguigu.spring.getstarted;
 
 public class Car {
 

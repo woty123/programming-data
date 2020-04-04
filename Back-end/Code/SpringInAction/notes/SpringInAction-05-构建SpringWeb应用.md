@@ -9,7 +9,7 @@ Spring MVC 是基于模型-视图-控制器（Model-View-Controller，MVC）模�
 
 Spring MVC 的工作流程：
 
-![](images/9960970c-0522-4117-b582-e880f815142e.jpg)
+![](images/dispatcher-servlet.jpg)
 
 以一次请求为例，使用 Spring MVC 处理请求所经历的过程如下：
 

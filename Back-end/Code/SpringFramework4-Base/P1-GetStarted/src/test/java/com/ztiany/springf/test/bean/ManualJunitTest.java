@@ -17,7 +17,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Spring 手动加载配置文件，手动从容器中获取对象。
  */
-public class ConfigTest {
+public class ManualJunitTest {
 
     private ApplicationContext applicationContext;
 

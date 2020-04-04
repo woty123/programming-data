@@ -1,4 +1,4 @@
-package com.atguigu.spring.tx;
+package com.atguigu.spring.transaction;
 
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;

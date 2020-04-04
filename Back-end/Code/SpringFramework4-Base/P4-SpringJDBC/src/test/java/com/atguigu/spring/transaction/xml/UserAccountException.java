@@ -1,4 +1,4 @@
-package com.atguigu.spring.tx.xml;
+package com.atguigu.spring.transaction.xml;
 
 public class UserAccountException extends RuntimeException {
 

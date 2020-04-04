@@ -9,5 +9,3 @@ allprojects {
         jcenter()
     }
 }
-
-

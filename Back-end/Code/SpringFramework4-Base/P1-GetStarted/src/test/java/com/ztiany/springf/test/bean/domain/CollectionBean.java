@@ -1,4 +1,4 @@
-package com.ztiany.springf.test.basic.domain;
+package com.ztiany.springf.test.bean.domain;
 
 import java.util.Arrays;
 import java.util.List;
@@ -48,6 +48,5 @@ public class CollectionBean {
     public String toString() {
         return "CollectionBean [arr=" + Arrays.toString(arr) + ", list=" + list + ", map=" + map + ", prop=" + prop + "]";
     }
-
 
 }
