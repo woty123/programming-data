@@ -13,7 +13,7 @@ public class EmployeeDao {
     private JdbcTemplate jdbcTemplate;
 
     public Employee get(Integer id) {
-        String sql = "SELECT id, last_name lastName, email FROM employees WHERE id = ?";
+        String sql = "SELECT id, last_name lastName, email FROM p4_jdbc_employees WHERE id = ?";
         RowMapper<Employee> rowMapper = new BeanPropertyRowMapper<>(Employee.class);
         return jdbcTemplate.queryForObject(sql, rowMapper, id);
     }

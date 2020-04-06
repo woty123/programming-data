@@ -1,5 +1,5 @@
 # JDBC模板
-create table spring_framework_test_user
+create table p1_get_started_user
 (
     id   int(20) NOT NULL AUTO_INCREMENT,
     name varchar(50) DEFAULT NULL,
@@ -7,7 +7,7 @@ create table spring_framework_test_user
 );
 
 # 事务
-create table spring_framework_test_account
+create table p1_get_started_account
 (
     id    int(20)     NOT NULL AUTO_INCREMENT,
     name  varchar(20) NOT NULL,

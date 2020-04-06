@@ -1,0 +1,6 @@
+rootProject.name = 'Spring-SSH'
+include 'P1-Spring-Hibernate'
+include 'P2-Spring-UsingInWeb'
+include 'P3-Spring-Struts2'
+include 'S1-Struts2-Base'
+

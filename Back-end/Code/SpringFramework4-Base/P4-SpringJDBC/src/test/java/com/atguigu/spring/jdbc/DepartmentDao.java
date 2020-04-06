@@ -20,7 +20,7 @@ public class DepartmentDao extends JdbcDaoSupport {
     }
 
     public Department get(Integer id) {
-        String sql = "SELECT id, dept_name name FROM departments WHERE id = ?";
+        String sql = "SELECT id, dept_name name FROM p4_jdbc_departments WHERE id = ?";
         RowMapper<Department> rowMapper = new BeanPropertyRowMapper<>(Department.class);
         return getJdbcTemplate().queryForObject(sql, rowMapper, id);
     }

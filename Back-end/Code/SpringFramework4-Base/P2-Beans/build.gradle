@@ -19,15 +19,6 @@ dependencies {
     compile springLibs.springBeans
     compile springLibs.springExpression
     compile springLibs.springContext
-    //web
-    compile springLibs.springWeb
-    //aop
-    compile springLibs.springAop
-    compile springLibs.springAspects
-    compile springLibs.aspectJweaver
-    //database
-    compile springLibs.springJdbc
-    compile springLibs.springTx
     //test
     testCompile springLibs.springTest
 

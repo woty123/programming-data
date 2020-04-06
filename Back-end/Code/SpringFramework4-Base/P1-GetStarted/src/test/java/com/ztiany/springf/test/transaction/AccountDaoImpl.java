@@ -6,12 +6,12 @@ public class AccountDaoImpl extends JdbcDaoSupport implements AccountDao {
 
     @Override
     public void increaseMoney(Integer id, Double money) {
-        getJdbcTemplate().update("UPDATE spring_framework_test_account SET money = money+? WHERE id = ? ", money, id);
+        getJdbcTemplate().update("UPDATE p1_get_started_account SET money = money+? WHERE id = ? ", money, id);
     }
 
     @Override
     public void decreaseMoney(Integer id, Double money) {
-        getJdbcTemplate().update("UPDATE spring_framework_test_account SET money = money-? WHERE id = ? ", money, id);
+        getJdbcTemplate().update("UPDATE p1_get_started_account SET money = money-? WHERE id = ? ", money, id);
     }
 
 }

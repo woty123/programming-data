@@ -14,26 +14,26 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
 
     @Override
     public void save(User u) {
-        String sql = "INSERT INTO spring_framework_test_user VALUES(NULL,?) ";
+        String sql = "INSERT INTO p1_get_started_user VALUES(NULL,?) ";
         getJdbcTemplate().update(sql, u.getName());
     }
 
     @Override
     public void delete(Integer id) {
-        String sql = "DELETE FROM spring_framework_test_user WHERE id = ? ";
+        String sql = "DELETE FROM p1_get_started_user WHERE id = ? ";
         getJdbcTemplate().update(sql, id);
     }
 
     @Override
     public void update(User u) {
-        String sql = "UPDATE  spring_framework_test_user SET name = ? WHERE id=? ";
+        String sql = "UPDATE  p1_get_started_user SET name = ? WHERE id=? ";
         getJdbcTemplate().update(sql, u.getName(), u.getId());
     }
 
     @Override
     @SuppressWarnings("all")
     public User getById(Integer id) {
-        String sql = "SELECT * FROM spring_framework_test_user WHERE id = ? ";
+        String sql = "SELECT * FROM p1_get_started_user WHERE id = ? ";
         return getJdbcTemplate().queryForObject(sql, new RowMapper<User>() {
             @Override
             public User mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -48,14 +48,14 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
 
     @Override
     public int getTotalCount() {
-        String sql = "SELECT count(*) FROM spring_framework_test_user ";
+        String sql = "SELECT count(*) FROM p1_get_started_user ";
         return getJdbcTemplate().queryForObject(sql, Integer.class);
     }
 
     @Override
     @SuppressWarnings("all")
     public List<User> getAll() {
-        String sql = "SELECT * FROM spring_framework_test_user ";
+        String sql = "SELECT * FROM p1_get_started_user ";
         return getJdbcTemplate().query(sql, new RowMapper<User>() {
             @Override
             public User mapRow(ResultSet rs, int rowNum) throws SQLException {

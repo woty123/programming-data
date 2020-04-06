@@ -1,13 +1,14 @@
 # Spring MVC 快速入门
 
 ---
+
 ## 1 Spring MVC 简介
 
 Spring 框架提供了构建 Web 应用程序的全功能 MVC 模块。使用 Spring 可插入的 MVC 架构，开发者可以选择是使用内置的 Spring Web 框架还是 Struts 这样的 Web 框架。通过策略接口，Spring 框架是高度可配置的，而且包含多种视图技术，例如 JavaServer Pages（JSP）技术、Velocity、Tiles、iText 和 POI。Spring MVC 框架并不知道使用的视图，所以不会强迫开发者只使用 JSP 技术。
 
 SpringMVC 框架是一个 MVC 框架，通过实现 Model-View-Controller 模式来很好地将数据、业务与展现进行分离。SpringMVC 和 Struts、Struts2 都是表现层的框架。SpringMVC 的设计是围绕 DispatcherServlet 展开的，DispatcherServlet 负责将请求派发到特定的 handler。通过可配置的 handler mappings、view resolution、locale 以及 theme resolution 来处理请求并且转到对应的视图。
 
-![](images/spring.png)
+![spring](images/spring.png)
 
 SpringMVC 与 Struts2 不同：
 
@@ -16,17 +17,18 @@ SpringMVC 与 Struts2 不同：
 3. Struts2 采用值栈存储请求和响应的数据，通过 OGNL 存取数据， SpringMVC 通过参数解析器是将 request 请求内容解析，并给方法形参赋值，将数据和视图封装成 ModelAndView 对象，最后又将 ModelAndView 中的模型数据通过 request 域传输到页面。Jsp 视图解析器默认使用 jstl。
 
 ---
+
 ## 2 Spring MVC 处理流程与组件
 
 ### 2.1  处理流程
 
 SpringMVC 处理流程：
 
-![](images/spring_processor.png)
+![spring_processor](images/spring_processor.png)
 
 SpringMVC 处理架构：
 
-![](images/spring_arc.png)
+![spring_arc](images/spring_arc.png)
 
 1. 用户发送请求至前端控制器 DispatcherServlet
 2. DispatcherServlet 收到请求调用 HandlerMapping 处理器映射器
@@ -58,6 +60,7 @@ SpringMVC 框架提供了很多的 View 视图类型的支持，包括：jstlVie
 >在springmvc的各个组件中，处理器映射器、处理器适配器、视图解析器称为springmvc的三大组件，DispatcherServlet是核心，需要用户开发的组件有**handler、view**。
 
 ---
+
 ## 3 Spring MVC 最简示例
 
 ### 3.1 gradle 集成 Spring MVC
@@ -152,6 +155,7 @@ Spring MVC 以 DispatcherServlet 为核心控制，url 模式配置为 `*.action
 当请求 `localhost:8080/springmvc/item/itemlist.action` 时，就可以请求到上面 ItemController 的 itemList 方法，然后把数据展示到 `itemList.jsp`页面。
 
 ---
+
 ## 4 组件配置
 
 ### 4.1 默认组件
@@ -228,6 +232,7 @@ org.springframework.web.servlet.HandlerAdapter=
 逻辑视图名需要在 Controller 中返回 ModelAndView 指定，比如逻辑视图名为 itemList，则最终返回的 jsp视图地址:`WEB-INF/jsp/itemList.jsp`，最终 jsp 物理地址：`前缀+逻辑视图名+后缀`。
 
 ---
+
 ## 5 参数绑定
 
 从前端页面传递数据到后端处理，在没有框架的开发中，需要我们手动的去解析每一个字段，或者利用一些初级的框架来封装数据到对象，而 SpringMVC 支持直接在响应方法中用参数声明接收前端传递的数据。
@@ -480,6 +485,7 @@ public class QueryVO {
 ```
 
 ---
+
 ## 6 RequestMapping 路径配置
 
 RequestMapping 支持多种的配置规则，通过 `@RequestMapping` 注解可以定义不同的处理器映射规则。
@@ -497,6 +503,7 @@ RequestMapping 支持多种的配置规则，通过 `@RequestMapping` 注解可�
 除了可以对url进行设置，还可以限定请求进来的方法，比如配置`@RequestMapping(method = RequestMethod.GET)`，如果通过POST访问则报错：`HTTP Status 405 - Request method 'POST' not supported`
 
 ---
+
 ## 7 Controller 方法返回值
 
 Controller 中通过响应方法的返回值告知 SpringMVC 响应该请求的页面，SpringMVC 支持 Controller 的多种返回方式：
@@ -563,6 +570,7 @@ public String updateItemById(Item item) {
 ```
 
 ---
+
 ## 8 异常处理器
 
 SpringMVC 在处理请求过程中出现异常信息交由**异常处理器**进行处理，自定义异常处理器可以实现一个系统的异常处理逻辑。
@@ -652,6 +660,7 @@ SimpleMappingExceptionResolver 是 HandlerExceptionResolver 的简单实现，�
 - 利用 web 容器提供的error-page，配置`<error-page>`，不过值得注意的是，这里配置的的location其实会被当成一个请求来访问。所以要防止 DispatcherServlet 对这个请求的拦截
 
 ---
+
 ## 9 文件上传
 
 SpringMVC 的文件上传需要 apache-fileupload 类库的支持：
@@ -693,6 +702,7 @@ public String updateItemById(MultipartFile pictureFile) throws Exception {
 如果是多文件上传，则定义一个 MultipartFile 数组接收参数，注意多个文件表单的 name 要一致才会放入 MultipartFile 数组中。
 
 ---
+
 ## 10 json数据交互
 
 SpringMVC 支持直接 json 数据交互，默认使用 `MappingJackson2HttpMessageConverter` json 的转换。
@@ -743,6 +753,7 @@ public @ResponseBody Item testJson(@RequestBody Item item) {
 ```
 
 ---
+
 ## 11 RESTful 支持
 
 ### 11.1 什么是 restful
@@ -790,6 +801,7 @@ public Item queryItemById(@PathVariable() Integer id) {
 ```
 
 ---
+
 ## 12 拦截器
 
 SpringMVC 的处理器拦截器类似于 Servlet 开发中的过滤器 Filter，用于对处理器进行预处理和后处理。
@@ -859,6 +871,7 @@ public class TestHandlerInterceptor implements HandlerInterceptor {
 - 控制缓存
 
 ---
+
 ## 13 整合 MyBatis
 
 控制层采用 springmvc、持久层使用 mybatis 实现。
@@ -1060,11 +1073,12 @@ sql Mapper 文件按照 MyBatis 规范配置即可。
 ```
 
 ---
+
 ## 疑问
 
 ### 核心 DispatcherServlet 的 path 配置策略
 
-```
+```xml
     <!--Spring核心控制-->
     <servlet>
         <servlet-name>springmvc</servlet-name>

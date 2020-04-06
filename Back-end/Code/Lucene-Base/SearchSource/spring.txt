@@ -1,2 +1,0 @@
-The Spring Framework provides a comprehensive programming and configuration model
-.

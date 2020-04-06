@@ -34,7 +34,7 @@ public class JDBCTest {
         jdbcTemplate.setDataSource(dataSource);
 
         //2 书写sql,并执行
-        String sql = "INSERT INTO spring_framework_test_user VALUES(NULL,'jordan') ";
+        String sql = "INSERT INTO p1_get_started_user VALUES(NULL,'jordan') ";
         jdbcTemplate.update(sql);
     }
 

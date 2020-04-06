@@ -108,9 +108,9 @@ Component 是最原始的注解，但是如果所有的组件都使用 Component
 
 引用类型属性注入：
 
-- Autowired：自动装配，会自动在容器中根据类型找
-- Qualifier：配合Autowired使用，告诉 Autowired 使用哪个名称的对象
-- Resource：指定注入哪个名称的对象
+- Autowired：自动装配，会自动在容器中根据类型找。
+- Qualifier：配合Autowired使用，告诉 Autowired 使用哪个名称的对象。
+- Resource：指定注入哪个名称的对象。
 
 #### 生命周期注解
 

@@ -7,7 +7,7 @@
 
 ## 项目说明
 
-1 基础
+1 基础部分
 
 1. Java-XML：XML解析
 2. Servlet-Base：学习基本的 Servlet 知识。
@@ -15,31 +15,25 @@
 4. Servlet-SessionManagement：Session管理。
 5. Servlet-V3：学习 Servlet3 特性。
 6. Servlet-FileUploading：实现文件上传。
-7. JSP-Base：jstl 相关技术。
+7. Servlet-JSP-Base：jstl 相关技术。
 8. Servlet-MVC-Sample-Customer：基础部分综合实战。
 9. Servlet-MVC-Sample-Register：基础部分综合实战。
+10. Servlet-AJAX-Base：ajax 演示。
+11. Servlet-Project-BookMall：基础部分综合练习项目。
 
-2 WEB 前端相关技术
-
-1. AJAX-Base：ajax 演示。
-2. Servlet-Project-BookMall：基础部分综合练习项目。
-
-3 数据库
+2 数据库部分
 
 1. MySQL-Base（纯Java项目）
 2. Redis-Base（纯Java项目）
-3. MyBatis-Base
 
-4 SSH(可忽略)
+3 Spring 部分
 
-- Struts2-Base：了解 Struts2。
-
-5 Spring、MyBatis
-
-1. SpringFramework-Base
-2. SpringMVC-Base
-3. SpringInAction
-
-6 站内搜索
-
-1. Lucene-Base
+1. SpringFramework4-Base
+2. Spring-SSH
+   1. Struts2
+   2. Hibernate
+   3. Spring-Struts2-Hibernate
+3. Spring-SSM-Base
+   1. MyBatis
+   2. Spring-MVC
+4. SpringInAction

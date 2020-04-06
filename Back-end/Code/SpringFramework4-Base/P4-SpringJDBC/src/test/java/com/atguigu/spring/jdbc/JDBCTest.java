@@ -43,7 +43,7 @@ public class JDBCTest {
      */
     @Test
     public void testNamedParameterJdbcTemplate2() {
-        String sql = "INSERT INTO employees(last_name, email, dept_id) " + "VALUES(:lastName,:email,:dpetId)";
+        String sql = "INSERT INTO p4_jdbc_employees(last_name, email, dept_id) " + "VALUES(:lastName,:email,:dpetId)";
 
         Employee employee = new Employee();
         employee.setLastName("XYZ");
@@ -62,7 +62,7 @@ public class JDBCTest {
      */
     @Test
     public void testNamedParameterJdbcTemplate() {
-        String sql = "INSERT INTO employees(last_name, email, dept_id) VALUES(:ln,:email,:deptid)";
+        String sql = "INSERT INTO p4_jdbc_employees(last_name, email, dept_id) VALUES(:ln,:email,:deptid)";
 
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("ln", "FF");
@@ -88,7 +88,7 @@ public class JDBCTest {
      */
     @Test
     public void testQueryForObject2() {
-        String sql = "SELECT count(id) FROM employees";
+        String sql = "SELECT count(id) FROM p4_jdbc_employees";
         long count = jdbcTemplate.queryForObject(sql, Long.class);
         System.out.println(count);
     }
@@ -98,7 +98,7 @@ public class JDBCTest {
      */
     @Test
     public void testQueryForList() {
-        String sql = "SELECT id, last_name lastName, email FROM employees WHERE id > ?";
+        String sql = "SELECT id, last_name lastName, email FROM p4_jdbc_employees WHERE id > ?";
         RowMapper<Employee> rowMapper = new BeanPropertyRowMapper<>(Employee.class);
         List<Employee> employees = jdbcTemplate.query(sql, rowMapper, 5);
         System.out.println(employees);
@@ -115,7 +115,7 @@ public class JDBCTest {
      */
     @Test
     public void testQueryForObject() {
-        String sql = "SELECT id, last_name lastName, email, dept_id as \"department.id\" FROM employees WHERE id = ?";
+        String sql = "SELECT id, last_name lastName, email, dept_id as \"department.id\" FROM p4_jdbc_employees WHERE id = ?";
         RowMapper<Employee> rowMapper = new BeanPropertyRowMapper<>(Employee.class);
         Employee employee = jdbcTemplate.queryForObject(sql, rowMapper, 1);
         System.out.println(employee);
@@ -127,7 +127,7 @@ public class JDBCTest {
      */
     @Test
     public void testBatchUpdate() {
-        String sql = "INSERT INTO employees(last_name, email, dept_id) VALUES(?,?,?)";
+        String sql = "INSERT INTO p4_jdbc_employees(last_name, email, dept_id) VALUES(?,?,?)";
 
         List<Object[]> batchArgs = new ArrayList<>();
 
@@ -145,7 +145,7 @@ public class JDBCTest {
      */
     @Test
     public void testUpdate() {
-        String sql = "UPDATE employees SET last_name = ? WHERE id = ?";
+        String sql = "UPDATE p4_jdbc_employees SET last_name = ? WHERE id = ?";
         jdbcTemplate.update(sql, "Jack", 5);
     }
 

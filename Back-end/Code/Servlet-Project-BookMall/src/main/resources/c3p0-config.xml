@@ -2,7 +2,7 @@
     <!-- 用户自定义配置 -->
     <named-config name="book_devoloper">
         <property name="driverClass">com.mysql.jdbc.Driver</property>
-        <property name="jdbcUrl">jdbc:mysql://localhost:3306/book</property>
+        <property name="jdbcUrl">jdbc:mysql://localhost:3306/servlet_project_book</property>
         <property name="user">root</property>
         <property name="password">201314</property>
         <!-- 最大连接数 -->

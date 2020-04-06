@@ -1,9 +1,10 @@
 # MyBatis
 
 ---
+
 ## 1 MyBatis 简介
 
-MyBatis 本是 apache 的一个开源项目iBatis, 2010年这个项目由 `apache software foundation` 迁移到了 `google code`，并且改名为 MyBatis 。2013年11月迁移到Github。
+MyBatis 本是 apache 的一个开源项目iBatis，2010年这个项目由 `apache software foundation` 迁移到了 `google code`，并且改名为 MyBatis 。2013年11月迁移到 Github。
 
 MyBatis 是一个优秀的**持久层框架**，它对jdbc的操作数据库的过程进行封装，使开发者只需要关注 SQL 本身，而不需要花费精力去处理例如注册驱动、创建connection、创建statement、手动设置参数、结果集检索等jdbc繁杂的过程代码。
 
@@ -24,58 +25,56 @@ jdbc编程步骤：
 
 jdbc问题总结如下
 
-1、数据库连接创建、释放频繁造成系统资源浪费，从而影响系统性能。如果使用数据库连接池可解决此问题。
-2、sql 语句在代码中硬编码，造成代码不易维护，实际应用中 sql 变化的可能较大，sql 变动需要改变 java 代码。
-3、使用 preparedStatement 向占有位符号传参数存在硬编码，因为sql语句的where条件不一定，可能多也可能少，修改sql还要修改代码，系统不易维护。
-4、对结果集解析存在硬编码（查询列名），sql 变化导致解析代码变化，系统不易维护，如果能将数据库记录封装成 pojo 对象解析比较方便。
+- 1、数据库连接创建、释放频繁造成系统资源浪费，从而影响系统性能。如果使用数据库连接池可解决此问题。
+- 2、sql 语句在代码中硬编码，造成代码不易维护，实际应用中 sql 变化的可能较大，sql 变动需要改变 java 代码。
+- 3、使用 preparedStatement 向占有位符号传参数存在硬编码，因为sql语句的where条件不一定，可能多也可能少，修改sql还要修改代码，系统不易维护。
+- 4、对结果集解析存在硬编码（查询列名），sql 变化导致解析代码变化，系统不易维护，如果能将数据库记录封装成 pojo 对象解析比较方便。
 
 ### 1.2 MyBatis 架构
 
-MyBatis解决了上面问题：
+MyBatis 解决了上面问题：
 
-![](index_files/dabf6015-077a-4155-849c-cf22c702a41a.png)
+![mybatis](images/mybatis-process.png)
 
 1. mybatis配置 `SqlMapConfig.xml`，此文件作为 mybatis 的全局配置文件，配置了 mybatis 的运行环境等信息。`mapper.xml` 文件即 sql 映射文件，文件中配置了操作数据库的 sql 语句。此文件需要在`SqlMapConfig.xml`中加载。
 2. 通过 mybatis 环境等配置信息构造 `SqlSessionFactory` 即会话工厂
-3. 由会话工厂创建 `sqlSession` 即会话，操作数据库需要通过 `sqlSession` 进行。
+3. 由会话工厂创建 `sqlSession` 会话，操作数据库需要通过 `sqlSession` 进行。
 4. mybatis 底层自定义了 `Executor` 执行器接口操作数据库，`Executor` 接口有两个实现，一个是基本执行器、一个是缓存执行器。
 5. `Mapped Statement` 也是 mybatis 一个底层封装对象，它包装了 mybatis 配置信息及 sql 映射信息等。`mapper.xml` 文件中一个sql对应一个 Mapped Statement 对象，sql 的 id 即是 `Mapped statement` 的id。
 6. Mapped Statement 对 sql 执行输入参数进行定义，包括 `HashMap、基本类型、pojo`，Executor 通过 Mapped Statement 在执行 sql 前将输入的 java 对象映射至 sql 中，输入参数映射就是 jdbc 编程中对 `preparedStatement` 设置参数。
 7. Mapped Statement 对 sql 执行输出结果进行定义，包括 `HashMap、基本类型、pojo`，Executor通过 Mapped Statement 在执行sql后将输出结果映射至java对象中，输出结果映射过程相当于jdbc编程中对结果的解析处理过程。
 
-
 ### 1.3 Mybatis 解决 jdbc 编程的问题
 
 1. 数据库连接创建、释放频繁造成系统资源浪费从而影响系统性能，如果使用数据库连接池可解决此问题。
-  - 解决：在SqlMapConfig.xml中配置数据连接池，使用连接池管理数据库链接。
+   - 解决：在SqlMapConfig.xml中配置数据连接池，使用连接池管理数据库链接。
 2. Sql语句写在代码中造成代码不易维护，实际应用sql变化的可能较大，sql变动需要改变java代码。
-  - 解决：将Sql语句配置在XXXXmapper.xml文件中与java代码分离。
+     - 解决：将Sql语句配置在XXXXmapper.xml文件中与java代码分离。
 3. 向sql语句传参数麻烦，因为sql语句的where条件不一定，可能多也可能少，占位符需要和参数一一对应。
-  - 解决：Mybatis自动将java对象映射至sql语句，通过statement中的parameterType定义输入参数的类型。
+   - 解决：Mybatis自动将java对象映射至sql语句，通过statement中的parameterType定义输入参数的类型。
 4. 对结果集解析麻烦，sql变化导致解析代码变化，且解析前需要遍历，如果能将数据库记录封装成pojo对象解析比较方便。
-  - 解决：Mybatis自动将sql执行结果映射至java对象，通过statement中的resultType定义输出结果的类型。
+     - 解决：Mybatis自动将sql执行结果映射至java对象，通过statement中的resultType定义输出结果的类型。
 
 ### 1.4 mybatis 与 hibernate 不同
 
-- Mybatis和hibernate不同，它不完全是一个ORM框架，因为MyBatis需要程序员自己编写Sql语句。mybatis可以通过XML或注解方式灵活配置要运行的sql语句，并将java对象和sql语句映射生成最终执行的sql，最后将sql执行的结果再映射生成java对象。
+- Mybatis和hibernate不同，它不完全是一个ORM框架，因为MyBatis需要程序员自己创建表并编写相关操作数据的Sql语句。mybatis可以通过XML或注解方式灵活配置要运行的sql语句，并将java对象和sql语句映射生成最终执行的sql，最后将sql执行的结果再映射生成java对象。
 - Mybatis学习门槛低，简单易学，程序员直接编写原生态sql，可严格控制sql执行性能，灵活度高，非常适合对关系数据模型要求不高的软件开发，例如互联网软件、企业运营类软件等，因为这类软件需求变化频繁，一但需求变化要求成果输出迅速。但是灵活的前提是mybatis无法做到数据库无关性，如果需要实现支持多种数据库的软件则需要自定义多套sql映射文件，工作量大。
 - Hibernate对象/关系映射能力强，数据库无关性好，对于关系模型要求高的软件（例如需求固定的定制化软件）如果用hibernate开发可以节省很多代码，提高效率。但是Hibernate的学习门槛高，要精通门槛更高，而且怎么设计O/R映射，在性能和对象模型之间如何权衡，以及怎样用好Hibernate需要具有很强的经验和能力才行。
 
-**总之，按照用户的需求在有限的资源环境下只要能做出维护性、扩展性良好的软件架构都是好架构，所以框架只有适合才是最好。**
-
-
+**总之，按照用户的需求在有限的资源环境下只要能做出维护性、扩展性良好的软件架构都是好架构，所以框架只有适合才是最好**。
 
 ---
+
 ## 2 MyBatis 入门
 
 ### 2.1 开发步骤
 
-- 添加 MyBatis 相关依赖。
-- 在类路径中创建 MyBatis 核心配置文件。
-- 创建 pojo，pojo 类作为 mybatis 进行 sql 映射使用，pojo 类字段通常与数据库表列对应。
-- 创建 sql 映射文件(sql映射文件中描述了如何操作数据库的sql语句)，并在核心配置文件中配置好该映射文件的位置。
-- 创建 SqlSessionFactoryBuilder 对象，加载核心配置文件，创建 SqlSessionFactory 对象。
-- 创建 SqlSession 对象，通过调用 SqlSession 相关方法操作数据库，关闭 SqlSession 释放资源。
+1. 添加 MyBatis 相关依赖。
+2. 在类路径中创建 MyBatis 核心配置文件。
+3. 创建 pojo，pojo 类用于 mybatis 对 sql 进行映射，pojo 类字段通常与数据库表列对应。
+4. 创建 sql 映射文件(sql映射文件中描述了如何操作数据库的sql语句)，并在核心配置文件中配置好该映射文件的位置。
+5. 创建 SqlSessionFactoryBuilder 对象，加载核心配置文件，创建 SqlSessionFactory 对象。
+6. 创建 SqlSession 对象，通过调用 SqlSession 相关方法操作数据库，关闭 SqlSession 释放资源。
 
 ### 2.2 核心类
 
@@ -91,7 +90,6 @@ MyBatis解决了上面问题：
 - 注意添加 XML 头部的声明，用来验证 XML 文档正确性
 - environment 元素体中包含了事务管理和连接池的配置
 - mappers 元素则是包含一组 mapper 映射器（这些 mapper 的 XML 文件包含了 SQL 代码和映射定义信息）
-
 
 **Dao 开发方法**：通常有两个方法，即原始 Dao 开发方法和 Mapper 动态代理开发方法。Mapper动态代理方式让程序员只需要编写 Mapper 接口（相当于Dao接口），由 Mybatis 框架根据接口定义创建接口的动态代理对象，Mapper接口开发需要遵循以下规范如下。
 
@@ -109,8 +107,8 @@ MyBatis解决了上面问题：
 - **SqlSession**：每个线程都应该有它自己的 SqlSession 实例。SqlSession 的实例不是线程安全的，因此是不能被共享的，所以它的最佳的作用域是请求或方法作用域。绝对不能将 SqlSession 实例的引用放在一个类的静态域，甚至一个类的实例变量也不行。也绝不能将 SqlSession 实例的引用放在任何类型的管理作用域中，比如 Servlet 架构中的 HttpSession。
 - **映射器实例（Mapper Instances）**：映射器接口的实例是从 SqlSession 中获得的。因此从技术层面讲，任何映射器实例的最大作用域是和请求它们的 SqlSession 相同的。尽管如此，映射器实例的最佳作用域是方法作用域。
 
-
 ---
+
 ## 3 MyBatis 配置
 
 ### 3.1 核心配置文件
@@ -126,7 +124,6 @@ MyBatis解决了上面问题：
   - transactionManager：事务管理
   - dataSource：数据源
 - **mappers**：映射器，告诉 MyBatis 到哪里去找到定义的 SQL 映射语句。
-
 
 ### 3.2 mapper（映射器）
 
@@ -152,7 +149,7 @@ public interface BlogMapper {
 命名解析：为了减少输入量，MyBatis 对所有的命名配置元素（包括语句，结果映射，缓存等）使用了如下的命名解析规则：
 
 - 完全限定名（比如`com.mypackage.MyMapper.selectAllThings`）将被直接查找并且找到即用。
-- 短名称（比如`selectAllThings`）如果全局唯一也可以作为一个单独的引用。如果不唯一，有两个或两个以上的相同名称（比如`com.foo.selectAllThings `和`com.bar.selectAllThings`），那么使用时就会收到错误报告说短名称是不唯一的，这种情况下就必须使用完全限定名。
+- 短名称（比如`selectAllThings`）如果全局唯一也可以作为一个单独的引用。如果不唯一，有两个或两个以上的相同名称（比如`com.foo.selectAllThings`和`com.bar.selectAllThings`），那么使用时就会收到错误报告说短名称是不唯一的，这种情况下就必须使用完全限定名。
 
 #### parameterType
 
@@ -161,12 +158,10 @@ parameterType 指定 sql 输入参数类型，mybatis 通过 ognl 从输入对�
 - 传递pojo对象：Mybatis使用ognl表达式解析对象字段的值，`#{}` 或者 `${}` 括号中的值为pojo属性名称。
 - 传递pojo包装对象：比如传递多个查询条件，查询条件可能是综合的查询条件，不仅包括用户查询条件还包括其它的查询条件（比如查询用户信息的时候，将用户购买商品信息也作为查询条件），这时可以使用包装对象传递输入参数。
 
-
 #### `#{}` 和 `${}`
 
 - `#{}`表示一个占位符号，通过 `#{}` 可以实现 preparedStatement 向占位符中设置值，自动进行 java 类型和jdbc类型转换。`#{}` 可以有效防止 sql 注入。 `#{}` 可以接收简单类型值或 pojo 属性值。 如果 parameterType 传输单个简单类型值，`#{}` 括号中可以是 value 或其它名称。
 -` ${}`表示拼接sql串，通过 `${}` 可以将 parameterType 传入的内容拼接在 sql 中且不进行 jdbc 类型转换， `${}` 可以接收简单类型值或 pojo 属性值，如果 parameterType 传输单个简单类型值，`${}`括号中只能是value。
-
 
 #### resultType
 
@@ -179,13 +174,14 @@ resultType 指定输出结果类型，mybatis 将 sql 查询结果的一行记�
 - Java API
 - 配置日志
 
-
 ---
+
 ## 4 逆向工程
 
 根据SQL生成POJO、Mapper、和 xml 映射文件。具体参考[mybatis-generator-plugin](https://blog.csdn.net/Inke88/article/details/74766432)
 
 ---
+
 ## 5 整合 Spring
 
 ### 4.1  整合思路
@@ -195,14 +191,13 @@ resultType 指定输出结果类型，mybatis 将 sql 查询结果的一行记�
 3. Mapper 代理形式中，应该从 spring 容器中直接获得 mapper 的代理对象。
 4. 数据库的连接以及数据库连接池事务管理都交给 spring 容器来完成
 
-###  5.2 事务管理
+### 5.2 事务管理
 
 MyBatis事务管理：
 
 - 手动 commit 管理，默认的 SqlSession 是 `org.apache.ibatis.session.defaults.DefaultSqlSession`
 - 使用 SqlSessionTemplate 管理 MyBatis 事务，注入的 SqlSession 实现为：`org.mybatis.spring.SqlSessionTemplate`
 - 使用 Spring 的事务模板管理 MyBatis 事务
-
 
 #### 单表事务管理
 
@@ -215,7 +210,6 @@ MyBatis事务管理：
 
 实际上这并没有用到事务管理，而是使用MyBatis批量操作数据的做法，目的是为了减少和数据库的交互次数。
 
-
 #### 多库/多表事务管理
 
 我要对单库/多库的两张表（Student表、Teacher表）同时插入一条数据，要么全部成功，要么全部失败，该如何处理？此时明显就不可以使用MyBatis批量操作的方法了，要实现这个功能，可以使用Spring的事务管理。
@@ -224,10 +218,8 @@ MyBatis事务管理：
 
 所以一般在Service层加入Spring体工队事务管理。
 
-
-
-
 ---
+
 ## 引用
 
 - [mybatis 官网](http://blog.mybatis.org/)，mybatis提供了中文文档

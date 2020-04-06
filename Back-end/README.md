@@ -84,6 +84,10 @@
 
 - [MySQL/InnoDB中，乐观锁、悲观锁、共享锁、排它锁、行锁、表锁、死锁概念的理解](https://juejin.im/post/5b5ea32351882519f6477c5c)
 
+### 项目配置
+
+- [idea 创建java web项目ssm-gradle](https://www.cnblogs.com/Im-Victor/p/10857638.html)
+
 ---
 
 ## 3 待整理
