@@ -116,6 +116,7 @@ flutter 版本升级记录与兼容：
 
 实例项目
 
+- [玩Android客户端Flutter版本。Provider的最佳实践.DarkMode、多色彩主题、国际化、切换字体、优美动画](https://github.com/phoenixsky/fun_android_flutter)
 - [WanAndroid-Flutter](https://github.com/xing16/WanAndroid-Flutter)
 - [Flutter版】玩安卓，非常适合学习，代码不多、注释多](https://github.com/yechaoa/wanandroid_flutter)
 - [Flutter豆瓣客户端](https://github.com/kaina404/FlutterDouBan)

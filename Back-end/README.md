@@ -17,6 +17,10 @@
 
 ## 3 学习资料
 
+### JavaEE
+
+- [JavaEE 规范](https://www.oracle.com/java/technologies/java-ee-glance.html)
+
 ### Tomcat
 
 - [Tomcat 安全部署实战指南](https://klionsec.github.io/2017/12/16/tomcat-sec/)
