@@ -113,7 +113,20 @@ sudo apt-get check 检查是否有损坏的依赖
 
 ## 4 其他安装方式
 
-使用 wget 可以下载软件，然后手动解压。
+使用 wget 可以下载开源软件的源码，然后手动编译后安装。
+
+```shell
+wget https:/lopenresty.org/download/openresty-1.15.8.1.tar.gz
+tar-zxf openresty-VERSION.tar.gz
+cd openresty-VERSION/
+# 运行脚本，自行配置一下缓解，--prefix=/usr/local/openresty 用于指定安装目录
+./configure --prefix=/usr/local/openresty
+// 编译，-j2 表示使用两个逻辑cpu进行编译
+make -j2
+# 安装
+make install
+
+```
 
 ## 5 配置环境变量
 
@@ -179,7 +192,39 @@ Linux 也有相应的服务，这就是程序运行的第三种方式，以服�
 
 - 通过命令 `yum install mariadb-server mariadb` 进行安装，命令 `systemctl start mariadb` 启动，命令 `systemctl enable mariadb` 设置开机启动。同理，会在 `/usr/lib/systemd/system` 目录下，创建一个 `XXX.service` 的配置文件，从而成为一个服务。
 
-## 8 引用
+## 8 升级内核
+
+使用 yum 升级内核：（由于依赖于远程仓库，不一定能安装到最新的内核版本）
+
+1. 查看内核版本：`uname -r`
+2. 升级内核：
+   1. yum 仓库和国内的镜像可能没有那么高的内部版本，可用使用 epel 仓库，安装即可使用：`yum install epel-release -y`
+   2. 指定内核版本 `yum install kernel-3.10.0`，安装最新内核版本 ``yum install kernel`。
+3. 升级已安装的其他软件包和补丁：`yum update`
+
+源代码编译安装升级内核版本：
+
+1. 安装依赖包：`yum install gcc gcc-c++ make ncurses-devel openssl-devel elfutils-libelf-devel`
+2. 下载内核
+3. `tar xvf linux-xxx.tar.xz -C /usr/src/kernels`
+4. 配置内核编译参数
+   1. 方式1：重新配置内核：`cd /usr/src/kernels/linux-5.1.10`，`make menuconfig | allyesconfig | allnoconfig`（内核很多东西需要进行配置）
+      1. menuconfig 交互式配置
+      2. allyesconfig 全部配置
+      3. allnoconfig 最小内核版本
+   2. 方式2：使用原有配置：`cp /boot/config-kernelversion.platform-name /usr/src/kernels/linux-5.1.10/.config`
+5. make -j2 all（可用 `lscpu` 查看cpu个数）
+6. make modules_install（先安装内核所支持的模块）
+7. make install
+
+## 9 grub 配置文件
+
+grub 是启动引导软件。
+
+1. 如何设置默认引导项
+2. 忘记 root 密码如何重置
+
+## 10 引用
 
 - [Ubuntu(Debian)的 aptitude 与 apt-get 的区别和联系](http://www.cnblogs.com/yuxc/archive/2012/08/02/2620003.html)
 - [apt 和 apt-get 的区别](https://juejin.im/post/5d7731e15188257e8c4d974d)
