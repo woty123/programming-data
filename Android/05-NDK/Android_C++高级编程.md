@@ -68,11 +68,11 @@ adb shell start
 - 取消自动显示：`undisplay 行号`（自动显示的行号）
 - 查看内存布局：`x /20 buff`，查看buff数组的前20个元素
 - 程序非正常退出，如何查看错误？
-  1.  `ulimit -a` 查看core文件是否分配大小
-  2.  `ulimit -c 1024` 创建的core文件大小为1024字节
-  3.  `gcc test2.c -g -o test2` 编译链接得到带有-g选项的可执行程序
-  4.  `./test2` 执行程序，会生成core日志文件
-  5.  `gdb test2 core` 打开日志文件，定位错误信息到具体的代码行数
+  1. `ulimit -a` 查看core文件是否分配大小
+  2. `ulimit -c 1024` 创建的core文件大小为1024字节
+  3. `gcc test2.c -g -o test2` 编译链接得到带有-g选项的可执行程序
+  4. `./test2` 执行程序，会生成core日志文件
+  5. `gdb test2 core` 打开日志文件，定位错误信息到具体的代码行数
 
 ---
 ## 6 Binoic API
@@ -226,7 +226,6 @@ POSIX也提供了基于调度策略调整线程优先级的函数，可以在调
   - ntons:与htons相反
   - htonl:将unsigned integer 从主机字节排序转换到网络字节排序
   - ntonl:与htonl相反
-
 
 - 4 `int listen(int, int);`，监听socke是通过listen函数完成的
 

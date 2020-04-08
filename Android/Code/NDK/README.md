@@ -11,8 +11,4 @@
 - `Sample5`：cmake开发
 - `Sample-NdkBuild-ThridLib`：ndkbuild开发，使用第三方库
 - `Sample-CMake-ThridLib`：cmake开发，使用第三方库
-
-## 项目
-
-- AppSecurity：本地代价使用反射校验签名（仅为示例，不推荐使用反射）
-- bsdiff：bsdiff增量更新示例
+- `bsdiff`：bsdiff增量更新示例

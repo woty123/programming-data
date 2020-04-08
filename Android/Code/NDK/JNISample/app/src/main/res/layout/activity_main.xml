@@ -18,7 +18,7 @@
             android:layout_marginTop="10dp"
             android:onClick="stringFromC"
             android:text="stringFromC"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false" />
 
 
         <Button
@@ -27,7 +27,7 @@
             android:layout_marginTop="10dp"
             android:onClick="intFromC"
             android:text="intFromC"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false" />
 
 
         <Button
@@ -36,7 +36,7 @@
             android:layout_marginTop="10dp"
             android:onClick="addArray"
             android:text="addArray"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false" />
 
 
         <Button
@@ -45,7 +45,7 @@
             android:layout_marginTop="10dp"
             android:onClick="bubbleSort"
             android:text="bubbleSort"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false" />
 
 
         <Button
@@ -54,7 +54,7 @@
             android:layout_marginTop="10dp"
             android:onClick="encryption"
             android:text="encryption"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false" />
 
 
         <Button
@@ -63,7 +63,7 @@
             android:layout_marginTop="10dp"
             android:onClick="stringFromC"
             android:text="stringFromC"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false" />
 
         <Button
             android:layout_width="match_parent"
@@ -71,7 +71,7 @@
             android:layout_marginTop="10dp"
             android:onClick="callJava"
             android:text="callJava"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false" />
 
         <Button
             android:layout_width="match_parent"
@@ -79,7 +79,7 @@
             android:layout_marginTop="10dp"
             android:onClick="throwError"
             android:text="throwError"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false" />
 
         <Button
             android:layout_width="match_parent"
@@ -87,7 +87,15 @@
             android:layout_marginTop="10dp"
             android:onClick="dynamicRegisterFromJni"
             android:text="dynamicRegisterFromJni"
-            android:textAllCaps="false"/>
+            android:textAllCaps="false" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="pThread"
+            android:text="pThread"
+            android:textAllCaps="false" />
 
     </LinearLayout>
 

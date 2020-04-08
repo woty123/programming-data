@@ -4,8 +4,8 @@
 - 重载的`+`操作符，JVM使用StringBuilder进行的优化
 - String格式化输出
 - 正则表达式(重要)
-    - Pattern
-    - Matcher
+  - Pattern
+  - Matcher
 - String的intern方法
 - StringTokenizer
 - String内部实现：字符数组、字节数组。
@@ -17,8 +17,8 @@
 
 - width用来表示最小尺寸，默认情况下是左对齐的，通过"-"符号可以改变对其的方向
 - 与width对应的是precision，用来表示最大的尺寸，width可以根所有的数据类型转换，而precision则不行，
- - precision应用于string，表示打印String时除此字符的最大数量
- - precision应用与浮点数时，表示小数部分要显示出来的位数，默认是6为位，按四舍五入运算
+  - precision应用于string，表示打印String时除此字符的最大数量
+  - precision应用与浮点数时，表示小数部分要显示出来的位数，默认是6为位，按四舍五入运算
 
 示例：
 
@@ -52,4 +52,3 @@ a|十六进制浮点|0x1.fccdp3|n|与平台有关的行分隔符|——
 格式化字符串可以使用参数索引，索引必须在 `%` 号后面，以`$`符号结束(索引从1开始)，`<`标志，指示前面格式说明中的参数将再次被使用
 
 `System.out.printf("%1$s %2$tB %2$tY  ", "Date", new Date());` `1$`表示格式化第一次索引，后面`%2$tB %2$tY`使用的都是Date对象，只是格式化的方式不一样。`System.out.printf("%s %tB %<tY  ", "Date", new Date());`与前面语句输出一样。
-

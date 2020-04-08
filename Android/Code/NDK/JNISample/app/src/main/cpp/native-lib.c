@@ -1,11 +1,10 @@
-#include "com_ztiany_jni_sample_JniBridge.h"
+#include "JniBridge.h"
 #include "Utils.h"
 #include <string.h>
 #include "android/log.h"
+#include "LogUtils.h"
 
-#define LOG_TAG "C-Log"
-#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
-#define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
+JavaVM *javaVM;
 
 /*
  * Class:     com_ztiany_jni_sample_JniBridge
@@ -13,8 +12,7 @@
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL
-Java_com_ztiany_jni_sample_JniBridge_stringFromC(JNIEnv *env, jclass thiz) {
-    LOGI("stringFromC called");
+Java_com_ztiany_jni_sample_JniBridge_stringFromC(JNIEnv *env, jclass thiz) {LOGI("stringFromC called");
     char *str = "你好，Java";
     return (*env)->NewStringUTF(env, str);
 }
@@ -24,8 +22,7 @@ Java_com_ztiany_jni_sample_JniBridge_stringFromC(JNIEnv *env, jclass thiz) {
  * Method:    intFromC
  * Signature: (II)I
  */
-JNIEXPORT jint JNICALL Java_com_ztiany_jni_sample_JniBridge_intFromC
-        (JNIEnv *env, jobject thiz, jint a, jint b) {
+JNIEXPORT jint JNICALL Java_com_ztiany_jni_sample_JniBridge_intFromC (JNIEnv *env, jobject thiz, jint a, jint b) {
     LOGI("intFromC called");
     jint add = a + b;
     return add;
@@ -36,9 +33,7 @@ JNIEXPORT jint JNICALL Java_com_ztiany_jni_sample_JniBridge_intFromC
  * Method:    addArray
  * Signature: ([II)[I
  */
-JNIEXPORT jintArray JNICALL Java_com_ztiany_jni_sample_JniBridge_addArray
-        (JNIEnv *env, jobject thiz, jintArray jArray, jint add) {
-
+JNIEXPORT jintArray JNICALL Java_com_ztiany_jni_sample_JniBridge_addArray(JNIEnv *env, jobject thiz, jintArray jArray, jint add) {
     //获取数组的长度
     jsize length = (*env)->GetArrayLength(env, jArray);
     //获取数组的指针
@@ -87,7 +82,7 @@ JNIEXPORT jstring JNICALL Java_com_ztiany_jni_sample_JniBridge_encryption
         (JNIEnv *env, jobject thiz, jstring jstr) {
 
     char *cArr = Jstring2CString(env, jstr);
-    const char *cHello = "hello";
+    const char *cHello = "你好";
     strcat(cArr, cHello);
     return (*env)->NewStringUTF(env, cArr);
 }
@@ -153,6 +148,8 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {
     if ((*jvm)->GetEnv(jvm, (void **) &env, JNI_VERSION_1_4) != JNI_OK) {
         return -1;
     }
+
+    javaVM = jvm;
 
     jclass clz = (*env)->FindClass(env, "com/ztiany/jni/sample/JniBridge");
 

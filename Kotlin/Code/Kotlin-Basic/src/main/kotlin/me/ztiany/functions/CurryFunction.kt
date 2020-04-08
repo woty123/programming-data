@@ -7,8 +7,6 @@ import java.nio.charset.Charset
  *柯里化函数：多元函数变成单元函数调用链的过程
  *偏函数：指定多参数函数的某些参数而得到新函数，实现方式是函数扩展
  */
-
-
 private fun log(tag: String, target: OutputStream, message: Any?) {
     target.write("[$tag] $message\n".toByteArray())
 }
@@ -47,13 +45,11 @@ fun main(args: Array<String>) {
     val stringFromGBK = makeStringFromGbkBytes(bytes)
 }
 
-
 private val makeString = fun(byteArray: ByteArray, charset: Charset): String {
     return String(byteArray, charset)
 }
 
 private val makeStringFromGbkBytes = makeString.partial2(charset("GBK"))
-
 
 private fun <P1, P2, R> Function2<P1, P2, R>.partial2(p2: P2) = fun(p1: P1) = this(p1, p2)
 private fun <P1, P2, R> Function2<P1, P2, R>.partial1(p1: P1) = fun(p2: P2) = this(p1, p2)

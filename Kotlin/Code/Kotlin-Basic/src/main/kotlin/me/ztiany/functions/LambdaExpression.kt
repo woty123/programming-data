@@ -22,7 +22,6 @@ private fun testLock() {
     lock(lock) { println("abc") }
 }
 
-
 /**
  * Lambda 表达式：
  *      1，lambda 表达式总是被大括号括着，
@@ -52,10 +51,8 @@ private fun testMap() {
     }
 }
 
-
 //可以直接声明Lambda类型
 private val toStr: (num: Int) -> String = { it.toString() }
-
 
 // 函数类型：对于接受另一个函数作为参数的函数，我们必须为该参数指定函数类型。
 // max函数中必须指定less的类型，其类型为(T, T) -> Boolean) 接收两个类型，返回一个Boolean
@@ -68,7 +65,6 @@ private fun <T> max(collection: Collection<T>, less: (T, T) -> Boolean): T? {
     }
     return max
 }
-
 
 private fun lambdaReturn() {
 
@@ -117,7 +113,6 @@ private fun testClosure() {
     print(sum)
 }
 
-
 //自执行闭包：自执行闭包就是在定义闭包的同时直接执行闭包，一般用于初始化上下文环境。
 fun autoExecute() {
     { x: Int, y: Int ->
@@ -153,4 +148,5 @@ private fun testExtend() {
         // 带接收者的 lambda 由此开始
         body()   // 省略HTML直接调用该接收者对象的一个方法
     }
+
 }

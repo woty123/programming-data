@@ -3,7 +3,7 @@ version = "1.0"
 
 buildscript {
 
-    ext.kotlin_version = '1.3.11'
+    ext.kotlin_version = '1.3.61'
 
     repositories {
         maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
@@ -22,6 +22,7 @@ buildscript {
 
 apply plugin: "java"
 apply plugin: "kotlin"
+apply plugin: 'kotlin-kapt'
 //https://kotlinlang.org/docs/reference/compiler-plugins.html
 //apply plugin: "kotlin-noarg"
 //apply plugin: "kotlin-allopen"
@@ -32,10 +33,13 @@ repositories {
     jcenter()
     mavenCentral()
     maven { url "https://kotlin.bintray.com/kotlinx/" }
+    //arrow
+    maven { url "https://dl.bintray.com/arrow-kt/arrow-kt/" }
+    maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local/' } // for SNAPSHOT builds
 }
 
 sourceSets {
-    main.kotlin.srcDirs += ["src/main/libraries", "src/main/BennyHuo","src/main/Tools"]
+    main.kotlin.srcDirs += ["src/main/libraries", "src/main/BennyHuo", "src/main/Tools"]
 }
 
 dependencies {
@@ -43,16 +47,19 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${rootProject.kotlin_version}"
     compile("org.jetbrains.kotlin:kotlin-reflect")
     compile "org.jetbrains.kotlin:kotlin-script-runtime:${rootProject.kotlin_version}"
+
     //https://github.com/JetBrains/kotlin/tree/master/libraries/kotlinx-metadata/jvm
     compile("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.0.5")
     //https://github.com/Kotlin/kotlinx.serialization
     compile "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.10.0"
+
     //https://github.com/ReactiveX/RxKotlin
     compile("io.reactivex.rxjava2:rxkotlin:2.3.0")
     //https://github.com/square/moshi
     compile("com.squareup.moshi:moshi:1.8.0")
     compile("com.squareup.moshi:moshi-kotlin:1.8.0")
     //kapt("com.squareup.moshi:moshi-kotlin-codegen:1.8.0")
+
     //https://github.com/enbandari/KotlinTuples
     compile "com.bennyhuo.kotlin:kotlin-tuples:1.0"
     //https://github.com/enbandari/ObjectPropertyDelegate
@@ -63,6 +70,11 @@ dependencies {
     //kpt "com.bennyhuo.kotlin:deepcopy-compiler:1.1.0"
     //https://github.com/enbandari/ReleasableVar
     compile "com.bennyhuo.kotlin:releasable-nonnull-vars:1.1.0"
+
+    def arrow_version = "0.10.5"
+    compile "io.arrow-kt:arrow-core:$arrow_version"
+    compile "io.arrow-kt:arrow-syntax:$arrow_version"
+    kapt "io.arrow-kt:arrow-meta:$arrow_version"
 }
 
 sourceCompatibility = 1.8

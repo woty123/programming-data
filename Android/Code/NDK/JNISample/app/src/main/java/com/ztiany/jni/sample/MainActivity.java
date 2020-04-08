@@ -9,6 +9,8 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
+    private PosixThread mPosixThread;
+
     private static final String TAG = MainActivity.class.getSimpleName();
 
     static {
@@ -22,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mJniBridge = new JniBridge();
+        mPosixThread = new PosixThread();
+        mPosixThread.init();
     }
 
 
@@ -82,13 +86,22 @@ public class MainActivity extends AppCompatActivity {
         AppContext.showToast(registerFromJni);
     }
 
-
     private int[] initIntArr() {
         int[] arr = new int[10000];
         for (int x = 0; x < arr.length; x++) {
             arr[x] = (int) (Math.random() * 10000 + 1);
         }
         return arr;
+    }
+
+    public void pThread(View view) {
+        mPosixThread.pthread();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPosixThread.destroy();
     }
 
 }

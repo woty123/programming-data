@@ -1,9 +1,15 @@
 # NDK 相关资料
 
+## 前置知识：JNI
+
+- The Java™ NativeInterfaceProgrammer’s Guide and Specification.pdf
+- [JNI笔记1](JNI笔记-1.md)
+- [JNI笔记2](JNI笔记-2.md)
+
 ## 官方文档
 
-- [向您的项目添加 C 和 C++ 代码](https://developer.android.com/studio/projects/add-native-code.html)
 - [NDK 入门指南](https://developer.android.com/ndk/guides/index.html)
+- [向您的项目添加 C 和 C++ 代码](https://developer.android.com/studio/projects/add-native-code.html)
 
 ## 教程
 

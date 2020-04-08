@@ -1,5 +1,6 @@
 package me.ztiany.functions
 
+import kotlin.math.pow
 
 
 /** 函数声明 */
@@ -15,7 +16,7 @@ private fun sum(x: Int, y: Int): Int {
  * 应用场景： DSL
  */
 private infix fun Int.pow(x: Int): Int {
-    return Math.pow(this.toDouble(), x.toDouble()).toInt()
+    return this.toDouble().pow(x.toDouble()).toInt()
 }
 
 private fun testInfix() {
@@ -37,6 +38,7 @@ private fun read(b: Array<Byte>, off: Int = 0, len: Int = b.size) {
 
 }
 
+
 /**
  * 命名参数：传入参数时可以指定参数名。
  *
@@ -52,7 +54,6 @@ private fun reformat(str: String,
 private fun testReformat() {
     reformat("ABC", wordSeparator = 'c')
 }
-
 
 //返回 Unit 的函数：如果一个函数不返回任何有用的值，它的返回类型是 Unit。Unit 是一种只有一个值——Unit 的类型。这个 值不需要显式返回
 fun printHello(name: String?): Unit {
@@ -74,7 +75,6 @@ private fun add1(x: Int, y: Int): Int = x + y
 
 private fun add2(x: Int, y: Int) = x + y
 
-
 //可变数量的参数（Varargs）：函数的参数（通常是最后一个）可以用 vararg 修饰符标记
 private fun <T> asList(vararg ts: T): List<T> {
     val result = ts // ts is an Array
@@ -95,7 +95,6 @@ private fun testAsList() {
  *      2，成员函数
  *      3，顶层函数
  */
-
 //顶层函数
 private fun funType() {
     //局部函数

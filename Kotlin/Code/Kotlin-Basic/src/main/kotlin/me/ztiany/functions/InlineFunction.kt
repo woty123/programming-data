@@ -19,7 +19,6 @@ import javax.swing.tree.TreeNode
  *           尤其是在循环中的“超多态（megamorphic）”调用处。
  */
 
-
 //内联函数
 private inline fun <T> lock(lock: Lock, body: () -> T): T {
     lock.lock()
@@ -100,6 +99,7 @@ private fun inlineReturn3(people: List<String>) {
         println("$s is not Alice")
     })
 }
+
 
 /**
  * crossinline：
