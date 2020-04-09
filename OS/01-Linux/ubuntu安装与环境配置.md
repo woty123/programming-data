@@ -112,7 +112,7 @@ sudo apt-get install zsh
 sudo apt-get install dos2unix
 ```
 
-## 引用
+### 引用
 
 - [ss 的安装与配置](https://github.com/Shadowsocks-Wiki/shadowsocks/blob/master/6-linux-setup-guide-cn.md)
 - [how-to-install-visual-studio-code-on-ubuntu-18-04/](https://linuxize.com/post/how-to-install-visual-studio-code-on-ubuntu-18-04/)
