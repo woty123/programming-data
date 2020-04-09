@@ -72,11 +72,14 @@ id root
 - 创建的用户会被记录在 `/etc/passwd` 文件中以及 `etc/shadow`（用户密码相关） 文件中。
 
 ```shell
-useradd -d/home/abc abc -m创建abc用户，如果/home/abc目录不存在，就自动创建这个目录，同时用户属于abc组
+# 创建abc用户，如果/home/abc目录不存在，就自动创建这个目录，同时用户属于abc组
+useradd -d/home/abc abc -m
 
-useradd -d/home/a a -g test-m创建一个用户名字叫a，主目录在/home/a，如果主目录不存在，就自动创建主目录，同时用户属于test组
+# 创建一个用户名字叫a，主目录在/home/a，如果主目录不存在，就自动创建主目录，同时用户属于test组
+useradd -d/home/a a -g test -m
 
-cat /etc/passwd查看系统当前用户名
+# 查看系统当前用户名
+cat /etc/passwd
 ```
 
 ### 设置用户密码：passwd
@@ -90,8 +93,11 @@ passwd username
 ### 删除用户：userdel
 
 ```shell
-userdel abc(用户名)删除abc用户，但不会自动删除用户的主目录
-userdel -r abc(用户名)删除用户，同时删除用户的主目录
+# 删除abc用户，但不会自动删除用户的主目录
+userdel abc(用户名)
+
+# 删除用户，同时删除用户的主目录
+userdel -r abc(用户名)
 ```
 
 ### 修改用户属性：usermod
@@ -289,7 +295,6 @@ Linux 允许将命令执行结果重定向到一个文件，本应显示在终�
 ls > test.txt ( test.txt如果不存在，则创建，存在则覆盖其内容)
 >输出重定向会覆盖原来的内容，>>输出重定向则会追加到文件的尾部。
 ```
-
 
 ### 切换工作目录：cd
 
@@ -1179,7 +1184,7 @@ echo命令的功能是在显示器上显示一段文字，一般起到一个提�
 补充说明： 在shell中执行程序时，shell会提供一组环境变量。 export可新增，修改或删除环境变量，供后续执行的程序使用。export的效力仅及于该此登陆操作。
 
 参　　数：
-     -f 　代表[变量名称]中为函数名称。
+  -f 　代表[变量名称]中为函数名称。
 　-n 　删除指定的变量。变量实际上并未删除，只是不会输出到后续指令的执行环境中。
 　-p 　列出所有的shell赋予程序的环境变量。
 ```
