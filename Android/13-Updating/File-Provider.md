@@ -91,5 +91,5 @@ paths节点下可以配置的节点名和对应的目录如下：
 ---
 ## 引用
 
-- [FileProvider](https://developer.android.com/reference/android/support/v4/content/FileProvider.html)
-- [我想把 FileProvider 聊的更透彻一些](https://juejin.im/post/5974ca356fb9a06bba4746bc)
+* [FileProvider](https://developer.android.com/reference/android/support/v4/content/FileProvider.html)
+* [我想把 FileProvider 聊的更透彻一些](https://juejin.im/post/5974ca356fb9a06bba4746bc)

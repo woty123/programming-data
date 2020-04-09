@@ -2,7 +2,7 @@
 
 ## 前置知识：JNI
 
-- The Java™ NativeInterfaceProgrammer’s Guide and Specification.pdf
+- [The Java™ NativeInterfaceProgrammer’s Guide and Specification](TheJava™NativeInterfaceProgrammer’sGuideAndSpecification.pdf)
 - [JNI笔记1](JNI笔记-1.md)
 - [JNI笔记2](JNI笔记-2.md)
 

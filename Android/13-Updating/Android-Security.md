@@ -1,6 +1,6 @@
 # Android 平台安全、加密记录
 
-## 1 Android RSA加密模式和JAVA默认不一致
+## 1 Android RSA 加密模式和 JAVA 默认不一致
 
 1. JDK 默认使用：`RSA/ECB/PKCS1Padding`。
 2. Android 默认使用：`RSA/ECB/NoPadding`。

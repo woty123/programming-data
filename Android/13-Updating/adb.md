@@ -105,7 +105,7 @@ findstr DisplayDeviceInfo 表示找到DisplayDeviceInfo相关的信息，这与�
 
 `adb [-d|-e|-s serial_number] shell shell_command` 直接执行shell命令
 `adb [-d|-e|-s serial_number] shell`进入模拟器/设备实例上的远程 shell
-`Control + D `或输入` exit`。可以退出shell
+`Control + D`或输入`exit`。可以退出shell
 
 ### PM命令
 
@@ -148,10 +148,11 @@ PM主要功能包括：
 | -d | 允许降级覆盖安装 |
 | -g | 授予所有运行时权限 |
 
-**清理应用数据**
-` pm clear [--user USER_ID] PACKAGE`
+**清理应用数据**：
 
-**重置所有授权**
+`pm clear [--user USER_ID] PACKAGE`
+
+**重置所有授权**：
 
 `pm reset-permissions`
 
@@ -176,7 +177,7 @@ WM即WindowManager
 
 常用的WM命令
 
-```bash
+```shell
 wm size：查询设备分辨率
 wm size 1000x2000 设置设备的分辨率
 wm size reset 重置分辨率
@@ -197,7 +198,7 @@ input可以模拟按键/输入
 
 服务信息部分显示如下：
 
-![](index_files/5e514aae-a24c-4c91-9b4c-2405d5827aba.png)
+![adh-dump.png](index_files/adh-dump.png)
 
 某些命令可以加上`- h`获取帮助文档，比如：`dumpsys activity -h`
 
@@ -221,7 +222,7 @@ input可以模拟按键/输入
 - package packagename    获取安装包信息
 - usagestats    每个界面启动的时间
 - statusbar    显示状态栏相关的信息
-- meminfo    内存信息（`meminfo $package_name or $pid `使用程序的包名或者进程id显示内存信息）
+- meminfo    内存信息（`meminfo $package_name or $pid`使用程序的包名或者进程id显示内存信息）
 - diskstats     磁盘相关信息
 - battery     电池信息
 - alarm    显示Alarm信息

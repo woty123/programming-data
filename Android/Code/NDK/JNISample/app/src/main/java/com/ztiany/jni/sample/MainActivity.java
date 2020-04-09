@@ -1,10 +1,14 @@
 package com.ztiany.jni.sample;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,19 +23,69 @@ public class MainActivity extends AppCompatActivity {
 
     private JniBridge mJniBridge;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        this.<TextView>findViewById(R.id.jniTvInfo).setText("isArtInUse = " + getIsArtInUse() + ", getCurrentRuntimeValue = " + getCurrentRuntimeValue());
+
         mJniBridge = new JniBridge();
         mPosixThread = new PosixThread();
         mPosixThread.init();
     }
 
+    private boolean getIsArtInUse() {
+        final String vmVersion = System.getProperty("java.vm.version");
+        return vmVersion != null && vmVersion.startsWith("2");
+    }
+
+    private CharSequence getCurrentRuntimeValue() {
+        final String SELECT_RUNTIME_PROPERTY = "persist.sys.dalvik.vm.lib";
+        final String LIB_DALVIK = "libdvm.so";
+        final String LIB_ART = "libart.so";
+        final String LIB_ART_D = "libartd.so";
+        try {
+            Class<?> systemProperties = Class.forName("android.os.SystemProperties");
+            try {
+                Method get = systemProperties.getMethod("get", String.class, String.class);
+                if (get == null) {
+                    return "WTF?!";
+                }
+                try {
+                    final String value = (String) get.invoke(systemProperties, SELECT_RUNTIME_PROPERTY,/* Assuming default is */"Dalvik");
+                    if (LIB_DALVIK.equals(value)) {
+                        return "Dalvik";
+                    } else if (LIB_ART.equals(value)) {
+                        return "ART";
+                    } else if (LIB_ART_D.equals(value)) {
+                        return "ART debug build";
+                    }
+                    return value;
+                } catch (IllegalAccessException e) {
+                    return "IllegalAccessException";
+                } catch (IllegalArgumentException e) {
+                    return "IllegalArgumentException";
+                } catch (InvocationTargetException e) {
+                    return "InvocationTargetException";
+                }
+            } catch (NoSuchMethodException e) {
+                return "SystemProperties.get(String key, String def) method is not found";
+            }
+        } catch (ClassNotFoundException e) {
+            return "SystemProperties class is not found";
+        }
+    }
 
     //返回字符串
     public void stringFromC(View view) {
         String stringFromC = JniBridge.stringFromC();
+        AppContext.showToast(stringFromC);
+    }
+
+    public void stringFromCReflection(View view) {
+        String stringFromC = JniBridge.stringFromCReflection();
         AppContext.showToast(stringFromC);
     }
 
@@ -96,6 +150,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void pThread(View view) {
         mPosixThread.pthread();
+    }
+
+    public void javaCrash(View view) {
+        int a = 3 / 0;
     }
 
     @Override

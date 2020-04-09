@@ -1,10 +1,10 @@
-## android的软件盘属性讲解
+# Android 的软件盘属性
 
 在Android开发中，经常使用到EditText,让用户输入文本，但是如果对软键盘不是很熟悉，可能对很多现象的发送不是很了解，比如进入到一个有EditText的可滑动界面，软键盘就自动弹出，但是有时候又不会，这是为什么呢？这就需要了解软键盘的一些属性了。
 
 首先如何设置软件盘的相关属性？
 
-**方式1：在manifest文件的Activity节点中设置**
+**方式1：在manifest文件的Activity节点中设置**：
 
 ```xml
       <activity
@@ -16,10 +16,10 @@
 
 使用的属性是：windowSoftInputMode
 
-**方式2：在代码中设置**
+**方式2：在代码中设置**：
 
 ```java
-	getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+    getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
     View view = activity.getCurrentFocus();
     if (view != null) {
@@ -53,7 +53,7 @@
 
 他们可以分为两类，一类是state类，控制软键盘显示，一类是adjust类，控制软键盘与界面上控件布局的关系
 
-#### stateUnspecified
+### stateUnspecified
 
 软件默认采用的就是这种交互方式，然后 **系统会根据界面采取相应的软键盘的显示模式**
 

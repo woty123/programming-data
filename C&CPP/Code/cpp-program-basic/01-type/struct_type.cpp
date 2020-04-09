@@ -56,7 +56,6 @@ static void test_Books() {
 
 }
 
-
 int main() {
     test_sales_data();
     test_Books();

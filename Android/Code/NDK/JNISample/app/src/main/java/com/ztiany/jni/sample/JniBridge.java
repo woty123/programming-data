@@ -10,6 +10,8 @@ public class JniBridge {
     //返回字符串
     public static native String stringFromC();
 
+    public static native String stringFromCReflection();
+
     //模拟登录
     public native int intFromC(int a, int b);
 

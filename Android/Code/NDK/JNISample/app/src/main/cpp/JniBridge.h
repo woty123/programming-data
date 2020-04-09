@@ -7,12 +7,21 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 /*
  * Class:     com_ztiany_jni_sample_JniBridge
  * Method:    stringFromC
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL Java_com_ztiany_jni_sample_JniBridge_stringFromC
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     com_ztiany_jni_sample_JniBridge
+ * Method:    stringFromCReflection
+ * Signature: ()Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_com_ztiany_jni_sample_JniBridge_stringFromCReflection
   (JNIEnv *, jclass);
 
 /*
@@ -63,8 +72,8 @@ JNIEXPORT void JNICALL Java_com_ztiany_jni_sample_JniBridge_callJava
 JNIEXPORT void JNICALL Java_com_ztiany_jni_sample_JniBridge_throwError
   (JNIEnv *, jobject, jstring);
 
-
 #ifdef __cplusplus
 }
 #endif
+
 #endif

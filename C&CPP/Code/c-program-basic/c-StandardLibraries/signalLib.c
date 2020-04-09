@@ -29,7 +29,6 @@ int main() {
         return EXIT_FAILURE;
     }
 
-
     int a = 1;
     while (1) {
         printf("start sleep 1 second...\n");

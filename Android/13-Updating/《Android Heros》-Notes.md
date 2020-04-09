@@ -39,7 +39,7 @@
 
 ### View树结构
 
-![](index_files/8de4f031-62ef-4676-b280-2c6c8537c8b3.png)
+![view-system.png](index_files/view-system.png)
 
 每个Activity都包含一个Window对象，有PhoneWindow实现，所有View的监听事件，统一由WindowManagerService来接受，当在onCreate()中调用setContentView方法时，AMS会回调onResume()方法，此时系统才会把整个DecorView添加到PhoneWindow中，让其显示，最终完成界面绘制。这些PhoneWindow统一由WindowManager管理。
 
@@ -257,7 +257,7 @@ onTouchEvent                (View,ViewGroup)                    处理事件
     getRight         View自身的右边到父控件顶边的距离
 ```
 
-![](index_files/b5251b57-7068-4543-8b4c-0f0786db9954.png)
+![view-coordinate.png](index_files/view-coordinate.png)
 
 触摸事件
 
@@ -383,7 +383,7 @@ Android绘图机制是Android核心内容之一
 
 - [bitmap](http://blog.csdn.net/coder_pig/article/details/49103657)
 - shape
-  - rectangle矩形；oval椭圆；line 线；ring圆环 <br/>
+  - rectangle矩形；oval椭圆；line 线；ring圆环
   - corners：半径；gradient：渐变；padding：内边距；size：尺寸；solid：填充颜色；stroke：边框
 - layer：layer类似photoShop中图层的概念，在xml中根节点是layer-list
 - selector：选择器，各种状态下显示的drawable

@@ -12,9 +12,26 @@ JavaVM *javaVM;
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL
-Java_com_ztiany_jni_sample_JniBridge_stringFromC(JNIEnv *env, jclass thiz) {LOGI("stringFromC called");
+Java_com_ztiany_jni_sample_JniBridge_stringFromC(JNIEnv *env, jclass thiz) {
+    LOGI("stringFromC called");
     char *str = "你好，Java";
     return (*env)->NewStringUTF(env, str);
+}
+
+/*
+ * Class:     com_ztiany_jni_sample_JniBridge
+ * Method:    stringFromCReflection
+ * Signature: ()Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL
+Java_com_ztiany_jni_sample_JniBridge_stringFromCReflection(JNIEnv *env, jclass thiz) {
+    LOGI("stringFromCReflection called");
+    char *str = "😁，\u4F60\u597D，Java";
+    //NewStringUTF input is not valid Modified UTF-8: illegal start byte 0xf0
+    // jstring result = (*env)->NewStringUTF(env, str);
+    jobject jobj;
+    cStringToJString(env, str, &jobj);
+    return jobj;
 }
 
 /*
@@ -22,7 +39,8 @@ Java_com_ztiany_jni_sample_JniBridge_stringFromC(JNIEnv *env, jclass thiz) {LOGI
  * Method:    intFromC
  * Signature: (II)I
  */
-JNIEXPORT jint JNICALL Java_com_ztiany_jni_sample_JniBridge_intFromC (JNIEnv *env, jobject thiz, jint a, jint b) {
+JNIEXPORT jint JNICALL
+Java_com_ztiany_jni_sample_JniBridge_intFromC(JNIEnv *env, jobject thiz, jint a, jint b) {
     LOGI("intFromC called");
     jint add = a + b;
     return add;
@@ -33,7 +51,9 @@ JNIEXPORT jint JNICALL Java_com_ztiany_jni_sample_JniBridge_intFromC (JNIEnv *en
  * Method:    addArray
  * Signature: ([II)[I
  */
-JNIEXPORT jintArray JNICALL Java_com_ztiany_jni_sample_JniBridge_addArray(JNIEnv *env, jobject thiz, jintArray jArray, jint add) {
+JNIEXPORT jintArray JNICALL
+Java_com_ztiany_jni_sample_JniBridge_addArray(JNIEnv *env, jobject thiz, jintArray jArray,
+                                              jint add) {
     //获取数组的长度
     jsize length = (*env)->GetArrayLength(env, jArray);
     //获取数组的指针
@@ -52,8 +72,8 @@ JNIEXPORT jintArray JNICALL Java_com_ztiany_jni_sample_JniBridge_addArray(JNIEnv
  * Method:    bubbleSort
  * Signature: ([I)V
  */
-JNIEXPORT void JNICALL Java_com_ztiany_jni_sample_JniBridge_bubbleSort
-        (JNIEnv *env, jobject thiz, jintArray jintArr) {
+JNIEXPORT void JNICALL
+Java_com_ztiany_jni_sample_JniBridge_bubbleSort(JNIEnv *env, jobject thiz, jintArray jintArr) {
 
     //获取数组指针
     jint *jintArrPointer = (*env)->GetIntArrayElements(env, jintArr, 0);//java int数组 转 c int数组
@@ -78,10 +98,9 @@ JNIEXPORT void JNICALL Java_com_ztiany_jni_sample_JniBridge_bubbleSort
  * Method:    encryption
  * Signature: (Ljava/lang/String;)Ljava/lang/String;
  */
-JNIEXPORT jstring JNICALL Java_com_ztiany_jni_sample_JniBridge_encryption
-        (JNIEnv *env, jobject thiz, jstring jstr) {
-
-    char *cArr = Jstring2CString(env, jstr);
+JNIEXPORT jstring JNICALL
+Java_com_ztiany_jni_sample_JniBridge_encryption(JNIEnv *env, jobject thiz, jstring jstr) {
+    char *cArr = jString2CString(env, jstr);
     const char *cHello = "你好";
     strcat(cArr, cHello);
     return (*env)->NewStringUTF(env, cArr);
@@ -92,8 +111,8 @@ JNIEXPORT jstring JNICALL Java_com_ztiany_jni_sample_JniBridge_encryption
  * Method:    callJava
  * Signature: (Ljava/lang/String;)V
  */
-JNIEXPORT void JNICALL Java_com_ztiany_jni_sample_JniBridge_callJava
-        (JNIEnv *env, jobject thiz, jstring jStr) {
+JNIEXPORT void JNICALL
+Java_com_ztiany_jni_sample_JniBridge_callJava(JNIEnv *env, jobject thiz, jstring jStr) {
 
     jclass clz = (*env)->FindClass(env, "com/ztiany/jni/sample/JniBridge");
 
@@ -106,8 +125,8 @@ JNIEXPORT void JNICALL Java_com_ztiany_jni_sample_JniBridge_callJava
  * Method:    throwError
  * Signature: (Ljava/lang/String;)V
  */
-JNIEXPORT void JNICALL Java_com_ztiany_jni_sample_JniBridge_throwError
-        (JNIEnv *env, jobject thiz, jstring message) {
+JNIEXPORT void JNICALL
+Java_com_ztiany_jni_sample_JniBridge_throwError(JNIEnv *env, jobject thiz, jstring message) {
 
     //找到EOFException类
     jclass class_EOF = (*env)->FindClass(env, "java/io/EOFException");

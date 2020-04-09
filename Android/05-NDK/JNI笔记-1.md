@@ -4,7 +4,7 @@ JNI 学习资料：
 
 - [Oracle JNI 文档 1.5](https://docs.oracle.com/javase/1.5.0/docs/guide/jni/spec/jniTOC.html)
 - [Oracle JNI 文档 1.7](https://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/jniTOC.html)
-- 《The Java™ NativeInterfaceProgrammer’s Guide and Specification》
+- [The Java™ NativeInterfaceProgrammer’s Guide and Specification](TheJava™NativeInterfaceProgrammer’sGuideAndSpecification.pdf)
 - [IBM：Java 本机接口 (JNI)](https://www.ibm.com/support/knowledgecenter/zh/SSYKE2_8.0.0/com.ibm.java.lnx.80.doc/diag/understanding/jni.html)
 - [极客学院：JNI/NDK 开发指南](http://wiki.jikexueyuan.com/project/jni-ndk-developer-guide/workflow.html)
 - [IntelliJ IDEA平台下 JNI 编程](http://blog.csdn.net/huachao1001/article/details/53906237)

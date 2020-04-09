@@ -3,6 +3,8 @@
 
 #include "jni.h"
 
-char *Jstring2CString(JNIEnv *env, jstring jstr);
+char *jString2CString(JNIEnv *env, jstring jstr);
+
+void cStringToJString(JNIEnv *env, char *str, jobject *receive);
 
 #endif

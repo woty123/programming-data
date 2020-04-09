@@ -8,8 +8,4 @@ public class PosixThread {
 
     public native void destroy();
 
-    static {
-        System.loadLibrary("native-lib");
-    }
-
 }

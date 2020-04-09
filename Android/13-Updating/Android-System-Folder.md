@@ -29,7 +29,7 @@ Android Version    |API Level  |Linux Kernel in AOSP
 
 虽然Android基于Linux内核，但是Android还是对Linux系统的目录结构做了一些调整，参考下图目录结构：
 
-![](index_files/199c1467-a858-47af-80f5-926b33462519.png)
+![android-files.png](index_files/android-files.png)
 
 各目录作用如下：
 
