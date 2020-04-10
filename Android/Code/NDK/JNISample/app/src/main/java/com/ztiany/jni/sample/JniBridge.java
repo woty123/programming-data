@@ -30,6 +30,9 @@ public class JniBridge {
     //让C抛出异常
     public native void throwError(String message);
 
+    //制造信号
+    public native void triggerSignal();
+
     //调用C动态方法注册
     public native String dynamicRegisterFromJni();
 

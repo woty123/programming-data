@@ -72,6 +72,14 @@ JNIEXPORT void JNICALL Java_com_ztiany_jni_sample_JniBridge_callJava
 JNIEXPORT void JNICALL Java_com_ztiany_jni_sample_JniBridge_throwError
   (JNIEnv *, jobject, jstring);
 
+/*
+ * Class:     com_ztiany_jni_sample_JniBridge
+ * Method:    throwError
+ * Signature: (Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL Java_com_ztiany_jni_sample_JniBridge_triggerSignal
+  (JNIEnv *, jobject);
+
 #ifdef __cplusplus
 }
 #endif

@@ -88,8 +88,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:onClick="throwError"
-            android:text="throwError"
+            android:onClick="nativeThrowError"
+            android:text="nativeThrowError"
             android:textAllCaps="false" />
 
         <Button
@@ -115,8 +115,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:onClick="javaCrash"
-            android:text="trigger java crash"
+            android:onClick="nativeThrowErrorUnCaught"
+            android:text="native throw error not caught"
             android:textAllCaps="false" />
 
     </LinearLayout>

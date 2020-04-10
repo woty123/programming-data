@@ -74,7 +74,6 @@ Java_com_ztiany_jni_sample_JniBridge_addArray(JNIEnv *env, jobject thiz, jintArr
  */
 JNIEXPORT void JNICALL
 Java_com_ztiany_jni_sample_JniBridge_bubbleSort(JNIEnv *env, jobject thiz, jintArray jintArr) {
-
     //获取数组指针
     jint *jintArrPointer = (*env)->GetIntArrayElements(env, jintArr, 0);//java int数组 转 c int数组
     //获取数组长度
@@ -113,9 +112,7 @@ Java_com_ztiany_jni_sample_JniBridge_encryption(JNIEnv *env, jobject thiz, jstri
  */
 JNIEXPORT void JNICALL
 Java_com_ztiany_jni_sample_JniBridge_callJava(JNIEnv *env, jobject thiz, jstring jStr) {
-
     jclass clz = (*env)->FindClass(env, "com/ztiany/jni/sample/JniBridge");
-
     jmethodID showMessage = (*env)->GetStaticMethodID(env, clz, "showMessage", "(Ljava/lang/String;)V");
     (*env)->CallStaticVoidMethod(env, clz, showMessage, jStr);
 }
@@ -145,6 +142,18 @@ Java_com_ztiany_jni_sample_JniBridge_throwError(JNIEnv *env, jobject thiz, jstri
     //(*env)->ThrowNew(env,(*env)->FindClass(env,"java/io/EOFException"), "Unexpected end of file");
 }
 
+
+/*
+ * Class:     com_ztiany_jni_sample_JniBridge
+ * Method:    triggerSignal
+ * Signature: (Ljava/lang/String;)V
+ */
+JNIEXPORT void JNICALL
+Java_com_ztiany_jni_sample_JniBridge_triggerSignal(JNIEnv *jniEnv, jobject thiz) {
+    int *a;
+    *a = 10;
+    LOGI("a = %d", *a);
+}
 
 /*
  * 动态注册的方法，Java可直接调用

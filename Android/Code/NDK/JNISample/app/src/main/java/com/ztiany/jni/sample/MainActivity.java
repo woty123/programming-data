@@ -1,6 +1,7 @@
 package com.ztiany.jni.sample;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.<TextView>findViewById(R.id.jniTvInfo).setText("isArtInUse = " + getIsArtInUse() + ", getCurrentRuntimeValue = " + getCurrentRuntimeValue());
+        this.<TextView>findViewById(R.id.jniTvInfo).setText("isArtInUse = " + getIsArtInUse() + ", getCurrentRuntimeValue = " + getCurrentRuntimeValue()+" abi = "+ Build.CPU_ABI);
 
         mJniBridge = new JniBridge();
         mPosixThread = new PosixThread();
@@ -126,12 +127,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //让C抛出异常
-    public void throwError(View view) {
+    public void nativeThrowError(View view) {
         try {
             mJniBridge.throwError("抛出一个异常吧");
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void nativeThrowErrorUnCaught(View view) {
+        mJniBridge.triggerSignal();
     }
 
     //调用C动态方法注册
@@ -150,10 +155,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void pThread(View view) {
         mPosixThread.pthread();
-    }
-
-    public void javaCrash(View view) {
-        int a = 3 / 0;
     }
 
     @Override
