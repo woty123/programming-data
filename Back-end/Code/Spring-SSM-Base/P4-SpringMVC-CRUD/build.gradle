@@ -42,8 +42,8 @@ dependencies {
 
     //表单解校验
     compile web.validationApi
-    compile dataBaseLibs.hibernateValidator
-    annotationProcessor dataBaseLibs.hibernateValidatorAnnotationProcessor
+    compile web.hibernateValidator
+    annotationProcessor web.hibernateValidatorAnnotationProcessor
 
     //文件上传
     compile commonsLibs.commonsFileUpload

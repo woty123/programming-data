@@ -55,13 +55,6 @@ ext {
             hamcrest: 'org.hamcrest:hamcrest-library:1.3'//testCompile
     ]
 
-    shiro = [
-            shiroCore   : 'org.apache.shiro:shiro-core;1.3.2',
-            shiroWeb    : 'org.apache.shiro:shiro-web:1.3.2',
-            shiroSpring : 'org.apache.shiro:shiro-spring:1.3.2',
-            shiroEhcache: 'org.apache.shiro : shiro-ehcache:1.3.2'
-    ]
-
     /*数据库*/
     dataBaseLibs = [
             // https://mvnrepository.com/artifact/mysql/mysql-connector-java
@@ -82,13 +75,8 @@ ext {
             //hibernate
             // https://mvnrepository.com/artifact/org.hibernate/hibernate-core
             hibernate           : 'org.hibernate:hibernate-core:5.4.13.Final',
-    ]
-
-    jboos = [
-            // https://mvnrepository.com/artifact/org.jboss.logging/jboss-logging
-            jbossLogging           : 'org.jboss.logging:jboss-logging:3.4.1.Final',
-            // https://mvnrepository.com/artifact/org.jboss.spec.javax.transaction/jboss-transaction-api_1.2_spec
-            jbossTransactionApiSpec: 'org.jboss.spec.javax.transaction:jboss-transaction-api_1.2_spec:1.1.1.Final'
+            // https://mvnrepository.com/artifact/org.hibernate/hibernate-ehcache
+            hibernateEhcache: 'org.hibernate:hibernate-ehcache:5.4.13.Final',
     ]
 
     web = [

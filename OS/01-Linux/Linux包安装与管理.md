@@ -224,6 +224,8 @@ grub 是启动引导软件。
 1. 如何设置默认引导项
 2. 忘记 root 密码如何重置
 
+具体参考：《Linux实战技能100讲》-36 讲
+
 ## 10 引用
 
 - [Ubuntu(Debian)的 aptitude 与 apt-get 的区别和联系](http://www.cnblogs.com/yuxc/archive/2012/08/02/2620003.html)

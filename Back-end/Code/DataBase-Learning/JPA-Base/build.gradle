@@ -1,0 +1,9 @@
+group 'ztiany.jpa'
+version '1.0'
+
+dependencies {
+    compile dataBaseLibs.mysqlConnector
+    compile dataBaseLibs.hibernate
+    compile dataBaseLibs.hibernateEhcache
+    compile dataBaseLibs.hibernateEntitymanager
+}

@@ -29,7 +29,7 @@ create_specification:
 - 选择数据库：`use database_name;`
 - 查看正在使用的数据块：`select database();`
 - 查看数据库创建细节：`show create database database_name;`
-- 创建一个字符集为gbk的数据库：`create database  database_name character set gbk;`
+- 创建一个字符集为gbk的数据库：`create database database_name character set gbk;`
 - 创建一个使用 utf8字符集，并带校对规则的 mydb3 数据库：`create database database_name character set utf-8 collate utf8_general_ci;`utf8_general_ci时默认规则。
 - 删除前面创建的数据库：`drop database [IF EXISTS] database_name;`
 - 查看服务器的数据库并修改数据库的字符集：`show databass; alter database database_name character set 字符集名;`

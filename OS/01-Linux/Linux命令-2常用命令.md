@@ -509,18 +509,65 @@ tar这个命令并没有压缩的功能，它只是一个打包的命令，但�
 
 ## 4 系统管理
 
-### 4.1 网络管理
+### 4.1 服务管理工具
 
-- 网络状态查看
-- 网络配置
-- 路由命令
-- 网络故障排除
-- 网络服务管理
-- 常用网络配置文件
+**Linux 系统目前存在的三种系统启动方式**：
 
-#### 4.1.1 网络状态查看
+- Sysvinit：它源于 System V 系列 UNIX，大多数 Linux 发行版的 init 系统是和 SystemV 相兼容的，被称为 sysvinit。这是人们最熟悉的 init 系统。Ubuntu 6.10 及以前版本就使用 Sysvinit，其主要就是一个 Shell 脚本，配置在 `/etc/init.d` 目录下。
 
-net-tools(CentOS7前) 和 iprote(CentOS7后)
+>不同的 Linux 发行版在这些 sysvinit 的基本工具基础上又开发了一些辅助工具用来简化 init 系统的管理工作。比如 RedHat 提供了 `service`，`chkconfig` 等命令行工具，甚至一套图形化界面来管理 init 系统。其他的 Linux 发行版也有各自的 initscript 或其他名字的 init 软件包来简化 sysvinit 的管理。
+
+SysVinit 主要依赖于 Shell 脚本，这就决定着其启动太慢。在很少重新启动的 Server 上，这个缺点并不重要。而当 Linux 被应用到移动终端设备的时候，启动慢就成了一个大问题。于是便出现了启动更快的 UpStart 和 Systemd。
+
+- UpStart：大约在 2006 年或者更早的时候， Ubuntu 开发人员试图将 Linux 安装在笔记本电脑上。在这期间技术人员发现经典的 sysvinit 存在一些问题：它不适合笔记本环境。这促使程序员 Scott James Remnant 着手开发 upstart。
+- Systemd：是 Linux 系统新的初始化系统(init)，作用是提高系统的启动速度，目前已成为大多数发行版的标准配置（比如 Ubuntu 15.04 开始预设使用 Systemd）。Systemd 包含一组命令，涉及到系统管理的方方面面。主命令就是 `systemctl`。
+
+**服务管理命令说明**：
+
+- service 命令是 Redhat Linux 兼容的发行版中用来控制系统服务的实用工具，它以启动、停止、重新启动和关闭系统服务，还可以显示所有系统服务的当前状态。一般 service 和 chkconfig 结合使用。
+- chkconfig 用于命令检查、设置系统的各种服务。这是 RedHat 公司遵循 GPL 规则所开发的程序，它可查询操作系统在每一个执行等级中会执行哪些系统服务，其中包括各类常驻服务。chkconfig 在新的 ubuntu 发行版中已经被不可用了，可以使用 `systemctl`代替。具体参考[how-do-i-install-chkconfig-on-ubuntu](https://stackoverflow.com/questions/20680050/how-do-i-install-chkconfig-on-ubuntu)。
+- systemctl 是系统服务管理器指令，它实际上将 service 和 chkconfig 这两个命令组合到一起。
+
+>思考：新的 Linux 发行版已经使用 Systemd 作为初始化系统，但是还支持之前的 service 命令，可能底层是通过 systemctl 命令实现的。
+
+**服务管理级别**：
+
+一个服务的关闭与打开在不同的运行级别（runlevel）下是不一致的，比如 chkconfig 主要讲运行级别分为 7 个：
+
+- 等级0表示：表示关机
+- 等级1表示：单用户模式
+- 等级2表示：无网络连接的多用户命令行模式
+- 等级3表示：有网络连接的多用户命令行模式
+- 等级4表示：不可用
+- 等级5表示：带图形界面的多用户模式
+- 等级6表示：重新启动
+
+可以通过 chkconfig 命令分别配置在不同级别下，某个服务是打开还是关闭。
+
+在 systemd 的管理体系里面，以前的运行级别（runlevel）的概念被新的运行目标（target）所取代。比如原来的 runlevel3 就对应新的多用户目标`multi-user.target`， runlevel5 就相当于 `graphical.target`。
+
+**参考资料**：
+
+关于 SysVinit 和 systemd 具体信息，参考：
+
+- [浅析 Linux 初始化 init 系统，第 1 部分: sysvinit](http://www.ibm.com/developerworks/cn/linux/1407_liuming_init1/)
+- [浅析 Linux 初始化 init 系统，第 2 部分: UpStart](http://www.ibm.com/developerworks/cn/linux/1407_liuming_init2/)
+- [浅析 Linux 初始化 init 系统，第 3 部分: Systemd](http://www.ibm.com/developerworks/cn/linux/1407_liuming_init3/index.html)
+- [How to find out if a system uses SysV, Upstart or Systemd initsystem](https://unix.stackexchange.com/questions/196166/how-to-find-out-if-a-system-uses-sysv-upstart-or-systemd-initsystem)
+- [[Linux]systemd和sysV 的历史](https://www.cnblogs.com/aaronLinux/p/10654523.html)
+- [Systemd 入门教程：命令篇](http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html)
+- [Systemd 入门教程：实战篇](http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-part-two.html)
+
+关于 systemctl 命令，参考：
+
+- [systemctl 命令完全指南](https://linux.cn/article-5926-1.html)
+- [Linux巨大变革之Systemd取代SysV的Init](http://www.nljb.net/default/Linux%E5%B7%A8%E5%A4%A7%E5%8F%98%E9%9D%A9%E4%B9%8BSystemd%E5%8F%96%E4%BB%A3SysV%E7%9A%84Init/)
+
+### 4.2 网络管理
+
+#### 4.2.1 网络状态查看
+
+主要有两套服务网络管理工具：net-tools(CentOS7 前) 和 iprote2(CentOS7 后)
 
 net-tools：
 
@@ -604,7 +651,7 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 255.255.255.255 0.0.0.0         255.255.255.255 U     256    0        0 lo
 ```
 
-#### 4.1.2 网络配置命令
+#### 4.2.2 网络配置命令
 
 网络配置命令1：
 
@@ -637,7 +684,7 @@ route add default gw ip_address
 route add -host ip_address gw gw_address
 ```
 
-#### 4.1.3 网络故障排除
+#### 4.2.3 网络故障排除
 
 ##### 测试远程主机连通性：ping
 
@@ -698,33 +745,20 @@ ss -ntpl
 
 >上面网配置命令所进行的网络都是临时的，如果系统重启或者网络服务重启，这些配置就会丢失，如果需要将配置持久化，就需要操作网络配置文件。
 
-**网络服务管理程序分为两种**：
-
-- SysV：Ubuntu 6.10 及以前版本使用 Sysvinit，其主要就是一个 Shell 脚本，并且是放置在 `/etc/init.d` 文件夹下。然后通过 `update-rc.d` 命令进行运行级别的操作来达到服务的启动，对应命令 `service`，
-- Systemd：Ubuntu 15.04 开始预设使用 Systemd，其包含是一组命令，涉及到系统管理的方方面面。主命令就是 systemctl。
-
-关于 SysV 和 systemd，参考
-
-- [[Linux]systemd和sysV 的历史](https://www.cnblogs.com/aaronLinux/p/10654523.html)
-- [Systemd 入门教程：命令篇](http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html)
-- [Linux 服务管理两种方式service和systemctl](https://www.cnblogs.com/shijingjing07/p/9301590.html)
-- [systemctl 命令完全指南](https://linux.cn/article-5926-1.html)
-
 **网络服务管理相关命令**：
+
+service 和 chkconfig：
 
 - `service network start|stop|restart` (CentOS)
 - `service networking start|stop|restart` (Ubuntu)
 - `service network-manager start|stop|restart`
-- `chkconfig -list network` (CentOS)
+- `chkconfig -list network`
+
+systemctl：
+
 - `systemctl list-unit-files NetworkManager.service`
 - `systemctl start|stop|restart NetworkManger`
 - `systemctl enable|disable NetworkManger`
-
-命令说明：
-
-- systemctl 是系统服务管理器指令，它实际上将 service 和 chkconfig 这两个命令组合到一起。
-- service 命令是 Redhat Linux 兼容的发行版中用来控制系统服务的实用工具，它以启动、停止、重新启动和关闭系统服务，还可以显示所有系统服务的当前状态。
-- chkconfig命令检查、设置系统的各种服务。这是 Red Hat 公司遵循 GPL 规则所开发的程序，它可查询操作系统在每一个执行等级中会执行哪些系统服务，其中包括各类常驻服务。chkconfig 在 ubuntu 中已经被不可用了，可以使用 `systemctl`, `sysv-rc-conf` 代替。具体参考[how-do-i-install-chkconfig-on-ubuntu](https://stackoverflow.com/questions/20680050/how-do-i-install-chkconfig-on-ubuntu)。
 
 **`network` 和 `NetworkManager`**：
 
@@ -732,6 +766,8 @@ Linux 中有两套网络服务脚本：`network` 和 `NetworkManager`，不建�
 
 - 在个人电脑上建议使用`NetworkManager`，NetworkManager 主要用于图形化环境。
 - 服务器开发建议继续使用`network`，network 主要用于命令行环境。
+
+相关命令：
 
 ```shell
 # 查看网络状态(centos)
@@ -741,19 +777,19 @@ service network-manager status
 # 重启（重置配置）
 service network restart
 
-# 查看 NetworkManager 服务是否可用
-systemctl list-unit-files NetworkManager.service
-# 关掉 NetworkManager
-systemctl disable NetworkManager
-# 开启 NetworkManager
-systemctl enbale NetworkManager
-
 # 查看 network 开启状态
 chkconfig --list network
 # 关掉 network，参考文档可了解 2345 所指的意义
 chkconfig --level 2345 network off
 # 开启 network
 chkconfig --level 2345 network on
+
+# 查看 NetworkManager 服务是否可用
+systemctl list-unit-files NetworkManager.service
+# 关掉 NetworkManager
+systemctl disable NetworkManager
+# 开启 NetworkManager
+systemctl enbale NetworkManager
 ```
 
 **网络服务读取的配置文件**：
@@ -763,9 +799,13 @@ chkconfig --level 2345 network on
   - `/etc/network/interfaces`（debain），参考[where-is-the-equivalent-of-etc-sysconfig-networking-devices-directory-in-ubunt](https://askubuntu.com/questions/320537/where-is-the-equivalent-of-etc-sysconfig-networking-devices-directory-in-ubunt)
 - 主机名配置文件：`/etc/hosts`
 
+修改完配置文件后，需要重启才能生效：
+
 ```shell
-# 修改完配置文件后，需要重启才能生效
+# netowrk
 service netowrk restart
+
+# NetworkManager
 systemctl restart NetworkManager.service
 ```
 
@@ -782,9 +822,10 @@ hostnamectl set-hostname xxxx
 # 修改了主机名后，由于很多服务需要依赖主机名进行工作，因此需要在 hosts 中加上新主机名与 127.0.0.1 的对应关系
 vim /etc/hosts
 # 加上 127.0.0.1 xxxx
+127.0.0.1 xxxx
 ```
 
-#### 4.1.4 网络开放端口号配置
+#### 4.2.4 网络开放端口号配置
 
 1. Ubuntu 默认有装 iptables，可通过 `which iptables` 确认
 2. Ubuntu 默认没有 iptables 配置文件，可通过`iptables-save > /etc/iptables.up.rules`生成
@@ -821,9 +862,9 @@ pre-up iptables-restore < /etc/iptables.up.rules
 post-down iptables-save > /etc/iptables.up.rules
 ```
 
-### 4.2 进程管理
+### 4.4 进程管理
 
-#### 4.2.1 进程的概念与查看进程
+#### 4.4.1 进程的概念与查看进程
 
 进程一运行中的程序，从程序开始运行到终止的整个生命周期是可管理的，C程序的启动是从main函数开始的`int main(int agrc, char *argv[)`。终止的方式并不唯一，分为正常终止和异常终止：
 
@@ -880,7 +921,7 @@ top 命令用来动态显示运行中的进程。top 命令能够在运行后，
 - q 退出
 - h 获得帮助
 
-#### 4.2.2 进程的控制命令
+#### 4.4.2 进程的控制命令
 
 ##### 优先级调整
 
@@ -960,7 +1001,7 @@ fg 1
 bg 1
 ```
 
-#### 4.2.3 进程的通信方式：信号
+#### 4.4.3 进程的通信方式：信号
 
 信号是进程间通信方式之一，典型用法是：终端用户输入中断命令，通过信号机制停止一个程序的运行。
 
@@ -980,7 +1021,7 @@ bg 1
 kill [-signal] pid
 ```
 
-#### 4.2.4 守护进程
+#### 4.4.4 守护进程
 
 ##### nohup 进程
 
@@ -1025,7 +1066,7 @@ ls -l fd
 2. 守护进程结束由 1 号进程收留。
 3. 通常，我们在终端运行进程后，则该进程会占用终端所在当前目录，导致其不可卸载，而 deamon 是一直在后台运行的，为了防止其占用某个目录不能被卸载， 所以 deamon 进程启动时会将运行目录切换为根`/root`。
 
-#### 4.2.5 系统日志
+#### 4.4.5 系统日志
 
 在远程终端操作时，可能因为网络断开，远程终端日志会丢失，此时可以使用 screen 命令，screen 会保存进程运行日志。
 
@@ -1038,23 +1079,28 @@ ls -l fd
 
 具体参考[linux 技巧：使用 screen 管理你的远程会话](https://www.ibm.com/developerworks/cn/linux/l-cn-screen/index.html)
 
-#### 4.2.6 服务管理工具：systemctl
+#### 4.4.6 服务管理工具：systemctl
 
-- service：旧的服务管理工具，执行简单，但是每个服务的启动与停止都需要你编写脚本来控制。
-- systemctl：新的服务管理工具，更加强大。
+- service：旧的服务管理工具，执行简单，但是每个服务的启动与停止都需要你编写脚本来控制，服务控制的好坏取决于编写脚本的人。
+- systemctl：新的服务管理工具，服务的启动和停止就是一条命令，更加强大。
 
 service 的启动脚本：
 
 ```shell
-# 很复杂
-vim etc/init.d
+# 进入脚本目录
+cd etc/init.d
+
+# 查看某个服务的控制脚本
+vim network
 ```
 
-service 的启动脚本：
+systemctl 的启动脚本：
 
 ```shell
 # 进入目软件包安装的服务单元
+# CentOS
 cd /usr/lib/systemd/system/
+
 # 查看某个进程的脚本
 vim sshd.service
 ```
@@ -1069,13 +1115,67 @@ systemctl start | stop | restart | reload | enable | disable 服务名称
 systemctl status 服务名称
 ```
 
-#### 4.2.7 SELinux 简介
+查看服务运行级别
 
-- [ ] todo
+```shell
+cd /lib/systemd/system
+# 查看不同的级别，不同的 .target 表示对应的级别
+ls -l *.target
+#  查看与 chkconfig 对应的服务级别
+ls -l runlevel*.target
+lrwxrwxrwx 1 root root 15 Feb  5 09:07 runlevel0.target -> poweroff.target
+lrwxrwxrwx 1 root root 13 Feb  5 09:07 runlevel1.target -> rescue.target
+lrwxrwxrwx 1 root root 17 Feb  5 09:07 runlevel2.target -> multi-user.target
+lrwxrwxrwx 1 root root 17 Feb  5 09:07 runlevel3.target -> multi-user.target
+lrwxrwxrwx 1 root root 17 Feb  5 09:07 runlevel4.target -> multi-user.target
+lrwxrwxrwx 1 root root 16 Feb  5 09:07 runlevel5.target -> graphical.target
+lrwxrwxrwx 1 root root 13 Feb  5 09:07 runlevel6.target -> reboot.target
 
-### 4.3 磁盘管理
+# 查看当前系统所运行的级别
+systemctl get-defualt
+# 修改下次启动时的运行级别
+systemctl set-default multi-user.target
+```
 
-#### 4.3.1 检测磁盘空间：df
+服务的启动配置：
+
+```shell
+cd /lib/systemd/system
+
+vim sshd.service
+
+# 内容如下：
+# Unit 用于配置服务的启动顺序，如果要新增一个 a.service 在该服务之前自动，则将 a.service 放在 After 和 Requires 之后
+[Unit]
+Description=OpenBSD Secure Shell server
+# 该服务在 xxx 服务之后启动
+After=network.target auditd.service a.service
+Requires=a.service
+ConditionPathExists=!/etc/ssh/sshd_not_to_be_run
+
+[Service]
+EnvironmentFile=-/etc/default/ssh
+ExecStartPre=/usr/sbin/sshd -t
+# 启动后执行的命令
+ExecStart=/usr/sbin/sshd -D $SSHD_OPTS
+ExecReload=/usr/sbin/sshd -t
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+RestartPreventExitStatus=255
+Type=notify
+RuntimeDirectory=sshd
+RuntimeDirectoryMode=0755
+
+# Install 当前 service 在哪个 target 会被默认进行引导
+[Install]
+WantedBy=multi-user.target
+Alias=sshd.service
+```
+
+### 4.5 内存与磁盘管理
+
+#### 4.5.1 检测磁盘空间：df
 
 df命令用于检测文件系统的磁盘空间占用和空余情况，可以显示所有文件系统对节点和磁盘块的使用情况。
 
@@ -1086,7 +1186,7 @@ df命令用于检测文件系统的磁盘空间占用和空余情况，可以显
 - -t显示各指定文件系统的磁盘空间使用情况
 - -T显示文件系统
 
-#### 4.3.2 检测目录所占磁盘空间：du
+#### 4.5.2 检测目录所占磁盘空间：du
 
 du命令用于统计目录或文件所占磁盘空间的大小，该命令的执行结果与df类似，du更侧重于磁盘的使用状况。
 
@@ -1096,6 +1196,10 @@ du命令用于统计目录或文件所占磁盘空间的大小，该命令的执
 - -s显示指定文件或目录占用的数据块
 - -b以字节为单位显示磁盘占用情况
 - -l计算所有文件大小，对硬链接文件计算多次
+
+### 4.6 SELinux 简介
+
+- [ ] todo
 
 ---
 

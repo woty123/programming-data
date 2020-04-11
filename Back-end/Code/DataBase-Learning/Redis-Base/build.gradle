@@ -1,0 +1,6 @@
+group 'com.ztiany'
+version '1.0'
+
+dependencies {
+    compile dataBaseLibs.jedis
+}
