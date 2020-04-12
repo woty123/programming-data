@@ -86,12 +86,22 @@ public class JPAJpqlTest {
         System.out.println(result);
     }
 
+
     //查询 order 数量大于 2 的那些 Customer
     @Test
-    public void testGroupBy() {
+    public void testGroupBy2() {
         String jpql = "SELECT o.customer FROM ORDER_TWO_WAY_MANY_TO_ONE o  GROUP BY o.customer  HAVING count(o.id) >= 2";
         List<Customer> customers = entityManager.createQuery(jpql).getResultList();
         System.out.println(customers);
+    }
+
+    @Test
+    public void testGroupBy1() {
+        String jpql = "SELECT c FROM CUSTOMER_TWO_WAY_MANY_TO_ONE c  GROUP BY c.lastName";
+        List<Customer> customers = entityManager.createQuery(jpql).getResultList();
+        for (Customer customer : customers) {
+            System.out.println(customer);
+        }
     }
 
     @Test
@@ -143,7 +153,7 @@ public class JPAJpqlTest {
     }
 
     //默认情况下，若只查询部分属性，则将返回 Object[] 类型的结果，或者 Object[] 类型的 List。
-    //返回的 Object 根本无法使用，此时可以在实体类中创建对应的构造器，然后在 JPQL 语句中利用对应的构造器返回实体类的对象。
+    //返回的 Object 使用很麻烦，此时可以在实体类中创建对应的构造器，然后在 JPQL 语句中利用对应的构造器返回实体类的对象。
     @Test
     public void testPartlyProperties() {
         //String jpql1 = "SELECT c.lastName, c.age FROM CUSTOMER_TWO_WAY_MANY_TO_ONE c WHERE c.id > ?1";

@@ -258,8 +258,7 @@ select * from table1 full join table2 on table1.id=table2.id
 
 #### 使用exists
 
-exists即外层sql查询所查到的行代入内层sql查询，要使内层查询能够成立
-查询可以与in型子查询互换，但效率要高。典型语法:
+exists即外层sql查询所查到的行代入内层sql查询，要使内层查询能够成立查询可以与in型子查询互换，但效率要高。典型语法:
 
 ```sql
 select * from tablename
@@ -366,7 +365,7 @@ Select max(列名)　from tablename [WHERE where_definition]
             group by column having ...
 ```
 
->having和where均可实现过滤，但在having可以使用合计函数,having通常跟在group by后，它作用于组。
+>having和where均可实现过滤，但在having可以使用合计函数，having通常跟在group by后，它作用于组。
 
 准备数据：
 

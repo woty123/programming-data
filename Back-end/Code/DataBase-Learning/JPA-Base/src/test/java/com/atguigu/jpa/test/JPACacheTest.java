@@ -39,7 +39,7 @@ public class JPACacheTest {
 
     @Test
     public void testSecondLevelCache(){
-        //只会执行一条语句，因为配置了二级缓存。
+        //只会执行一条语句，因为配置了二级缓存，如果没有配置二级缓存，将触发两次查询。
         Customer customer1 = entityManager.find(Customer.class, 16);
         transaction.commit();
         entityManager.close();
@@ -52,7 +52,7 @@ public class JPACacheTest {
 
     @Test
     public void testFirstLevelCache(){
-        //只会执行一条语句，因为存在一级缓存。
+        //只会执行一条语句，因为jpa自带一级缓存。
         Customer customer1 = entityManager.find(Customer.class, 16);
         Customer customer2 = entityManager.find(Customer.class, 16);
     }

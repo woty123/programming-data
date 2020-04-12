@@ -34,7 +34,7 @@ public class JPABaseTest {
         entityManagerFactory.close();
     }
 
-    /**
+    /*
      * 同 hibernate 中 Session 的 refresh 方法.
      */
     @Test
@@ -44,7 +44,7 @@ public class JPABaseTest {
         entityManager.refresh(customer);
     }
 
-    /**
+    /*
      * 同 hibernate 中 Session 的 flush 方法.
      */
     @Test

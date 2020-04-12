@@ -88,7 +88,6 @@ ext {
     /*数据库*/
     dataBaseLibs = [
             // https://mvnrepository.com/artifact/mysql/mysql-connector-java
-
             mysqlConnector        : 'mysql:mysql-connector-java:6.0.5',
             // https://mvnrepository.com/artifact/com.mchange/c3p0
             c3p0                  : 'com.mchange:c3p0:0.9.5.2',

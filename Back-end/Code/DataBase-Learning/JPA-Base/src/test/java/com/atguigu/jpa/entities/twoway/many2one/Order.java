@@ -38,7 +38,7 @@ public class Order {
     }
 
     /*
-        双向多对一，两个表列名要一致。
+        双向多对一，两个表外键列名要一致。
      */
     @JoinColumn(name = "customer_id")
     @ManyToOne(fetch = FetchType.LAZY)

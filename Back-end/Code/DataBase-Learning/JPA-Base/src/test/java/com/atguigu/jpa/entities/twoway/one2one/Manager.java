@@ -35,7 +35,7 @@ public class Manager {
         this.mgrName = mgrName;
     }
 
-    //对于不维护关联关系，没有外键的一方, 使用 @OneToOne 来进行映射，建议设置 mappedBy=‘’mgr‘，mgr 为对方表中的关联属性的字段名。
+    //对于不维护关联关系，没有外键的一方, 使用 @OneToOne 来进行映射，建议设置 mappedBy='mgr'，mgr 为关系维护方表中的关联属性的字段名。
     @OneToOne(mappedBy = "mgr")
     public Department getDept() {
         return dept;

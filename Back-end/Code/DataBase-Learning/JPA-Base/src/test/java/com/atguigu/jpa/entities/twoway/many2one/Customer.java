@@ -106,7 +106,7 @@ public class Customer {
     }
 
     /*
-    双向多对一，两个表列名要一致。
+    双向多对一，两个表外键列名要一致。
 
         注意:：若在 1 的一端的 @OneToMany 中使用 mappedBy 属性, 则 @OneToMany 的 one 端就不能再使用 @JoinColumn 属性了.
      */

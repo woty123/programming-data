@@ -56,7 +56,9 @@ public class JPATwoWayOneToOneTest {
     public void testOneToOneFind() {
         Department dept = entityManager.find(Department.class, 29);
         System.out.println(dept.getDeptName());
-        System.out.println(dept.getMgr().getClass().getName());
+        System.out.println(dept.getMgr().getClass());
+        //这里再次触发sql查询
+        System.out.println(dept.getMgr());
     }
 
     //双向 1-1 的关联关系,，建议先保存不维护关联关系的一方,，即没有外键的一方，这样不会多出 UPDATE 语句。

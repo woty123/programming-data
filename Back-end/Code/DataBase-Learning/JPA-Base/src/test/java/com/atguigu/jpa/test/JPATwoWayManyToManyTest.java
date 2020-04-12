@@ -12,7 +12,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-public class JPATowWayManyToManyTest {
+public class JPATwoWayManyToManyTest {
 
     private EntityManagerFactory entityManagerFactory;
     private EntityManager entityManager;
