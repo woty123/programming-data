@@ -1007,10 +1007,38 @@ bg 1
 
 使用信号的常用快捷键和命令：
 
-`kill -l` 用于查看所有信号：比如  
+`kill -l` 用于查看所有信号，通过 `man -7 signal` 可以查看详细信号说明：
 
-- SIGINT 通知前台进程组终止进程 `ctrl+c`
-- SIGKILL 立即结束程序，不能被阻塞和处理 `kill-9 pid`
+名称 | 默认动作 | 说明
+---|------|---
+SIGHUP | 终止进程 | 终端线路挂断
+SIGINT | 终止进程 | 通知前台进程组终止进程 `ctrl+c`
+SIGQUIT | 建立CORE文件 终止进程，并且生成core文件
+SIGILL | 建立CORE文件 | 非法指令
+SIGTRAP | 建立CORE文件 | 跟踪自陷
+SIGBUS | 建立CORE文件 | 总线错误
+SIGSEGV | 建立CORE文件 | 段非法错误
+SIGFPE | 建立CORE文件 | 浮点异常
+SIGIOT | 建立CORE文件 | 执行I/O自陷
+SIGKILL | 终止进程 | 立即结束程序，不能被阻塞和处理 `kill-9 pid`
+SIGPIPE | 终止进程 | 向一个没有读进程的管道写数据
+SIGALARM | 终止进程 | 计时器到时
+SIGTERM | 终止进程 | 软件终止信号
+SIGSTOP | 停止进程 | 非终端来的停止信号
+SIGTSTP | 停止进程 | 终端来的停止信号
+SIGCONT | 忽略信号 | 继续执行一个停止的进程
+SIGURG | 忽略信号 | I/O紧急信号
+SIGIO | 忽略信号 | 描述符上可以进行I/O
+SIGCHLD | 忽略信号 | 当子进程停止或退出时通知父进程
+SIGTTOU | 停止进程 | 后台进程写终端
+SIGTTIN | 停止进程 | 后台进程读终端
+SIGXGPU | 终止进程 | CPU时限超时
+SIGXFSZ | 终止进程 | 文件长度过长
+SIGWINCH | 忽略信号 | 窗口大小发生变化
+SIGPROF | 终止进程 | 统计分布图用计时器到时
+SIGUSR1 | 终止进程 | 用户定义信号1
+SIGUSR2 | 终止进程 | 用户定义信号2
+SIGVTALRM | 终止进程 | 虚拟计时器到时
 
 具体查看[Linux下查看支持的信号列表](http://blog.sina.com.cn/s/blog_864017a701018vtb.html)
 

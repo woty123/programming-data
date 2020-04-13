@@ -7,10 +7,12 @@
  ============================================================================
  */
 
+/*
+signal.h 是 C 标准函数库中的信号处理部分，定义了程序执行时如何处理不同的信号。信号用作进程间通信，报告异常行为（如除零）、用户的一些按键组合（如同时按下Ctrl与C键，产生信号SIGINT）。
+参考：https://zh.wikipedia.org/wiki/Signal.h
 
-//signal.h是C标准函数库中的信号处理部分， 定义了程序执行时如何处理不同的信号。
-//信号用作进程间通信， 报告异常行为（如除零）、用户的一些按键组合（如同时按下Ctrl与C键，产生信号SIGINT）。
-//参考：https://zh.wikipedia.org/wiki/Signal.h
+在 linux 内的信号处理函数中，有 #define SIG_DFL ((void(*)(int))0) 和 #define SIG_IGN ((void(*)(int))1) 两个宏定义。它们是预定义的信号 handler，分别表示对捕获的信号采取忽略操作或者默认操作。
+ */
 
 //typedef void (*__p_sig_fn_t)(int); 用typedef定义一个类型void (*__p_sig_fn_t)(int);，这是一个函数指针，接收int，无返回值。
 

@@ -35,7 +35,7 @@
    2. 动手实践，编译 Breakpad，使用 Breakpad 监控 Native 异常
    3. 阅读 Breakpad 相关代码，并掌握其实现原理
 
-了解：[linux-syscall-support/](https://chromium.googlesource.com/linux-syscall-support/)
+Breakpad 底层使用了 [linux-syscall-support](https://chromium.googlesource.com/linux-syscall-support/)。
 
 **如何客观地衡量崩溃**：
 

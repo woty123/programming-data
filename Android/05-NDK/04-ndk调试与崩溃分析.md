@@ -2,11 +2,19 @@
 
 ## 0 参考文档
 
+官方文档
+
 1. [AndroidStudio：调试应用](https://developer.android.com/studio/debug?hl=zh-cn)
 2. [NDK：调试项目](https://developer.android.com/ndk/guides/debug)
 3. [调试 Android 平台原生代码](https://source.android.com/devices/tech/debug)
 
-## 1 调试工具
+相关博客
+
+1. [gityuan debug 原理分析](https://gityuan.com/tags/#debug)
+
+## 1 调试
+
+### 1.1 调试工具
 
 - ndk-gdb：ndk 中提供的调试工具，用于进行源码调试，支持使用 ndk-build 方式构建的项目，现在普遍使用 cmake，所以推荐使用 lldb。
 - lldb：AndroidStudio 中自带的调试，用于进行源码调试，使用比较简单。
@@ -14,12 +22,12 @@
 - Sanitizer：google 官方提供的用于检测 C/C++ 代码的 memory error 的工具。
 - Native Tracing：对 C++ 代码进行跟踪分析，比如执行时间和效率等等。使用非常简单，仅需要依赖Android的 `#include <android/trace.h>` 头文件即可。但仅在 `Android API Level>=23` 才支持。用于在开发阶段优化代码逻辑，提升算法质量等。
 
-## 2 lldb 和 ndk-gdb 的使用
+### 1.2 lldb 和 ndk-gdb 的使用
 
 - [ndk-gdb](https://developer.android.com/ndk/guides/ndk-gdb?hl=zh-cn) 参考
 - [lldb](https://developer.android.com/studio/debug?hl=zh-cn) 参考
 
-## 3 ndk-stack 的使用
+### 1.3 ndk-stack 的使用
 
 相关参考资料：
 
@@ -28,14 +36,14 @@
 - [调试 Android 平台原生代码](https://source.android.com/devices/tech/debug)：关于 tombstone 文件结构。
 - [Android NDK墓碑/崩溃分析](https://blog.csdn.net/lxb00321/article/details/74668383)
 
-### 3.1 日志变迁
+#### 1.3.1 日志变迁
 
 1. 在旧版本的系统中，ndk 错误日志能完整地打印在控制台上，此时直接使用 `adb logcat` 命令重定向到 `ndk-stack` 即可进行分析，高版本系统中只会展示很少的日志信息，取而代之的是日志保存到 tombstone 文件，这类似 Linux 的信号处理函数会将崩溃的现场信息记录到核心文件一样。
 2. tombstone 文件的路径为：`/data/tombstones/`，里面对应着不同序号的文件。在一些手机上可以直接将文件 pull 到 pc 上进行分析，而有一些手机却会展示权限不足，此时可以使用 `adb bugreport` 命令。
 
-### 3.2 使用示例
+#### 1.3.2 使用示例
 
-#### 获取 tombstone 文件
+##### 获取 tombstone 文件
 
 1：一段引发异常的代码
 
@@ -112,7 +120,7 @@ backtrace:
 
 找到对应的 tombstone 文件后，可以尝试使用 ndk-stack 或者 addr2line 工具进行分析，不过可以先来认识一下 tombstone 文件结构：
 
-#### tombstone 文件结构
+##### tombstone 文件结构
 
 墓碑文件它主要由下面几部分组成：
 
@@ -157,7 +165,7 @@ backtrace:
       #03 pc 0000000000145fec  /apex/com.android.runtime/lib64/libart.so (art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*)+244) (BuildId: 112fa750f6a9adbd7b599e735b27a900)
 ```
 
-#### 使用 addr2line 分析
+##### 使用 addr2line 分析
 
 addr2line 是 NDK 中用来获得指定动态链接库文件或者可执行文件中指定地址对应的源代码信息，它们位于 NDK 工具中的位置为：`$NDK_HOME\toolchains\aarch64-linux-android-4.9\prebuilt\windows-x 86_64\bin\aarch64-linux-android-addr2line.exe`。
 
@@ -176,7 +184,7 @@ Java_com_ztiany_jni_sample_JniBridge_triggerSignal
 D:\code\ztiany\notes\Android\Code\NDK\JNISample\app\src\main\cpp/native-lib.c:154
 ```
 
-#### 使用 ndk-stack 分析
+##### 使用 ndk-stack 分析
 
 Android NDK自从版本 r6 开始，提供了一个工具 ndk-stack。这个工具能自动分析 tombstone 文件，能将崩溃时的调用内存地址和 c++ 代码一行一行对应起来。（ndk-stack 其实是个 python 脚本，且需要 2.x 版本）：
 
@@ -201,15 +209,22 @@ Stack frame       #05 pc 00000000002dea2c  /apex/com.android.runtime/lib64/libar
 Stack frame       #06 pc 00000000005a681c  /apex/com.android.runtime/lib64/libart.so (MterpInvokeVirtual+648) (BuildId: 112fa750f6a9adbd7b599e735b27a900)
 ```
 
-## 4 Native tracing
+### 1.4 Native tracing
 
 参考：
 
 - [原生跟踪](https://developer.android.com/ndk/guides/tracing)
 
-## 5 sanitizers
+### 1.5 sanitizers
 
 参考：
 
 - [sanitizers](https://github.com/google/sanitizers)
 - [NDK：Address Sanitizer](https://developer.android.com/ndk/guides/asan?hl=zh-cn)
+
+## 3 崩溃信息收集
+
+### 3.1 参考资料
+
+- [腾讯Bugly：Android 平台 Native 代码的崩溃捕获机制及实现](https://mp.weixin.qq.com/s/g-WzYF3wWAljok1XjPoo7w)
+- [极客时间《Android开发高手课》-崩溃优化](https://time.geekbang.org/column/article/70602)
