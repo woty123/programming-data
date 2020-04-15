@@ -27,7 +27,7 @@
 - [ndk-gdb](https://developer.android.com/ndk/guides/ndk-gdb?hl=zh-cn) 参考
 - [lldb](https://developer.android.com/studio/debug?hl=zh-cn) 参考
 
-### 1.3 ndk-stack 的使用
+### 1.3 ndk-stack 、addr2line 等工具的使用
 
 相关参考资料：
 
@@ -87,10 +87,10 @@ adb bugreport D:\android
 # 有很多 tombstone 文件，可以根据包名信息来确定是哪个文件，最终确定 tombstone_07 中报错了调试应用的奔溃信息
 
 *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
-Build fingerprint: 'xxx/release-keys'
+Build fingerprint: 'Xiaomi/umi/umi:10/QKQ1.191117.002/V11.0.20.0.QJBCNXM:user/release-keys'
 Revision: '0'
 ABI: 'arm64'
-Timestamp: xxx
+Timestamp: 2020-04-10 15:26:29+0800
 pid: 24258, tid: 24258, name: iany.jni.sample  >>> com.ztiany.jni.sample <<<
 uid: 10355
 signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x10040140100401
@@ -109,13 +109,22 @@ backtrace:
       #01 pc 000000000000998c  /data/app/com.ztiany.jni.sample-wOIiYmbC4_CKeOVbR0JGng==/oat/arm64/base.odex (art_jni_trampoline+124)
       #02 pc 0000000000137334  /apex/com.android.runtime/lib64/libart.so (art_quick_invoke_stub+548) (BuildId: 112fa750f6a9adbd7b599e735b27a900)
       #03 pc 0000000000145fec  /apex/com.android.runtime/lib64/libart.so (art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*)+244) (BuildId: 112fa750f6a9adbd7b599e735b27a900)
-      #04 pc 00000000002e37cc  /apex/com.android.runtime/lib64/libart.so (art::interpreter::ArtInterpreterToCompiledCodeBridge(art::Thread*, art::ArtMethod*, art::ShadowFrame*, unsigned short, art::JValue*)+384) (BuildId: 112fa750f6a9adbd7b599e735b27a900)
-      #05 pc 00000000002dea2c  /apex/com.android.runtime/lib64/libart.so (bool art::interpreter::DoCall<false, false>(art::ArtMethod*, art::Thread*, art::ShadowFrame&, art::Instruction const*, unsigned short, art::JValue*)+892) (BuildId: 112fa750f6a9adbd7b599e735b27a900)
-      #06 pc 00000000005a681c  /apex/com.android.runtime/lib64/libart.so (MterpInvokeVirtual+648) (BuildId: 112fa750f6a9adbd7b599e735b27a900)
-      #07 pc 0000000000131814  /apex/com.android.runtime/lib64/libart.so (mterp_op_invoke_virtual+20) (BuildId: 112fa750f6a9adbd7b599e735b27a900)
-      #08 pc 00000000001097ca  /data/app/com.ztiany.jni.sample-wOIiYmbC4_CKeOVbR0JGng==/oat/arm64/base.vdex (com.ztiany.jni.sample.MainActivity.nativeThrowErrorUnCaught+4)
-      #09 pc 00000000002b4ae0  /apex/com.android.runtime/lib64/libart.so (_ZN3art11interpreterL7ExecuteEPNS_6ThreadERKNS_20CodeItemDataAccessorERNS_11ShadowFrameENS_6JValueEbb.llvm.10609397952962263602+240) (BuildId: 112fa750f6a9adbd7b599e735b27a900)
       ......
+
+stack:
+         0000007ff7062810  0000007de048b490  /apex/com.android.runtime/lib64/libart.so
+         0000007ff7062818  0000007e66571000  [anon:libc_malloc]
+         0000007ff7062820  0000007ff70628b0  [stack]
+         0000007ff7062828  0000007de048b4bc  /apex/com.android.runtime/lib64/libart.so
+         0000007ff7062830  0000007e665d9b80  [anon:libc_malloc]
+         0000007ff7062838  0000007ff70628d4  [stack]
+         0000007ff7062840  0000000000000000
+         0000007ff7062848  0000007e66571000  [anon:libc_malloc]
+         0000007ff7062850  0000007ff7062d10  [stack]
+         0000007ff7062858  0000007dd4c98b37  /data/app/com.ztiany.jni.sample-wOIiYmbC4_CKeOVbR0JGng==/oat/arm64/base.vdex
+         0000007ff7062860  685465766974616e
+         0000007ff7062868  0000000000000000
+         ......
 ```
 
 找到对应的 tombstone 文件后，可以尝试使用 ndk-stack 或者 addr2line 工具进行分析，不过可以先来认识一下 tombstone 文件结构：
@@ -129,18 +138,18 @@ backtrace:
 - 终止信号和故障地址
 - CPU寄存器
 - 调用堆栈
-- 堆叠每个通话的内容
+- 栈信息
 
 构建指纹：
 
 ```log
-Build fingerprint: 'xxx/release-keys'
+Build fingerprint: 'Xiaomi/umi/umi:10/QKQ1.191117.002/V11.0.20.0.QJBCNXM:user/release-keys'
 ```
 
 崩溃的过程和PID：
 
 ```shell
-# pid 为进程id，tid 为线程id，如果pid等于tid，那么就说明这个程序是在主线程中Crash掉的。
+# pid 为进程id，tid 为线程id，如果pid等于tid，那么就说明这个程序是在主线程中Crash掉的，后面跟着的是进程包名。
 pid: 24258, tid: 24258, name: iany.jni.sample  >>> com.ztiany.jni.sample <<<
 ```
 
@@ -149,9 +158,13 @@ pid: 24258, tid: 24258, name: iany.jni.sample  >>> com.ztiany.jni.sample <<<
 ```shell
 # 这里 SIGSEGV 是当一个进程执行了一个无效的内存引用，或发生段错误时发送给它的信号。非法地址为：0x10040140100401。
 signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x10040140100401
+    # 下面是进程奔溃时各寄存器的值，随着cpu的不同而不同
+    x0  4010040140100401  x1  0000007ff70628d4  x2  0000000000000000  x3  0000007e66571000
+    x4  0000007ff7062d10  x5  0000007dd4c98b37  x6  685465766974616e  x7  0000000000000000
+    x8  000000000000000a  x9  c592ca4408b3c4f0  x10 0000000000430000  x11 0000000000000060
 ```
 
-调用堆栈信息：
+崩溃时函数调用堆栈信息：
 
 ```shell
 # 调用栈信息是分析程序崩溃的非常重要的一个信息，它主要记录了程序在Crash前的函数调用关系以及当前正在执行函数的信息：
@@ -163,6 +176,18 @@ backtrace:
       #01 pc 000000000000998c  /data/app/com.ztiany.jni.sample-wOIiYmbC4_CKeOVbR0JGng==/oat/arm64/base.odex (art_jni_trampoline+124)
       #02 pc 0000000000137334  /apex/com.android.runtime/lib64/libart.so (art_quick_invoke_stub+548) (BuildId: 112fa750f6a9adbd7b599e735b27a900)
       #03 pc 0000000000145fec  /apex/com.android.runtime/lib64/libart.so (art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*)+244) (BuildId: 112fa750f6a9adbd7b599e735b27a900)
+```
+
+崩溃时栈信息
+
+```shell
+stack:
+         #栈地址            栈内容
+         0000007ff7062810  0000007de048b490  /apex/com.android.runtime/lib64/libart.so
+         0000007ff7062818  0000007e66571000  [anon:libc_malloc]
+         0000007ff7062820  0000007ff70628b0  [stack]
+         0000007ff7062828  0000007de048b4bc  /apex/com.android.runtime/lib64/libart.so
+         0000007ff7062830  0000007e665d9b80  [anon:libc_malloc]
 ```
 
 ##### 使用 addr2line 分析
@@ -209,6 +234,10 @@ Stack frame       #05 pc 00000000002dea2c  /apex/com.android.runtime/lib64/libar
 Stack frame       #06 pc 00000000005a681c  /apex/com.android.runtime/lib64/libart.so (MterpInvokeVirtual+648) (BuildId: 112fa750f6a9adbd7b599e735b27a900)
 ```
 
+##### 其他工具：objdump、IDA Pro
+
+objdump 可以在汇编层对崩溃原因进行分析。当然这要求开发人员了解一些 arm/x86 汇编知识。
+
 ### 1.4 Native tracing
 
 参考：
@@ -228,3 +257,5 @@ Stack frame       #06 pc 00000000005a681c  /apex/com.android.runtime/lib64/libar
 
 - [腾讯Bugly：Android 平台 Native 代码的崩溃捕获机制及实现](https://mp.weixin.qq.com/s/g-WzYF3wWAljok1XjPoo7w)
 - [极客时间《Android开发高手课》-崩溃优化](https://time.geekbang.org/column/article/70602)
+- [Android Native Crash 收集](https://www.kymjs.com/code/2018/08/22/01/)
+- [xCrash](https://github.com/iqiyi/xCrash)

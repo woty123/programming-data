@@ -1,5 +1,7 @@
 # CMake笔记
 
+---
+
 ## 1 基础语法
 
 ### 1.1 最简单的CmakeLists
@@ -156,6 +158,7 @@ endif (NOT HAVE_POW)
 ```
 
 ---
+
 ## 2 命令
 
 ### 2.1 [Cmake语言](https://cmake.org/cmake/help/latest/manual/cmake-language.7.html)
@@ -239,12 +242,14 @@ set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
 ```
 
 ---
+
 ## 3 注意
 
 - cmake的语法支持大小、小写和大小写混合，但是只有系统指令是不区分大小写的，但是变量和字符串是区分大小写的
 - 传递参数：参数可以用引号包裹起来，双引号内部包括的内容表示一个参数，也可以不用引号，但是假如参数带有分隔符则必须用双引号包裹起来，否则将被认为是多个参数，假如一行不能写完，则用`\\`符号来表示连接成一行
 
 ---
+
 ## 4 todo
 
 - 安装和测试

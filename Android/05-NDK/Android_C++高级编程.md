@@ -3,6 +3,7 @@
 原书代码[pro-android-c-w-ndk](https://github.com/apress/pro-android-c-w-ndk)。
 
 ---
+
 ## 2 深入理解Android NDK
 
 ### ndk工具目录说明
@@ -27,13 +28,14 @@ obj是中间目录，编译源代码后所产生的目标文件都保存在该�
 其实.mk文件都是make文件的片段，类似`include $(BUILD_SHARED_LIBRARY)`是从NDK目录把`build-shared-library.mk`文件引入到当前make文件中，其实并没有什么神奇之处。
 
 ---
+
 ## 5 日志与调试
 
 ### 控制台日志
 
 将stdout和stderr输出到logcat
 
-```
+```shell
 adb shell stop
 adb shell setprop log.redirect-stdio true
 adb shell start
@@ -75,6 +77,7 @@ adb shell start
   5. `gdb test2 core` 打开日志文件，定位错误信息到具体的代码行数
 
 ---
+
 ## 6 Binoic API
 
 **Bionic**是Android平台为使用C和C++进行元素应用程序开发所提供的POSIX标准C库，Google希望用它来取代glibc(GNU C)，它的发展目标是达到轻量化以及高运行速度。Bionic不会支持全部的C标准库函数，Android NDK文档中提供了缺失功能的完整列表。
@@ -213,6 +216,7 @@ POSIX线程规范要求实现一组调度策略，最常使用的策略如下：
 POSIX也提供了基于调度策略调整线程优先级的函数，可以在调用`pthread_create(`)创建线程时，用线程属性参数`pthread_attr_t`的`sched_policy`来定义线程优先级，也可以在运行时调用`pthread_setschedparam`函数提供优先级，应用程序可以使用`sched_get_priority_max`函数和`sched_get_priority_min`函数来查询这些数
 
 ---
+
 ## 8 POSI Socket API
 
 ### TCP：面向连接的通讯
@@ -247,6 +251,7 @@ UDP的其他API与TCP共用，而发送和接收数据的API不同
 大多数socket api阻塞函数调用，这些函数挂起调用进程直到满足某些条件，例如都操作时socket上有可读数据，socket通过select函数提供异步io，select可以操作多个socket描述符并同时监控它们的状态。
 
 ---
+
 ## 11 支持 C++
 
 Android平台提供了一个微型的C++运行库，称为**系统运行库**，该运行库不支持以下特性：
@@ -263,6 +268,7 @@ Android NDK提供了用于补充系统运行库功能的一些额外的C++运行
 - GNU STL
 
 ---
+
 ## 12 原生图形API
 
 - JNI Graphice(原生Bitmap)
@@ -270,11 +276,13 @@ Android NDK提供了用于补充系统运行库功能的一些额外的C++运行
 - 原生Window
 
 ---
+
 ## 13 原生音频API
 
 - OpenSL ES
 
 ---
+
 ## 14 程序概要分析和NEON优化
 
 - GNU Profiler
