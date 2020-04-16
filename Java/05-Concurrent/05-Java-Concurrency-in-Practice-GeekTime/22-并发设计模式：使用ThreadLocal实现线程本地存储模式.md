@@ -2,12 +2,9 @@
 
 ## 1 ThreadLocal 的使用方法
 
-使用 ThreadLocal 可以实现线程域对象，每个线程可以从 ThreadLocal 获取到该线程独有的对象，即线程之间没有共享，也就没有并发问题。
-
-我们知道，SimpleDateFormat 不是线程安全的，那如果需要在并发场景下使用它，你该怎么办呢？我们可以使用 ThreadLocal：
+每个线程可以用 ThreadLocal 存储和获取自己独有的对象，而且线程之间存储与获取操作互不影响，即线程之间不存在共享，也就没有并发问题。比如我们知道，SimpleDateFormat 不是线程安全的，那如果需要在并发场景下使用它，你该怎么办呢？这时我们就可以使用 ThreadLocal，针对每个线程创建一个 SimpleDateFormat：
 
 ```java
-
 static class SafeDateFormat {
 
   //定义ThreadLocal变量
