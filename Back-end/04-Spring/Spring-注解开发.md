@@ -1,0 +1,135 @@
+# Spring 注解开发
+
+在 SpringBoot 和 SpringCluod 兴起之后，使用了大量的注解配置，所以掌握 Spring 注解开发非常有必要。
+
+## 1 容器
+
+### 1.1 IOC
+
+1. 使用注解配置 Spring 容器、定制包的扫描规则。
+2. 组件注册、条件注册。
+3. 生命周期控制：Scope、Lazy。
+4. 生命周期处理。
+5. 属性赋值。
+6. 自动装配。
+7. Profile 注解
+
+#### 使用注解配置 Spring 容器
+
+`@Configuration`：用于标注一个类是一个配置类。然后构建 AnnotationConfigApplicationContext 时，传入用 Configuration 标注的类即可完成容器构建。
+
+#### 定制包的扫描规则
+
+`@ComponentScan`：用于指定要扫描的包，相关属性如下。
+
+- useDefaultFilters 用于表示是否使用默认的过滤器，默认会注册包下所有用`@Controller/@Service/@Repository/@Component`标注的类。
+- excludeFilters = Filter[] ：指定扫描的时候按照什么规则排除那些组件
+- includeFilters = Filter[] ：指定扫描的时候只需要包含哪些组件
+- FilterType 的类型：
+  - FilterType.ASSIGNABLE_TYPE：按照给定的类型；
+  - FilterType.ASPECTJ：使用ASPECTJ表达式
+  - FilterType.REGEX：使用正则指定
+  - FilterType.CUSTOM：使用自定义规则，此时可以实现 TypeFilter 实现自定义过滤规则。
+
+#### 组件注册
+
+`@Bean` 注解，标识在方法上，用于给容器中注册一个 Bean，类型为返回值的类型，id 默认是用方法名作为 id，可以通过 Bean 的 name 属性指定明确的 bean id。
+
+#### 调整作用域：Scope、Lazy
+
+默认情况下，向容器种注册的 Bean 都是单例的，可以通过 Scope 来修改作用域。Spring 提供了四种作用域：
+
+- prototype：多实例的，ioc容器启动并不会去调用方法创建对象放在容器中。每次获取的时候才会调用方法创建对象；
+- singleton：单实例的（默认值），ioc容器启动会调用方法创建对象放到ioc容器中，以后每次获取就是直接从容器中获取。
+- request：同一次请求创建一个实例。
+- session：同一个 session 创建一个实例。
+
+懒加载：单实例 bean：默认在容器启动的时候创建对象；使用 Layz 注解标注可以实现懒加载，即容器启动不创建对象。第一次使用(获取) Bean 创建对象，并初始化。
+
+#### 条件注册
+
+`@Conditional` 用于实现条件注册，只有满足条件的 Bean 才会注册到容器中。
+
+Conditional 的 value 属性接收 Condition 数组，Condition 用于做实际的条件判断，Conditional 可以标注在方法上，也可以标注在类上。
+
+- 标注在方法上时，只要 Conditional 指定的 Condition 返回 true，Bean 就会注册到容器中。
+- 标注在类上时，如果类上标注的 Conditional 所指定的 Condition 返回 false，那么该类中提供的所有 Bean 都不会注册到容器中。
+
+#### 其他注入 Bean 的注解
+
+1. @Import：快速给容器中导入一个组件，Import 接收三种类型的 Class：
+   1. 直接指定某个类的 Class，容器中就会自动注册这个组件，id默认是全类名。
+   2. 指定实现了 ImportSelector 的类，该类可以返回需要导入的组件的全类名数组。
+   3. 指定实现了 ImportBeanDefinitionRegistrar 的类，通过该方式可以手动注册 bean 到容器中。
+2. 使用 Spring 提供的 `FactoryBean`（工厂Bean），然后配置 @Bean 使用。如果要从容器容器中获取工厂 Bean 本身，我们需要给 id 前面加一个 &。
+
+#### 生命周期处理
+
+bean 的生命周期包含三个阶段：`bean创建--->初始化---->销毁`。容器管理 bean 的生命周期：我们可以自定义初始化和销毁方法；容器在 bean 进行到当前生命周期的时候来调用我们自定义的初始化和销毁方法。
+
+1. 构造（对象创建）
+   1. 单实例：在容器启动的时候创建对象。
+   2. 多实例：在每次获取的时候创建对象。
+2. 初始化：对象创建完成，并赋值好，调用初始化方法。
+3. 销毁：
+   1. 单实例：容器关闭的时候。
+   2. 多实例：容器不会管理这个bean；容器不会调用销毁方法。
+
+**监听容器的初始化**：实现 BeanPostProcessor，然后将其注册到容器中，IOC 容器会识别到它是一个 bean 后置处理器, 并调用其方法对于的方法。
+
+1. BeanPostProcessor.postProcessBeforeInitialization：在 Bean 初始化之前调用。
+2. BeanPostProcessor.postProcessAfterInitialization：在 Bean 初始化之后调用。
+
+```java
+// 调用流程
+populateBean(beanName, mbd, instanceWrapper)//为Bean的属性赋值
+initializeBean(beanName, mbd, instanceWrapper){
+    applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);
+    invokeInitMethods(beanName, wrappedBean, mbd);//执行自定义初始化，比如 PostConstruct 标注的方法。
+    applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
+}
+```
+
+说明：Spring 会遍历得到容器中所有的 BeanPostProcessor，挨个执行 beforeInitialization，一但返回 null，跳出 for 循环，不会执行后面的 BeanPostProcessor.postProcessorsBeforeInitialization。Spring 底层很多功能都使用了 BeanPostProcessor，比如 bean 的赋值、注入其他组件、`@Autowired`处理，生命周期注解功能，`@Async***BeanPostProcessor`等的处理。
+
+**指定初始化和销毁方法**：
+
+1. 指定初始化和销毁方法：通过 @Bean 指定 `init-method` 和 `destroy-method`。
+2. 通过让 Bean 实现InitializingBean（定义初始化逻辑）、DisposableBean（定义销毁逻辑）。
+3. 使用JSR250；
+   1. `@PostConstruct`：在 bean 创建完成并且属性赋值完成，来执行初始化方法。
+   2. `@PreDestroy`：在容器销毁 bean 之前通知我们进行清理工作。
+
+#### 属性赋值
+
+`@Value` 用于给 bean 的成员指定初始化值。其可以处理三种类型的参数：
+
+1. 基本数值
+2. SpEL`#{}`
+3. `${}`；取出配置文件【properties】中的值（在运行环境变量里面的值）
+
+`@PropertySource` 用于配置属性文件，比如配置 `@PropertySource(value={"classpath:/person.properties"})` 的话，person.properties 中 的值将会被添加到运行环境中，可以通过 System.getProperty() 获取。
+
+#### 自动装配
+
+Spring 利用依赖注入（DI），完成对 IOC 容器中中各个组件的依赖关系赋值，我们可以使用`@Autowired`、`@Resource`、`@Inject` 注解来指定容器中组件之间的依赖关系：
+
+**`@Autowired`** 自动注入：
+
+1. 默认优先按照类型去容器中找对应的组件:`applicationContext.getBean(BookDao.class);`，找到就赋值。
+2. 如果找到多个相同类型的组件，再将属性的名称作为组件的 id 去容器中查找 `applicationContext.getBean("bookDao")`。
+3. 配合 `@Qualifier("bookDao")` 使用：使用 `@Qualifier` 指定需要装配的组件的 id，而不是使用属性名。
+4. 自动装配默认一定要将属性赋值好，没有就会报错，可以使用 `@Autowired(required=false)` 指定为可选属性。
+5. `@Primary`：让 Spring 进行自动装配的时候，默认使用首选的 bean，也可以继续使用 `@Qualifier` 指定需要装配的 bean 的名字。
+
+**Spring 还支持使用 `@Resource`(JSR250) 和 `@Inject(JSR330)` java 规范的注解**：
+
+- @Resource：可以和 `@Autowired`一样实现自动装配功能，默认是按照组件名称进行装配的，但是没有能支持 `@Primary` 功能，也没有 reqiured 属性。
+- @Inject：需要导入 javax.inject 的包，和 Autowired 的功能一样，没有 required 的功能。
+- @Autowired 是 Spring 定义的； @Resource、@Inject 都是 java 规范。
+
+**AutowiredAnnotationBeanPostProcessor分析**：
+
+#### Profile 注解
+
+### 1.2 AOP
