@@ -43,7 +43,7 @@
 
 - [20-并发设计模式：Immutability模式](20-并发设计模式：Immutability模式.md)
 - [21-并发设计模式：Cop-on-Write](21-并发设计模式：Cop-on-Write.md)
-- [22-并发设计模式：ThreadLocal](22-并发设计模式：ThreadLocal.md)
+- [22-并发设计模式：使用ThreadLocal实现线程本地存储模式](22-并发设计模式：使用ThreadLocal实现线程本地存储模式.md)
 - [23-并发设计模式：保护性暂停](23-并发设计模式：保护性暂停.md)
 - [24-并发设计模式：Balking模式](24-并发设计模式：Balking模式.md)
 - [25--并发设计模式：Thread-Per-Message](25--并发设计模式：Thread-Per-Message.md)
