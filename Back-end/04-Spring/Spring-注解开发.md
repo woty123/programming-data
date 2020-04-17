@@ -6,14 +6,6 @@
 
 ### 1.1 IOC
 
-1. 使用注解配置 Spring 容器、定制包的扫描规则。
-2. 组件注册、条件注册。
-3. 生命周期控制：Scope、Lazy。
-4. 生命周期处理。
-5. 属性赋值。
-6. 自动装配。
-7. Profile 注解
-
 #### 使用注解配置 Spring 容器
 
 `@Configuration`：用于标注一个类是一个配置类。然后构建 AnnotationConfigApplicationContext 时，传入用 Configuration 标注的类即可完成容器构建。
@@ -22,9 +14,9 @@
 
 `@ComponentScan`：用于指定要扫描的包，相关属性如下。
 
-- useDefaultFilters 用于表示是否使用默认的过滤器，默认会注册包下所有用`@Controller/@Service/@Repository/@Component`标注的类。
-- excludeFilters = Filter[] ：指定扫描的时候按照什么规则排除那些组件
-- includeFilters = Filter[] ：指定扫描的时候只需要包含哪些组件
+- useDefaultFilters：用于表示是否使用默认的过滤器，默认会注册包下所有用`@Controller/@Service/@Repository/@Component`标注的类。
+- excludeFilters：指定扫描的时候按照什么规则排除那些组件
+- includeFilters：指定扫描的时候只需要包含哪些组件
 - FilterType 的类型：
   - FilterType.ASSIGNABLE_TYPE：按照给定的类型；
   - FilterType.ASPECTJ：使用ASPECTJ表达式
@@ -110,7 +102,7 @@ initializeBean(beanName, mbd, instanceWrapper){
 
 `@PropertySource` 用于配置属性文件，比如配置 `@PropertySource(value={"classpath:/person.properties"})` 的话，person.properties 中 的值将会被添加到运行环境中，可以通过 System.getProperty() 获取。
 
-#### 自动装配
+#### 自动装配：Autowired、Resource、Inject
 
 Spring 利用依赖注入（DI），完成对 IOC 容器中中各个组件的依赖关系赋值，我们可以使用`@Autowired`、`@Resource`、`@Inject` 注解来指定容器中组件之间的依赖关系：
 
@@ -121,6 +113,9 @@ Spring 利用依赖注入（DI），完成对 IOC 容器中中各个组件的依
 3. 配合 `@Qualifier("bookDao")` 使用：使用 `@Qualifier` 指定需要装配的组件的 id，而不是使用属性名。
 4. 自动装配默认一定要将属性赋值好，没有就会报错，可以使用 `@Autowired(required=false)` 指定为可选属性。
 5. `@Primary`：让 Spring 进行自动装配的时候，默认使用首选的 bean，也可以继续使用 `@Qualifier` 指定需要装配的 bean 的名字。
+6. Autowired 标注可以标注在参数，方法，属性上：
+   1. 对于 Bean 的构造器：如果组件只有一个有参构造器，而容器中有构造器需要的参数类型，那么这个构造器上的 @Autowired 可以省略，参数位置的组件还是可以自动从容器中获取。
+   2. 在配置类中使用 @Bean 向容器注册 Bean 时，Bean 所标注的方法也可以声明方法参数，然后使用 Autowired 标注，Spring 就会在容器中找对应类型的 Bean，甚至我们可以不使用 @Autowired 标注参数，Spring 也会能从容器中找到对应类型的参数然后调用注册 Bean 的方法。
 
 **Spring 还支持使用 `@Resource`(JSR250) 和 `@Inject(JSR330)` java 规范的注解**：
 
@@ -128,8 +123,70 @@ Spring 利用依赖注入（DI），完成对 IOC 容器中中各个组件的依
 - @Inject：需要导入 javax.inject 的包，和 Autowired 的功能一样，没有 required 的功能。
 - @Autowired 是 Spring 定义的； @Resource、@Inject 都是 java 规范。
 
-**AutowiredAnnotationBeanPostProcessor分析**：
+**AutowiredAnnotationBeanPostProcessor分析**：用于解析和完成自动装配，本质上它是一个 BeanPostProcessor 的实现。
+
+#### 自动装配 Spring 底层的组件
+
+自定义组件想要使用 Sprin g容器底层的一些组件，比如 ApplicationContext、BeanFactory 等，那么自定义组件实现特定类型的 `xxxAware`，在 Spring 创建对象的时候，会调用接口规定的方法注入相关组件。Spring 提供了很多类型的 Aware：
+
+```java
+ApplicationEventPublisherAware (org.springframework.context)
+MessageSourceAware (org.springframework.context)
+ResourceLoaderAware (org.springframework.context)
+NotificationPublisherAware (org.springframework.jmx.export.notification)
+EnvironmentAware (org.springframework.context)
+BeanFactoryAware (org.springframework.beans.factory)
+ImportAware (org.springframework.context.annotation)
+EmbeddedValueResolverAware (org.springframework.context)
+BootstrapContextAware (org.springframework.jca.context)
+LoadTimeWeaverAware (org.springframework.context.weaving)
+BeanNameAware (org.springframework.beans.factory)
+BeanClassLoaderAware (org.springframework.beans.factory)
+ApplicationContextAware (org.springframework.context)
+```
 
 #### Profile 注解
 
+Spring为我们提供的可以根据当前环境，动态的激活和切换一系列组件的功能，比如我们有下面三种开发环境，分别对应着不同的数据源：
+
+- 开发环境：数据源 A
+- 测试环境：数据源 B
+- 生产环境：数据源 C
+
+我们可以使用 `@Profile` 指定组件在哪个环境的情况下才能被注册到容器中，对于没有用 Profile 指定的组件，则任何环境下都能注册这个组件。
+
+1. 加了环境标识的 bean，只有这个环境被激活的时候才能注册到容器中。默认环境是 `default`。
+2. 如果 `@Profile` 标注在配置类上，那么只有是在指定的环境的时候，整个配置类里面的所有配置才能生效。
+3. 没有标注环境标识的 bean 在任何环境下都是加载的。
+
+指定环境的方法：
+
+1. 添加虚拟机参数：`-Dspring.profiles.active=test`
+2. 在代码中指定：
+
+```java
+//1、创建一个applicationContext
+AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+//2、设置需要激活的环境
+applicationContext.getEnvironment().setActiveProfiles("dev");
+//3、注册主配置类
+applicationContext.register(MainConfigOfProfile.class);
+//4、启动刷新容器
+applicationContext.refresh();
+```
+
 ### 1.2 AOP
+
+- [ ] todo
+
+### 1.3 声明式事务
+
+- [ ] todo
+
+## 2 Spring 扩展原理
+
+- [ ] todo
+
+## 3 Servlet3.0 与异步请求
+
+- [ ] todo
