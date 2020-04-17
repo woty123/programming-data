@@ -1,8 +1,9 @@
-#  Fragment 的使用
+# Fragment 的使用
 
 **内存重启**：指 Activity 在后台因内存不足被回收，当重新回到 Activity 时，系统会重新创建 Activity 与 Activity 中的 fragments，利用屏幕旋转可以模拟这种情况。
 
 ---
+
 ## 1 Fragment的操作方式
 
 Fragment的需要通过 FragmentTransaction 来操作，主要的操作方法如下：
@@ -17,15 +18,15 @@ Fragment的需要通过 FragmentTransaction 来操作，主要的操作方法如
 | hide  | 隐藏Fragment的视图，Fragment的生命周期不会被调用  |
 | show  | 与hide方法对应，重新显示Fragment的视图，Fragment的生命周期不会被调用  |
 
-
 ---
+
 ## 2 操作Fragment时生命周期回调
 
 ### add
 
 当Fragment被add时，它的生命周期调用如下：
 
-```
+```java
     Opt1Fragment-->onAttach
     Opt1Fragment-->onCreate
     onCreateView()
@@ -39,16 +40,16 @@ Fragment的需要通过 FragmentTransaction 来操作，主要的操作方法如
 
 当我们replace一个新的Fragment时，生命周期如下：
 
-```
+```java
     Opt2Fragment-->onAttach
     Opt2Fragment-->onCreate
-    
+
     Opt1Fragment-->onPause
     Opt1Fragment-->onStop
     Opt1Fragment-->onDestroyView
     Opt1Fragment-->onDestroy
     Opt1Fragment-->onDetach
-    
+
     onCreateView()
     Opt2Fragment-->onViewCreated
     Opt2Fragment-->onActivityCreated
@@ -60,7 +61,7 @@ Fragment的需要通过 FragmentTransaction 来操作，主要的操作方法如
 
 ### remove
 
-```
+```java
     Opt2Fragment-->onResume
     Opt2Fragment-->onPause
     Opt2Fragment-->onStop
@@ -76,7 +77,7 @@ Fragment的需要通过 FragmentTransaction 来操作，主要的操作方法如
 当我们add一个fragment后，可以使用detach来销毁Fragment的视图。
 有一点需要注意，detach后Fragment的onStart,onResume，onPause,onStop已经不再和Activity关联了。
 
-```
+```java
     //add operation
     Opt1Fragment-->onAttach
     Opt1Fragment-->onCreate
@@ -85,7 +86,7 @@ Fragment的需要通过 FragmentTransaction 来操作，主要的操作方法如
     Opt1Fragment-->onActivit
     Opt1Fragment-->onStart
     Opt1Fragment-->onResume
-    
+
     //detach operation
     Opt1Fragment-->onPause
     Opt1Fragment-->onStop
@@ -94,7 +95,7 @@ Fragment的需要通过 FragmentTransaction 来操作，主要的操作方法如
 
 当然在detach后，可以继续使用remove完全移除Fragment：
 
-```
+```java
      Opt1Fragment-->onDestroy
      Opt1Fragment-->onDetach
 ```
@@ -103,14 +104,13 @@ Fragment的需要通过 FragmentTransaction 来操作，主要的操作方法如
 
 attach应该只在用在使用了detach销毁了视图的Fragment：
 
-```
+```java
     onCreateView()
     Opt1Fragment-->onViewCreated
     Opt1Fragment-->onActivityCreated
     Opt1Fragment-->onStart
     Opt1Fragment-->onResume
 ```
-
 
 ### show/hide
 
@@ -127,9 +127,10 @@ show 和 hide 是对应的两个方法，用于显示和隐藏 fragment 的视�
 所幸的是，**这个问题在 Support24 之后被修复了**。
 
 ---
+
 ## 3 Fragment 中一些方便的方法
 
-```
+```shell
     isAdded
     isDetached
     isHidden
@@ -142,12 +143,14 @@ show 和 hide 是对应的两个方法，用于显示和隐藏 fragment 的视�
 ```
 
 ---
+
 ## 4 需要注意的地方
 
 - Fragment 一般分为两类，一类是有 UI 的 Fragment，可以作为页面，作为 View 来展示，另一类是用没有 UI 的 Fragment，一般用作保存数据。
 
 - 使用静态工厂方法 `newInstance(...)` 来获取Fragment实例，可以在 Google 的示例代码中发现这种写法，好处是接收确切的参数，返回一个Fragment实例，避免了在创建Fragment的时候无法在类外部知道所需参数的问题，在合作开发的时候特别有用。
-```
+
+```java
 public static WeatherFragment newInstance(String cityName) {
     Bundle args = new Bundle();
     args.putString(cityName, CITY_NAME_KEY);
