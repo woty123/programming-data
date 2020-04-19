@@ -14,6 +14,7 @@ import javax.servlet.http.Part;
 @MultipartConfig
 public class UploadServlet extends HttpServlet {
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Utils.setUTF8Encode(request, response);
 
@@ -32,6 +33,7 @@ public class UploadServlet extends HttpServlet {
         photoPart.write(getServletContext().getRealPath("/WEB-INF/files") + "/" + filename);
     }
 
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }

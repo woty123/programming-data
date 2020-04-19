@@ -14,15 +14,18 @@ import javax.servlet.annotation.WebInitParam;
 @WebFilter(value = "*.jsp", initParams = @WebInitParam(name = "encoding", value = "UTF-8"))
 public class FilterDemo implements Filter {
 
+    @Override
     public void init(FilterConfig filterConfig) {
 
     }
 
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        System.out.println("过滤了");
+        System.out.println("FilterDemo.doFilter");
         chain.doFilter(request, response);
     }
 
+    @Override
     public void destroy() {
 
     }

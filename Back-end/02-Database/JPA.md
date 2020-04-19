@@ -1275,7 +1275,7 @@ Spring 整合 JPA 的三种方式：
 
 ## 8 参考
 
-以上笔记来自对 [尚硅谷JavaEE](http://www.atguigu.com/download.shtml#javaEE) 课程 JPA 部分的学习。
+以上笔记来自对 [尚硅谷JavaEE](http://www.atguigu.com/download.shtml#javaEE) 课程 **JPA** 部分的学习。
 
 ## 9 示例项目
 

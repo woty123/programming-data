@@ -12,6 +12,7 @@ public class SendMail extends Thread {
         this.ac = ac;
     }
 
+    @Override
     public void run() {
         //发送邮件
         try {

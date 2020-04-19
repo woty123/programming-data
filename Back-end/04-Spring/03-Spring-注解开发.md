@@ -2,6 +2,8 @@
 
 在 SpringBoot 和 SpringCluod 兴起之后，使用了大量的注解配置，所以掌握 Spring 注解开发非常有必要。
 
+---
+
 ## 1 容器
 
 ### 1.1 IOC
@@ -31,7 +33,7 @@
 
 默认情况下，向容器种注册的 Bean 都是单例的，可以通过 Scope 来修改作用域。Spring 提供了四种作用域：
 
-- prototype：多实例的，ioc容器启动并不会去调用方法创建对象放在容器中。每次获取的时候才会调用方法创建对象；
+- prototype：多实例的，ioc容器启动并不会去调用方法创建对象放在容器中。每次获取的时候才会调用方法创建对象。
 - singleton：单实例的（默认值），ioc容器启动会调用方法创建对象放到ioc容器中，以后每次获取就是直接从容器中获取。
 - request：同一次请求创建一个实例。
 - session：同一个 session 创建一个实例。
@@ -65,7 +67,7 @@ bean 的生命周期包含三个阶段：`bean创建--->初始化---->销毁`。
 2. 初始化：对象创建完成，并赋值好，调用初始化方法。
 3. 销毁：
    1. 单实例：容器关闭的时候。
-   2. 多实例：容器不会管理这个bean；容器不会调用销毁方法。
+   2. 多实例：容器不会管理这个bean，容器不会调用销毁方法。
 
 **监听容器的初始化**：实现 BeanPostProcessor，然后将其注册到容器中，IOC 容器会识别到它是一个 bean 后置处理器, 并调用其方法对于的方法。
 
@@ -127,7 +129,7 @@ Spring 利用依赖注入（DI），完成对 IOC 容器中中各个组件的依
 
 #### 自动装配 Spring 底层的组件
 
-自定义组件想要使用 Sprin g容器底层的一些组件，比如 ApplicationContext、BeanFactory 等，那么自定义组件实现特定类型的 `xxxAware`，在 Spring 创建对象的时候，会调用接口规定的方法注入相关组件。Spring 提供了很多类型的 Aware：
+自定义组件想要使用 Spring 容器底层的一些组件，比如 ApplicationContext、BeanFactory 等，那么自定义组件可以实现特定类型的 `org.springframework.beans.factory.Aware` 然后注册到容器中，在 Spring 创建对象的时候，会调用接口规定的方法注入相关组件。Spring 提供了很多类型的 Aware：
 
 ```java
 ApplicationEventPublisherAware (org.springframework.context)
@@ -177,16 +179,46 @@ applicationContext.refresh();
 
 ### 1.2 AOP
 
-- [ ] todo
+相关注解：
+
+1. `@EnableAspectJAutoProxy` 用于开启 AOP。
+2. `@Before/@After/@AfterReturning/@AfterThrowing/@Around`
+3. `@Pointcut`
 
 ### 1.3 声明式事务
 
+相关注解：
+
+1. `@EnableTransactionManagement` 用于开启事物
+2. `@Transactional`
+
+---
+
+## 2 SpringMVC 与 Servlet3.0 注解开发
+
+SpringMVC 基于 Servle3.0 中引入的 ServletContainerInitializer 提供了注解方式对 Spring 容器进行配置。
+
+SpringWeb jar 包中就配置了一个 `org.springframework.web.SpringServletContainerInitializer`，而其配置的 HandlesTypes 是 WebApplicationInitializer 类型，WebApplicationInitializer 是一个接口，SpringWeb 提供了三个抽象类实现，我们可以选择实现其中的任一个来进行配置：
+
+1. AbstractContextLoaderInitializer，其主要功能是：
+   1. 创建根容器；`createRootApplicationContext();`
+2. AbstractDispatcherServletInitializer，其主要功能是：
+   1. 创建一个 web 的 ioc 容器：`createServletApplicationContext();`
+   2. 创建 DispatcherServlet：`createDispatcherServlet();`，然后将创建的 DispatcherServlet 添加到 ServletContext 中；我们可以实现抽象方法 `getServletMappings()` 对 DispatcherServlet 的映射路径进行配置。
+3. AbstractAnnotationConfigDispatcherServletInitializer：注解方式配置的 DispatcherServlet 初始化器，其主要功能是：
+      创建根容器：`createRootApplicationContext()`，我们可以实现抽象方法 `getRootConfigClasses()` 传入一个根容器配置类。
+      创建 web 的 ioc 容器：`createServletApplicationContext()`，我们可以实现抽象方法 `getServletConfigClasses()` 传入一个 Web 容器的配置类。
+
+所以，如果要以注解方式来启动 SpringMVC；则继承 AbstractAnnotationConfigDispatcherServletInitializer，然后实现抽象方法指定DispatcherServlet 的配置信息。
+
+---
+
+## 3 Spring 原理分析
+
 - [ ] todo
 
-## 2 Spring 扩展原理
+---
 
-- [ ] todo
+## 4 参考
 
-## 3 Servlet3.0 与异步请求
-
-- [ ] todo
+以上笔记来自对 [尚硅谷JavaEE](http://www.atguigu.com/download.shtml#javaEE) 课程 **Spring注解开发** 部分的学习。

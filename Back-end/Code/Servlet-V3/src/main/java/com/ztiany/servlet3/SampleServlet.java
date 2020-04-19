@@ -20,12 +20,14 @@ import javax.servlet.http.HttpServletResponse;
                 @WebInitParam(name = "XXX", value = "YYY")})
 public class SampleServlet extends HttpServlet {
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Utils.setUTF8Encode(request, response);
 
         response.getWriter().write("你好啊");
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         doPost(request, response);
     }

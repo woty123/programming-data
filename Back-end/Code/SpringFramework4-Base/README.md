@@ -42,3 +42,9 @@
 - jdbc：jdbc
 - transaction：事务
 - transaction.xml：事务的xml配置方式
+
+## P5-SpringAnnotation：Spring 纯注解开发
+
+- ioc：ioc 容器注解开发
+- aop：aop 注解开发
+- tx：声明式事务
