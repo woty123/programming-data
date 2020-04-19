@@ -4,11 +4,11 @@
 
 ---
 
-## 1 容器
+## 1 Spring 容器的注解配置
 
 ### 1.1 IOC
 
-#### 使用注解配置 Spring 容器
+#### 使用注解配置 Spring IOC 容器
 
 `@Configuration`：用于标注一个类是一个配置类。然后构建 AnnotationConfigApplicationContext 时，传入用 Configuration 标注的类即可完成容器构建。
 
@@ -16,14 +16,14 @@
 
 `@ComponentScan`：用于指定要扫描的包，相关属性如下。
 
-- useDefaultFilters：用于表示是否使用默认的过滤器，默认会注册包下所有用`@Controller/@Service/@Repository/@Component`标注的类。
+- useDefaultFilters：用于表示是否使用默认的过滤器，默认会注册包下所有用`@Controller/@Service/@Repository/@Component`标注的类
 - excludeFilters：指定扫描的时候按照什么规则排除那些组件
 - includeFilters：指定扫描的时候只需要包含哪些组件
 - FilterType 的类型：
-  - FilterType.ASSIGNABLE_TYPE：按照给定的类型；
+  - FilterType.ASSIGNABLE_TYPE：按照给定的类型
   - FilterType.ASPECTJ：使用ASPECTJ表达式
   - FilterType.REGEX：使用正则指定
-  - FilterType.CUSTOM：使用自定义规则，此时可以实现 TypeFilter 实现自定义过滤规则。
+  - FilterType.CUSTOM：使用自定义规则，此时可以实现 TypeFilter 实现自定义过滤规则
 
 #### 组件注册
 
@@ -61,32 +61,15 @@ Conditional 的 value 属性接收 Condition 数组，Condition 用于做实际�
 
 bean 的生命周期包含三个阶段：`bean创建--->初始化---->销毁`。容器管理 bean 的生命周期：我们可以自定义初始化和销毁方法；容器在 bean 进行到当前生命周期的时候来调用我们自定义的初始化和销毁方法。
 
-1. 构造（对象创建）
+1. 对象的创建
    1. 单实例：在容器启动的时候创建对象。
    2. 多实例：在每次获取的时候创建对象。
-2. 初始化：对象创建完成，并赋值好，调用初始化方法。
+2. 初始化：对象创建完成，相关依赖属性被赋值，调用初始化方法。
 3. 销毁：
    1. 单实例：容器关闭的时候。
-   2. 多实例：容器不会管理这个bean，容器不会调用销毁方法。
+   2. 多实例：容器不会管理这个 bean，容器不会调用销毁方法。
 
-**监听容器的初始化**：实现 BeanPostProcessor，然后将其注册到容器中，IOC 容器会识别到它是一个 bean 后置处理器, 并调用其方法对于的方法。
-
-1. BeanPostProcessor.postProcessBeforeInitialization：在 Bean 初始化之前调用。
-2. BeanPostProcessor.postProcessAfterInitialization：在 Bean 初始化之后调用。
-
-```java
-// 调用流程
-populateBean(beanName, mbd, instanceWrapper)//为Bean的属性赋值
-initializeBean(beanName, mbd, instanceWrapper){
-    applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);
-    invokeInitMethods(beanName, wrappedBean, mbd);//执行自定义初始化，比如 PostConstruct 标注的方法。
-    applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
-}
-```
-
-说明：Spring 会遍历得到容器中所有的 BeanPostProcessor，挨个执行 beforeInitialization，一但返回 null，跳出 for 循环，不会执行后面的 BeanPostProcessor.postProcessorsBeforeInitialization。Spring 底层很多功能都使用了 BeanPostProcessor，比如 bean 的赋值、注入其他组件、`@Autowired`处理，生命周期注解功能，`@Async***BeanPostProcessor`等的处理。
-
-**指定初始化和销毁方法**：
+**指定 Bean 的初始化和销毁方法**：
 
 1. 指定初始化和销毁方法：通过 @Bean 指定 `init-method` 和 `destroy-method`。
 2. 通过让 Bean 实现InitializingBean（定义初始化逻辑）、DisposableBean（定义销毁逻辑）。
@@ -94,7 +77,14 @@ initializeBean(beanName, mbd, instanceWrapper){
    1. `@PostConstruct`：在 bean 创建完成并且属性赋值完成，来执行初始化方法。
    2. `@PreDestroy`：在容器销毁 bean 之前通知我们进行清理工作。
 
-#### 属性赋值
+**Hook bean 的创建**：实现 BeanPostProcessor，然后将其注册到容器中，IOC 容器会识别到它是一个 bean 后置处理器, 并调用其方法对于的方法。
+
+1. BeanPostProcessor.postProcessBeforeInitialization：在 Bean 初始化之前调用。
+2. BeanPostProcessor.postProcessAfterInitialization：在 Bean 初始化之后调用。
+
+Spring 会遍历得到容器中所有的 BeanPostProcessor，逐个执行 beforeInitialization，一但返回 null，跳出 for 循环，不会执行后面的 BeanPostProcessor.postProcessorsBeforeInitialization。Spring 底层很多功能都使用了 BeanPostProcessor，比如 bean 的赋值、注入其他组件、`@Autowired`处理，生命周期注解功能，`@Async***BeanPostProcessor`等的处理。
+
+#### Bean 的属性赋值
 
 `@Value` 用于给 bean 的成员指定初始化值。其可以处理三种类型的参数：
 
@@ -125,7 +115,7 @@ Spring 利用依赖注入（DI），完成对 IOC 容器中中各个组件的依
 - @Inject：需要导入 javax.inject 的包，和 Autowired 的功能一样，没有 required 的功能。
 - @Autowired 是 Spring 定义的； @Resource、@Inject 都是 java 规范。
 
-**AutowiredAnnotationBeanPostProcessor分析**：用于解析和完成自动装配，本质上它是一个 BeanPostProcessor 的实现。
+**AutowiredAnnotationBeanPostProcessor**：用于解析和完成自动装配，本质上它是一个 BeanPostProcessor 的实现。
 
 #### 自动装配 Spring 底层的组件
 
