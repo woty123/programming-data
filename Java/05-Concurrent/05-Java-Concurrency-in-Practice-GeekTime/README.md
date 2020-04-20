@@ -42,7 +42,7 @@
 ## 3 第三部分，并发模式设计
 
 - [20-并发设计模式：Immutability模式](20-并发设计模式：Immutability模式.md)
-- [21-并发设计模式：Cop-on-Write](21-并发设计模式：Cop-on-Write.md)
+- [21-并发设计模式：Copy-on-Write](21-并发设计模式：Copy-on-Write.md)
 - [22-并发设计模式：使用ThreadLocal实现线程本地存储模式](22-并发设计模式：使用ThreadLocal实现线程本地存储模式.md)
 - [23-并发设计模式：保护性暂停](23-并发设计模式：保护性暂停.md)
 - [24-并发设计模式：Balking模式](24-并发设计模式：Balking模式.md)
