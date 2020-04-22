@@ -61,7 +61,71 @@ try {
 
 **Open JDK 的 Fiber 项目**：Java 语言目前也已经意识到轻量级线程的重要性了，OpenJDK 有个 Loom 项目，就是要解决 Java 语言的轻量级线程问题，在这个项目中，轻量级线程被叫做 Fiber。
 
-## 参考
+## 4 用 Fiber 实现 Thread-Per-Message 模式
+
+Loom 项目在设计轻量级线程时，充分考量了当前 Java 线程的使用方式，采取的是尽量兼容的态度，所以使用上还是挺简单的。用 Fiber 实现 echo 服务的示例代码如下所示：
+
+```java
+final ServerSocketChannel ssc =  ServerSocketChannel.open().bind(new InetSocketAddress(8080));
+
+//处理请求
+try{
+  while (true) {
+    // 接收请求
+    final SocketChannel sc = serverSocketChannel.accept();
+    Fiber.schedule(()->{
+      try {
+        // 读Socket
+        ByteBuffer rb = ByteBuffer
+          .allocateDirect(1024);
+        sc.read(rb);
+        //模拟处理请求
+        LockSupport.parkNanos(2000*1000000);
+        // 写Socket
+        ByteBuffer wb = (ByteBuffer)rb.flip()
+        sc.write(wb);
+        // 关闭Socket
+        sc.close();
+      } catch(Exception e){
+        throw new UncheckedIOException(e);
+      }
+    });
+  }//while
+}finally{
+  ssc.close();
+}
+```
+
+性能测试：
+
+1. 首先通过 ulimit -u 512 将用户能创建的最大进程数（包括线程）设置为 512；
+2. 启动 Fiber 实现的 echo 程序；
+3. 利用压测工具 ab 进行压测：`ab -r -c 20000 -n 200000 http:// 测试机 IP 地址:8080/`
+
+使用 Fiber，在 20000 并发下，该程序依然能够良好运行。同等条件下，Thread 实现的 echo 程序 512 并发都抗不过去，直接就 OOM 了。通过 Linux 命令 `top -Hp pid` 可以查看 Fiber 实现的 echo 程序的进程信息，其会根据 CPU 核数创建合适的线程数，来处理执行轻量级线程。
+
+>要使用 Fiber 需要自行编译 OpenJDK，具体可以参考[project loom](https://wiki.openjdk.java.net/display/loom)。
+
+## 5 总结
+
+并发编程领域的**分工问题，指的是如何高效地拆解任务并分配给线程**。
+
+Future、CompletableFuture 、CompletionService、Fork/Join 计算框架等都是 Java JDK 提供的并发框架，但是它们使用起来都比较复杂。作为 Java 程序员可能觉得这样的复杂度很正常，但是随着技术的发展，很多复杂变得没有必要。比如 Thread-Per-Message 模式如果使用线程池方案就会增加复杂度。
+
+Thread-Per-Message 模式在 Java 领域并不知名，根本原因在于 Java 语言里的线程是一个重量级的对象，为每一个任务创建一个线程成本太高，尤其是在高并发领域，基本就不具备可行性。但是随着 [project loom](https://wiki.openjdk.java.net/display/loom) 项目发展，Java 语言未来一定会提供轻量级线程，这样基于轻量级线程实现 Thread-Per-Message 模式就是一个非常靠谱的选择。
+
+## 6 思考题
+
+使用 Thread-Per-Message 模式会为每一个任务都创建一个线程，在高并发场景中，很容易导致应用 OOM，那有什么办法可以快速解决呢？
+
+1. 改用线程池
+2. 服务的限流
+3. 修改 JVM 相关参数
+4. 使用 NIO/AIO 模式
+
+## 7 扩展参考
 
 - [服务器端限流保护](https://www.cnblogs.com/xianzhedeyu/p/5868024.html)
 - [Java并发 -- Thread-Per-Message模式](http://zhongmingmao.me/2019/05/23/java-concurrent-thread-per-message/)
+- [Quasar Fiber ，通过 javaagent 技术实现轻量级线程](http://www.paralleluniverse.co/quasar/)
+- [Java 异步编程：从 Future 到 Loom](https://www.jianshu.com/p/5db701a764cb#8088b12f-499f-e7f0-1ac7-4d7b9980cd23)

@@ -1,4 +1,4 @@
-# Balking 模式
+# 并发设计模式：Balking 模式
 
 ## 1 Balking 模式简介
 

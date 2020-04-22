@@ -1,4 +1,4 @@
-# 并发设计模式：ThreadLocal
+# 并发设计模式：ThreadLocal 线程本地存储模式
 
 ## 1 ThreadLocal 的使用方法
 
