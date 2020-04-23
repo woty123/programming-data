@@ -47,4 +47,5 @@ SLIB_INSTALL_LINKS='$(SLIBNAME)'
 
 - [FFMPEG视音频编解码零基础学习方法](http://blog.csdn.net/leixiaohua1020/article/details/15811977)
 - [Android 音视频开发学习思路](https://www.cnblogs.com/renhui/p/7452572.html)
+- [【Android 音视频开发打怪升级】系列文章](https://github.com/ChenLittlePing/LearningVideo)
 - [WliveTV](https://github.com/wanliyang1990/WliveTV) 付费视频教程

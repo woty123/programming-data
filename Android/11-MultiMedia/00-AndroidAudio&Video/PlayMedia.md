@@ -19,7 +19,7 @@ SurfaceView的大概原理就是在现有View的位置上创建一个新的Windo
 
 VideoView 常用的几个方法：
 
-```
+```java
     public int getDuration()：获得所播放视频的总时间
     public int getCurrentPosition()：获得当前的位置,我们可以用来设置播放时间的显示
     public int getCurrentPosition():获得当前的位置,我们可以用来设置播放时间的显示
@@ -65,6 +65,7 @@ TextureView是在4.0引入的，与SurfaceView相比，它不会创建新的窗�
         }
     }
 ```
+
 上面就是TextureView对应的回调，当`onSurfaceTextureAvailable`方法被调用时，表示SurfaceTexture准备就绪已经准备就绪，这时就可以让SurfaceTexture关联到MediaPlayer，作为播放视频的图像数据来源，SurfaceTexture作为数据通道，把从数据源(MediaPlayer)中获取到的图像帧数据转为GL外部纹理，交给TextureVeiw作为View heirachy中的一个硬件加速层来显示，从而实现视频播放功能。
 
 ### 1.5 如何选择
@@ -72,6 +73,7 @@ TextureView是在4.0引入的，与SurfaceView相比，它不会创建新的窗�
 根据上面的分析，所有一般情况下，应该MediaPlayer+TextureView来播放视频。
 
 ---
+
 ## 2 MediaPlayer
 
 在官方文档[MediaPlayer](https://developer.android.com/reference/android/media/MediaPlayer.html)中，已经很详细的介绍了MediaPlayer的各种状态以及各种操作方法对各种状态的影响。
@@ -87,7 +89,6 @@ TextureView是在4.0引入的，与SurfaceView相比，它不会创建新的窗�
 - `setOnBufferingUpdateListener(OnBufferingUpdateListener)`
 - `setOnInfoListener(OnInfoListener)`
 - `setOnErrorListener(OnErrorListener)`
-
 
 ---
 ## 引用

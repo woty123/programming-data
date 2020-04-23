@@ -1,8 +1,9 @@
 # FFmpeg与视音频基础知识
 
-全部内容来自[基于FFmpeg+SDL的视频播放器的制作](http://blog.csdn.net/leixiaohua1020/article/details/47068015)
+[基于FFmpeg+SDL的视频播放器的制作](http://blog.csdn.net/leixiaohua1020/article/details/47068015) 学习笔记
 
 ---
+
 ## 1 视音频基础知识视音频基础知识
 
 ### 视频播放器原理
@@ -86,6 +87,7 @@ YUV格式中，Y只包含亮度信息，而UV只包含色度信息。
 音频采样数据：PCM
 
 ---
+
 ## 2 FFmpeg介绍
 
 ### FFmpeg背景
@@ -150,11 +152,12 @@ i | filename输入文件
 -c:a codec |设置音频编码器
 -ar freq |设置音频采样率
 
-### ffplay.exe的使用
+### ffplay 的使用
 
 ffplay.exe用于视频的播放。最简单的命令：`ffplayinput.avi`
 
 ---
+
 ## 3 视频解码知识
 
 一般的视频解码流程：
@@ -170,7 +173,7 @@ ffplay.exe用于视频的播放。最简单的命令：`ffplayinput.avi`
 
 函数简介：
 
-```
+```c
 av_register_all()：注册所有组件
 avformat_open_input()：打开输入视频文件
 avformat_find_stream_info()：获取视频文件信息
@@ -200,7 +203,7 @@ AVFormatContext：
 
 - iformat：输入视频的AVInputFormat
 - nb_streams ：输入视频的AVStream 个数
-- streams ：输入视频的AVStream []数组
+- streams ：输入视频的`AVStream []`数组
 - duration ：输入视频的时长（以微秒为单位）
 - bit_rate ：输入视频的码率
 
