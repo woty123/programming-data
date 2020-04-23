@@ -44,14 +44,13 @@ boolean tryLock(long time, TimeUnit unit) throws InterruptedException;
 boolean tryLock();
 ```
 
-## 3 Lock/Condition 如果保证可见性
+## 3 Lock/Condition 如何保证可见性
 
 Lock 的使用模板：
 
 ```java
 class X {
-  private final Lock rtl =
-  new ReentrantLock();
+  private final Lock rtl = new ReentrantLock();
   int value;
   public void addOne() {
     // 获取锁

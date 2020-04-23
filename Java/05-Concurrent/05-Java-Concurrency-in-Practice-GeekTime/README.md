@@ -17,23 +17,28 @@
 并发工具：
 
 - [10-Lock和Condition](10-Lock和Condition.md)
-- [11-并发工具](11-并发工具.md)
+  - 有了 synchronized，为什么还要 Lock/Condition。
+  - 可重入锁、可重入函数、公平锁与非公平锁。
+  - 同步与异步。
+- [11-并发工具](11-并发工具.md)：Semaphore、ReadWriteLock、StampedLock、CountDownLatch 与 CyclicBarrier。
 
 并发容器：
 
 - [12-并发容器](12-并发容器.md)
+  - 同步容器与并发容器。
+  - 分类：List、Map、Set、Queue。
 
 原子类：
 
-- [13-原子类](13-原子类.md)
+- [13-原子类](13-原子类.md)：无锁方案的实现原理——CAS。
 
 线程池框架：
 
-- [14-ThreadPoolExecutor](14-ThreadPoolExecutor.md)
-- [15-Futrue](15-Futrue.md)
-- [16-CompletableFuture](16-CompletableFuture.md)
-- [17-CompletionService](17-CompletionService.md)
-- [18-ForkJoin](18-ForkJoin.md)
+- [14-ThreadPoolExecutor](14-ThreadPoolExecutor.md)：使用生产者-消费者模式实现线程池。
+- [15-Futrue](15-Futrue.md)：如何获取任务执行结果。
+- [16-CompletableFuture](16-CompletableFuture.md)：Java 在 1.8 版本提供了 CompletableFuture 来支持异步编程。
+- [17-CompletionService](17-CompletionService.md)：当需要批量提交异步任务的时候建议你使用 CompletionService。CompletionService 将线程池 Executor 和阻塞队列 BlockingQueue 的功能融合在了一起，能够让批量异步任务的管理更简单。除此之外，CompletionService 能够让异步任务的执行结果有序化，先执行完的先进入阻塞队列，利用这个特性，你可以轻松实现后续处理的有序性，避免无谓的等待，同时还可以快速实现诸如 Forking Cluster 这样的需求。
+- [18-ForkJoin](18-ForkJoin.md)：分治算法实现。
 
 总结：
 
@@ -41,19 +46,34 @@
 
 ## 3 第三部分，并发模式设计
 
+避免共享的设计模式：
+
 - [20-并发设计模式：Immutability模式](20-并发设计模式：Immutability模式.md)
 - [21-并发设计模式：Copy-on-Write](21-并发设计模式：Copy-on-Write.md)
 - [22-并发设计模式：使用ThreadLocal实现线程本地存储模式](22-并发设计模式：使用ThreadLocal实现线程本地存储模式.md)
+
+多线程版本 IF 的设计模式：
+
 - [23-并发设计模式：保护性暂停](23-并发设计模式：保护性暂停.md)
 - [24-并发设计模式：Balking模式](24-并发设计模式：Balking模式.md)
+
+三种最简单的分工模式：
+
 - [25--并发设计模式：Thread-Per-Message](25--并发设计模式：Thread-Per-Message.md)
 - [26-并发设计模式：WorkerThread模式](26-并发设计模式：WorkerThread模式.md)
-- [27-并发设计模式：两阶段终止模式](27-并发设计模式：两阶段终止模式.md)
 - [28-并发设计模式：生产者消费者模式](28-并发设计模式：生产者消费者模式.md)
+
+优雅终止线程与线程池：
+
+- [27-并发设计模式：两阶段终止模式](27-并发设计模式：两阶段终止模式.md)
+
+总结：
+
 - [29-并发设计模式总结](29-并发设计模式总结.md)
 
 ## 推荐阅读
 
 - 《Java 安全编码标准》
 - 《Java 并发编程实战》
+- 《图解 Java 多线程设计模式》
 - [Rules](https://wiki.sei.cmu.edu/confluence/display/java/2+Rules)

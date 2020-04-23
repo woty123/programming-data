@@ -246,7 +246,7 @@ class Test{
 }  
 ```
 
-答：无法实现，volatile 不能保证对 inited 操作的原子性。
+答：无法实现，volatile 不能保证对 inited 操作的原子性，在 `if(inited)` 处，存在竞态条件。
 
 ## 6 其他参考
 
