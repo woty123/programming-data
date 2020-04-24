@@ -1,6 +1,7 @@
 # Kotlin Coroutines 实践
 
 ---
+
 ## 在 Android 上使用协程
 
 添加相关依赖：
@@ -21,6 +22,7 @@ coroutines-android 中有些什么东西呢？，其实内容很少：
 - HandlerContextKt.class
 
 ---
+
 ## 传统的异步编程如何重构为协程风格
 
 使用 CompletableDeferred
@@ -63,6 +65,7 @@ suspend fun load(): String {
 ```
 
 ---
+
 ## 以同步代码的风格 show 一个 Dialog
 
 ```kotlin
@@ -101,6 +104,7 @@ launchUI {
 ```
 
 ---
+
 ## 序列与协程
 
 序列可以避免类似 map、filter 等操作符创建过多的临时集合，协程 `kotlin.coroutines.experimental.SequenceBuilder` 中的 buildSequence 可以让序列与协程协同工作。buildSequence 接收一个 suspend 函数，其文档说明为：`Builds a [Sequence] lazily yielding values one by one.`即构建一个序列，惰性的一个接着一个地生产变量。
@@ -142,7 +146,9 @@ fun main(args: Array<String>) {
 }
 ```
 
-## 协程的使用姿势（[google-codelabs：kotlin-coroutines](https://codelabs.developers.google.com/codelabs/kotlin-coroutines/#0)）
+---
+
+## 协程的使用姿势-[google-codelabs：kotlin-coroutines](https://codelabs.developers.google.com/codelabs/kotlin-coroutines/#0)
 
 在 Repository 层提供 LiveData，用于让上层监听数据加载的结果。
 

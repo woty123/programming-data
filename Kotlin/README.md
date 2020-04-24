@@ -1,3 +1,5 @@
+# Kotlin References
+
 ## 1 Kotlin 简介
 
 Kotlin主要是由俄罗斯圣彼得堡的JetBrains开发团队所发展出来的编程语言，其名称来自于圣彼得堡附近的科特林岛。Kotlin是一门 **静态的强类型编程语言**，可以运行在JVM上，但不限于JVM。Kotlin 与所有基于 Java 的框架完全兼容，应用领域有 **服务端开发、Android开发、Kotlin For JavaScript、Kotlin Native**，可以说是全栈语言。
@@ -66,26 +68,31 @@ Collections：
 
 ### 4 协程
 
-码上开学：
-
-- [Kotlin 的协程用力瞥一眼 - 学不会协程？很可能因为你看过的教程都是错的](https://kaixue.io/kotlin-coroutines-1/)
-- [Kotlin 协程的挂起好神奇好难懂？今天我把它的皮给扒了](https://kaixue.io/kotlin-coroutines-2/)
-
-什么是协程（参考即可）：
-
-- [协程-维基百科](https://zh.wikipedia.org/wiki/%E5%8D%8F%E7%A8%8B)
-- [协程的好处有哪些？](https://www.zhihu.com/question/20511233/answer/24260355)
-
 文档：
 
 - [kotlinx.coroutines guide en](https://github.com/Kotlin/kotlinx.coroutines)
 - [kotlinx coroutines guide cn](https://www.kotlincn.net/docs/reference/coroutines.html)
 - [kotlinx coroutines api doc](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/)
 
+什么是协程（参考即可）：
+
+- [协程-维基百科](https://zh.wikipedia.org/wiki/%E5%8D%8F%E7%A8%8B)
+- [协程的好处有哪些？](https://www.zhihu.com/question/20511233/answer/24260355)
+
+码上开学：
+
+- [Kotlin 的协程用力瞥一眼 - 学不会协程？很可能因为你看过的教程都是错的](https://kaixue.io/kotlin-coroutines-1/)
+- [Kotlin 协程的挂起好神奇好难懂？今天我把它的皮给扒了](https://kaixue.io/kotlin-coroutines-2/)
+
 文档（中文）：
 
 - [kotlinx.coroutines cn](https://github.com/hltj/kotlinx.coroutines-cn)
 - [kotlinx.coroutines cn](https://saplf.gitbooks.io/kotlinx-coroutines/content/)
+
+在 Android 开发中使用协程系列：
+
+- [在 Android 开发中使用协程 | 背景介绍](https://mp.weixin.qq.com/s/LGP25rsdBl2mTpR3sDNE3A)
+- [在 Android 开发中使用协程 | 上手指南](https://mp.weixin.qq.com/s/kPvWOCkMjYRKJSTX4I5VKg)
 
 破解协程系列：
 
@@ -107,7 +114,7 @@ Sample：
 - [coroutine-recipes 协程风格代码](https://github.com/dmytrodanylyk/coroutine-recipes)
 - [google-codelabs：kotlin-coroutines](https://codelabs.developers.google.com/codelabs/kotlin-coroutines/#0)
 
-教程：
+视频教程：
 
 - [Kotlin 系统入门到进阶视频教程](http://coding.imooc.com/class/108.html)
 - [基于 GitHub App 业务深度讲解 Kotlin1.2高级特性与框架设计](https://coding.imooc.com/class/232.html)

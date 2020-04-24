@@ -1,6 +1,7 @@
 # Kotlin 概要总结
 
 ---
+
 ## 1 协程 API 概述
 
 Kotlin 作为一门编程语言，在其标准库中只提供了最低级别的 API，以使各种其他库能够使用协程，与许多其他具有类似功能的语言不同，async 和 await 不是 Kotlin 中的关键字，也不是其标准库的一部分。Kotlin 官方对协程提供的三种级别的能力支持, 分别是:
@@ -44,9 +45,9 @@ Kotlin 作为一门编程语言，在其标准库中只提供了最低级别的 
 - kotlinx-coroutines-swing
 
 ---
+
 ## 2 核心概念
 
----
 ### 2.1 什么是挂起函数
 
 在 Kotlin 中，suspend 函数表示一个可以被挂起的函数，suspend 函数是协程的核心概念之一。
@@ -135,7 +136,6 @@ private fun asyncReturn(){
 
 要理解协程我们必须要明白，我们写的代码将被协程分成多个段执行，而这多个段所运行的线程是由协程上下文指定的，我们启动协程的时候可以指定任意的协程上下文，比如上面的 UI 就是一个协程上下文，由它启动的协程都运行在主线程，而 async 默认的协程上下文是 Kolint 内置的 CommonPool。
 
----
 ### 2.2 理解暂停点与 Continuation
 
 一个协程的执行经常是断断续续的: `执行一段, 挂起来, 再执行一段, 再挂起来, ...`，每个挂起的地方是一个 suspension point, 每一小段执行是一个 Continuation，协程的执行流被它的 `"suspension point"` 分割成了很多个 `"Continuation"`，kotlin 编译器会把这些 `"suspension point"` 编译成单独的函数或代码段，然后根据状态转移去调用由挂起点分割开的函数或代码段：
@@ -155,7 +155,6 @@ public interface Continuation<in T> {
 
 协程之间通过 Continuation 协作运行，挂起段由 Continuation 中的 CoroutineContext调度。Continuation 把各个挂起段连接起来。
 
----
 ### 2.3 如何分析协程
 
 分析协程套路：
@@ -174,10 +173,10 @@ public interface Continuation<in T> {
 - suspend 代码块会被编译成继承 CoroutineImpl 类的类型。
 
 ---
+
 ## 3 标准库（kotlin.coroutines）API 简介
 
----
-### 1 CoroutineContext
+### 3.1 CoroutineContext
 
 上下文很常见，比如 Android 里的 Context，可以认为上下文是一个编程环境。具体一点就是 “与现在这个工作相关的周围环境”，这个 Context 里有一些和当前编程相关的方法和变量。参考[如何理解上下文](https://www.zhihu.com/question/26387327)
 
@@ -248,8 +247,7 @@ private suspend fun sample1() {
 
 关于 CoroutineContext，推荐参考[破解 Kotlin 协程(3) - 协程调度篇](https://juejin.im/post/5ceb4749518825141c356cbe)。
 
----
-### 2 Continuation
+### 3.2 Continuation
 
 挂起的协程可以作为保持其挂起状态与局部变量的对象来存储和传递。这种对象的类型是 Continuation。Continuation 是一个运行控制类，负责结果和异常的返回，每一个 Continuation 都持有一个协程上下文。Continuation 有继续、持续的意思，Continuation 中定义了继续执行协程的方法：
 
@@ -266,8 +264,7 @@ public interface Continuation<in T> {
 
 协程的基本操作包括`创建、启动、暂停和继续`，`继续` 的操作在 Continuation 当中，而其他的方法都在包级函数当中
 
----
-### 3 ContinuationInterceptor 拦截器
+### 3.3 ContinuationInterceptor 拦截器
 
 ContinuationInterceptor 继承了 Element，所以它本身是一个协程上下文，然后其添加了拦截功能，可以拦截协程的调度，ContinuationInterceptor 通过拦截修改 Continuation，可用来处理协程调度。
 
@@ -329,8 +326,7 @@ private suspend fun sample2() {
 
 关于 ContinuationInterceptor，推荐参考[破解 Kotlin 协程(3) - 协程调度篇](https://juejin.im/post/5ceb4749518825141c356cbe)。
 
----
-### 4 CoroutinesLibrary
+### 3.4 CoroutinesLibrary
 
 `kotlin.coroutines.experimental.CoroutinesLibrary` 中定义了 Kotlin 协程的底层 API，这些为数不多的协程底层 API 一般用于构建应用级协程库。
 
@@ -369,7 +365,7 @@ public suspend inline fun <T> suspendCancellableCoroutine(
     }
 ```
 
-### 5 SequenceBuilder
+### 3.5 SequenceBuilder
 
 `kotlin.coroutines.experimental.SequenceBuilder` 是 Kotlin 协程的生成器 API，这是 `kotlin.coroutines` 中仅有的应用级函数，它包括：
 
@@ -378,7 +374,7 @@ public suspend inline fun <T> suspendCancellableCoroutine(
 - `yield()`：转让当前协程转调器的线程(或线程池)的执行权到其他协程
 - `yieldAll()`
 
-### 6 `runSuspend`
+### 3.6 `runSuspend`
 
 用于支持将 main 或一些测试函数定义为 suspend 的函数。
 
@@ -391,6 +387,7 @@ suspend fun main() {
 ```
 
 ---
+
 ## 4 应用层（kotlinx.coroutines）API 简介
 
 `kotlinx.coroutines` 是 Kotlin 官方的协程高级 API，它被作为多个单独的组件发布，其中 `kotlinx-coroutines-core` 是平台无关异步编程，它提供了众多启动协程的 API：
@@ -403,7 +400,7 @@ suspend fun main() {
     - kotlinx.coroutines.experimental.Deferred：表示一个有返回结果的协程调度
 ```
 
-### 1 CoroutineDispatcher 协程的调度器
+### 4.1 CoroutineDispatcher 协程的调度器
 
 CoroutineDispatcher 是协程的调度器，由它来确定调度协程的线程。
 
@@ -439,8 +436,7 @@ CoroutineDispatcher 继承了 ContinuationInterceptor，显然需要处理协程
 
 关于 CoroutineDispatcher，推荐参考[破解 Kotlin 协程(3) - 协程调度篇](https://juejin.im/post/5ceb4749518825141c356cbe)。
 
----
-### 2 CoroutineScope
+### 4.2 CoroutineScope
 
 CoroutineScope 定义创建协程的范围。每个协程构建器（比如 launch、async）都是 CoroutineScope 的扩展，并继承其 coroutineContext 以自动传播上下文元素和取消（取消行为，当 CoroutineScope 被取消，由其发起的协程都将被取消）。
 
@@ -489,8 +485,7 @@ CoroutineScope 的子类：
 - [CoroutineScope API 文档](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-coroutine-scope/)
 - [破解 Kotlin 协程(4) - 异常处理篇](https://juejin.im/post/5ceb480de51d4556da53d031)
 
----
-### 3 kotlinx.coroutines 中的协程构建器
+### 4.3 kotlinx.coroutines 中的协程构建器
 
 程构建器用于开启一个协程。
 
@@ -585,7 +580,7 @@ actor 用于启动一个新的协程，协程的运行范围是 ActorScope，act
 
 #### coroutineScope 与 supervisorScope
 
-coroutineScope：创建新的 CoroutineScope 并使用此范围调用指定的协程代码块。提供的范围从外部范围继承其 coroutineContext，但会覆盖上下文的 Job。此功能用于并行分解（多个子协程并行分解的任务）工作。当此范围中的任何子协程失败时，此范围将失败，其余所有子项都将被取消。一旦给定代码块及其所有子协程完成，该函数就会返回。 coroutineScope 与 runBlocking 的主要区别在于其在等待所有子协程执行完毕时不会阻塞当前线程。而是使启动它的协程暂停等待期执行完毕。
+**coroutineScope**：创建新的 CoroutineScope 并使用此范围调用指定的协程代码块。提供的范围从外部范围继承其 coroutineContext，但会覆盖上下文的 Job。此功能用于并行分解（多个子协程并行分解的任务）工作。当此范围中的任何子协程失败时，此范围将失败，其余所有子项都将被取消。一旦给定代码块及其所有子协程完成，该函数就会返回。 coroutineScope 与 runBlocking 的主要区别在于其在等待所有子协程执行完毕时不会阻塞当前线程。而是使启动它的协程暂停等待期执行完毕。
 
 使用示例如下：
 
@@ -610,14 +605,14 @@ suspend fun loadDataForUI() = coroutineScope {
 2. 如果 doSomeWork 抛出异常，则取消异步任务并且 loadDataForUI 重新抛出该异常。
 3. 如果取消 loadDataForUI 的外部作用域，则取消启动 async和 withContext。
 
-supervisorScope：使用 SupervisorJob 创建新的 CoroutineScope，并使用此范围调用指定的协程代码块。提供的范围从外部范围继承其 coroutineContext，但使用 SupervisorJob 覆盖上下文的 Job。范围内某个子协程的失败不会导致此范围（由 supervisorScope 启动的协程）失败并且不会影响其他子协程。
+**supervisorScope**：使用 SupervisorJob 创建新的 CoroutineScope，并使用此范围调用指定的协程代码块。提供的范围从外部范围继承其 coroutineContext，但使用 SupervisorJob 覆盖上下文的 Job。范围内某个子协程的失败不会导致此范围（由 supervisorScope 启动的协程）失败并且不会影响其他子协程。
 
 具体参考：
 
 - [破解 Kotlin 协程(4) - 异常处理篇：异常传播](https://juejin.im/post/5ceb480de51d4556da53d031#heading-3)
 - [supervisor-job doc](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-supervisor-job.html)
 
-### 4 顶级 suspending functions
+### 4.4 顶级 suspending functions
 
 - delay：在给定的时间内延迟协程，此时该协程将让出执行权，仅用于协程中使用
 - yield：转让协程调度资源。
@@ -625,7 +620,7 @@ supervisorScope：使用 SupervisorJob 创建新的 CoroutineScope，并使用�
 - withTimeout：用于给协程设置超时时间。
 - withTimeoutOrNull：用于给协程设置超时时间，规定时间内没有完成则返回 null。
 
-### 5 CoroutineStart
+### 4.5 CoroutineStart
 
 CoroutineStart 是一个枚举类型，它是一个选项值，表示如何启动协程，比如 launch 和 async 协程构建器都需要传递 CoroutineStart 类型参数，但这个参数默认值 CoroutineStart.DEFAULT，CoroutineStart 的值和说明如下：
 
@@ -634,63 +629,6 @@ CoroutineStart 是一个枚举类型，它是一个选项值，表示如何启�
 - `ATOMIC`：原子 (以不可取消的方式) 根据其上下文安排要执行的 coroutine。
 - `UNDISPATCHED`：立即执行 coroutine, 直到其在当前线程中的第一个挂点。
 
-### 6 select
+### 4.6 select
 
 select 表达式可以同时等待多个挂起函数，并选择第一个可用的。（这个有点类似于 NIO 中的 Selector）
-
----
-## 5 协程指南概要总结
-
-现在 [协程指南](https://www.kotlincn.net/docs/reference/coroutines/coroutines-guide.html) 已经有中文版了。
-
-### 1 结构化化并发与显式等待
-
-- 使用 join 可以让一个协程等待另一个协程完成后才继续执行。
-- 结构化并发：在协程所在的指定作用域内启动子协程，而不是像通常使用线程（线程总是全局的）那样在 GlobalScope 中启动。那该协程总是会等待所有子协程完成后才会完成。
-
-### 2 协程的取消
-
-- 启动的协程是可以被取消的，通过 `Job.cancel` 方法
-- 协程的取消是 **协作** 的。一段协程代码必须协作才能被取消。 所有 `kotlinx.coroutines` 中的挂起函数都是可被取消的。它们检查协程的取消，并在取消时抛出 CancellationException。我们可以不处理 CancellationException，程序不会崩溃，但如果需要在异常时做一些额外的操作，则可以使用 `try/catch` 包装协程代码。
-- 在罕见的情况下，需要在取消的协程中挂起，可以使用 `withContext(NonCancellable) {...}`
-
-### 3 协程错误处理
-
-- 协程构建器有两种风格：自动的传播异常（launch 以及 actor） 或者将它们暴露给用户（async 以及 produce）。
-  - 自动的传播异常：对待异常是不处理的，类似于 Java 的 Thread.uncaughtExceptionHandler。用户可以不处理这些异常，程序不会崩溃。
-  - 暴露给用户：依赖用户来最终消耗异常，比如说，通过 await 或 receive。用户需要处理这些异常，否则程序会奔溃。
-- CoroutineExceptionHandler：用于处理协程中的未捕获异常，它和使用 Thread.uncaughtExceptionHandler 很相似。
-
-#### 取消与异常紧密相关
-
-- 取消与异常紧密相关，协程内部使用 CancellationException 来进行取消，这个异常会被所有的处理者忽略，所以那些可以被 catch 代码块捕获的异常仅仅应该被用来作为额外调试信息的资源（即不需要开发者处理）。
-- 当一个协程使用 `Job.cancel` 取消的时候，它会被终止，但是它不会取消它的父协程。而父协程使用 `Job.cancel` 时，其子协程都将被取消。
-- 如果协程遇到除 CancellationException 以外的异常，它将取消具有该异常的父协程。 这种行为不能被覆盖，且它被用来提供一个稳定的协程层次结构来进行结构化并发而无需依赖 CoroutineExceptionHandler 的实现。且当所有的子协程被终止的时候，原本的异常被父协程所处理。
-- 由此可以看出，取消是一种双向机制，在协程的整个层次结构之间传播。
-
-#### 单向取消与 SupervisorJob
-
-- 单向取消需求：此类需求的一个良好示例是可以在其作用域内定义任务的的 UI 组件。如果任何一个 UI 的子任务执行失败了，它并不总是有必要取消（有效地杀死）整个 UI 组件， 但是如果 UI 组件被销毁了（并且它的任务也被取消了），由于它的结果不再被需要了，它有必要使所有的子任务执行失败。
-- SupervisorJob：可以被用于实现上面需求。它类似于常规的 Job，唯一不同的是取消异常将只会向下传播。使用 SupervisorJob 的作用是，子协程抛出异常不会导致父协程和其他兄弟协程停止。
-- 对于 SupervisorJob，每一个子任务应该通过异常处理机制处理自身的异常，这种差异来自于子任务的执行失败不会传播给它的父任务的事实。
-- 相关的函数是 supervisorScope。
-
-### 4 协程上下文与调度器
-
-- 调度器：Coroutine context 包含一个 Dispatchers，它确定对应协程用于执行的线程或线程池。Dispatchers 可以将协程执行限制在一个特定的线程上，将其调度到线程池，或者让其无限制地运行。
-- 当调用 `launch { …… }`（或其他协程构造器） 时不传参数，它从启动了它的 CoroutineScope 中承袭了上下文（以及调度器）。
-- 全局的协程只能通过 GlobalScope 上面的扩展函数启动，其默认使用 `Dispatchers.Default` 协程调度器。
-- 当一个协程被其它协程在 CoroutineScope 中启动的时候， 它将通过 CoroutineScope.coroutineContext 来承袭上下文，并且这个新协程的 Job 将会成为父协程任务的 子任务。当一个父协程被取消的时候，所有它的子协程也会被递归的取消。当 GlobalScope 被用来启动一个协程时，它与作用域无关且是独立被启动的。
-- 可以使用 `withContext` 来切换调度器，而仍然驻留在相同的协程中。
-- 可以使用 `CoroutineName("main")` 来给协程命名。
-- ThreadLocal 的 `asContextElement` 扩展方法用于实现协程域变量。
-
-### 5 协程并发安全
-
-对于协程的调度，底层使用的依然还是线程，所以一样会遇到各种并发安全问题，除了使用常规的处理方式外，协程库也提供了一些解决方案，以下是官方示例中提供的集中解决方案：
-
-- 使用 JUC 中的并发工具，比如 Atomic。
-- 限制线程是解决共享可变状态问题的一种方案：对特定共享状态的所有访问权都限制在单个线程中。但是这样的代码运行很慢。
-- 使用一个单线程的调度器来调度所有协程，这样就不会有线程安全问题。
-- 作为 synchronized 或者 ReentrantLock 的替代，协程提供了 Mutex 。它具有 lock 和 unlock 方法， 可以隔离关键的部分。关键的区别在于 Mutex.lock() 是一个挂起函数，它不会阻塞线程。
-- actor 也可以用于解决线程安全问题，在 actor 启动的协程内部，对变量的操作是线程安全的，而外界可以有多个协程同时向 actor 启动的协程发送数据，actor 在高负载下比锁更有效，因为在这种情况下它总是有工作要做，而且根本不需要切换到不同的上下文。

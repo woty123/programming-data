@@ -64,11 +64,22 @@ AndroidX 针对 ViewModel 提供了 CoroutineScope 支持。
 
 ## 引用
 
+Blogs:
+
 - [如何正确的在 Android 上使用协程 ？](https://juejin.im/post/5d5d5aac51882549be53b75b)
 - [Android Coroutine Recipes](https://speakerdeck.com/dmytrodanylyk/android-coroutine-recipes)
+
+Official Introductions:
+
 - [Use Kotlin coroutines with Architecture components](https://developer.android.com/topic/libraries/architecture/coroutines)
 - [Improve app performance with Kotlin coroutines](https://developer.android.com/kotlin/coroutines)
+
+Coroutines on Android:
+
 - [Coroutines on Android (part I): Getting the background](https://medium.com/androiddevelopers/coroutines-on-android-part-i-getting-the-background-3e0e54d20bb)
 - [Coroutines on Android (part II): Getting started](https://medium.com/androiddevelopers/coroutines-on-android-part-ii-getting-started-3bff117176dd)
 - [Coroutines On Android (part III): Real work](https://medium.com/androiddevelopers/coroutines-on-android-part-iii-real-work-2ba8a2ec2f45)
+
+Libraries:
+
 - [kotlin-coroutines-android](https://github.com/enbandari/kotlin-coroutines-android) 提供了 Activity/Fragment/View 级别的 coroutineScope，而且这些 Scope 都是与 Activity/Fragment/View 生命周期相关联的，相对于 MainScope，使用起来更加优雅和方便。但是如果已经迁移到 AndroidX 的话，就没必要引入了。
