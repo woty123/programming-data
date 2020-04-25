@@ -1,4 +1,4 @@
-group 'me.ztiany'
+group 'com.ztiany'
 version '1.0'
 
 buildscript {

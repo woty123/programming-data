@@ -1279,5 +1279,5 @@ Spring 整合 JPA 的三种方式：
 
 ## 9 示例项目
 
-- [JAP-Base](../Code/DataBase-Learning/JPA-Base/README.md)
-- [JAP-Base](../Code/DataBase-Learning/JPA-Spring/README.md)
+- [JAP-Base](../Code/JPA/JPA-Base/README.md)
+- [JAP-Base](../Code/JPA/JPA-Spring/README.md)

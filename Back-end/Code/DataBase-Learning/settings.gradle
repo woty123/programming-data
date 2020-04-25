@@ -1,7 +1,0 @@
-rootProject.name = 'DataBase-Learning'
-
-include(":MySQL-Base")
-include(":Redis-Base")
-include 'JPA-Base'
-include 'JPA-Spring'
-

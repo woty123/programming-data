@@ -1,8 +1,11 @@
-group 'me.ztiany'
-version '1.0'
-
 buildscript {
     apply from: '../config.gradle'
+
+    repositories {
+        maven { url 'https://jitpack.io' }
+        jcenter()
+        mavenCentral()
+    }
 }
 
 subprojects {
@@ -12,5 +15,5 @@ subprojects {
         jcenter()
         mavenCentral()
     }
-
+    
 }

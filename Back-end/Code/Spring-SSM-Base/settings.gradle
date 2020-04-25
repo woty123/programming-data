@@ -1,9 +1,0 @@
-rootProject.name = 'Spring-SSM-Base'
-include 'P1-MyBatis-Base'
-include 'P2-MyBatis-Advanced'
-include 'P3-SpringMVC-Base'
-include 'P4-SpringMVC-CRUD'
-include 'P5-Spring-SpringMVC'
-include 'P6-SpringMVC-MyBatis'
-include 'P7-SpringMVC-Annotation'
-
