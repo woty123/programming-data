@@ -4,7 +4,7 @@
 
 ## 1 Spring Data 概述
 
-Spring Data : Spring 的一个子项目。用于简化数据库访问，支持NoSQL 和 关系数据存储。其主要目标是使数据库的访问变得方便快捷。
+Spring Data：Spring 的一个子项目。用于简化数据库访问，支持 NoSQL 和 关系数据存储。其主要目标是使数据库的访问变得方便快捷。
 
 SpringData 项目所支持 NoSQL 存储：
 
@@ -159,7 +159,6 @@ Spring Data 提供了默认的事务处理方式，即所有的查询均声明�
 JpaSpecificationExecutor 不属于 Repository 体系，其实现一组 JPA Criteria 查询相关的方法，Specification：封装  JPA Criteria 查询条件。通常使用匿名内部类的方式来创建该接口的对象。
 
 ```java
-@Test
 public void testJpaSpecificationExecutor() {
 
         int pageNo = 3 - 1;
