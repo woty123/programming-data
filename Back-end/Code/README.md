@@ -25,8 +25,10 @@
 
 DataBase-All
 
-1. MySQL-Base（纯Java项目）
-2. Redis-Base（纯Java项目）
+1. MySQL
+2. Redis
+3. JPA
+4. MyBatis
 
 3 Spring 部分
 
@@ -35,7 +37,5 @@ DataBase-All
    1. Struts2
    2. Hibernate
    3. Spring-Struts2-Hibernate
-3. Spring-SSM-Base
-   1. MyBatis
-   2. Spring-MVC
+3. SpringWeb-Base
 4. SpringInAction

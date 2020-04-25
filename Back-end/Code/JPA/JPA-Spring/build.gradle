@@ -20,8 +20,9 @@ dependencies {
     compile springLibs.springJdbc
     compile springLibs.springTx
     compile springLibs.springORM
+
     //test
-    testCompile springLibs.springTest
+    testCompile testLibs.junit
 
     //database
     compile dataBaseLibs.mysqlConnector

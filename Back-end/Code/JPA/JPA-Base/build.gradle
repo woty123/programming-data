@@ -10,4 +10,7 @@ dependencies {
     compile dataBaseLibs.hibernate
     compile dataBaseLibs.hibernateEhcache
     compile dataBaseLibs.hibernateEntitymanager
+
+    //test
+    testCompile testLibs.junit
 }
