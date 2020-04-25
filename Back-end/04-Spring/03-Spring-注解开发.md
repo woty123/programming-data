@@ -4,15 +4,15 @@
 
 ---
 
-## 1 Spring 容器的注解配置
+## 1 注解方式配置 Spring 容器
 
 ### 1.1 IOC
 
-#### 使用注解配置 Spring IOC 容器
+#### 1.1.1 使用注解配置 Spring IOC 容器
 
 `@Configuration`：用于标注一个类是一个配置类。然后构建 AnnotationConfigApplicationContext 时，传入用 Configuration 标注的类即可完成容器构建。
 
-#### 定制包的扫描规则
+#### 1.1.2 定制包的扫描规则
 
 `@ComponentScan`：用于指定要扫描的包，相关属性如下。
 
@@ -25,11 +25,11 @@
   - FilterType.REGEX：使用正则指定
   - FilterType.CUSTOM：使用自定义规则，此时可以实现 TypeFilter 实现自定义过滤规则
 
-#### 组件注册
+#### 1.1.3 组件注册
 
 `@Bean` 注解，标识在方法上，用于给容器中注册一个 Bean，类型为返回值的类型，id 默认是用方法名作为 id，可以通过 Bean 的 name 属性指定明确的 bean id。
 
-#### 调整作用域：Scope、Lazy
+#### 1.1.4 调整作用域：Scope、Lazy
 
 默认情况下，向容器种注册的 Bean 都是单例的，可以通过 Scope 来修改作用域。Spring 提供了四种作用域：
 
@@ -40,7 +40,7 @@
 
 懒加载：单实例 bean：默认在容器启动的时候创建对象；使用 Layz 注解标注可以实现懒加载，即容器启动不创建对象。第一次使用(获取) Bean 创建对象，并初始化。
 
-#### 条件注册
+#### 1.1.5 条件注册
 
 `@Conditional` 用于实现条件注册，只有满足条件的 Bean 才会注册到容器中。
 
@@ -49,7 +49,7 @@ Conditional 的 value 属性接收 Condition 数组，Condition 用于做实际�
 - 标注在方法上时，只要 Conditional 指定的 Condition 返回 true，Bean 就会注册到容器中。
 - 标注在类上时，如果类上标注的 Conditional 所指定的 Condition 返回 false，那么该类中提供的所有 Bean 都不会注册到容器中。
 
-#### 其他注入 Bean 的注解
+#### 1.1.6 其他注入 Bean 的注解
 
 1. @Import：快速给容器中导入一个组件，Import 接收三种类型的 Class：
    1. 直接指定某个类的 Class，容器中就会自动注册这个组件，id默认是全类名。
@@ -57,7 +57,7 @@ Conditional 的 value 属性接收 Condition 数组，Condition 用于做实际�
    3. 指定实现了 ImportBeanDefinitionRegistrar 的类，通过该方式可以手动注册 bean 到容器中。
 2. 使用 Spring 提供的 `FactoryBean`（工厂Bean），然后配置 @Bean 使用。如果要从容器容器中获取工厂 Bean 本身，我们需要给 id 前面加一个 &。
 
-#### 生命周期处理
+#### 1.1.7 生命周期处理
 
 bean 的生命周期包含三个阶段：`bean创建--->初始化---->销毁`。容器管理 bean 的生命周期：我们可以自定义初始化和销毁方法；容器在 bean 进行到当前生命周期的时候来调用我们自定义的初始化和销毁方法。
 
@@ -84,7 +84,7 @@ bean 的生命周期包含三个阶段：`bean创建--->初始化---->销毁`。
 
 Spring 会遍历得到容器中所有的 BeanPostProcessor，逐个执行 beforeInitialization，一但返回 null，跳出 for 循环，不会执行后面的 BeanPostProcessor.postProcessorsBeforeInitialization。Spring 底层很多功能都使用了 BeanPostProcessor，比如 bean 的赋值、注入其他组件、`@Autowired`处理，生命周期注解功能，`@Async***BeanPostProcessor`等的处理。
 
-#### Bean 的属性赋值
+#### 1.1.8 Bean 的属性赋值
 
 `@Value` 用于给 bean 的成员指定初始化值。其可以处理三种类型的参数：
 
@@ -94,7 +94,7 @@ Spring 会遍历得到容器中所有的 BeanPostProcessor，逐个执行 before
 
 `@PropertySource` 用于配置属性文件，比如配置 `@PropertySource(value={"classpath:/person.properties"})` 的话，person.properties 中 的值将会被添加到运行环境中，可以通过 System.getProperty() 获取。
 
-#### 自动装配：Autowired、Resource、Inject
+#### 1.1.9 自动装配：Autowired、Resource、Inject
 
 Spring 利用依赖注入（DI），完成对 IOC 容器中中各个组件的依赖关系赋值，我们可以使用`@Autowired`、`@Resource`、`@Inject` 注解来指定容器中组件之间的依赖关系：
 
@@ -117,7 +117,7 @@ Spring 利用依赖注入（DI），完成对 IOC 容器中中各个组件的依
 
 **AutowiredAnnotationBeanPostProcessor**：用于解析和完成自动装配，本质上它是一个 BeanPostProcessor 的实现。
 
-#### 自动装配 Spring 底层的组件
+#### 1.1.10 自动装配 Spring 底层的组件
 
 自定义组件想要使用 Spring 容器底层的一些组件，比如 ApplicationContext、BeanFactory 等，那么自定义组件可以实现特定类型的 `org.springframework.beans.factory.Aware` 然后注册到容器中，在 Spring 创建对象的时候，会调用接口规定的方法注入相关组件。Spring 提供了很多类型的 Aware：
 
@@ -137,7 +137,7 @@ BeanClassLoaderAware (org.springframework.beans.factory)
 ApplicationContextAware (org.springframework.context)
 ```
 
-#### Profile 注解
+#### 1.1.11 Profile 注解
 
 Spring为我们提供的可以根据当前环境，动态的激活和切换一系列组件的功能，比如我们有下面三种开发环境，分别对应着不同的数据源：
 
@@ -203,7 +203,7 @@ SpringWeb jar 包中就配置了一个 `org.springframework.web.SpringServletCon
 
 ---
 
-## 3 Spring 原理分析
+## 3 Spring 注解配置原理分析
 
 - [ ] todo
 
