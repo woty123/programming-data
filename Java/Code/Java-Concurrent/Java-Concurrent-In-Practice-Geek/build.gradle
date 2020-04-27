@@ -10,4 +10,6 @@ dependencies {
     compile 'co.paralleluniverse:quasar-disruptor:0.8.0'
     //actor模式
     compile 'com.typesafe.akka:akka-actor_2.11:2.4.9'
+    //stm
+    compile 'org.multiverse:multiverse-core:0.7.0'
 }
