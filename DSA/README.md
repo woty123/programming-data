@@ -43,3 +43,4 @@
 - [30张图带你彻底理解红黑树](https://www.jianshu.com/p/e136ec79235c)
 - [常见排序算法](http://bubkoo.com/2014/01/17/sort-algorithm/archives/)
 - [Cspiration 留学两年多刷题过三千，教你刷题不再困难；全美唯一Java版本Leetcode视频讲解](https://cspiration.com/)
+- [手把手撕LeetCode题目，扒各种算法套路的裤子](https://github.com/labuladong/fucking-algorithm)
