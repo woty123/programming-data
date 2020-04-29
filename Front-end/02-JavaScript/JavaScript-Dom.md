@@ -17,6 +17,7 @@ W3C DOM 标准被分为 3 个不同的部分：
 HTML DOM 是关于如何获取、修改、添加或删除 HTML 元素的标准
 
 ---
+
 ## 1 Html中引入js的方式
 
 HTML 的 `<script>` 标签用于把 JavaScript 插入 HTML 页面当中，编写JavaScript 两种方式：**内部JS和外部JS**
@@ -28,7 +29,7 @@ HTML 的 `<script>` 标签用于把 JavaScript 插入 HTML 页面当中，编写
      <script type="text/javascript">
         alert(1);
     </script>
-    
+
     //或则用window.onload
     window.onload=function(){//当整个页面加载完毕后再出发函数中的内容
             //alert("提示消息");
@@ -45,17 +46,18 @@ HTML 的 `<script>` 标签用于把 JavaScript 插入 HTML 页面当中，编写
 
 - 引入外部的js文件
 
-```
+```javascript
 <script src="1.js"></script>
 ```
 
 - 采用事件调用
 
-```
+```html
 <input type="button" onclick="alert('hei')"/>
 ```
 
 ---
+
 ## 2 JavaScript常用对象介绍与常用全局函数
 
 常用对象：
@@ -75,8 +77,8 @@ HTML 的 `<script>` 标签用于把 JavaScript 插入 HTML 页面当中，编写
 - `eval` 计算javascript 字符串，并把它作为脚本代码来执行
 - `escape、unescape、encodeURI()、decodeURI()`
 
-
 ---
+
 ## 3 HTML DOM
 
 ### Document
@@ -84,7 +86,6 @@ HTML 的 `<script>` 标签用于把 JavaScript 插入 HTML 页面当中，编写
 每个载入浏览器的 HTML 文档都会成为 Document 对象。Document 对象使我们可以从脚本中对 HTML 页面中的所有元素进行访问。Document 对象是 Window 对象的一部分，可通过 `window.document` 属性对其进行访问。
 
 HTMLDocument 接口对 DOM Document 接口进行了扩展，定义 HTML 专用的属性和方法。
-
 
 ### DOM树结构
 
@@ -108,9 +109,10 @@ DOM的属性
 - childNodes：子节点（不止一个）
 - attributes：属性（不止一个）
 
-![](index_files/58fd4a9d-0fb1-4a93-adcd-e0b87aaf505d.png)
+![dom_tree](index_files/dom_tree.png)
 
 ---
+
 ## 引用
 
 - [W3School HTML DOM](http://www.w3school.com.cn/htmldom/index.asp)

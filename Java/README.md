@@ -14,27 +14,6 @@
 - [注解02-APT](01-Java-Basic/注解02-APT.md) 
 - [注解03-AST](01-Java-Basic/注解03-AST.md) 
 
-## EffectiveJava
-
-- [前言](04-EffectiveJava/前言.md)
-- [01-创建和销毁对象1](04-EffectiveJava/01-创建和销毁对象1.md)
-- [02-创建和销毁对象2](04-EffectiveJava/02-创建和销毁对象2.md)
-- [03-创建和销毁对象3](04-EffectiveJava/03-创建和销毁对象3.md)
-- [04-对于所有对象都通用的方法1](04-EffectiveJava/04-对于所有对象都通用的方法1.md)
-- [05-对于所有对象都通用的方法2](04-EffectiveJava/05-对于所有对象都通用的方法2.md)
-- [06-对于所有对象都通用的方法3](04-EffectiveJava/06-对于所有对象都通用的方法3.md)
-- [07-类与接口1](04-EffectiveJava/07-类与接口1.md)
-- [08-类与接口2](04-EffectiveJava/08-类与接口2.md)
-- [09-类与接口3](04-EffectiveJava/09-类与接口3.md)
-- [10-类与接口4](04-EffectiveJava/10-类与接口4.md)
-- [11-泛型](04-EffectiveJava/11-泛型.md)
-- [12-枚举和注解](04-EffectiveJava/12-枚举和注解.md)
-- [13-方法](04-EffectiveJava/13-方法.md)
-- [14-通用程序设计](04-EffectiveJava/14-通用程序设计.md)
-- [15-异常](04-EffectiveJava/15-异常.md)
-- [16-并发](04-EffectiveJava/16-并发.md)
-- [17-序列化](04-EffectiveJava/17-序列化.md)
-
 ## IO & Network
 
 - [01-Java-IO](03-IO&Network/01-Java-IO.md)

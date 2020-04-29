@@ -9,6 +9,7 @@ BOM包括五大对象
 5. Location：Location包含有关当前 URL 的信息
 
 ---
+
 ## Window对象
 
 Window 对象表示浏览器中打开的窗口，如果文档包含框架（frame 或 iframe 标签），浏览器会为 HTML 文档创建一个 window 对象，并为每个框架创建一个额外的 window 对象。
@@ -19,14 +20,12 @@ Window 对象表示浏览器中打开的窗口，如果文档包含框架（fram
 
 ### Window常用方法
 
-
 - `open()/close()`：打开/关闭窗口
 - `showModalDialog()`：显示模态框
 - `window.alert(String)、window.confirm(String)、window.prompt(String)`：展示警告、确认、输入对话框，confirm返回布尔值，prompt返回输入的内容
 - `setInterval(code,millisec[,"lang"])`：按照指定的周期（以毫秒计）来调用函数或计算表达式
 - `clearInerval()`：移除setInterval设置的函数调用任务
 - `setTimeout(code,millisec)`：在指定的毫秒数后调用函数或计算表达式
-
 
 ---
 ## BOM History
@@ -37,16 +36,14 @@ History 对象包含用户（在浏览器窗口中）访问过的 URL
 - `forward()`  加载 history 列表中的下一个 URL
 - `go()`  加载 history 列表中的某个具体页面，可以是整数或负数
 
-
 ---
 ## BOM Location
 
 Location 对象包含有关当前 URL 的信息，通过href属性完成超链接效果
 
-```
+```js
 window.location.href = "xxx.html"
 ```
-
 
 ---
 ## JavaScript常用事件
@@ -58,7 +55,6 @@ window.location.href = "xxx.html"
 - 键盘事件：`keydown/keyup/keypress`
 - 提交与重置事件：`submit/reset`
 - 选择与改变事件：`select/change`
-
 
 ```html
 //鼠标移动
@@ -88,4 +84,3 @@ function submitform(e){
 <input type="submit" value="删除">
 </form>
 ```
-
