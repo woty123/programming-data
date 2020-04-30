@@ -1,9 +1,10 @@
 # ASM 入门
 
 ---
+
 ## 1 ASM 介绍
 
-ASM 和 javassist 类似，都是 Java 字节码操作类库，ASM是一个通用的Java字节码操作和分析框架。它可以用来修改现有的类或直接以二进制形式动态生成类。ASM提供了一些常用的字节码转换和分析算法，从中可以构建自定义的复杂转换和代码分析工具。ASM提供与其他Java字节码框架相似的功能，但它更专注于性能。因为它的设计和实施尽可能地小和尽可能快，它非常适合在动态系统中使用（但当然也可以静态方式使用，例如在编译器中）。
+[ASM](http://asm.ow2.io/index.html) 和 javassist 类似，都是 Java 字节码操作类库，ASM是一个通用的Java字节码操作和分析框架。它可以用来修改现有的类或直接以二进制形式动态生成类。ASM提供了一些常用的字节码转换和分析算法，从中可以构建自定义的复杂转换和代码分析工具。ASM提供与其他Java字节码框架相似的功能，但它更专注于性能。因为它的设计和实施尽可能地小和尽可能快，它非常适合在动态系统中使用（但当然也可以静态方式使用，例如在编译器中）。
 
 ASM被用于许多项目，包括：
 
@@ -23,6 +24,7 @@ ASM被用于许多项目，包括：
 ```
 
 ---
+
 ## 2 类的结构简介
 
 >对于 ASM 来说，Java class 被描述为一棵树；使用 “Visitor” 模式遍历整个二进制结构；事件驱动的处理方式使得用户只需要关注于对其编程有意义的部分，而不必了解 Java 类文件格式的所有细节：ASM 框架提供了默认的 “response taker” 处理这一切。
@@ -42,7 +44,7 @@ ASM被用于许多项目，包括：
 - 字节码不包含 package 和 import 的部分，所以所有的类型引用名称都要用完整的名称。
 - 字节码中包含常量池。常量池是一个包括所有这个类中的numeric，string或者其他类型的常量的array。这些常量仅仅被定义一次，并且被类的全局持有引用。
 
-![](index_files/2-1.png)
+![](images/ASM-1.png)
 
 ### 内部名称
 
@@ -50,25 +52,24 @@ ASM被用于许多项目，包括：
 
 类型描述符，用于描述变量的类型：
 
-![](index_files/2-2.png)
+![](images/ASM-2.png)
 
 方法描述符，用于描述方法的类型：
 
-![](index_files/2-3.png)
+![](images/ASM-2.png)
 
 >关于类文件结构可以参考《深入理解Java虚拟机》
 
 ---
-## 2 ASM 核心 API
 
-### 2.1 核心组件介绍
+## 3 ASM 核心 API
 
----
+### 3.1 核心组件介绍
+
 #### ClassReader
 
 `ClassReader` 用于从字节数组或由 class 文件间接读取类的字节码数据，通过调用它的 `accept`方法，传入一个实现了 `ClassVisitor` 接口的对象实例作为参数，以访问者的模式来访问类结构的每一个部分。`ClassReader` 会将相应区域的内容对象传递给 ClassVistor 实例中相应的 visitXXX 方法，ClassReader 可以看作是一个事件生产者。**ClassReader 用来解析类，如果仅仅是查看类的结构，只需要使用 ClassReader即可。**
 
----
 #### ClassVisitor
 
 ASM API 构造和处理字节码基于 `ClassVisitor` 抽象类，ClassVisitor 类中的每一个方法都对应字节码中的一个结构。`ClassVisitor` 是类结构的访问者抽象，它定义了不同的 visit 方法，开发者可以通过实现这些方法来访问类的特定部分。`ClassVisitor`会产生一些**子过程**，比如 `visitMethod`会返回一个实现 `MethordVisitor`接口的实例，`visitField`会返回一个实现 `FieldVisitor`接口的实例，完成子过程后控制返回到父过程，继续访问下一节点。
@@ -109,14 +110,12 @@ public abstract class ClassVisitor {
 
 **不管是 ClassVisitor 还是其他的 Visitor，最终都以一个 `visitEnd()` 方法结束该部分的访问**
 
----
 #### ClassWriter
 
 `ClassWriter` 继承自 `ClassVistor` 抽象类，负责将对象化的 class 文件内容重构成一个二进制格式的 class 字节码文件，`ClassWriter` 可以看作是一个事件消费者。继承自 `ClassVistor` 抽象类的自定义类负责 class 文件各个区域内容的修改和生成，它可以看作是一个事件过滤器，一次生产消费过程中这样的事件过滤器可以有`N个（0<=N）`。
 
-**ClassWriter 提供了字节码的改写功能，用来编译修改好的字节码。它生产了一个包含了编译好的类的二进制的数组，ClassWriter可以单独使用，用来构造出一个全新的类**
+**ClassWriter 提供了字节码的改写功能，用来编译修改好的字节码。它生产了一个包含了编译好的类的二进制的数组，ClassWriter可以单独使用，用来构造出一个全新的类**。
 
----
 #### 调用流程
 
 ClassVisitor中方法的顺序必须按照顺序调用，Java文档中规定：
@@ -138,7 +137,7 @@ ASM 基于ClassVisitor API提供了三种核心组件去构造和更改字节码
 - ClassWriter 是 ClassVisitor 抽象类的子类，用来编译修改好的字节码。它生产了一个包含了编译好的类的二进制的数组，可以用 toByteArray 方法获取。ClassWriter 是事件的消费者。
 - ClassVisitor 代理了所有来自其它 ClassVisitor 实例的方法调用，ClassVisitor是事件过滤器
 
-### 2.2 示例
+### 3.2 示例
 
 只了解 API 是非常抽象的，通过示例可以很好的掌握 ASM 的基本用法。（推荐配合使用 `jdk instrumentation` 调试）
 
@@ -348,12 +347,10 @@ public class AddFieldAdapter extends ClassVisitor {
 }
 ```
 
----
-### 2.3 工具类
+### 3.3 工具类
 
 除了 ClassVisitor 和 ClassReader 等组件，ASM在 `org.objectweb.asm.util` 包中提供了很多在开发时提供帮助的工具去初始化和适配一个类。
 
----
 #### Type
 
 ASM API 公开了存储在字节码中的类型，即内部名称和类型描述符。而没有使用更加接近源码的方式去暴露它们，让它们有更好的可读性。在使用 ASM 时我们需要使用 Java 类型的内部名称，不过 ASM 提供了 Type 类来帮助我们做转换。
@@ -369,7 +366,6 @@ Type 对象也可以表示一个方法类型。一个 Type 对象可以从一个
 - **getArgumentTypes**：获取参数类型，例如 `Type.getArgumentTypes(“(I)V”)` 返回的是 Type.INT_TYPE
 - **getReturnType**：获取返回值类型，例如 `Type.getReturnType(“(I)V”)` 返回的是 Type.VOID_TYPE
 
----
 #### TraceClassVisitor
 
 TraceClassVisitor 可以检查一个构建和转换的类是否符合你的期望，TraceClassVisitor 可以将字节码转换为文字表示：
@@ -383,7 +379,6 @@ cv.visit(...);
 cw.toByteArray();
 ```
 
----
 #### CheckClassAdapter
 
 ClassWriter 类并不能检查一个方法是否用正确的顺序和参数被调用，因此，可能会因为初始化一个错误的类从而被Java虚拟机验证拒绝，为了避免这些错误。可以使用 CheckClassAdaoter 类。TraceClassVisitor 也继承自 ClasVisitor，并且分发所有的请求给另一个 ClassVisitor 实例。这个类的作用是在分发给下一个 visitor 之前检查方法调用顺序和参数，如果出错就会抛出 IllegalStateException 或者 IllegalArgumentException异常。
@@ -405,7 +400,6 @@ CheckClassAdapter cca = new CheckClassAdapter(cw);
 TraceClassVisitor cv = new TraceClassVisitor(cca, printWriter);
 ```
 
----
 #### ASMifier
 
 通过 ASMifier 可以获取一个已存在的类的 ASM 代码。ASMifier类可以使用下面的命令行来调用：
@@ -443,13 +437,14 @@ public class RunnableDump implements Opcodes {
 ```
 
 ---
-## 3 深入字节码指令与 ASM API
 
-### 3.1 字节码指令
+## 4 深入字节码指令与 ASM API
+
+### 4.1 字节码指令
 
 想要很好的理解和使用 ASM 的相关API，必须对Java字节码指令有一定的了解， ASM 操作类的 API 是完全基于 字节码指令设计的。关于字节码指令可以参考各个版本《深入理解Java虚拟机》的第六、七章。
 
-### 3.2 ClassVisitor 接口
+### 4.2 ClassVisitor 接口
 
 ClassVisitor 主要负责访问类成员信息。其中包括（标记在类上的注解，类的构造方法，类的字段，类的方法，静态代码块），ClassVisitor 中每个方法都对应类的一个结构：
 
@@ -753,12 +748,14 @@ public abstract class MethodVisitor {
 ```
 
 ---
-## 4 Tree API
+
+## 5 Tree API
 
 todo
 
 ---
-## 5 使用插件
+
+## 6 使用插件
 
 使用 IDEA 插件可以帮助我们快速的生成 ASM 代码，下面两个都是可以使用的插件：
 
@@ -766,10 +763,11 @@ todo
 - ASM ByteCode Viewer
 
 ---
+
 ## 引用
 
 - [ASM 主页](http://asm.ow2.io/index.html)
 - [AOP 的利器：ASM 3.0 介绍](https://www.ibm.com/developerworks/cn/java/j-lo-asm30/index.html)
 - [使用ASM Core API修改类](https://smallsoho.com/android/2017/08/07/%E8%AF%91-%E4%BD%BF%E7%94%A8ASM-Core-API%E4%BF%AE%E6%94%B9%E7%B1%BB/)
-- [深入字节码 -- 使用 ASM 实现 AOP](https://my.oschina.net/u/1166271/blog/162796)
+- [深入字节码--使用 ASM 实现 AOP](https://my.oschina.net/u/1166271/blog/162796)
 - [ASM-clickdebounce](https://github.com/SmartDengg/asm-clickdebounce)
