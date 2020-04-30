@@ -20,5 +20,5 @@
 
 ## 2 相关资料
 
-- [Effective Java, Third Edition](https://github.com/Ztiany/effective-java-3rd-chinese)
+- [Effective Java, Third Edition-zh](https://github.com/Ztiany/effective-java-3rd-chinese)，来源：[Effective Java, Third Edition](https://www.jianshu.com/c/ce8cf0e13b23)
 - [effective-java-3e-source-code](https://github.com/jbloch/effective-java-3e-source-code)
