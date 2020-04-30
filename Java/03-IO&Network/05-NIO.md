@@ -595,9 +595,11 @@ try(需要关闭的资源声明){
 
 ## 引用
 
-- 尚硅谷 NIO 教程
-- 《Java NIO》
+- [尚硅谷 NIO 教程](05-尚硅谷Java-NIO.pdf)
+- [《Java NIO》](05-《Java%20NIO》-RonHitchens.pdf)
 - [Jenkov Java NIO Tutorials](http://tutorials.jenkov.com/java-nio/index.html)
+- [Java NIO浅析](https://tech.meituan.com/2016/11/04/nio.html)
+- [JavaGuide：BIO-NIO-AIO](https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/BIO-NIO-AIO.md)
 - [JAVA NIO之浅谈内存映射文件原理与DirectMemory](https://blog.csdn.net/szwangdf/article/details/10588489)
 - [通俗编程——白话 NIO 之 Channel](https://gold.xitu.io/entry/57a4aac3a633bd00603e83e5)
 - [通俗编程——白话 NIO 之 Selector](https://blog.csdn.net/dd864140130/article/details/50299687)
