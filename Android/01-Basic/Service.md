@@ -1,6 +1,7 @@
 # service
 
 ---
+
 ## 1 服务的两种开启方式
 
 ### startService()开启服务
@@ -12,6 +13,7 @@
 如果开启者Activity退出了，服务也会跟着挂断leaked漏气，没有解除绑定Activity就退出了，服务找不到绑定的对象。解除绑定服务unBindService()服务只能被解绑一次，多次解绑就会抛异常服务应当只绑定一次，注意：如果开启了服务的同时也绑定了服务，在没有接触绑定的情况下，调用stopService是无法停止Service的。
 
 ---
+
 ## 2 服务的生命周期
 
 ### 采用startService和stopService方法去开启和停止服务
@@ -31,11 +33,7 @@ bindService(intent, conn, Service.BIND_AUTO_CREATE);
 
 ### 混合方式开启服务
 
-1. startservice 开启服务 （保证服务长期后台运行）
-2. bindservice 绑定服务  （调用服务的方法）
+1. startservice 开启服务（保证服务长期后台运行）
+2. bindservice 绑定服务（调用服务的方法）
 3. unbindService 解除绑定服务 （停止调用服务的方法）
-4. stopService 停止服务   （停止服务，播放器停止）
-
-
-
-
+4. stopService 停止服务（停止服务，播放器停止）

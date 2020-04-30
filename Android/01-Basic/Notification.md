@@ -11,13 +11,14 @@ Notification通知，是一种让你的应用程序在不使用Activity的情况
 - 在通知托盘显示其他额外的信息
 - 在通知托盘使用交互式操作来操作广播
 
-**Notification 对象必须包含以下内容：**
+**Notification 对象必须包含以下内容**：
 
 - 小图标，由 setSmallIcon() 设置
 - 标题，由 setContentTitle() 设置
 - 详细文本，由 setContentText() 设置
 
 ---
+
 ## 1 Notification视觉元素介绍
 
 一个通知就是一条消息，显示在你的应用程序之外的界面（通知栏）。当你告知系统需要发布一个通知时，它首先作为一个icon出现在状态栏区域。为了进一步了解它的细节，用户可以下拉状态栏展开至通知栏查看。
@@ -29,9 +30,9 @@ Notification通知，是一种让你的应用程序在不使用Activity的情况
 
 #### 正常视图元素介绍
 
- 一个出现在标准视图中的通知，其高度是64dp。即使你使用大型视图创建一个通知，它仍然出现在标准视图中直至被展开。下面是一个正常视图的范例：
+一个出现在标准视图中的通知，其高度是64dp。即使你使用大型视图创建一个通知，它仍然出现在标准视图中直至被展开。下面是一个正常视图的范例：
 
- ![](images/notification01.jpg)
+![](images/notification01.jpg)
 
  1. 内容标题，
  2. 大型图标，
@@ -58,6 +59,7 @@ Notification通知，是一种让你的应用程序在不使用Activity的情况
 - Summary text：允许你在细节区域底端添加一行文本。
 
 ---
+
 ## 2 如何使用Notification
 
 Notification的api在不同的系统版本变化较大,为了解决Android系统版本差异导致的Notification兼容性问题，Android官方在4.1版本后提供了`NotificationCompat`兼容类来帮助开发实现体验统一的Notification,这一段主要介绍如何使用`NotificationCompat`。
@@ -92,7 +94,7 @@ NotificationManagerCompat.from(this).notify(ID_1, builder.build());//分别为 �
 
 上面代码可以显示一个简单的Notification如下：
 
- ![](images/notification03.png)
+![](images/notification03.png)
 
 上面Notification设置了通知的基本元素，接下来详细讲解：
 
@@ -111,13 +113,13 @@ NotificationManagerCompat.from(this).notify(ID_1, builder.build());//分别为 �
 设置连续的通知
 
 ```java
-    .setOngoing(true)//连续的通知，一直持续振动，播放音乐，和闪烁，直到用户处理
+.setOngoing(true)//连续的通知，一直持续振动，播放音乐，和闪烁，直到用户处理
 ```
 
 设置持续的通知：
 
 ```java
-    Notification.FLAG_INSISTENT 表示那些正在进行的事件(下载，播放音乐，前台的Service必须要有持续的通知)
+Notification.FLAG_INSISTENT 表示那些正在进行的事件(下载，播放音乐，前台的Service必须要有持续的通知)
 ```
 
 ### 2.3 其他特性（Api21）
@@ -128,34 +130,34 @@ NotificationManagerCompat.from(this).notify(ID_1, builder.build());//分别为 �
 
 如下图：
 
- ![](images/notification04.jpg)
+![](images/notification04.jpg)
 
 ### 2.4 Api4.1后的Style的通知
 
 #### 大型文本通知样式
 
 ```java
-      .setStyle(new NotificationCompat.InboxStyle() // 设置通知样式为收件箱样式
-                            .addLine("M.Lynn reminder")
-                            .addLine("M.Lynn launch")
-                            .addLine("M.Lynn hello")
-                            .setSummaryText("+3 more")// 设置在细节区域底端添加一行文本
+.setStyle(new NotificationCompat.InboxStyle() // 设置通知样式为收件箱样式
+.addLine("M.Lynn reminder")
+.addLine("M.Lynn launch")
+.addLine("M.Lynn hello")
+.setSummaryText("+3 more")// 设置在细节区域底端添加一行文本
 ```
 
- ![](images/notification05.png)
+![](images/notification05.png)
 
 #### 大图样式
 
 ```java
-    new NotificationCompat.BigPictureStyle() // 设置通知样式为大型图片样式
-                        .bigPicture(BitmapFactory.decodeResource(getResources(), R.drawable.fantasy)))
+new NotificationCompat.BigPictureStyle() // 设置通知样式为大型图片样式
+        .bigPicture(BitmapFactory.decodeResource(getResources(), R.drawable.fantasy)))
 ```
 
- ![](images/notification06.png)
+![](images/notification06.png)
 
 ### 2.5 启动 Activity 时保留导航
 
-##### 常规 Activity
+#### 常规 Activity
 
 >您要启动的 Activity 是应用的正常工作流的一部分。在这种情况下，请设置 PendingIntent 以启动全新任务并为 PendingIntent提供返回栈，这将重现应用的正常“返回”行为。
 
@@ -164,31 +166,31 @@ NotificationManagerCompat.from(this).notify(ID_1, builder.build());//分别为 �
 首先我们应该构建给Activity设置parentActivity
 
 ```xml
-    <activity
-        android:name=".MainActivity"
-        android:label="@string/app_name" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
-    <activity
-        android:name=".ResultActivity"
-        android:parentActivityName=".MainActivity">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".MainActivity"/>
-    </activity>
+<activity
+    android:name=".MainActivity"
+    android:label="@string/app_name" >
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+    </intent-filter>
+</activity>
+<activity
+    android:name=".ResultActivity"
+    android:parentActivityName=".MainActivity">
+    <meta-data
+        android:name="android.support.PARENT_ACTIVITY"
+        android:value=".MainActivity"/>
+</activity>
 ```
 
 使用TaskStackBuilder来构建PendingIntent
 
 ```java
-            TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-            stackBuilder.addParentStack(SecondActivity.class);
-            stackBuilder.addNextIntent(intent);//可以反复叠加
-            PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-            //stackBuilder.editIntentAt(1).putExtra() 添加数据
+TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+stackBuilder.addParentStack(SecondActivity.class);
+stackBuilder.addNextIntent(intent);//可以反复叠加
+PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+//stackBuilder.editIntentAt(1).putExtra() 添加数据
 ```
 
 ##### 特殊 Activity
@@ -198,9 +200,9 @@ NotificationManagerCompat.from(this).notify(ID_1, builder.build());//分别为 �
 如，可以设置如下属性：
 
 ```java
-    android:launchMode="singleTask"
-    taskAffinity:设置新的任务栈，在新的任务栈启动该Activity
-    android:excludeFromRecents="true"退出后不在历史任务栈中保留该任务栈
+android:launchMode="singleTask"
+taskAffinity:设置新的任务栈，在新的任务栈启动该Activity
+android:excludeFromRecents="true"退出后不在历史任务栈中保留该任务栈
 ```
 
 ### 2.6 自定义View
@@ -212,44 +214,43 @@ NotificationManagerCompat.from(this).notify(ID_1, builder.build());//分别为 �
 参考官方demo
 
 ```java
-    mNotifyManager =
-            (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-    mBuilder = new NotificationCompat.Builder(this);
-    mBuilder.setContentTitle("Picture Download")
-        .setContentText("Download in progress")
-        .setSmallIcon(R.drawable.ic_notification);
-    // Start a lengthy operation in a background thread
-    new Thread(
-        new Runnable() {
-            @Override
-            public void run() {
-                int incr;
-                // Do the "lengthy" operation 20 times
-                for (incr = 0; incr <= 100; incr+=5) {
-                        // Sets the progress indicator to a max value, the
-                        // current completion percentage, and "determinate"
-                        // state
-                        mBuilder.setProgress(100, incr, false);
-                        // Displays the progress bar for the first time.
-                        mNotifyManager.notify(0, mBuilder.build());
-                            // Sleeps the thread, simulating an operation
-                            // that takes time
-                            try {
-                                // Sleep for 5 seconds
-                                Thread.sleep(5*1000);
-                            } catch (InterruptedException e) {
-                                Log.d(TAG, "sleep failure");
-                            }
-                }
-                // When the loop is finished, updates the notification
-                mBuilder.setContentText("Download complete")
-                // Removes the progress bar
-                        .setProgress(0,0,false);
-                mNotifyManager.notify(ID, mBuilder.build());
+mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+mBuilder = new NotificationCompat.Builder(this);
+mBuilder.setContentTitle("Picture Download")
+    .setContentText("Download in progress")
+    .setSmallIcon(R.drawable.ic_notification);
+// Start a lengthy operation in a background thread
+new Thread(
+    new Runnable() {
+        @Override
+        public void run() {
+            int incr;
+            // Do the "lengthy" operation 20 times
+            for (incr = 0; incr <= 100; incr+=5) {
+                    // Sets the progress indicator to a max value, the
+                    // current completion percentage, and "determinate"
+                    // state
+                    mBuilder.setProgress(100, incr, false);
+                    // Displays the progress bar for the first time.
+                    mNotifyManager.notify(0, mBuilder.build());
+                        // Sleeps the thread, simulating an operation
+                        // that takes time
+                        try {
+                            // Sleep for 5 seconds
+                            Thread.sleep(5*1000);
+                        } catch (InterruptedException e) {
+                            Log.d(TAG, "sleep failure");
+                        }
             }
+            // When the loop is finished, updates the notification
+            mBuilder.setContentText("Download complete")
+            // Removes the progress bar
+                    .setProgress(0,0,false);
+            mNotifyManager.notify(ID, mBuilder.build());
         }
-    // Starts the thread by calling the run() method in its Runnable
-    ).start();
+    }
+// Starts the thread by calling the run() method in its Runnable
+).start();
 ```
 
 #### 2.8 和Service一起使用
@@ -257,7 +258,7 @@ NotificationManagerCompat.from(this).notify(ID_1, builder.build());//分别为 �
 配合Service可以构建一个前台进程服务，此服务需要一个Notification，并且这个Notification不能被移除。如何第一个参数为0,Notification不会显示
 
 ```java
-      startForeground(1, mNotification);
+startForeground(1, mNotification);
 ```
 
 #### 2.9 取消通知
@@ -265,6 +266,7 @@ NotificationManagerCompat.from(this).notify(ID_1, builder.build());//分别为 �
 所有的通知都由NotificationManager管理，可以通过NotificationManager来取消对于的通知
 
 ---
+
 ## 3 Notification开发方式在各个版本中的区别
 
 Notification的api在不同的系统版本变化较大，下面根据不同版本简单介绍Notification的使用，具体版本差异具体参考此[博客](http://blog.csdn.net/wwzqj/article/details/44098587)
@@ -272,19 +274,19 @@ Notification的api在不同的系统版本变化较大，下面根据不同版�
 ### 低于API Level 11版本中(即Android 2.3.3之前的系统)
 
 ```java
-    Notification notification = new Notification();//创建一个Notification
-         notification.icon = R.drawable.ic_launcher;//图标
-         notification.tickerText = "hello world";
-         notification.when = SystemClock.currentThreadTimeMillis();//时间
-         notification.flags = Notification.FLAG_AUTO_CANCEL;//Notification行为标识
-         //添加 声音和振动(需要权限)
-         notification.defaults |= (Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);  
-         Intent intent = new Intent(this, SecondActivity.class);
-         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-         //设置pendingIntent，否则保存
-         notification.setLatestEventInfo(this , "ddd","cecece" , pendingIntent);
-         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-         notificationManager.notify(1, notification);
+Notification notification = new Notification();//创建一个Notification
+    notification.icon = R.drawable.ic_launcher;//图标
+    notification.tickerText = "hello world";
+    notification.when = SystemClock.currentThreadTimeMillis();//时间
+    notification.flags = Notification.FLAG_AUTO_CANCEL;//Notification行为标识
+    //添加 声音和振动(需要权限)
+    notification.defaults |= (Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);  
+    Intent intent = new Intent(this, SecondActivity.class);
+    PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    //设置pendingIntent，否则保存
+    notification.setLatestEventInfo(this , "ddd","cecece" , pendingIntent);
+    NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    notificationManager.notify(1, notification);
 ```
 
 在这个版本中setLatestEventInfo是唯一的实现方法，在构造notification的时候有很多种写法，但是要注意，用Notification notification = new Notification();这种构建方法的时候，一定要加上notification.icon这个设置，不然，程序虽不会报错，但是会没有效果。
@@ -294,32 +296,31 @@ Notification的api在不同的系统版本变化较大，下面根据不同版�
 Android在API级别 11中添加了Notification.Builder，高于API Level 11，低于API Level 16 (Android 4.1.2)版本的系统中，可使用Notification.Builder来构造函数。但要使用**getNotification()**来使notification实现。此时，前面版本在notification中设置的**Flags，icon等属性都已经无效**，要在builder里面设置。
 
 ```java
-            Intent intent = new Intent(this, SecondActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            Notification.Builder builder = new Notification.Builder(this)
-                    .setAutoCancel(true)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentIntent(pendingIntent)
-                    .setContentTitle("hahaa")
-                    .setContentText("Haha");
-            NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            notificationManager.notify(1, builder.getNotification());
+Intent intent = new Intent(this, SecondActivity.class);
+PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+Notification.Builder builder = new Notification.Builder(this)
+        .setAutoCancel(true)
+        .setSmallIcon(R.mipmap.ic_launcher)
+        .setContentIntent(pendingIntent)
+        .setContentTitle("hahaa")
+        .setContentText("Haha");
+NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+notificationManager.notify(1, builder.getNotification());
 ```
 
 ### 高于API Level 16的版本
 
 高于API Level 16的版本，就可以用Builder和build()函数使用notification了。
 
-
 ```java
-     Notification notification = new Notification.Builder(context)
-             .setAutoCancel(true)
-             .setContentTitle("title")
-             .setContentText("describe")
-             .setContentIntent(pendingIntent)
-             .setSmallIcon(R.drawable.ic_launcher)
-             .setWhen(System.currentTimeMillis())
-             .build();
+Notification notification = new Notification.Builder(context)
+        .setAutoCancel(true)
+        .setContentTitle("title")
+        .setContentText("describe")
+        .setContentIntent(pendingIntent)
+        .setSmallIcon(R.drawable.ic_launcher)
+        .setWhen(System.currentTimeMillis())
+        .build();
 ```
 
 ### API Level26
@@ -347,6 +348,7 @@ mNotificationManager.notify(ID, mBuilder.build());
 ```
 
 ---
+
 ## 引用
 
 - [官方文档地址](http://developer.android.com/intl/zh-cn/guide/topics/ui/notifiers/notifications.html)

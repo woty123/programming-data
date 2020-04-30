@@ -15,28 +15,28 @@ Intent 是一个消息传递对象，可以使用它从其他应用组件请求�
 从Intent声明来看，其支持Android的序列化(因为需要跨进程传递)和克隆，Intent常用方法：
 
 ```java
-           //构造方法
-            Intent intent = new Intent();
-            Intent intent1 = new Intent(this, MainActivity.class);
-            Intent intent2 = new Intent(Intent.ACTION_CALL);
-            Intent intent3 = new Intent(Intent.ACTION_CALL, Uri.parse("tel:123"));
-            //添加类别
-            intent.addCategory(Intent.CATEGORY_ALTERNATIVE);
-            //添加flag源数据
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            //设置一些数据
-            intent.putExtra("", "");
-            intent.setType()
-            intent.setAction()
-            intent.setClass()
-            intent.setClassName()
-            intent.setData()
-            intent.setDataAndType();
-            intent.setComponent()
-             //获取uri数据
-            intent.getData()
-            //验证意图将解决一个活动
-            ComponentName componentName = intent.resolveActivity(getPackageManager());
+//构造方法
+Intent intent = new Intent();
+Intent intent1 = new Intent(this, MainActivity.class);
+Intent intent2 = new Intent(Intent.ACTION_CALL);
+Intent intent3 = new Intent(Intent.ACTION_CALL, Uri.parse("tel:123"));
+//添加类别
+intent.addCategory(Intent.CATEGORY_ALTERNATIVE);
+//添加flag源数据
+intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//设置一些数据
+intent.putExtra("", "");
+intent.setType()
+intent.setAction()
+intent.setClass()
+intent.setClassName()
+intent.setData()
+intent.setDataAndType();
+intent.setComponent()
+    //获取uri数据
+intent.getData()
+//验证意图将解决一个活动
+ComponentName componentName = intent.resolveActivity(getPackageManager());
 ```
 
 ## 2 Intent的类型
@@ -98,15 +98,15 @@ Intent 是一个消息传递对象，可以使用它从其他应用组件请求�
 类似打开相机，发送图片等隐式Intent，是并不一定能够在所有的Android设备上都正常运行。例如打开相机的隐式Intent，如果系统相机应用被关闭或者不存在相机应用，又或者是相机应用的某些权限被关闭等等情况都可能导致这个隐式的Intent无法正常工作。一旦发生隐式Intent找不到合适的调用组件的情况，系统就会抛出`ActivityNotFoundException`的异常，如果我们的应用没有对这个异常做任何处理，那应用就会发生Crash。正确的使用方式应该为：
 
 ```java
-    Intent sendIntent = new Intent();
-    sendIntent.setAction(Intent.ACTION_SEND);
-    sendIntent.putExtra(Intent.EXTRA_TEXT, textMessage);
-    sendIntent.setType("text/plain");
-    // Verify that the intent will resolve to an activity 
-    if (sendIntent.resolveActivity(getPackageManager()) != null) {
-        startActivity(sendIntent);
-    }
-    //或者可以使用PackageManager的query类方法
+Intent sendIntent = new Intent();
+sendIntent.setAction(Intent.ACTION_SEND);
+sendIntent.putExtra(Intent.EXTRA_TEXT, textMessage);
+sendIntent.setType("text/plain");
+// Verify that the intent will resolve to an activity 
+if (sendIntent.resolveActivity(getPackageManager()) != null) {
+    startActivity(sendIntent);
+}
+//或者可以使用PackageManager的query类方法
 ```
 
 ### 强制使用应用选择器
@@ -114,17 +114,17 @@ Intent 是一个消息传递对象，可以使用它从其他应用组件请求�
 如果多个应用可以响应 Intent，且用户可能希望每次使用不同的应用，则应采用显式方式显示选择器对话框：
 
 ```java
-    Intent sendIntent = new Intent(Intent.ACTION_SEND);
-    ...
-    // Always use string resources for UI text.
-    // This says something like "Share this photo with"
-    String title = getResources().getString(R.string.chooser_title);
-    // Create intent to show the chooser dialog
-    Intent chooser = Intent.createChooser(sendIntent, title);
+Intent sendIntent = new Intent(Intent.ACTION_SEND);
+...
+// Always use string resources for UI text.
+// This says something like "Share this photo with"
+String title = getResources().getString(R.string.chooser_title);
+// Create intent to show the chooser dialog
+Intent chooser = Intent.createChooser(sendIntent, title);
 
-    // Verify the original intent will resolve to at least one activity
-    if (sendIntent.resolveActivity(getPackageManager()) != null) {
-        startActivity(chooser);
+// Verify the original intent will resolve to at least one activity
+if (sendIntent.resolveActivity(getPackageManager()) != null) {
+    startActivity(chooser);
     }
 ```
 
@@ -133,24 +133,24 @@ Intent 是一个消息传递对象，可以使用它从其他应用组件请求�
 要公布应用可以接收哪些隐式Intent，需要在清单文件的对应组件中声明Intent-Fliter。示例：
 
 ```xml
-    <activity android:name="ShareActivity">
-        <!-- 处理send的action，并且数据类型为text -->
-        <intent-filter>
-            <action android:name="android.intent.action.SEND"/>
-            <category android:name="android.intent.category.DEFAULT"/>
-            <data android:mimeType="text/plain"/>
-        </intent-filter>
+<activity android:name="ShareActivity">
+    <!-- 处理send的action，并且数据类型为text -->
+    <intent-filter>
+        <action android:name="android.intent.action.SEND"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <data android:mimeType="text/plain"/>
+    </intent-filter>
 
-        <!-- 处理"SEND" and "SEND_MULTIPLE"的action，并且数据类型为图片或者视频 -->
-        <intent-filter>
-            <action android:name="android.intent.action.SEND"/>
-            <action android:name="android.intent.action.SEND_MULTIPLE"/>
-            <category android:name="android.intent.category.DEFAULT"/>
-            <data android:mimeType="application/vnd.google.panorama360+jpg"/>
-            <data android:mimeType="image/*"/>
-            <data android:mimeType="video/*"/>
-        </intent-filter>
-    </activity>
+    <!-- 处理"SEND" and "SEND_MULTIPLE"的action，并且数据类型为图片或者视频 -->
+    <intent-filter>
+        <action android:name="android.intent.action.SEND"/>
+        <action android:name="android.intent.action.SEND_MULTIPLE"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <data android:mimeType="application/vnd.google.panorama360+jpg"/>
+        <data android:mimeType="image/*"/>
+        <data android:mimeType="video/*"/>
+    </intent-filter>
+</activity>
 ```
 
 IntentFliter中包含三个部分：

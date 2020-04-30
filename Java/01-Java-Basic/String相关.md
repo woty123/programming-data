@@ -8,9 +8,10 @@
   - Matcher
 - String的intern方法
 - StringTokenizer
-- String内部实现：字符数组、字节数组。
+- String内部实现：字符数组、字节数组
 
 ---
+
 ## 1 格式化输出
 
 语法为：`%[argument_index$][flags][width][.precision]conversion`
@@ -23,21 +24,20 @@
 示例：
 
 ```java
-    System.out.print(String.format("%-15s %5s %10s\n", "item", "Qty", "Price"));//-表示右对齐，15表示宽度
-    System.out.print(String.format("%-15s %5s %10s\n", "-----", "-----", "-----"));
-    System.out.print(String.format("%-15.15s %5d %10.2f\n", "Jacks Magic Be", 4, 4.25));// 15.15表示15个宽度，最多打印15个字符，%10.2f表示10个宽度，浮点保留两位
-    System.out.print(String.format("%-15.15s %5d %10.2f\n", "Jacks Magic Be", 5, 2.2));
+System.out.print(String.format("%-15s %5s %10s\n", "item", "Qty", "Price"));//-表示右对齐，15表示宽度
+System.out.print(String.format("%-15s %5s %10s\n", "-----", "-----", "-----"));
+System.out.print(String.format("%-15.15s %5d %10.2f\n", "Jacks Magic Be", 4, 4.25));// 15.15表示15个宽度，最多打印15个字符，%10.2f表示10个宽度，浮点保留两位
+System.out.print(String.format("%-15.15s %5d %10.2f\n", "Jacks Magic Be", 5, 2.2));
 
 
-    //打印结果
-    item              Qty      Price
-    -----           -----      -----
-    Jacks Magic Be      4       4.25
-    Jacks Magic Be      5       2.20
+//打印结果
+item              Qty      Price
+-----           -----      -----
+Jacks Magic Be      4       4.25
+Jacks Magic Be      5       2.20
 ```
 
----
-**System.out.printf与String的Format转换符：**
+**System.out.printf与String的Format转换符**：
 
 符号|类型|示例|符号|类型|示例
 --|--|--|--|--|--|--|---

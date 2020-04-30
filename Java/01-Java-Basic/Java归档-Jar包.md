@@ -4,12 +4,11 @@
 
 Jar是java的归档文件，一个jar即可包含类文件,**也可以包含图形和声音这些其他类型的文件**，此外jar文件时压缩的，使用的是zip压缩格式。一个可运行的jar需要在jar的清单文件中包含主类路径,如：`Main-Class:com.ztiany.Main`,清单文件中的最后一行必须以换行符结束。使用第三方打包器可以将jar文件转换为Windows的可执行文件，比如JSmooth和、Launch4J、LzPack等工具。
 
-
 ### 打 jar 包
 
 工具的帮助稳定如下：
 
-```
+```shell
 用法: jar {ctxui}[vfmn0PMe] [jar-file] [manifest-file] [entry-point] [-C dir] files ...
 选项:
     -c  创建新档案
@@ -41,7 +40,7 @@ Jar是java的归档文件，一个jar即可包含类文件,**也可以包含图�
 
 ### 示例讲解 1
 
-` jar cvf classes.jar Foo.class Bar.class`
+`jar cvf classes.jar Foo.class Bar.class`
 
 - c表示创建新档案,不需要参数
 - v表示在标准输出中生成详细输出，不需要参数
@@ -57,31 +56,29 @@ Jar是java的归档文件，一个jar即可包含类文件,**也可以包含图�
 
 ### 其他命令
 
-```
+```shell
 jar -tf HelloWorld.jar   //查看归档文件的内容
 jar -cvfe HelloWorld.jar HelloWorld HelloWorld.class   //创建可以运行的jar包，其中HelloWorld为类的全限定路径
 jar cfm jar-file manifest-addition input-file(s)     //修改清单文件的内容
 ```
 
----
 ## 2 jar的遍历
 
 `java.util.jar.JarFile` 提供了遍历 jar 的方法：
 
-```
-                    JarFile jarFile = new JarFile(jarInput.file)
-                    Enumeration enumeration = jarFile.entries()
-                    while (enumeration.hasMoreElements()) {
-                        JarEntry jarEntry = (JarEntry) enumeration.nextElement()
-                        String entryName = jarEntry.getName()
-                        println "==== jarInput class entryName :" + entryName
-                        if (entryName.endsWith(".class")) {
-                             //...
-                        }
-                    }
+```java
+JarFile jarFile = new JarFile(jarInput.file)
+Enumeration enumeration = jarFile.entries()
+while (enumeration.hasMoreElements()) {
+    JarEntry jarEntry = (JarEntry) enumeration.nextElement()
+    String entryName = jarEntry.getName()
+    println "==== jarInput class entryName :" + entryName
+    if (entryName.endsWith(".class")) {
+            //...
+    }
+}
 ```
 
 ## 参考
 
 [Java之jar打包](http://www.jianshu.com/p/61cfa1347894)
-

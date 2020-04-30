@@ -9,15 +9,15 @@
 
 基本数据类型计算时，如果不能确定数据的范围，则计算应该考虑可能发生的数据溢出，比如：
 
-```
+```java
 Integer.MAX_VALUE + 1 = -2147483648
 ```
 
 ## 1 System控制台
 
 ```java
-   char[] chars = System.console().readPassword();
-   System.out.println(new String(chars));
+char[] chars = System.console().readPassword();
+System.out.println(new String(chars));
 ```
 
 可以使用上面代码从控制台读取密码，然而这个方法总是不能正常运行，因为System.console()总是返回null。所有还是使用Sannner比较安全。
@@ -31,13 +31,13 @@ String s = in.nextLine();
 
 ## 2 创建File的相对位置
 
-```
+```java
 File file = new File("a.txt");
 ```
 
 当构建一个File使用的是相对路径时，文件位于Java虚拟机启动的相对路径，而如果使用命令行的方式启动程序，启动路径就是命名解释器的当前路径，如果使用集成开发环境，那么启动路径由IDE控制，可以使用下面方式获取虚拟机的相对路径：
 
-```
+```java
 System.getProperty("user.dir")
 ```
 
@@ -97,20 +97,20 @@ class Manager implements Comparable<Manager> {
 
 hashCdoe方法应该返回一个整数，并合理的组合实例域的散列码以便能够让各个不同的对产生的散列码更加均匀。
 
-```
+```java
     Objects.hashCode("abc");
     Arrays.hashCode(new int[]{12, 3});
 ```
 
 ## 6 trimToSize
 
-```
-            ArrayList<String> list = new ArrayList<>();
-            list.add("A");
-            list.add("B");
-            list.add("C");
-            list.add("D");
-            list.trimToSize();
+```java
+ArrayList<String> list = new ArrayList<>();
+list.add("A");
+list.add("B");
+list.add("C");
+list.add("D");
+list.trimToSize();
 ```
 
 当确认不再有元素需要被添加后，可以调用trimToSize方法优化内存
@@ -121,16 +121,18 @@ hashCdoe方法应该返回一个整数，并合理的组合实例域的散列码
 
 比如：
 
-```
-     private static void test(Integer integer) {
-            int val = integer;
-            System.out.println(val);
-     }
-    会被翻译为：
-    private static void test(Integer integer) {
-            int val = integer.intValue();
-            System.out.println(val);
-     }
+```java
+private static void test(Integer integer) {
+    int val = integer;
+    System.out.println(val);
+}
+
+// 会被翻译为：
+
+private static void test(Integer integer) {
+    int val = integer.intValue();
+    System.out.println(val);
+}
 ```
 
 ## 8 对象克隆
@@ -145,41 +147,41 @@ hashCdoe方法应该返回一个整数，并合理的组合实例域的散列码
 
 内部类是一种编译器现象，与虚拟机无关，编译器将会把内部类翻译成$符号分隔外部类和内部类名的常规类文件。而虚拟机对此一无所知。
 
-```
-    public class Test {
-        class A implements Cloneable {
-            int a;
-            public A(int a) {
-                this.a = a;
-            }
+```java
+public class Test {
+    class A implements Cloneable {
+        int a;
+        public A(int a) {
+            this.a = a;
         }
     }
+}
 ```
 
 对于上面代码可以使用反射或者使用`javap -private Test$A`命名查看A的编译结果:
 
-```
-        class basic.Test$A{
-                  public basic.IntegerTest$A(basic.IntegerTest, int);
-                  public java.lang.Cloneable clone();
-                  public volatile java.lang.Object clone();
-                  int a;
-                  final basic.Test this$0;
-           }
+```java
+class basic.Test$A{
+    public basic.IntegerTest$A(basic.IntegerTest, int);
+    public java.lang.Cloneable clone();
+    public volatile java.lang.Object clone();
+    int a;
+    final basic.Test this$0;
+}
 ```
 
 可以看到编译器为内部类生成了一个附加的实例域this$0指向它的外部类。
 
 ### 局部类只可以引用final的局部遍历
 
-```
-    final int val = 3;
-            Runnable runnable = new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println(val);
-                }
-            };
+```java
+final int val = 3;
+Runnable runnable = new Runnable() {
+    @Override
+    public void run() {
+        System.out.println(val);
+    }
+};
 ```
 
 当创建Runnable时，val就会被传递给Runnable构造器，并存储在实例域中。将val声明为final的，就使得局部变量域与在局部类内建立的拷贝保持一致。
@@ -240,8 +242,8 @@ Java国际化涉及内容：
 java可以与一些脚本语言很好的进行交互，比如javascript、groovy、ruby等。通过Java提供的`javax.script.ScriptEngineManager`可以执行脚本语言，不过并没有这么简单
 
 ```java
-          ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-          List<ScriptEngineFactory> engineFactories = scriptEngineManager.getEngineFactories();//枚举所有发现可用的脚本引擎
+ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
+List<ScriptEngineFactory> engineFactories = scriptEngineManager.getEngineFactories();//枚举所有发现可用的脚本引擎
 ```
 
 默认情况下只有一个`jdk.nashorn.api.scripting.NashornScriptEngineFactory`，是用于执行javaScript的引擎(JDK1.7)，可通过在类路径中提供必要的jar来添加对额外的语言支持。

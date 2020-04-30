@@ -1,9 +1,7 @@
-# Android todo
+# AndroidKnowledgeReferences
 
 ## 源码分析
 
-- [Advance RxJava](https://blog.piasy.com/AdvancedRxJava/index.html)
-- [xUtils3](https://github.com/wyouflf/xUtils3/)
 - [ARouter](https://github.com/alibaba/ARouter)
 - [MultiThreadDownloader](https://github.com/AigeStudio/MultiThreadDownloader)
 - [RxDownload](https://github.com/ssseasonnn/RxDownload)
@@ -11,6 +9,7 @@
 - [Aria](https://github.com/AriaLyy/Aria)
 - [okdownload](https://github.com/lingochamp/okdownload)
 - [PRDownloader](https://github.com/MindorksOpenSource/PRDownloader)
+- [xUtils3](https://github.com/wyouflf/xUtils3/)
 
 ## View
 

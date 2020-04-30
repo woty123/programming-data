@@ -2,8 +2,8 @@
 
 Java语言有以下机制确保安全：
 
-1. 语言涉及特性(对数组越界进行检查、没有不受检查的类型转换、无指针算法)
-2. 访问控制机制，用于控制代码能够执行的操作(比如文件，网络访问等)
+1. 语言涉及特性(对数组越界进行检查、没有不受检查的类型转换、无指针算法)。
+2. 访问控制机制，用于控制代码能够执行的操作(比如文件，网络访问等)。
 3. 代码签名，利用该特性，代码的作者就能够用标准的加密算法来认证Java代码，以及代码手否被篡改过。
 
 ## 1 类加载器、字节码校验
@@ -22,7 +22,6 @@ Java语言有以下机制确保安全：
 
 编译通过的代码，在编译为字节码后，如果被串改，也会被java虚拟机发现。
 
-
 ## 2 安全管理器与访问权限
 
 一旦某个类被加载到虚拟机中，并由校验器检查过后，java平台的第二种安全机制就会启动，这个机制就是**安全管理器**，安全管理器检查的操作包括：
@@ -40,13 +39,13 @@ Java语言有以下机制确保安全：
 比如Runtime类的Exit方法会调用安全管理器的checkExit方法：
 
 ```java
-        public void exit(int status) {
-            SecurityManager security = System.getSecurityManager();
-            if (security != null) {
-                security.checkExit(status);
-            }
-            Shutdown.exit(status);
-        }
+public void exit(int status) {
+    SecurityManager security = System.getSecurityManager();
+    if (security != null) {
+        security.checkExit(status);
+    }
+    Shutdown.exit(status);
+}
 ```
 
 ## 3 用户认证
@@ -60,19 +59,19 @@ JAAS(Java Authentication and Authorization Service)
 1. 这份代码来自哪里
 2. 这份代码是否被篡改过
 
-**消息摘要**
+**消息摘要**：
 
 - MD5
 - SHA1
 
 实现类，java.security.MessageDigest
 
-**消息签名**
+**消息签名**：
 
 - 对称加密： DES、3DES、AES、
 - 不对称加密：RSA
 
-**签名校验**
+**签名校验**：
 
 - keytool使用，生成公钥与私钥
 - CA证书与证书链，校验公钥是否正规
@@ -80,4 +79,5 @@ JAAS(Java Authentication and Authorization Service)
 
 ## 引用
 
+- 《java加密与解密的艺术构建安全》
 - 《Java核心技术》
