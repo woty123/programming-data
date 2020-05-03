@@ -5,3 +5,5 @@ include 'P2-Spring-SpringMVC'
 include 'P3-SpringMVC-Base'
 include 'P4-SpringMVC-CRUD'
 include 'P5-SpringMVC-Annotation'
+include 'P6-SpringSSP'
+

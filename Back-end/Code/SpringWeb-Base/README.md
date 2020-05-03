@@ -5,3 +5,5 @@
 - P3-SpringMVC-Base：Spring MVC 基础。
 - P4-SpringMVC-CRUD：Spring MVC 深入。
 - P5-SpringMVC-Annotation：Spring MVC 纯注解开发。
+- P6-SpringSSP：Spring + SpringMVC + SpringData/JPA 整合实现分页以及增删改查。
+

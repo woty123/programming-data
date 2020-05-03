@@ -58,6 +58,7 @@ public class SpringMVCTest {
      * 2. @ModelAttribute 注解也可以来修饰目标方法 POJO 类型的入参, 其 value 属性值有如下的作用:
      * 	1). SpringMVC 会使用 value 属性值在 implicitModel 中查找对应的对象, 若存在则会直接传入到目标方法的入参中.
      * 	2). SpringMVC 会一 value 为 key, POJO 类型的对象为 value, 存入到 request 中.
+     * 	3). ModelAttribute 设置了@RequestParam(value = "id", required = false)，这时，要求请求的参数中有 id 才会执行此方法。
      */
     @ModelAttribute
     public void getUser(@RequestParam(value = "id", required = false) Integer id, Map<String, Object> map) {
