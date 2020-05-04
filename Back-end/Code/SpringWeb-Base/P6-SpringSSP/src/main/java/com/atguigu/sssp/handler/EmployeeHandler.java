@@ -32,10 +32,11 @@ public class EmployeeHandler {
     }
 
     @ModelAttribute
-    public void getEmployee(@RequestParam(value = "id", required = false) Integer id,
-                            Map<String, Object> map) {
+    public void getEmployee(@RequestParam(value = "id", required = false) Integer id, Map<String, Object> map) {
         if (id != null) {
             Employee employee = employeeService.get(id);
+            //这里如果不置空，则会导致崩溃，因为更新时，不允许修改 employee 关联的 Department（外键）id。
+            //Hibernate 持久化对象的 主键id 是不允许被修改的。
             employee.setDepartment(null);
             map.put("employee", employee);
         }
@@ -81,6 +82,7 @@ public class EmployeeHandler {
 
     @RequestMapping("/emps")
     public String list(@RequestParam(value = "pageNo", required = false, defaultValue = "1") String pageNoStr, Map<String, Object> map) {
+        /*这里用字符串接收 pageNumber，防止解析异常。*/
         int pageNo = 1;
 
         try {
@@ -89,7 +91,7 @@ public class EmployeeHandler {
             if (pageNo < 1) {
                 pageNo = 1;
             }
-        } catch (Exception e) {
+        } catch (Exception ignore) {
         }
 
         Page<Employee> page = employeeService.getPage(pageNo, 5);

@@ -16,7 +16,7 @@
                 const label = $(this).next(":hidden").val();
                 const flag = confirm("确定要删除" + label + "的信息吗?");
                 if (flag) {
-                    var url = $(this).attr("href");
+                    const url = $(this).attr("href");
 
                     $("#_form").attr("action", url);
                     $("#_method").val("DELETE");

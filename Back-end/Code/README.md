@@ -1,9 +1,11 @@
 # JaveEE学习项目
 
-## 缓解说明
+## 环境说明
 
-- IDEA
-- Tomcat8：启动时添加`-Dfile.encoding=UTF-8`参数
+- IDEA 2019.3。
+- 服务器：Tomcat，低版本的需要设置 JVM 运行时字符编码，`-Dfile.encoding=UTF-8`参数。
+
+>`Dfile.encoding` 用于设置外部环境的编码，Java 的 I/O 操作也是使用此编码。
 
 ## 项目说明
 
@@ -23,8 +25,6 @@
 
 2 数据库部分
 
-DataBase-All
-
 1. MySQL
 2. Redis
 3. JPA
@@ -32,10 +32,10 @@ DataBase-All
 
 3 Spring 部分
 
-1. SpringFramework-Base
-2. Spring-SSH
+1. SpringFramework-Base：Spring 核心框架示例代码。
+2. Spring-SSH：Spring 整合 Struts2, Hibernate 示例代码。
    1. Struts2
    2. Hibernate
    3. Spring-Struts2-Hibernate
-3. SpringWeb-Base
-4. SpringInAction
+3. SpringWeb-Base：SpringWeb、SpringMVC 示例代码。
+4. SpringInAction：《SpringInAction》学习示例代码。
