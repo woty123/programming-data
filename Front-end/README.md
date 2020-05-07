@@ -15,7 +15,7 @@ W3 school $ W3C school
 
 博客教程
 
-- [前端九部 - 入门者手册2019](https://www.yuque.com/fe9/basic)
+- [前端九部-入门者手册2019](https://www.yuque.com/fe9/basic)
 - [第一本 PWA 中文书](https://github.com/SangKa/PWA-Book-CN)
 - [typescript-tutorial](https://github.com/xcatliu/typescript-tutorial)
 - [CSS 奇技淫巧](https://github.com/chokcoco/iCSS)
@@ -27,7 +27,3 @@ W3 school $ W3C school
 - 尚硅谷免费视频教程
 - 黑马程序员视频教程
 - 珠峰视频教程
-
-## 2 笔记
-
-todo

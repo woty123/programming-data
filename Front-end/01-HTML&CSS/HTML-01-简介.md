@@ -15,6 +15,7 @@ HTML是最基础的网络语言，HTML是通过标签来定义的语言，不区
 **标签语义化**：HTML 语义化是指仅仅从 HTML 元素上就能看出页面的大致结构，比如需要强调的内容可以放在 <strong> 标签中，而不是通过样式设置 <span> 标签去做。
 
 ---
+
 ## 1 HTML骨架
 
 ### 完整的骨架
@@ -45,11 +46,12 @@ HTML是最基础的网络语言，HTML是通过标签来定义的语言，不区
 第1行是网页的 **声明头**，网页声明头可以告诉浏览器，这是一个什么标准的页面。术语叫做 **DocType Defintion** ，文档类型定义，简称 DTD。**W3C** 就是出 web 规范的组织机构。html、css、js 的规范都是 W3C 定义发布的。W3C 即 `world wide web coalition` 国际万维网联盟。任何一个标准的 HTML 页面，第一行一定是一个以`<!DOCTYPE ……`开头的语句。此标签可告知浏览器文档使用哪种 HTML 或 XHTML 规范。那么到底有哪些规范呢？
 
 ---
+
 ## 2 Html 版本与规范
 
  Html 历史参考下图：
 
-![](index_files/html_history.png)
+![html_history](index_files/html_history.png)
 
 ### HTML4.0.1
 
@@ -63,7 +65,7 @@ HTML是最基础的网络语言，HTML是通过标签来定义的语言，不区
 
 大规范|小规范
 ---|---
-HTML 4.01| Strict 严格的，体现在一些标签不能使用，比如 `u` 
+HTML 4.01| Strict 严格的，体现在一些标签不能使用，比如 `u`
 HTML 4.01| Transitional   普通的
 HTML 4.01| Frameset     带有框架的页面
 XHTML1.0 严格体现在小写标签、闭合、引号|Strict 严格的，体现在一些标签不能使用，比如`u`
@@ -89,4 +91,3 @@ IE9 开始兼容 HTML5，HTML5 不基于 SGML，所以不需要引入 DTD，其�
     </body>
 </html>
 ```
-
