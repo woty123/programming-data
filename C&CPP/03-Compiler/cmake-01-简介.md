@@ -10,11 +10,11 @@
 
 ## 2 示例与笔记
 
-- Sample01：最简单的Cmake示例
-- Sample02：编译多个文件
-- Sample03：编译不同目录下的多个文件
-- Sample04：自定义编译选项
-- Sample05：构建时检查系统环境
+- Sample01：最简单的Cmake示例。
+- Sample02：编译多个文件。
+- Sample03：编译不同目录下的多个文件。
+- Sample04：自定义编译选项。
+- Sample05：构建时检查系统环境。
 
 参考 [github](../Code/cmake-samples/README.md) 仓库
 
@@ -41,7 +41,7 @@
 - [cmake手册](http://www.cnblogs.com/coderfenghc/tag/cmake/)
 - [cmake 的正确打开方式](https://segmentfault.com/a/1190000015113987)
 - [Tutorial: Easy dependency management for C++ with CMake and Git](https://foonathan.net/blog/2016/07/07/cmake-dependency-handling.html)
-- [CMake 语法 - 详解 CMakeLists.txt](https://www.jianshu.com/p/528eeb266f83)
+- [CMake 语法-详解 CMakeLists.txt](https://www.jianshu.com/p/528eeb266f83)
 
 Android
 

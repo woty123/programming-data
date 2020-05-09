@@ -17,7 +17,7 @@ Android.mk文件语法将资源分组为“模块”。模块可以是以下之�
 
 ### Android.mk基本变量说明
 
--  `$`代表调用一个makefile的函数
+- `$`代表调用一个makefile的函数
 
 下面是一个最简单的Android.mk文件配置
 
@@ -70,4 +70,4 @@ Android.mk 和 Application.mk 的更多指令说明可以参考官方文档。
 ---
 ## 4 引入其他库
 
-使用 ndkbuild 开发方式，如何引入其他第三方native库呢？官方 sample。
+使用 ndkbuild 开发方式，如何引入其他第三方native库呢？参考官方 sample。

@@ -188,7 +188,7 @@ Frame (clink.core)
 - `CancelReceiveFrame (clink.frame)`：
 - `ReceiveHeaderFrame (clink.frame)`：
 
-###  分片的接收、发送、组装
+### 分片的接收、发送、组装
 
 - AsyncPacketReader 负责 Frame 的发送
 - AsyncPacketWriter 负责 Frame 的接收
@@ -197,13 +197,13 @@ Frame (clink.core)
 
 BytePriorityNode 链表结构用于支持分片的优先级传输，所有要发送的分片都先加入到 BytePriorityNode 中。
 
-###  三层传输架构
+### 三层传输架构
 
 ![](images/chat-room-v3-3layer_data_transfer.png)
 
 ## 7、chat-room-v4-optimize：基于 chat-room-v3-sharding  的并发优化、心跳包、聊天室开发
 
-###  解决 Java NIO 中并发环境下的 Selector 可能存在的并发问题
+### 解决 Java NIO 中并发环境下的 Selector 可能存在的并发问题
 
 在 JAVA NIO 中，当某个线程调用 `Selector.select()` 时，`select()` 方法内部实现其实就是对已经注册的 Channel 队列的进行反复地扫描，如果扫描完一遍没有发现就绪的 channel 则继续进行扫描，如果有则从 `select()` 函数返回。在扫描的这个过程中，是不允许其他线程更改其内部队列的，比如：
 
@@ -214,7 +214,8 @@ BytePriorityNode 链表结构用于支持分片的优先级传输，所有要发
 如果在扫描过程中其他线程调用方法修改 Selector 内部的队列，可能导致线程阻塞，所以如果想要调用以上方法，应该下先调用 Selector 的 `wakeup()` 方法，让 Selector 立即从 `select()` 方法返回，从而避免这个可能的并发 bug。
 
 对此问题，stackoverflow 上也有讨论，具体参考 [java-non-blocking-io-selector-causing-channel-register-to-block](https://stackoverflow.com/questions/3189153/java-non-blocking-io-selector-causing-channel-register-to-block) 。
-![](images/chat-room-v3-thread-block.png)
+
+![chat-room-v3-thread-block](images/chat-room-v3-thread-block.png)
 
 ### 聊天室开发
 
@@ -224,4 +225,3 @@ server.Group
 
 - clink.core.frame.HeartbeatSendFrame
 - clink.core.frame.HeartbeatReceiveFrame
-
