@@ -4,7 +4,11 @@
 
 ## 1 学习路线
 
+下面收集到四个学习路线，一个比一个难。
+
+- [快速入门Java后端开发的正确姿势](https://mp.weixin.qq.com/s/r3vuy71dXIbiIgGscsjz5g)
 - [Java 后端自学之路](http://objcoding.com/2018/02/07/javaweb-learning/)
+- [Java后端开发详细学习路线视频教程，串起 Java 后端开发几乎所有主流技术](https://www.bilibili.com/video/BV1GQ4y1N7HD?p=1&share_medium=android&share_plat=android&share_source=COPY&share_tag=s_i&timestamp=1589129297&unique_k=9lqKnN)
 - [Java 工程师的成神之路](https://mp.weixin.qq.com/s/IfqEoFliXotzmI9TtWnYaw)
 
 ---
