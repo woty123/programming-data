@@ -1,10 +1,33 @@
 # Spring 快速入门
 
+内容概览：
+
+1. Spring间接
+   1. 配置形式：基于 XML 文件的方式；基于注解的方式
+   2. Bean 的配置方式：通过全类名（反射）、通过工厂方法（静态工厂方法 & 实例工厂方法）、FactoryBean
+   3. IOC 容器 BeanFactory & ApplicationContext 概述
+   4. 依赖注入的方式：属性注入；构造器注入
+   5. 注入属性值细节
+   6. 自动装配
+   7. bean 之间的关系：继承；依赖
+   8. bean 的作用域：singleton；prototype；WEB 环境作用域
+   9. 使用外部属性文件
+   10. spEL
+   11. IOC 容器中 Bean 的生命周期
+   12. Spring 4.x 新特性：泛型依赖注入
+2. Spring IOC 与 DI
+3. Spring 测试框架
+4. Spring AOP
+5. Spring 对 JDBC 的支持
+6. Spring 的事务管理
+7. Spring 整合 Hibernate
+8. Spring 整合 Struts2
+
 ---
 
 ## 1 Spring 简介
 
-Spring是一个开源框架，Spring是于 **2003** 年兴起的一个轻量级的Java 开发框架，由`Rod Johnson`在其著作`Expert One-On-One J2EE Development and Design`中阐述的部分理念和原型衍生而来。它是为了解决企业应用开发的 **复杂性** 而创建的。框架的主要优势之一就是其 **分层架构**。Spring使用基本的JavaBean来完成以前只可能由EJB完成的事情。然而，Spring的用途不仅限于服务器端的开发。从简单性、可测试性和松耦合的角度而言，任何Java应用都可以从Spring中受益。Spring的核心是 **控制反转（Inversion of Control 简称 Ioc）** 和 **面向切面（Aspect Oriented Programming 简称 AOP）**。简单来说，Spring是一个分层的`JavaSE/JavaEE full-stack`(一站式) 轻量级开源框架。Spring的框架性质是属于 **容器性质** 的，容器中有什么对象就具备什么功能。
+Spring是一个开源框架，Spring是于 **2003** 年兴起的一个轻量级的 Java 开发框架，由`Rod Johnson`在其著作`Expert One-On-One J2EE Development and Design`中阐述的部分理念和原型衍生而来。它是为了解决企业应用开发的 **复杂性** 而创建的。框架的主要优势之一就是其 **分层架构**。Spring使用基本的JavaBean来完成以前只可能由EJB完成的事情。然而，Spring的用途不仅限于服务器端的开发。从简单性、可测试性和松耦合的角度而言，任何Java应用都可以从Spring中受益。Spring的核心是 **控制反转（Inversion of Control 简称 Ioc）** 和 **面向切面（Aspect Oriented Programming 简称 AOP）**。简单来说，Spring是一个分层的`JavaSE/JavaEE full-stack`(一站式) 轻量级开源框架。Spring的框架性质是属于 **容器性质** 的，容器中有什么对象就具备什么功能。
 
 ### 1.1 Spring 优点
 
@@ -23,9 +46,11 @@ Spring是一个开源框架，Spring是于 **2003** 年兴起的一个轻量级�
 
 ---
 
-## 2 基础配置与容器对象
+## 2 Spring IOC 与 DI
 
-### 2.1 ApplicationContext 与 BeanFactory 容器对象
+### 2.1 Spring IOC
+
+#### 2.1 ApplicationContext 与 BeanFactory 容器对象
 
 Spring容器启动时就会创建容器中配置的所有对象，下面两个类用于加载Spring的配置文件：
 
@@ -42,7 +67,7 @@ BeanFactory 和 ApplicationContext 的区别
 - ApplicationContext：在加载 applicationContext.xml(容器启动)时候就会创建。
 - web 开发中，使用 applicationContext， 在资源匮乏的环境可以使用 BeanFactory。
 
-### 2.1 Bean 的配置方式
+#### 2.1 Bean 的配置方式
 
 - 在 Spring 配置文件中声明一个 Bean
 - 分模块配置，import 导入其他配置文件
@@ -51,7 +76,7 @@ BeanFactory 和 ApplicationContext 的区别
   - 静态工厂创建
   - 实例工厂创建
 
-### 2.2 Bean 的 Scope 与 生命周期配置
+#### 2.2 Bean 的 Scope 与 生命周期配置
 
 四种 scope：
 
@@ -65,11 +90,9 @@ BeanFactory 和 ApplicationContext 的区别
 - **初始化**：配置一个方法作为生命周期初始化方法.spring会在对象创建之后立即调用，`init-method`
 - **销毁**：配置一个方法作为生命周期的销毁方法，spring容器在关闭并销毁所有容器中的对象之前调用，`destroy-method`
 
----
+### 2.2 Spring 注入
 
-## 3 Spring 注入
-
-### 3.1 xml 配置注入
+#### 2.2.1 xml 配置注入
 
 - setter 方法
 - 构造函数注入
@@ -77,15 +100,15 @@ BeanFactory 和 ApplicationContext 的区别
 - spel注入：spring Expression Language spring
 - 复杂类型注入：包括：`数组、map、properties、list`
 
-### 3.2 注解注入
+#### 2.2.2 注解注入
 
-#### 开启注解
+##### 开启注解
 
 1. 导入 spring-aop 模块(默认已经导入了)
 2. 主配置文件引入 `context` 命名空间(约束)
 3. 开启配置：`<context:component-scan base-package="package-name"/>`
 
-#### 组件注解
+##### 组件注解
 
 Spring 提供了下面四个注解，如果类上声明了注解的，那么 Spring 会创建该类的对象并放入到容器中，并可以对容器的一些属性声明进行注入：
 
@@ -96,11 +119,11 @@ Spring 提供了下面四个注解，如果类上声明了注解的，那么 Spr
 
 Component 是最原始的注解，但是如果所有的组件都使用 Component 注解，在语义上就分辨不出对象到底是属于那一层，是属于什么类型的组件，所以后台就添加了另外三个注解，其实它们的作用都是一样的。
 
-#### Scope 注解
+##### Scope 注解
 
 `@Scope` 注解用于指定组件的范围
 
-#### 属性注入注解
+##### 属性注入注解
 
 值类型属性注入：
 
@@ -112,14 +135,14 @@ Component 是最原始的注解，但是如果所有的组件都使用 Component
 - Qualifier：配合Autowired使用，告诉 Autowired 使用哪个名称的对象。
 - Resource：指定注入哪个名称的对象。
 
-#### 生命周期注解
+##### 生命周期注解
 
 - PreConstruct：初始化
 - PostConstruct：注解
 
 ---
 
-## 4 Spring 配合 JUnit 测试
+## 3 Spring 配合 JUnit 测试
 
 - 添加 Spring Test 依赖
 - 添加 RunWith 注解
@@ -127,14 +150,14 @@ Component 是最原始的注解，但是如果所有的组件都使用 Component
 
 ---
 
-## 5 AOP
+## 4 AOP
 
 AOP 最早由 AOP 联盟的组织提出，并制定了一套规范，Spring 将 AOP 思想引入到框架中，必须遵守 AOP 联盟的规范。AOP的底层实现是**代理机制**: Spring的 AOP 的底层用到两种代理机制：
 
 - JDK 的动态代理：针对实现了接口的类产生代理
 - CgLib 的动态代理：针对没有实现接口的类产生代理，应用的是底层的字节码增强的技术生成当前类的子类对象
 
-### 5.1 Spring 基于 AspectJ 的 AOP 开发
+### 4.1 Spring 基于 AspectJ 的 AOP 开发
 
 AspectJ 是 Java 社区里最完整最流行的 AOP 框架，在 Spring2.0 以上版本中, 可以使用基于 AspectJ 注解或基于 XML 配置的 AOP。
 
@@ -151,7 +174,7 @@ AOP的开发中的相关术语：
 - **Proxy**（代理）：一个类被AOP织入增强后，就产生一个结果代理类
 - **Aspect**(切面)：是切入点和通知（引介）的结合
 
-### 5.2 通知
+### 4.2 通知
 
 - 前置通知(@Before)：在目标方法执行之前执行。
 - 返回通知(@AfterReturning)：在目标方法正常返回之后运行。
@@ -159,16 +182,16 @@ AOP的开发中的相关术语：
 - 环绕通知(@Around)：在目标方法执行前和执行后执行。
 - 异常抛出通知(@AfterThrowing)：在目标方法执行出现异常的时候执行。
 
-### 5.3 配置 Advice
+### 4.3 配置 Advice
 
 - xml配置方式
 - 注解配置方式
 
 ---
 
-## 6 Srping JDBC
+## 5 Srping JDBC
 
-### 6.1 JDBC 模板
+### 5.1 JDBC 模板
 
 spring 提供了很多模板整合 Dao 技术
 
@@ -181,7 +204,7 @@ JPA | `org.springframework.orm.jpa.JpaTemplate`
 
 DAO 实现类可以继承 JdbcDaoSupport，其提供 Template 类的获取。
 
-### 6.2 事务简介
+### 5.2 事务简介
 
 事务：逻辑上的一组操作，组成这组操作的各个逻辑单元，要么一起成功，要么一起失败。
 
@@ -205,7 +228,7 @@ DAO 实现类可以继承 JdbcDaoSupport，其提供 Template 类的获取。
 - 可重复读 :避免脏读和不可重复读，但是虚读有可能发生
 - 串行化的 :避免以上所有读问题
 
-### 6.3 Spring 事务管理
+### 5.3 Spring 事务管理
 
 PlatformTransactionManager 平台事务管理器，这是一个接口，针对不同平台有不同的实现：
 
