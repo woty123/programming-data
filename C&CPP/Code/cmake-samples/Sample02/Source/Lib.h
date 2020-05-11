@@ -6,9 +6,6 @@
 
  ============================================================================
  */
-//
-// Created by Administrator on 17.11.12.
-//
 
 #ifndef SAMPLE02_LIB_H
 #define SAMPLE02_LIB_H
