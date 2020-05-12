@@ -4,14 +4,15 @@ Shell 是一个用 C 语言编写的程序，它是用户使用 Linux 的桥梁�
 
 - Shell脚本(shell script)是一种为shell编写的脚本程序
 - Shell环境：
-- Bourne Shell (/usr/bin/sh或/bin/sh)
-- Bourne Again Shell (/bin/bash)
-- C Shell (/usr/bin/csh)
-- K Shell (/usr/bin/ksh)
+  - Bourne Shell (/usr/bin/sh或/bin/sh)
+  - Bourne Again Shell (/bin/bash)
+  - C Shell (/usr/bin/csh)
+  - K Shell (/usr/bin/ksh)
 
-Bash是大多数Linux 系统默认的 Shell。
+Bash 是大多数 Linux 系统默认的 Shell。
 
 ---
+
 ## 1 运行 Shell 脚本
 
 ```Shell
@@ -36,6 +37,7 @@ chmod +x ./test.sh  #使脚本具有执行权限
 ```
 
 ---
+
 ## 2 变量
 
 ### 定义变量
@@ -98,6 +100,7 @@ unset variable_name
 3. shell变量：shell变量是由shell程序设置的特殊变量。shell变量中有一部分是环境变量，有一部分是局部变量，这些变量保证了shell的正常运行
 
 ---
+
 ## 3 字符串
 
 字符串可以用单引号，也可以用双引号，也可以不用引号
@@ -139,6 +142,7 @@ echo `expr index "$string" is`
 ```
 
 ---
+
 ## 4 数组
 
 bash支持一维数组，并且没有限定数组的大小。
@@ -167,6 +171,7 @@ lengthn=${#array_name[n]}
 ```
 
 ---
+
 ## 5 Shell参数
 
 在执行Shel 脚本时，可以向脚本传递参数(参数以空格隔开)，脚本内获取参数的格式为：`$n`
@@ -202,6 +207,7 @@ done
 ```
 
 ---
+
 ## 6 运算符
 
 Shell包括以下运算符：
@@ -298,7 +304,6 @@ str | 检测字符串是否为空，不为空返回 true。 | `[ $a ]` 返回 tr
 
 加上`file="/var/www/runoob/test.sh"`
 
-
 操作符 | 说明 | 举例
 ---|---|---
 -b file | 检测文件是否是块设备文件，如果是，则返回 true。 | `[ -b $file ]` 返回 false。
@@ -316,6 +321,7 @@ str | 检测字符串是否为空，不为空返回 true。 | `[ $a ]` 返回 tr
 -e file | 检测文件（包括目录）是否存在，如果是，则返回 true。 | `[ -e $file ]` 返回 true。
 
 ---
+
 ## 7 命令
 
 ### 7.1 echo
@@ -584,6 +590,7 @@ esac
 - continue
 
 ---
+
 ## 9 函数
 
 shell中可以定义函数，然后在shell脚本中可以调用。
@@ -636,6 +643,7 @@ funWithParam 1 2 3 4 5 6 7 8 9 34 73
 ```
 
 ---
+
 ## 10 输入输出重定向
 
 大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回​​到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。
@@ -723,11 +731,13 @@ command  > /dev/null 2>&1
 ```
 
 ### 永久重定向
+
 ```Shell
 exec 1>test.sh
 ```
 
 ---
+
 ## 11 文件包含
 
 Shell可以包含外部脚本。这样可以很方便的封装一些通用的代码作为一个独立的脚本。Shell 文件包含的语法格式如下：
@@ -750,6 +760,7 @@ source ./test1.sh
 ```
 
 ---
+
 ## 12 常用命令和工具
 
 ### wc
@@ -858,6 +869,7 @@ let  "t1 = ((a = 5 + 3, b = 7 - 1, c = 15 - 4))"
 exit命令 同于退出shell，并返回给定值。在shell脚本中可以终止当前脚本执行。执行exit可使shell以指定的状态值退出。若不设置状态值参数，则shell以预设值退出。状态值0代表执行成功，其他值代表执行失败
 
 ---
+
 ## 13 shell 中的 `[]、()、[[]]、(())`
 
 ### 小括号 `( )`
@@ -898,6 +910,7 @@ if  test $var -eq 0;  then  echo  "True";  fi
 - bash把双中括号中的表达式看作一个单独的元素，并返回一个退出状态码。
 
 ---
+
 ## 14 数学计算
 
 数学计算总结
@@ -918,6 +931,7 @@ result=`echo "$nb3 * 1.5" | bc`
 ```
 
 ---
+
 ## 引用
 
 教程：
@@ -932,3 +946,4 @@ result=`echo "$nb3 * 1.5" | bc`
 - 《Linux Shell脚本攻略》第3版
 - 《Linux命令行与shell脚本编程大全》第3版
 - 《Shell脚本学习指南》
+- 《Shell编程和unix命令》

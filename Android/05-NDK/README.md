@@ -17,6 +17,7 @@
 ### 教程
 
 - [JNI/NDK开发指南](https://blog.csdn.net/xyang81/column/info/blogjnindk)
+- [音视频学习 (四) 交叉编译动态库、静态库的入门学习](https://juejin.im/post/5e1ad6806fb9a02ff076e103)
 - NDK 相关课程汇总：[Awesome-Android-NDK](https://github.com/JsonChao/Awesome-Android-NDK)
 
 菜鸟窝：

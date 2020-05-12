@@ -3,6 +3,7 @@
 ndkbuild开发方式需要在jni目录下配置Android.mk和Application.md等文件，然后进行编译。
 
 ---
+
 ## 1 Android.mk文件说明
 
 Android.mk是Android提供的一种makefile文件，用来指定诸如编译生成so库名、引用的头文件目录、需要编译的.c/.cpp文件和.a静态库文件等。
@@ -49,6 +50,7 @@ include $(BUILD_SHARED_LIBRARY)//代表将该c代码最终会变成一个动态�
 - 如果在android.mk文件中放置下面这一句`include $(BUILD_STATIC_LIBRARY)`，代表最终c代码会编译成一个静态库，扩展名为.a
 
 ---
+
 ## 2 Application.mk
 
 Application.mk用于描述应用需要的原生模块。 模块可以是静态库、共享库或可执行文件。Application.mk 文件实际上是定义要编译的多个变量的微小 GNU Makefile 片段。
@@ -63,11 +65,13 @@ Application.mk用于描述应用需要的原生模块。 模块可以是静态�
 ```
 
 ---
+
 ## 3 更多指令说明
 
 Android.mk 和 Application.mk 的更多指令说明可以参考官方文档。
 
 ---
+
 ## 4 引入其他库
 
 使用 ndkbuild 开发方式，如何引入其他第三方native库呢？参考官方 sample。

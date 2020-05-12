@@ -18,10 +18,9 @@ import kotlin.reflect.KProperty
  *     在 by 后面的表达式是该委托， 因为属性对应的 get()（和 set()）会被委托给它的 getValue() 和 setValue() 方法。
  *     属性的委托不必实现任何的接口，但是需要提供一个 getValue() 函数（和 setValue()——对于 var 属性）
  */
-
-
 private class Delegate {
     operator fun getValue(thisRef: Any?, property: KProperty<*>): String {
+        println("Delegate.getValue(${property.name})")
         return "$thisRef, thank you for delegating '${property.name}' to me!"
     }
 
@@ -36,13 +35,17 @@ private class Delegate {
 }
 
 private class DelegationExample {
-    var p: String by Delegate()
+    var p1: String by Delegate()
+    val p2: String by Delegate()
 }
 
 private fun testPropertyDelegation() {
     val delegationExample = DelegationExample()
-    delegationExample.p = "Like"
-    println(delegationExample.p)
+    delegationExample.p1 = "Like"
+    println(delegationExample.p1)
+    println(delegationExample.p1)
+    println(delegationExample.p2)
+    println(delegationExample.p2)
 }
 
 
@@ -58,7 +61,6 @@ private fun testPropertyDelegation() {
  * 如果初始化委托的同步锁不是必需的，这样多个线程 可以同时执行，那么将 LazyThreadSafetyMode.PUBLICATION 作为参数传递给 lazy() 函数。
  * 而如果你确定初始化将总是发生在单个线程，那么你可以使用 LazyThreadSafetyMode.NONE 模式， 它不会有任何线程安全的保证和相关的开销。
  */
-
 //默认是同步初始化
 private val lazyValue: String by lazy {
     println("computed!")
@@ -80,7 +82,6 @@ private val lazyValueUnSafe: String by lazy(LazyThreadSafetyMode.PUBLICATION) {
  *
  * 如果你想能够截获一个赋值并“否决”它，就使用 vetoable() 取代 observable()。 在属性被赋新值生效之前会调用传递给 vetoable 的处理程序。
  */
-
 private class User {
 
     var name: String by Delegates.observable("<no name>") { property, old, new ->
@@ -160,7 +161,6 @@ private val propertyA = object : ReadWriteProperty<ADelegationExample, String> {
 private class ADelegationExample {
     var name: String by ADelegate(propertyA)
 }
-
 
 /**
  * 翻译规则：在每个委托属性的实现的背后，Kotlin 编译器都会生成辅助属性并委托给它。

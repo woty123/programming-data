@@ -10,14 +10,14 @@
 
 | 目录名 | 描述|
 |---|---|
-| build   | 存放和编译相关的脚本文件,最外面的ndk-build就是调用该目录下的makefile文件,其中makefile文件都存放在build/core目录 |
+| build   | 存放和编译相关的脚本文件，最外面的 ndk-build 就是调用该目录下的 makefile 文件，其中makefile文件都存放在 build/core 目录 |
 | docs  | 帮助文档 |
-| platforms  | 存放不同android版本,不同平台架构的头文件和库文件 |
-| prebuilt  | 存放和编译相关工具比如make.exe |
-| samples | ndk代码例子,用根目录下的ndk-build即可编译 |
-| source | 源码目录,有一些头文件和库文件,比如gnu-libstdc,stlport |
-| test | 一些测试样例,有很多例子可以从里面学习 |
-| toolchains | 不同平台的编译器链接器目录以及一些和编译连接相关的工具,gcc,ld等工具都在这个目录 |
+| platforms  | 存放不同 android 版本，不同平台架构的头文件和库文件 |
+| prebuilt  | 存放和编译相关工具比如 make.exe |
+| samples | ndk 代码例子，用根目录下的 ndk-build 即可编译 |
+| source | 源码目录，有一些头文件和库文件，比如 gnu-libstdc，stlport |
+| test | 一些测试样例，有很多例子可以从里面学习 |
+| toolchains | 不同平台的编译器链接器目录以及一些和编译连接相关的工具，gcc，ld 等工具都在这个目录 |
 
 ### obj文件
 
