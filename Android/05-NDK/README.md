@@ -2,10 +2,9 @@
 
 ## 1 学习资料
 
-### 前置知识：JNI
+### 前置知识
 
 - C/C++ 语言
-- [The Java™ NativeInterfaceProgrammer’s Guide and Specification](TheJava™NativeInterfaceProgrammer’sGuideAndSpecification.pdf)
 - [JNI笔记1](JNI笔记-1.md)
 - [JNI笔记2](JNI笔记-2.md)
 
@@ -13,21 +12,25 @@
 
 - [NDK 入门指南](https://developer.android.com/ndk/guides/index.html)
 - [NDK WIKI](https://github.com/android/ndk)
+- [NDK 版本修订记录](https://developer.android.com/ndk/downloads/revision_history)
 - [向您的项目添加 C 和 C++ 代码](https://developer.android.com/studio/projects/add-native-code.html)
 
 ### 教程
 
 - [JNI/NDK开发指南](https://blog.csdn.net/xyang81/column/info/blogjnindk)
 - [音视频学习 (四) 交叉编译动态库、静态库的入门学习](https://juejin.im/post/5e1ad6806fb9a02ff076e103)
-- NDK 相关课程汇总：[Awesome-Android-NDK](https://github.com/JsonChao/Awesome-Android-NDK)
+
+比较老的教程：
+
 - [Mastering Android NDK Build System - Part 1: Techniques with ndk-build](http://web.guohuiwang.com/technical-notes/androidndk1)
 - [Mastering Android NDK Build System - Part 2: Standalone toolchain](http://web.guohuiwang.com/technical-notes/androidndk2)
 
-菜鸟窝：
+菜鸟窝（付费）：
 
 - [Android 音视频高级开发工程师-菜鸟窝](https://www.cniao5.com/class/android/ysp)
 - [JNI与NDK全面剖析与实战-菜鸟窝](https://www.cniao5.com/course/10284)
 - [0基础进阶NDK实战体系化专题-菜鸟窝](https://www.cniao5.com/course/10296#tab_1)
+- NDK 进阶相关课程汇总：[Awesome-Android-NDK](https://github.com/JsonChao/Awesome-Android-NDK)
 
 ### 示例代码
 
@@ -50,3 +53,4 @@
 4. Android NDK 开发
    1. ndk-build、cmake 构建方式
    2. 原生 API
+5. 第三方库集成与开发
