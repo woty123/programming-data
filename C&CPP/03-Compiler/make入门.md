@@ -7,16 +7,19 @@ make是一个命令工具，它解释Makefile中的指令（应该说是规则�
 - 在执行make之前，需要一个命名为Makefile的特殊文件来告诉make需要做什么，该怎么做
 
 ---
+
 ## 1 GNU make介绍
 
 ### Makefile规则介绍
 
 一个简单的Makefile描述规则组成：
 
+```MakeFile
         TARGET... : PREREQUISITES...
            COMMAND
            ...
            ...
+```
 
 - target：规则的目标。通常是最后需要生成的文件名或者为了实现这个目的而必需的中间过程文件名，目标也可以是一个make执行的动作的名称，如目标“clean”，可以make整个目录，也可以针对单个目录进行make
 - make中的第一个target也是该MakeFile文件的最终目标
@@ -52,6 +55,7 @@ clean:
     rm -f *.o
     rm -f myapp
 ```
+
 注意：
 
 - 一行写不下，可以使用`\`换号，但是\后面不能有空格，回车后继续写后续代码即可
@@ -142,7 +146,8 @@ test:
 ```
 
 ---
-## 2 Makefile总述
+
+## 2 Makefile 入门
 
 ### Makefile的内容
 
@@ -224,7 +229,8 @@ words函数说明
 GNU make支持一个特殊的变量，此变量不能通过任何途经给它赋值。它被展开为一个特定的值。一个重要的特殊的变量是“.VARIABLES”。它被展开以后是此引用点之前、makefile文件中所定义的所有全局变量列表。包括：空变量（未赋值的变量）和make的内嵌变量，但不包含目标指定的变量，目标指定变量值在特定目标的上下文有效。
 
 ---
+
 ## 引用
 
-- GNU make中文手册
+- [GNU make中文手册](https://free-online-ebooks.appspot.com/tools/gnu-make-cn/)
 - [跟我一起写Makefile](https://seisman.github.io/how-to-write-makefile/overview.html)
