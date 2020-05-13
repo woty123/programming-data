@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 29
     buildToolsVersion "25.0.3"
 
     defaultConfig {
@@ -37,7 +37,7 @@ android {
 
     sourceSets {
         main {
-            jniLibs.srcDirs += ['/src/main/cpp/lib']
+            jniLibs.srcDirs += ['/src/main/cpp/ffmpeglib2_8_8']
         }
     }
 }

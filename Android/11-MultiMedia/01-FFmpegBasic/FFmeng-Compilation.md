@@ -191,7 +191,7 @@ Toolchain options:
   --arch=ARCH              select architecture []
   --cpu=CPU                select the minimum required CPU (affects
                            instruction selection, may crash on older CPUs)
-  # 用于设置编译工具，这里需要指定为 Android 平台的交叉编译工具。
+  # 用于设置编译工具前缀，这里需要指定为 Android 平台的交叉编译工具。
   --cross-prefix=PREFIX    use PREFIX for compilation tools []
   --progs-suffix=SUFFIX    program name suffix []
   --enable-cross-compile   assume a cross-compiler is used
@@ -251,7 +251,7 @@ Toolchain options:
   --enable-lto             use link-time optimization
   --env="ENV=override"     override the environment variables
 
-# 高级选项
+# 高级选项（供专家使用）
 Advanced options (experts only):
   --malloc-prefix=PREFIX   prefix malloc and related names with PREFIX
   ...
@@ -266,3 +266,155 @@ Developer options (useful when working on FFmpeg itself):
   ...
 
 NOTE: Object files are built at the place where configure is launched.
+```
+
+## 4 编译 FFmpeg-n2.8 版本
+
+环境：
+
+1. FFmpeg-n2.8.8
+2. android-ndk-r14b
+
+脚本：
+
+```shell
+#!/bin/bash
+
+#临时文件夹
+export TMPDIR=../temp
+
+#NDK
+export NDK=/mnt/d/windows_linux_subsystem/android-ndk-r14b
+export SYSROOT=$NDK/platforms/android-19/arch-arm/
+export TOOLCHAIN=$NDK/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64
+export CPU=armv7-a
+
+#输出目录
+export PREFIX=../android/FFmpeg-n2.8.8/armv7a
+export ADDI_CFLAGS="-marm"
+
+#函数
+function build_one
+{
+./configure \
+--prefix=$PREFIX \
+--enable-shared \
+--disable-static \
+--disable-doc \
+--disable-ffmpeg \
+--disable-ffplay \
+--disable-ffserver \
+--disable-ffprobe \
+--disable-postproc \
+--disable-avdevice \
+--disable-symver \
+--enable-small \
+--cross-prefix=$TOOLCHAIN/bin/arm-linux-androideabi- \
+--target-os=linux \
+--arch=arm \
+--cpu=armv7-a \
+--enable-cross-compile \
+--sysroot=$SYSROOT \
+--extra-cflags="-Os -fpic $ADDI_CFLAGS" \
+--extra-ldflags="$ADDI_LDFLAGS" \
+$ADDITIONAL_CONFIGURE_FLAG
+make clean
+make
+make install
+}
+
+build_one
+```
+
+## 5 编译 FFmpeg 3.4 版本
+
+环境：
+
+1. [FFmpeg3.4](https://github.com/FFmpeg/FFmpeg/tree/release/3.4)
+2. android-ndk-r17c
+
+脚本：
+
+```shell
+#!/bin/bash
+
+#版本
+API=19
+
+# C 优化参数
+OPTIMIZE_CFLAGS="-D__ANDROID_API__=$API -U_FILE_OFFSET_BITS -Os -fpic -DANDROID -mfloat-abi=softfp -mfpu=vfp -marm"
+ADDI_CFLAGS=""
+# 链接优化参数
+ADDI_LDFLAGS="-marm"
+
+#NDK
+export NDK_ROOT=/home/ubuntu/android-ndk-r17c
+ISYSROOT=$NDK_ROOT/sysroot/
+
+#函数
+function build_one
+{
+./configure \
+--target-os=android \
+--prefix=$PREFIX \
+--enable-shared \
+--disable-static \
+--disable-doc \
+--disable-ffmpeg \
+--disable-ffplay \
+--disable-ffserver \
+--disable-ffprobe \
+--disable-postproc \
+--disable-avdevice \
+--disable-symver \
+--enable-small \
+--cross-prefix=$TOOLCHAIN/bin/arm-linux-androideabi- \
+--arch=$ARCH \
+--sysroot=$SYSROOT \
+--enable-cross-compile \
+--extra-cflags="-I$ASM -isysroot $ISYSROOT $ADDI_CFLAGS $OPTIMIZE_CFLAGS" \
+--extra-ldflags="$ADDI_LDFLAGS"
+
+make clean
+make
+make install
+}
+
+#build armv7-a
+ARCH=armv7-a
+PREFIX=./result/$ARCH
+PLATFORM=arm-linux-androideabi
+TOOLCHAIN=$NDK_ROOT/toolchains/$PLATFORM-4.9/prebuilt/linux-x86_64
+
+SYSROOT=$NDK_ROOT/platforms/android-$API/arch-arm/
+ASM=$ISYSROOT/usr/include/$PLATFORM
+
+build_one
+
+#build arm64
+ARCH=arm64
+PREFIX=./result/$ARCH
+PLATFORM=aarch64-linux-android
+TOOLCHAIN=$NDK_ROOT/toolchains/$PLATFORM-4.9/prebuilt/linux-x86_64
+
+SYSROOT=$NDK_ROOT/platforms/android-$API/arch-x86/
+ASM=$ISYSROOT/usr/include/$PLATFORM
+
+build_one
+```
+
+部分参数说明：
+
+- 将 `--target-os` 设为 android，生成的库文件就不带版本号了，可以不用再去修改 configure 文件。
+- 汇编优化参数：`-marm` (和 -mthumb 用来执行生成的代码在 arm 模式还是 thumb 模式执行)，参考（<https://abcamus.github.io/2017/01/04/arm-gcc%E7%BC%96%E8%AF%91%E4%B8%8E%E9%93%BE%E6%8E%A5%E5%8F%82%E6%95%B0/）。>
+- `-D__ANDROID_API__=$API -U_FILE_OFFSET_BITS` 用于指定 Android 版本，具体参考：
+  - <https://blog.csdn.net/luo0xue/article/details/80048847>
+  - [android-ndk-compilation-without-sysroot](https://stackoverflow.com/questions/45504340/android-ndk-compilation-without-sysroot)
+
+较新版本的 NDK 将头文件和库文件进行了分离，platforms 文件夹下只有库文件，而头文件放在了 NDK 目录下的 sysroot 内，需在 --extra-cflags 中添加 `-isysroot $NDK/sysroot"` 指定正确的位置，有关汇编的头文件也进行了分离，需要根据目标平台进行指定 `"-I$NDK_ROOT/sysroot/usr/include/arm-linux-androideabi"`，对于其他平台将 `"arm-linux-androideabi"` 改为需要的平台就可以，终于可以顺利的进行编译了。
+
+## 6 编译 FFmpeg 4.2 版本
+
+由于 gcc 从 ndk 中移除，需要在 configure 时使用 `--cc --cxx --ld` 来分别指定 c/c++编译器和链接器。
+
+- [ ] todo

@@ -12,6 +12,7 @@
 ### 官方文档
 
 - [NDK 入门指南](https://developer.android.com/ndk/guides/index.html)
+- [NDK WIKI](https://github.com/android/ndk)
 - [向您的项目添加 C 和 C++ 代码](https://developer.android.com/studio/projects/add-native-code.html)
 
 ### 教程
@@ -19,6 +20,8 @@
 - [JNI/NDK开发指南](https://blog.csdn.net/xyang81/column/info/blogjnindk)
 - [音视频学习 (四) 交叉编译动态库、静态库的入门学习](https://juejin.im/post/5e1ad6806fb9a02ff076e103)
 - NDK 相关课程汇总：[Awesome-Android-NDK](https://github.com/JsonChao/Awesome-Android-NDK)
+- [Mastering Android NDK Build System - Part 1: Techniques with ndk-build](http://web.guohuiwang.com/technical-notes/androidndk1)
+- [Mastering Android NDK Build System - Part 2: Standalone toolchain](http://web.guohuiwang.com/technical-notes/androidndk2)
 
 菜鸟窝：
 
@@ -37,7 +40,7 @@
 ### 库
 
 - [NDK Maping](http://cdn2.jianshu.io/p/bdce346aef85)
-- [JNA](https://github.com/java-native-access/jna)可以帮助 Java 方便快速的访问 native 层代码。
+- [JNA](https://github.com/java-native-access/jna) 可以帮助 Java 方便快速的访问 native 层代码。
 
 ## 2 学习路径
 

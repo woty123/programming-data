@@ -4,23 +4,24 @@ cmake_minimum_required(VERSION 3.4.1)
 set(cpp_dir ${CMAKE_SOURCE_DIR}/src/main/cpp)
 
 # FFmpeg
+set(FFmpegLibDir ffmpeglib2_8_8)
 add_library(avcodec SHARED IMPORTED )
-set_target_properties(avcodec PROPERTIES IMPORTED_LOCATION  ${cpp_dir}/lib/${ANDROID_ABI}/libavcodec-56.so)
+set_target_properties(avcodec PROPERTIES IMPORTED_LOCATION  ${cpp_dir}/${FFmpegLibDir}/${ANDROID_ABI}/libavcodec-56.so)
 
 add_library(avfilter SHARED IMPORTED)
-set_target_properties(avfilter PROPERTIES IMPORTED_LOCATION  ${cpp_dir}/lib/${ANDROID_ABI}/libavfilter-5.so)
+set_target_properties(avfilter PROPERTIES IMPORTED_LOCATION  ${cpp_dir}/${FFmpegLibDir}/${ANDROID_ABI}/libavfilter-5.so)
 
 add_library(avformat SHARED IMPORTED)
-set_target_properties(avformat PROPERTIES IMPORTED_LOCATION  ${cpp_dir}/lib/${ANDROID_ABI}/libavformat-56.so)
+set_target_properties(avformat PROPERTIES IMPORTED_LOCATION  ${cpp_dir}/${FFmpegLibDir}/${ANDROID_ABI}/libavformat-56.so)
 
 add_library(avutil SHARED IMPORTED)
-set_target_properties(avutil PROPERTIES IMPORTED_LOCATION  ${cpp_dir}/lib/${ANDROID_ABI}/libavutil-54.so)
+set_target_properties(avutil PROPERTIES IMPORTED_LOCATION  ${cpp_dir}/${FFmpegLibDir}/${ANDROID_ABI}/libavutil-54.so)
 
 add_library(swresample SHARED IMPORTED)
-set_target_properties(swresample PROPERTIES IMPORTED_LOCATION  ${cpp_dir}/lib/${ANDROID_ABI}/libswresample-1.so)
+set_target_properties(swresample PROPERTIES IMPORTED_LOCATION  ${cpp_dir}/${FFmpegLibDir}/${ANDROID_ABI}/libswresample-1.so)
 
 add_library(swscale SHARED IMPORTED)
-set_target_properties(swscale PROPERTIES IMPORTED_LOCATION  ${cpp_dir}/lib/${ANDROID_ABI}/libswscale-3.so)
+set_target_properties(swscale PROPERTIES IMPORTED_LOCATION  ${cpp_dir}/${FFmpegLibDir}/${ANDROID_ABI}/libswscale-3.so)
 
 # libyuv
 
@@ -85,7 +86,7 @@ set(ly_header_files
   ${ly_inc_dir}/libyuv/mjpeg_decoder.h
 )
 
-include_directories(${cpp_dir}/include)
+include_directories(${cpp_dir}/ffmpeglib2_8_8_include)
 include_directories(${ly_inc_dir})
 
 # Android log
