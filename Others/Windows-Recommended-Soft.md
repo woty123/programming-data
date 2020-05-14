@@ -97,6 +97,8 @@
 - Astah
 - StarUML
 - xmind
+- the brain
+- mind manager
 
 ## 图片压缩与信息
 
@@ -208,6 +210,10 @@ import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.
 - Rest Client
 - Remote-WSL
 - Code Runner
+- Draw.io VS Code Integration
+- Debugger for Chrome
+- ESLint
+- SVG Viewer
 
 markdown：
 

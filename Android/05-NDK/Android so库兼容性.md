@@ -18,6 +18,7 @@ Android系统目前支持以下七种不同的CPU架构：
 
 ## 引用
 
+- [为何大厂APP如微信、支付宝等只适配了armeabi-v7a/armeabi？](https://mp.weixin.qq.com/s/jnZpgaRFQT5ULk9tHWMAGg)
 - [关于Android的.so文件你所需要知道的](http://www.jianshu.com/p/cb05698a1968)
 - [Android的.so文件、ABI和CPU的关系](http://blog.csdn.net/xx326664162/article/details/51163905)
 - [让APK只包含指定的ABI](http://blog.csdn.net/justfwd/article/details/49308199)
