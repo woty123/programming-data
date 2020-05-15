@@ -74,6 +74,27 @@ public class DNPlayer {
         }
     }
 
+    public void destroy() {
+        nativeDestroy();
+    }
+
+    /**
+     * 提供给 native 调用，用于提示底层发生错误
+     */
+    public void onNativeError(int errorCode) {
+        LogUtil.d("DNPlayer error: " + errorCode);
+    }
+
+    /**
+     * 提供给 native 调用，用于提示底层准备好了
+     */
+    public void onNativePrepared() {
+        LogUtil.d("DNPlayer onPrepared");
+    }
+
     private native void nativePrepare(String dataSource);
+    private native void nativeDestroy();
+
+
 
 }

@@ -1,6 +1,7 @@
 # JNI 笔记 2
 
 ---
+
 ## 5 引用类型
 
 JNI 把 instance 和 array 类型的指针对外公布为 opaque reference，这种引用对于 JNI 来说是透明的，本地代码不需要通过指针操作 reference，不需要关心对象的内存布局，而是通过 JNI API。
@@ -138,6 +139,7 @@ IsSameObject 用于测试两个引用是否引用相同的 Java 对象。
 - 本地方法绝对不能滥用 GlobalRef 和 WeakGlobalRef，因为此类型引用不会被自动回收。
 
 ---
+
 ## 6 错误处理
 
 ### 6.1 在本地代码中捕获和处理异常
@@ -170,25 +172,25 @@ jboolean jbool = (*env)->ExceptionCheck(env); 当java层抛出异常时，此方
 示例：
 
 ```java
-class CatchThrow {    
+class CatchThrow {
     private native void doit()throws IllegalArgumentException;  
 
-    private void callback() throws NullPointerException {        
-        throw new NullPointerException("CatchThrow.callback");    
+    private void callback() throws NullPointerException {
+        throw new NullPointerException("CatchThrow.callback");
     }
 
-    public static void main(String args[]) {        
-        CatchThrow c = new CatchThrow();        
-        try {            
-            c.doit();        
-        } catch (Exception e) {            
-            System.out.println("In Java:\n\t" + e);        
-        }    
-    }    
-    
-    static {        
-        System.loadLibrary("CatchThrow");    
+    public static void main(String args[]) {
+        CatchThrow c = new CatchThrow();
+        try {
+            c.doit();
+        } catch (Exception e) {
+            System.out.println("In Java:\n\t" + e);
         }
+    }
+
+    static {
+        System.loadLibrary("CatchThrow");
+    }
 }
 ```
 
@@ -331,6 +333,7 @@ void JNU_ThrowByName(JNIEnv* env,const char* name,const char* msg){
 - 工具函数要注意处理LocalRef
 
 ---
+
 ## 7 JNI 与线程
 
 本地代码可以被任意 Java 线程调用，所以，本地代码中同样存在着并发问题，JNI 规范规定本地代码有如下约束，我们必须遵守这些规范：
@@ -419,6 +422,7 @@ f(){
 假设要在多个线程中运行的本地代码访问全局资源。本地代码应该使用 JNI 函数 MonitorEnter 和 MonitorExit，还是在主机环境中使用本地线程同步原语（例如mutex_lockon Solaris）？类似地，如果本地代码需要创建一个新线程，它应该创建一个`java.lang.Thread` 对象并通过 JNI 执行 `Thread.start` 的回调，还是应该在宿主环境中使用本地线程创建原语（如作为Solaris上的thr_create）？答案是，如果 Java 虚拟机实现支持与本地代码所使用的线程模型匹配的线程模型，则这些方法都有效。线程模型规定了系统如何实现基本线程操作，例如调度，上下文系统调用中的切换，同步和阻塞。在主动线程模型中，操作系统管理所有必要的线程操作。另一方面，在用户线程模型中，应用程序代码实现了线程操作。例如，Solaris 上附带 JDK 和 Java 2 SDK 版本的“绿色线程”模型使用 ANSI C 函数 setjmp 和 longjmp 来实现上下文切换。
 
 ---
+
 ## 8 其他 JNI 功能
 
 ### 8.1 动态注册方法
@@ -463,6 +467,7 @@ RegisterNatives函数可用于多种用途：
 - 当本地应用程序嵌入虚拟机实现并需要与本地应用程序中定义的本地方法实现链接时，RegisterNatives 特别有用。虚拟机无法自动找到此本地方法实现，因为它仅在本地库中搜索，而不是在应用程序本身中搜索。
 
 ---
+
 ### 8.2 编写国际化的 JNI 代码
 
 必须特别注意编写适用于多种语言环境的代码。 JNI 使程序员可以完全访问 Java 平台的国际化功能。以字符串转换作为示例，因为文件名和消息可能在许多语言环境中包含非ASCII字符。
@@ -535,13 +540,11 @@ char *JNU_GetStringNativeChars(JNIEnv *env, jstring jstr) {
 }
 ```
 
----
 ### 8.3 C++ 与 JNI
 
 1. 1. 为了兼容 C 与 C++ 的混编，头文件中的函数声明要使用 `extern "C" {}` 括起来，因为 C++ 编译器会混编方法名。具体参考 [extern C](https://github.com/hokein/Wiki/wiki/extern-%22C%22)
 2. c++ 对 JNI 函数的方法比 c 要简单，如`env->NewStringUTF(str)`即可实现 NewStringUTF 函数的调用。
 
----
 ### 8.4 本地库的加载和卸载处理
 
 加载和卸载处理程序允许本地库导出两个函数：一个在 `System.loadLibrary` 加载本地库时调用，另一个在虚拟机卸载本地库时调用。此功能已添加到Java 2 SDK 1.2版中
@@ -621,7 +624,6 @@ JNIEXPORT void JNICALL JNI_OnUnload(JavaVM *jvm, void *reserved) {
 
 JNI_OnUnload 函数删除对 JNI_OnLoad 处理程序中创建的 C 类的弱全局引用。我们不需要删除方法 ID MID_C_g，因为虚拟机在卸载其定义的 class C时自动回收表示 C 的方法 ID 所需的资源。为什么我们将 C 类缓存在弱全局引用而不是普通的全局引用中呢？因为全局引用会使 C 保持活跃状态，这反过来会使 C 的类加载器保持活动状态。鉴于本地库与 C 的类加载器 L 相关联，将不会卸载本地库并且不会调用 JNI_OnUnload，JNI_OnUnload 处理程序在终结器中运行。而 JNI_OnLoad 处理程序在启动 `System.loadLibrary` 调用的线程中运行。因为 JNI_OnUnload 在未知的线程上下文中运行，为了避免可能的死锁，应该避免在 JNI_OnUnload 中进行复杂的同步和锁定操作。 JNI_OnUnload 处理程序通常执行简单的任务，例如释放本地库分配的资源。当加载库的类加载器和该类加载器定义的所有类不再存在时，JNI_OnUnload 处理程序将被运行。 JNI_OnUnload 处理程序不得以任何方式使用这些类。在上面的 JNI_OnUnload 定义中，不能执行任何假定 Class_C 仍引用有效类的操作。示例中的 DeleteWeakGlobalRef 调用为其自身的弱全局引用释放内存，但不以任何方式操纵引用的类C，总之，在编写 JNI_OnUnload 处理时应该小心。避免可能引入死锁的复杂锁定操作。记住，在调用 JNI_OnUnload 处理程序时已卸载类。
 
----
 ### 8.5 反射支持
 
 反射通常是指在运行时操作语言级构造。例如，反射允许你在运行时发现任意类对象的名称以及类中定义的字段和方法的集合。 Java 编程语言级别通过`java.lang.reflect`包以及`java.lang.Object`和`java.lang.Class`类中的一些方法提供了反射支持。虽然你总是可以调用相应的 Java API 来执行反射操作，但 JNI 提供了以下功能，使本机代码的频繁反射操作更加高效和方便：
@@ -633,7 +635,6 @@ JNI_OnUnload 函数删除对 JNI_OnLoad 处理程序中创建的 C 类的弱全�
 - FromReflectedField 和 ToReflectedField 允许本机代码在字段ID 和 `java.lang.reflect.Field` 对象之间进行转换。
 - FromReflectedMethod 和 ToReflectedMethod 允许本机代码在方法ID，`java.lang.reflect.Method`对象和`java.lang.reflect.Constructor`对象之间进行转换。
 
----
 ## 9 TODO
 
 - 利用现有的 Native Libraries

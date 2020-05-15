@@ -18,6 +18,11 @@
 
 注意：由于 NDK 一直在改进，所以一定要了解自己所使用的 NDK 版本做了哪些修改，不然遇到编译错误问题很难解决的。
 
+编译常见问题总结：
+
+1. [Clang编译FFmpeg常见问题](https://www.laoyuyu.me/2019/05/23/android/clang_compile_ffmpeg/)
+2. [ffmpeg 编译&集成问题汇总](https://www.jianshu.com/p/c413873350a2)
+
 ---
 
 ## 2 编译方式
@@ -33,6 +38,8 @@
 ## 3 编译参数说明
 
 解压出来后进入 ffmpeg 解压目录，可以看到里面有各种文件、文档。需要关注的是`configure`文件。这个文件本身就是一个shell脚本，作用为生成`makfile`文件，然后使用`make`执行。
+
+>很多开源库都会提供 configure，所以当需要使用其他库时，也可以先看看其又没哟提供 configure。
 
 1. 首先尝试执行一下 `./configure` 命令，检测一下缓解。
 2. configure 文件中描述了各个模块之间的依赖关系，其内部提供了很多配置，用于对编译行为进行控制，configure 的配置方式可以从`./configure --help`命令获取。
@@ -800,3 +807,5 @@ build native-lib: phony ../../../../build/intermediates/cmake/debug/obj/armeabi-
 
 1. FFmpeg 4.2.2 版本默认使用了 clang 进行编译。在 `configure` 文件中查找 `cc_default` 会看到 `cc_default="clang"`。
 2. Android NDK，修订版 r18b 移除了 gcc，需要在 configure 时使用 `--cc --cxx --ld` 来分别指定 c/c++编译器和链接器。
+
+对此，如果想使用 NDK r18b 之前的 NDK 中的 gcc 进行编译，可以将 `configure` 文件钟的 `cc_default="clang"` 修改为 `cc_default="gcc"`。

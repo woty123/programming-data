@@ -1,24 +1,31 @@
 #include <jni.h>
 #include <string>
 #include "DNFFmpeg.h"
+#include "macro.h"
 
-extern "C" {
-#include <libavcodec/avcodec.h>
-}
-
-extern "C" JNIEXPORT jstring JNICALL
-Java_com_dongnao_player_MainActivity_stringFromJNI(JNIEnv *env, jobject /* this */) {
-    av_version_info();
-    return env->NewStringUTF(av_version_info());
-}
+JavaVM *globalJvm;
+DNFFmpeg *dnfFmpeg;
 
 extern "C"
 JNIEXPORT void JNICALL
 Java_com_dongnao_player_DNPlayer_nativePrepare(JNIEnv *env, jobject thiz, jstring dataSource) {
     //创建FFmpeg
-    const char *string = env->GetStringUTFChars(dataSource, 0);
-    DNFFmpeg fmpeg(string);
-    env->ReleaseStringUTFChars(dataSource, string);
+    const char *string = env->GetStringUTFChars(dataSource, nullptr);
+    auto *javaCallHelper = new JavaCallHelper(globalJvm, env, thiz);
+    dnfFmpeg = new DNFFmpeg(javaCallHelper, string);
     //调用 native 层的 prepare
-    fmpeg.prepare()
+    dnfFmpeg->prepare();
+    env->ReleaseStringUTFChars(dataSource, string);
+}
+
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *jvm, void *reserved) {
+    globalJvm = jvm;
+    LOGD("JNI_OnLoad");
+    return JNI_VERSION_1_4;
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_dongnao_player_DNPlayer_nativeDestroy(JNIEnv *env, jobject thiz) {
+    dnfFmpeg = nullptr;
 }

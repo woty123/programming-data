@@ -2,19 +2,18 @@
 
 ## 1 静态库还是动态库
 
-- 使用链接静态库：假设静态库中有 `a b c`，而我们只是用到其中的 `a`，那么在链接的时候，只会将静态库中的 `a` 连接到我们生成的库中。
+- 链接静态库：假设静态库中有 `a b c`，而我们只是用到其中的 `a`，那么在链接的时候，只会将静态库中的 `a` 连接到我们生成的库中。
 - 链接动态库：如果使用动态库，那么整个动态库都要打包进 apk 中。
 
 所以不一定使用静态库生成的包就比使用动态库的大，开源框架使用动态库的一大好处是方便使用和分发，因为 jni 无法直接使用静态库。
 
 ## 2 动态库依赖问题
 
-- 从 6.0 开始 使用 `Android.mk` 如果来引入一个预编译动态库，链接路径有问题，无法修复。
-- 在 4.4 的系统上如果 load 一个动态库 ，需要先将这个动态库的依赖的其他动态库 load 进来，而后续版本会自动查找依赖。即：
-  - 在 6.0 以下  System.loadLibrary 不会自动为我们加载依赖的动态库。
-  - 在 6.0以上  System.loadLibrary 会自动为我们加载依赖的动态库。
+- 从 Android 6.0 开始 使用 `Android.mk` 如果要引入一个预编译动态库，链接路径会有问题，且无法修复。
+- 在 6.0 以下 System.loadLibrary 不会自动为我们加载依赖的动态库。如果 load 一个动态库 ，需要先将这个动态库的依赖的其他动态库 load 进来，而后续版本会自动查找依赖
+- 在 6.0 以上 System.loadLibrary 会自动为我们加载依赖的动态库。
 
-假设存在两个动态库 `libhello-jni.so` 与 `libTest.so`。`libhello-jni.so` 依赖于 `libTest.so` (使用NDK下的`ndk-depends`可查看依赖关系)，则：
+假设存在两个动态库 `libhello-jni.so` 与 `libTest.so`。`libhello-jni.so` 依赖于 `libTest.so` (使用 NDK下 的`ndk-depends`可查看依赖关系)，则：
 
 ```java
 //在 <=5.0 的系统上，需要手动加载依赖
@@ -26,7 +25,7 @@ System.loadLibrary("hello-jni");
 
 ### 使用 `Android.mk` 的情况
 
-使用Android.mk在 >=6.0 设备上不能再使用预编译动态库，而静态库没问题：
+使用 Android.mk 在 >=6.0 设备上不能再使用预编译动态库了：
 
 ```makefile
 LOCAL_PATH := $(call my-dir)
@@ -51,7 +50,7 @@ include $(BUILD_SHARED_LIBRARY)
 
 ### 使用 CMake 的情况
 
-使用 CMakeList.txt 在 >=6.0 设备上引入预编译动态库:
+使用 CMakeList.txt 在 >=6.0 设备上引入预编译动态动态库:
 
 ```shell
 cmake_minimum_required(VERSION 3.4.1)
@@ -59,19 +58,20 @@ cmake_minimum_required(VERSION 3.4.1)
 file(GLOB SOURCE *.c )
 add_library(hello-jni SHARED ${SOURCE} )
 
-#这段配置在6.0依然没问题
+#方式1，手动用编译参数指定链接的库，这段配置在 6.0 系统及以上依然没问题
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -L[SO所在目录]")
 
-#这段配置只能在6.0以下使用 原因和android.mk一样
+# 方式2，使用 cmake 提供的指定设置要链接的库
+#这段配置只能在 6.0 以下系统使用，原因和 android.mk 一样
 #add_library(Test SHARED IMPORTED)
 #set_target_properties(Test PROPERTIES IMPORTED_LOCATION [SO绝对地址])
 
 target_link_libraries(hello-jni Test)
 ```
 
-## 3 CMake基本配置与注意事项
+## 3 CMake 基本配置与注意事项
 
-在 android studio 2.2 及以上，构建原生库的默认工具是 CMake。CMake是一个跨平台的构建工具，可以用简单的语句来描述所有平台的安装(编译过程)。能够输出各种各样的 makefile 或者 project 文件。Cmake 并不直接建构出最终的软件，而是产生其他工具的脚本（如Makefile ），然后再依这个工具的构建方式使用。
+在 android studio 2.2 及以上，构建原生库的默认工具是 CMake。CMake 是一个跨平台的构建工具，可以用简单的语句来描述所有平台的安装(编译过程)。能够输出各种各样的 makefile 或者 project 文件。Cmake 并不直接建构出最终的软件，而是产生其他工具的脚本（如 Makefile ），然后再依这个工具的构建方式使用。
 
 ​CMake 是一个比 make 更高级的编译配置工具，它可以根据不同平台、不同的编译器，生成相应的 Makefile 或者 vcproj 项目。从而达到跨平台的目的。Android Studio 利用 CMake 生成的是 ninja，ninja 是一个小型的关注速度的构建系统。我们不需要关心 ninja 的脚本，知道怎么配置 cmake 就可以了。从而可以看出 cmake 其实是一个跨平台的支持产出各种不同的构建脚本的一个工具。
 
@@ -139,7 +139,7 @@ add_library (child STATIC ${DIR_LIB_SRCS})
 add_library (child SHARED ${DIR_LIB_SRCS})
 ```
 
-### 生产库文件
+### 生成库文件
 
 在上面的例子中都是生成可执行文件，而在到 android studio 中是使用 cmakelist 生成库文件，只需将 `add_executable` 改为 `add_library` 接口。
 
@@ -163,7 +163,7 @@ target_link_libraries(native-lib log)
 #使用 IMPORTED 标志告知 CMake 只希望将库导入到项目中
 
 #如果是静态库则将shared改为static
-add_library(imported-lib SHARED MPORTED )
+add_library(imported-lib SHARED IMPORTED )
 # 参数分别为：库、属性、导入地址、so所在地址
 set_target_properties(imported-lib PROPERTIES IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/src/${ANDROID_ABI}/libimported-lib.so)
 

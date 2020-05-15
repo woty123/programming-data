@@ -10,6 +10,7 @@ JNI 学习资料：
 - [IntelliJ IDEA平台下 JNI 编程](http://blog.csdn.net/huachao1001/article/details/53906237)
 
 ---
+
 ## 0 JNI 开发环境
 
 ### Java 命令
@@ -43,6 +44,7 @@ windows JNI开发需要工具：MinGW(64位)提供的 gcc 工具链。
 `-Wl,--add-stdcall-alias -I "$JDKPath$\include" -I "$JDKPath$\include\win32" -shared -o $FileDir$\$FileNameWithoutAllExtensions$.dll $FileDir$\$FileName$`
 
 ---
+
 ## 1 JNI 是什么
 
 JNI(Java Native Interface)是 SUN 定义的一套标准接口，如 Dalvik, Apache Harmony 项目等 Java 虚拟机，都会实现 JNI 接口，供本地(C/C++)应用与 Java VM 互调。 JNI 可以供 Java 代码调用本地代码，本地代码也可以调用 Java 代码。
@@ -61,7 +63,7 @@ JNI 是一套双向的接口，允许 Java 与本地代码间的互操作。而�
 
 一般我们将用 C/C++ 实现的部分代码说成`本地代码`
 
-![](images/jni.png)
+![jni](images/jni.png)
 
 ### 使用 JNI 前你应该考虑的因素
 
@@ -99,6 +101,7 @@ JNI 是一套双向的接口，允许 Java 与本地代码间的互操作。而�
 - JNI 1.1：所有 JNI 开发者面对的是操作 Java VM 的规范 API。
 
 ---
+
 ## 2 Java 调用本地代码
 
 Java 方法与本地方法编写规范
@@ -130,9 +133,9 @@ JNIEXPORT void JNICALL Java_ztiany_JNIMain_helloC(JNIEnv * env, jclass cls)
 4. 静态代码块中使用 `System.loadLibrary` 方法加载编译好的c库(不需要加后缀名)
 
 ---
+
 ## 3 Java 与 C 数据类型对应
 
----
 ### 3.1 基本类型与宏定义
 
 java调用c/c++需要注意不同数据类型的传递，以及在c中如何处理这些不同类型的数据并返回。
@@ -150,18 +153,18 @@ java调用c/c++需要注意不同数据类型的传递，以及在c中如何处�
 
 jvalue类型:
 
-```
-            typedef union jvalue {
-                jboolean    z;
-                jbyte       b;
-                jchar       c;
-                jshort      s;
-                jint        i;
-                jlong       j;
-                jfloat      f;
-                jdouble     d;
-                jobject     l;
-            } jvalue;
+```c
+typedef union jvalue {
+    jboolean    z;
+    jbyte       b;
+    jchar       c;
+    jshort      s;
+    jint        i;
+    jlong       j;
+    jfloat      f;
+    jdouble     d;
+    jobject     l;
+} jvalue;
 ```
 
 JNI 中常用的宏定义常量
@@ -173,12 +176,10 @@ JNI 中常用的宏定义常量
   - JNI_COMMIT 强制要求本地数组数据拷贝至JVM中对应的数组，
   - JNI_ABORT 释放本地数组占用的内存空间，并且不作为新返回数据拷贝至JVM中对应的数组。
 
----
 ### 3.2 不透明类型：opaque references
 
 相比基本类型，对象类型的传递要复杂很多。 Java层对象作为opaque references(指针)传递到JNI层。 Opaque references是一种C的指针类型，它指向JavaVM内部数据结构。使用这种指针的目的是：不希望JNI用户了解JavaVM内部数据结构。对Opaque reference所指结构的操作，都要通过JNI方法进行. 比如，"java.lang.String"对象，JNI层对应的类型为jstring，对该opaque reference的操作要通过JNIEnv->GetStringUTFChars进行。 一定要按这种原则编程，千万不要为了效率或容易的取到某个值，绕过JNI，直接操作opaque reference. JNI是一套完善接口，所有需求都能满足。
 
----
 ### 3.3 处理字符串类型
 
 jni 中 jstring 对应 Java 中的 String，在 jni 中不要直接使用 jstring，而应将其转换为字符数组再使用，例如下面操作是错误的：
@@ -239,7 +240,7 @@ jstring Java_Prompt_getLine(JNIEnv* env,jobject obj,jstring prompt){
 }
 ```
 
-上面代码中注意，记得检测 GetStringUTFChars 的返回值，因为调用该函数会有内存分配操作，失败后，该函数返回NULL，并抛 OutOfMemoryError 异常。GetStringUTFChars 函数返回一个指向描述字符串的**改良UTF-8**字符的指针，可以得到实际的Java字符串的字符指针，因为Java字符串是不可变的，所以不要试图将数据写入该字符数组，同时使用完后，应该调用 ReleaseStringUTFChars 释放内存（Unicode -> UTF-8转换的原因：jstring 转化时，必须先 decode 转化成 `mirror::String`，然后再转化成 utf-8 编码，这涉及到内存分配，所以使用完是需要释放的）。
+上面代码中注意，记得检测 GetStringUTFChars 的返回值，因为调用该函数会有内存分配操作，失败后，该函数返回NULL，并抛 OutOfMemoryError 异常。GetStringUTFChars 函数返回一个指向描述字符串的 **改良UTF-8** 字符的指针，可以得到实际的Java字符串的字符指针，因为Java字符串是不可变的，所以不要试图将数据写入该字符数组，同时使用完后，应该调用 ReleaseStringUTFChars 释放内存（Unicode -> UTF-8转换的原因：jstring 转化时，必须先 decode 转化成 `mirror::String`，然后再转化成 utf-8 编码，这涉及到内存分配，所以使用完是需要释放的）。
 
 #### isCopy 参数
 
@@ -273,7 +274,6 @@ jstring JNIEXPORT jstring JNICALLJava_Prompt_getLine(JNIEnv*env,jobject obj,jstr
 - 对于小尺寸字串的操作，首选`Get/SetStringRegion`和`Get/SetStringUTFRegion`，因为栈上空间分配，开销要小的多；而且没有内存分配，就不会有 `out-of-memory exception` 。
 - `GetStringCritical` 必须非常小心使用。你必须确保不分配新对象和任何阻塞系统的操作，以避免发生死锁。
 
----
 ### 3.4 访问数组元素
 
 #### JNI 数组类型
@@ -294,20 +294,20 @@ Java 中所有的数组类型都有相对应的 C 语言类型：
 
 继承关系：
 
-```
-    jobject
-       |---jclass                       java.lang.Class
-       |---jstring                      java.lang.String
-       |---jarray                       arrays
-               |---jobjectArray         Object[]
-               |---jbooleanArray        boolean[]
-               |---jbyteArray           byte[]
-               |---jcharArray           char[]
-               |---jshortArray          short[]
-               |---jintArray            int[]
-               |---jlongArray           long[]
-               |---jfloatArray          float[]
-               |---jdoubleArray         double[]
+```c
+jobject
+    |---jclass                       java.lang.Class
+    |---jstring                      java.lang.String
+    |---jarray                       arrays
+            |---jobjectArray         Object[]
+            |---jbooleanArray        boolean[]
+            |---jbyteArray           byte[]
+            |---jcharArray           char[]
+            |---jshortArray          short[]
+            |---jintArray            int[]
+            |---jlongArray           long[]
+            |---jfloatArray          float[]
+            |---jdoubleArray         double[]
 ```
 
 #### 通用方法
@@ -349,6 +349,7 @@ Java 1.2支持 `Get/ReleasePrimitiveArrayCritical`，该套函数的使用原则
 - `jlong GetDirectBufferCapacity(jobject buf)`
 
 ---
+
 ## 4 从本地代码调用 Java
 
 JNI 中针对静态和非静态成分分别定义不同的操作方法，所以在反射时类时，先区分是否是静态成分。另外 Java层的字段和方法，不管它是什么访问权限，从 JNI 都可以访问到，可以说 Java 面向语言的封装性在 JNI 层不见了。
@@ -381,16 +382,16 @@ Java 中的类型对于的描述符如下：
 示例：
 
 ```java
-            字段：
-            "Ljava/lang/String;" 对应 String
-            "[I" 对应 int[]
-            "[Ljava/lang/Object;" 对应 Object[]
+// 字段：
+"Ljava/lang/String;" 对应 String
+"[I" 对应 int[]
+"[Ljava/lang/Object;" 对应 Object[]
 
-            方法：
-            "()Ljava/lang/String;" 对应 String f();
-            "(ILjava/lang/Class;)J" 对应 long f(int i, Class c);
-            "([B)V" 对应 String(byte[] bytes);
-            "<init>" 构造方法的方法名
+// 方法：
+"()Ljava/lang/String;" 对应 String f();
+"(ILjava/lang/Class;)J" 对应 long f(int i, Class c);
+"([B)V" 对应 String(byte[] bytes);
+"<init>" 构造方法的方法名
 ```
 
 要特别注意的是：
