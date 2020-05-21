@@ -22,12 +22,20 @@ public:
 
     void _prepare();
 
+    void start();
+
+    void _start();
+
+    void setRenderFrameCallback(RenderFrameCallback renderFrameCallback);
+
 private:
-    char *dataSource;
-    AVFormatContext *avFormatContext;
-    JavaCallHelper *javaCallHelper;
-    AudioChannel * audioChannel;
-    VideoChannel *videoChannel;
+    char *dataSource = nullptr;
+    AVFormatContext *avFormatContext = nullptr;
+    JavaCallHelper *javaCallHelper = nullptr;
+    AudioChannel *audioChannel = nullptr;
+    VideoChannel *videoChannel = nullptr;
+    int isPlaying = 0;
+    RenderFrameCallback renderFrameCallback;
 };
 
 #endif //DNFFMPEGPLAYER_DNFFMPEG_H

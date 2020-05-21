@@ -26,4 +26,4 @@ private:
     jmethodID onPreparedId;
 };
 
-#endif //DNFFMPEGPLAYER_JAVACALLHELPER_H
+#endif

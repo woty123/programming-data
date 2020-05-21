@@ -26,6 +26,9 @@ set_target_properties(swresample PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SO
 add_library(swscale STATIC IMPORTED)
 set_target_properties(swscale PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/${FFmpegLibDir}/${ANDROID_ABI}/libswscale.a)
 
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__STDC_CONSTANT_MACROS")
+
 #链接库时，需要注意依赖顺序：avfilter avformat avcodec  avutil  swresample swscale
 #ffmepg 使用了libz，务必要加上
-target_link_libraries(native-lib avformat avcodec avfilter avutil swresample swscale log z)
+#native_window 需要 android.so
+target_link_libraries(native-lib avformat avcodec avfilter avutil swresample swscale log z android)

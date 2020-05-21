@@ -1,28 +1,37 @@
 package com.dongnao.player;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.SurfaceView;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+
 public class MainActivity extends AppCompatActivity {
 
-    private SurfaceView mSurfaceView;
     private DNPlayer mDNPlayer;
+    private SystemMediaSelector mSystemMediaSelector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        SurfaceView surfaceView = findViewById(R.id.surfaceView);
+
         mDNPlayer = new DNPlayer();
-        mSurfaceView = findViewById(R.id.surfaceView);
-        findViewById(R.id.btnStart).setOnClickListener(v -> {
-            prepare();
-        });
+        mDNPlayer.setSurfaceView(surfaceView);
+
+        mSystemMediaSelector = new SystemMediaSelector(path -> mDNPlayer.setDataSource(path), this);
+        findViewById(R.id.btnStart).setOnClickListener(v -> prepare());
+        findViewById(R.id.btnSelectFile).setOnClickListener(v -> mSystemMediaSelector.takeFile());
+
+        mDNPlayer.setOnPrepareListener(() -> AndroidSchedulers.mainThread().scheduleDirect(() -> {
+            mDNPlayer.start();
+        }));
     }
 
     private void prepare() {
-        mDNPlayer.setSurfaceView(mSurfaceView);
-        mDNPlayer.setDataSource("rtsp://211.139.194.251:554/live/2/13E6330A31193128/5iLd2iNl5nQ2s8r8.sdp");
         mDNPlayer.prepare();
     }
 
@@ -30,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mDNPlayer.destroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mSystemMediaSelector.onActivityResult(requestCode, resultCode, data);
     }
 
 }

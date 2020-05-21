@@ -5,9 +5,11 @@
 
 void *task_prepare(void *);
 
+void *task_play(void *);
+
 DNFFmpeg::DNFFmpeg(JavaCallHelper *javaCallHelper, const char *dataSource) {
     //防止 dataSource 指向的内存被释放。
-    this->dataSource = new char[strlen(dataSource)];
+    this->dataSource = new char[strlen(dataSource) + 1];//strlen 不读取字符串结束符 '0'
     this->javaCallHelper = javaCallHelper;
     //拷贝数据
     strcpy(this->dataSource, dataSource);
@@ -19,7 +21,7 @@ DNFFmpeg::~DNFFmpeg() {
 }
 
 void DNFFmpeg::prepare() {
-    //创建多线程
+    //创建线程
     pthread_t tid;
     pthread_create(&tid, nullptr, task_prepare, this);
 }
@@ -109,9 +111,9 @@ void DNFFmpeg::_prepare() {
 
         //针对音频和视频做不同的处理
         if (avCodecParameters->codec_type == AVMEDIA_TYPE_AUDIO/*音频*/) {
-            audioChannel = new AudioChannel;
+            audioChannel = new AudioChannel(i, avCodecContext);
         } else if (avCodecParameters->codec_type == AVMEDIA_TYPE_VIDEO/*视频，一般字幕都和视频和到一起了*/) {
-            videoChannel = new VideoChannel;
+            videoChannel = new VideoChannel(i, avCodecContext);
         }
     }
 
@@ -125,4 +127,52 @@ void DNFFmpeg::_prepare() {
         javaCallHelper->onPrepare(THREAD_CHILD);
     }
 
+}
+
+void DNFFmpeg::start() {
+    //标识位，开始工作
+    isPlaying = 1;
+    //准备好音频频道
+    if (audioChannel) {
+        audioChannel->play();
+    }
+    //准备好视频频道
+    if (videoChannel) {
+        videoChannel->setRenderFrameCallback(renderFrameCallback);
+        videoChannel->play();
+    }
+    //创建线程
+    pthread_t tid;
+    pthread_create(&tid, nullptr, task_play, this);
+}
+
+void *task_play(void *args) {
+    auto dnPlayer = static_cast<DNFFmpeg *>(args);
+    dnPlayer->_start();
+    /*线程函数一定要 return*/
+    return nullptr;
+}
+
+void DNFFmpeg::_start() {
+    //step1 读取音视频数据包
+    while (isPlaying) {
+        AVPacket *avPacket = av_packet_alloc();
+        int result = av_read_frame(avFormatContext, avPacket);//0 if OK, < 0 on error or end of file
+        if (result == 0) {
+            //stream_index 对应在 stream[] 中元素的索引。
+            if (audioChannel && avPacket->stream_index == audioChannel->id) {
+                audioChannel->packets.push(avPacket);
+            } else if (videoChannel && avPacket->stream_index == videoChannel->id) {
+                videoChannel->packets.push(avPacket);
+            }
+        } else if (result == AVERROR_EOF) { /*解码与播放是异步进行的，读取完成，不代表播放完成*/
+
+        } else {
+
+        }
+    }
+}
+
+void DNFFmpeg::setRenderFrameCallback(RenderFrameCallback renderFrameCallback) {
+    this->renderFrameCallback = renderFrameCallback;
 }

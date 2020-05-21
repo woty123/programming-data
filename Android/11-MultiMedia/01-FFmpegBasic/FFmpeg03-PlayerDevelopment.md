@@ -10,7 +10,7 @@
 
 为什么需要解封装和解码呢？这就涉及到媒体数据的编码与封装了，我们使用使用设备分别对画面和声音进行采集，一定的编码方式存储为保存起来，这就形成了最原始的数据，然后再次通过一定的数据结构把视频数据和音频数据进行整合就形成了我们常见的视频格式了，比如 MP4 等，当然这其中还包括数据压缩等过程，而我们播放视频，其实对就是封装和编码的逆向过程。
 
-## 2 FFmpeg 解码流程
+## 2 FFmpeg 解码流程与常用结构体
 
 FFmpeg 内部就提供了各种视频编解码算法，不仅如此，还可以将其他第三方算法集成到 FFmpeg 中，比如 x264、lamc、faac、fdkaac。通过代码的方式进行编解码称为软解码，其次有些设备支持硬解码（使用硬件进行解码），硬解码性能较好，Android 中也提供了 MediaCodec 用于编解码，但是其兼容性很不好，所以大部分厂商都会选择集成 FFmpeg 来进行视频应用开发。
 
@@ -32,6 +32,70 @@ FFmpeg 内部就提供了各种视频编解码算法，不仅如此，还可以�
 1. `av_register_all()` 用于注册所有组件。（4.0 及以上版本不再需要调用该函数）
 2. `avformat_open_input()`：打开输入视频文件或流，然后可以获取到视频的相关信息，比如视频的宽高、帧率等。
 3. `avformat_find_stream_info()`：获取视频文件信息。
+4. `avcodec_find_decoder()`：查找解码器。
+5. `avcodec_open2()`：打开解码器。
+6. `av_read_frame()`：从输入文件读取一帧压缩数据。
+   1. 获取不到包，则急速播放。
+   2. 获取到 AVPacket 则继续流程。
+7. `avcodec_decode_video2()`：解码一帧压缩数据，获取到 AVFrame（像素数据），展示到屏幕视，然后回到步骤 6，反复执行。
+
+### 常用结构体
+
+AVFormatContext：封装格式上下文结构体，全局结构体，保存了视频文件封装格式相关信息
+
+1. iformat：输入视频的 AVInputFormat
+2. nb_streams：输入视频的AVStream 个数。
+3. streams：输入视频的 `AVStream []` 数组。
+4. duration：输入视频的时长（以微秒为单位）。
+5. bit_rate：输入视频的码率。
+
+AVInputFormat：每种封装格式对应一个该结构体
+
+1. name：封装格式名称。
+2. long_name：封装格式的长名称。
+3. extensions：封装格式的扩展名。
+4. id：封装格式 ID。。
+5. 一些封装格式处理的接口函数
+
+AVStream：视频文件中每个视频（音频）流对应一个该结构体
+
+1. id：序号。
+2. codec：该流对应的AVCodecContext。
+3. time_base：该流的时基。
+4. avg_frame_rate：该流的帧率。
+
+AVCodecContext：编码器上下文结构体，保存了视频（音频）编解码相关信息
+
+1. codec：编解码器的 AVCodec。
+2. width, height：图像的宽高。
+3. pix_fmt：像素格式。
+4. sample_rate：音频采样率。
+5. channels：声道数。
+6. sample_fmt：音频采样格式。
+
+AVCodec：每种视频（音频）编解码器(例如H.264解码器)对应一个该结构体
+
+1. name：编解码器名称。
+2. long_name：编解码器长名称。
+3. type：编解码器类型。
+4. id：编解码器ID。
+5. 一些编解码的接口函数。
+
+AVPacket
+
+1. pts：显示时间戳。
+2. dts：解码时间戳。
+3. data：压缩编码数据。
+4. size：压缩编码数据大小。
+5. stream_index：所属的 AVStream。
+
+AVFrame
+
+1. data：解码后的图像像素数据（音频采样数据）。
+2. linesize：对视频来说是图像中一行像素的大小；对音频来说是整个音。
+3. width, height：图像的宽高。
+4. key_frame：是否为关键帧。
+5. pict_type：帧类型（只针对视频） 。例如 I，P，B。
 
 ## 3 音视频基础知识
 
@@ -135,7 +199,7 @@ YUV格式有两大类：(平面格式)planar和(打包格式)packed。
 > v1   v2    v3    v4
 ```
 
-而android摄像头一般默认为NV21(YUV420SP)
+Android 摄像头一般默认为 NV21(YUV420SP)
 
 ```log
 >y1   y2     y3    y4
@@ -150,3 +214,22 @@ YUV格式有两大类：(平面格式)planar和(打包格式)packed。
 >
 >u3   v3    u4    v4
 ```
+
+### H.264 `I, P，B` 帧和 `PTS`, `DTS`
+
+`I, P，B` 帧：
+
+- I frame：帧内编码帧，I 帧通常是每个 GOP（MPEG 所使用的一种视频压缩技术）的第一个帧，经过适度地压缩，做为随机访问的参考点，可以当成图象。I帧可以看成是一个图像经过压缩后的产物。I frame 自身可以通过视频解压算法解压成一张单独的完整的图片。
+- P frame: 前向预测编码帧，通过充分将低于图像序列中前面已编码帧的时间冗余信息来压缩传输数据量的编码图像，也叫预测帧。P frame 需要参考其前面的一个 I frame 或者 B frame 来生成一张完整的图片。
+- B frame: 双向预测内插编码帧，既考虑与源图像序列前面已编码帧，也顾及源图像序列后面已编码帧之间的时间冗余信息来压缩传输数据量的编码图像，也叫双向预测帧。B frame 要参考其前一个 I 或者 P 帧及其后面的一个 P 帧来生成一张完整的图片。
+
+`PTS`, `DTS`：
+
+1. PTS：Presentation Time Stamp。PTS 主要用于度量解码后的视频帧什么时候被显示出来。
+2. DTS：Decode Time Stamp。DTS主要是标识读入内存中的帧数据在什么时候开始送入解码器中进行解码。
+
+在没有 B 帧存在的情况下DTS 的顺序和 PTS 的顺序应该是一样的。DTS 主要用于视频的解码，在解码阶段使用。PTS 主要用于视频的同步和输出，在显示的时候使用。
+
+![dts与pts](images/dts与pts.jpg)
+
+如上图：I frame 的解码不依赖于任何的其它的帧，而 p frame 的解码则依赖于其前面的 I frame 或者 P frame，B frame 的解码则依赖于其前的最近的一个 I frame 或者 P frame 及其后的最近的一个 P frame.

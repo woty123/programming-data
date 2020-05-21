@@ -2,6 +2,7 @@ package com.dongnao.player;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -17,7 +18,36 @@ public class DNPlayer {
     }
 
     private String mDataSource;
-    private SurfaceView mSurfaceView;
+
+    private OnPrepareListener listener;
+
+    private SurfaceHolder mHolder;
+
+    private SurfaceHolder.Callback2 mCallback = new SurfaceHolder.Callback2() {
+
+        @Override
+        public void surfaceRedrawNeeded(SurfaceHolder holder) {
+            LogUtil.d("surfaceRedrawNeeded");
+        }
+
+        @Override
+        public void surfaceCreated(SurfaceHolder holder) {
+            LogUtil.d("surfaceCreated");
+            nativeSetSurface(holder.getSurface());
+        }
+
+        /** 画布发送变化时会回调该函数，比如横竖屏切换、应用会到后台。*/
+        @Override
+        public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+            LogUtil.d("surfaceChanged");
+            nativeSetSurface(holder.getSurface());
+        }
+
+        @Override
+        public void surfaceDestroyed(SurfaceHolder holder) {
+            LogUtil.d("surfaceDestroyed");
+        }
+    };
 
     /**
      * 设置视频源
@@ -38,30 +68,12 @@ public class DNPlayer {
      * 用于承载视频的 视图
      */
     public void setSurfaceView(@NonNull SurfaceView surfaceView) {
-        mSurfaceView = surfaceView;
-        SurfaceHolder holder = mSurfaceView.getHolder();
-        holder.addCallback(new SurfaceHolder.Callback2() {
-            @Override
-            public void surfaceRedrawNeeded(SurfaceHolder holder) {
+        mHolder = surfaceView.getHolder();
+        mHolder.addCallback(mCallback);
+    }
 
-            }
-
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-
-            }
-
-            /** 画布发送变化时会回调该函数，比如横竖屏切换、应用会到后台。*/
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-
-            }
-        });
+    public void setOnPrepareListener(OnPrepareListener listener) {
+        this.listener = listener;
     }
 
     /**
@@ -74,8 +86,13 @@ public class DNPlayer {
         }
     }
 
+    public void start() {
+        nativeStart();
+    }
+
     public void destroy() {
         nativeDestroy();
+        mHolder.removeCallback(mCallback);
     }
 
     /**
@@ -90,11 +107,17 @@ public class DNPlayer {
      */
     public void onNativePrepared() {
         LogUtil.d("DNPlayer onPrepared");
+        if (null != listener) {
+            listener.onPrepare();
+        }
     }
 
     private native void nativePrepare(String dataSource);
+
     private native void nativeDestroy();
 
+    private native void nativeStart();
 
+    private native void nativeSetSurface(Surface surface);
 
 }
