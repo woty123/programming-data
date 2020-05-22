@@ -11,17 +11,21 @@ class BaseChannel {
 
 public:
     BaseChannel(int id, AVCodecContext *codecContext) : id(id), avCodecContext(codecContext) {
-
+        packets.setReleaseCallback(releaseAVPacket);
+        frames.setReleaseCallback(releaseAVFrame);
     }
 
     virtual ~BaseChannel() {
-        packets.setReleaseCallback(releaseAVPacket);
         packets.clear();
+        frames.clear();
     }
 
     int id;
     AVCodecContext *avCodecContext = nullptr;
+    /**待解码数据包队列*/
     SafeQueue<AVPacket *> packets;
+    /**解码后的数据包队列*/
+    SafeQueue<AVFrame *> frames;
     bool isPlaying = false;
 
     virtual void play() = 0;
@@ -41,4 +45,4 @@ public:
     }
 };
 
-#endif //DNFFMPEGPLAYER_BASECHANNEL_H
+#endif

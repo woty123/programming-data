@@ -18,18 +18,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnSelectFile"
-        style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="选择"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etUrl"
-        tools:ignore="HardcodedText" />
-
-    <Button
         android:id="@+id/btnStart"
         style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
         android:layout_width="wrap_content"
@@ -38,16 +26,19 @@
         android:text="开始"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSelectFile"
+        app:layout_constraintTop_toBottomOf="@id/etUrl"
         tools:ignore="HardcodedText" />
 
-    <SurfaceView
-        android:id="@+id/surfaceView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="W,1:1"
+    <Button
+        android:id="@+id/btnSelectFile"
+        style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="选择"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnStart" />
+        app:layout_constraintTop_toBottomOf="@+id/btnStart"
+        tools:ignore="HardcodedText" />
 
 </android.support.constraint.ConstraintLayout>

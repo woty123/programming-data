@@ -808,4 +808,7 @@ build native-lib: phony ../../../../build/intermediates/cmake/debug/obj/armeabi-
 1. FFmpeg 4.2.2 版本默认使用了 clang 进行编译。在 `configure` 文件中查找 `cc_default` 会看到 `cc_default="clang"`。
 2. Android NDK，修订版 r18b 移除了 gcc，需要在 configure 时使用 `--cc --cxx --ld` 来分别指定 c/c++编译器和链接器。
 
-对此，如果想使用 NDK r18b 之前的 NDK 中的 gcc 进行编译，可以将 `configure` 文件钟的 `cc_default="clang"` 修改为 `cc_default="gcc"`。
+对此：
+
+1. 如果想使用 NDK r18b 之前的 gcc 进行编译，可以将 `configure` 文件中的 `cc_default="clang"` 修改为 `cc_default="gcc"`。
+2. 如果使用 clang 进行编译，需要指定使用 clang 作为交叉编译工具。

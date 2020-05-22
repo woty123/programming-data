@@ -29,6 +29,7 @@ set_target_properties(swscale PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURC
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__STDC_CONSTANT_MACROS")
 
 #链接库时，需要注意依赖顺序：avfilter avformat avcodec  avutil  swresample swscale
-#ffmepg 使用了libz，务必要加上
-#native_window 需要 android.so
-target_link_libraries(native-lib avformat avcodec avfilter avutil swresample swscale log z android)
+#libz：ffmepg 使用了 libz，务必要加上
+#android：native_window 需要 android.so
+#OpenSLES：用于播放音频
+target_link_libraries(native-lib avformat avcodec avfilter avutil swresample swscale log z android OpenSLES)

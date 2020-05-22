@@ -154,7 +154,7 @@ void *task_play(void *args) {
 }
 
 void DNFFmpeg::_start() {
-    //step1 读取音视频数据包
+    //读取音视频数据包
     while (isPlaying) {
         AVPacket *avPacket = av_packet_alloc();
         int result = av_read_frame(avFormatContext, avPacket);//0 if OK, < 0 on error or end of file
@@ -167,7 +167,7 @@ void DNFFmpeg::_start() {
             }
         } else if (result == AVERROR_EOF) { /*解码与播放是异步进行的，读取完成，不代表播放完成*/
 
-        } else {
+        } else {/*error*/
 
         }
     }

@@ -14,4 +14,3 @@
 - [Android大图裁剪](http://ryanhoo.github.io/blog/2014/06/03/the-ultimate-approach-to-crop-photos-on-android-2/)
 - [get-filename-and-path-from-uri-from-mediastore](https://stackoverflow.com/questions/3401579/get-filename-and-path-from-uri-from-mediastore)
 - [how-to-get-the-full-file-path-from-uri](https://stackoverflow.com/questions/13209494/how-to-get-the-full-file-path-from-uri)
-

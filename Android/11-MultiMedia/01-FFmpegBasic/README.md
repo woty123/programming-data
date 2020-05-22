@@ -3,7 +3,7 @@
 - [ffmpeg 官网](https://ffmpeg.org/)
 - [ffmpeg 官方 wiki](https://trac.ffmpeg.org/wiki)
 
-## 简介
+## 1 简介
 
 FFmpeg 既是一款音视频编解码工具，同时也是一组音视频编解码开发套件，作为编解码开发套件，它为开发者提供了丰富的音视频处理的调用接口。FFmpeg 提供了多种媒体格式的封装和解封装，包括多种音视频编码、多种协议的流媒体、多种色彩格式转换、多种采样率转换、多种码率转换等; FFmpeg 框架提供了多种丰富的插件模块，包含封装与解封转的插件、编码与解码的插件等。
 
@@ -22,20 +22,31 @@ FFmpeg 框架的基本组成包含 libavcodec 、libavformat、libavfilter、lib
 
 比较老的 ffmpeg 还会编译出 avresamle 模块，也是用于对音频原始出具进行重采样的，但是已经被废弃，推荐使用 libswresample 替代另外，库里还可以包含对 H.264/MPEG-4 AVC 视频编码的 X264 库，是最常用的有损视频编码器，支持 CBR、VBR 模式，可以在编码的过程中直接改变码率的设置，在直播的场景中非常适用，可以做码率自适应的功能。
 
-## 库
+FFmeng 还提供以下几个工具
+
+- ffmpeg-一个流媒体的编解码、格式转换以及多媒体流的内容处理工具
+- ffplay-一个使用FFmpeg编解码的播放器
+- ffprobe-一个多媒体分析工具
+- ffserver-一个流多媒体服务器
+
+## 2 相关资料
+
+### 库
 
 - [VideoCompression](https://github.com/RudreshJR/VideoCompression)，Android Library for VideoCompressionLibrary for VideoCompression
 - [RxFFmpeg](https://github.com/microshow/RxFFmpeg)
 
-## 项目
+### 项目
 
 - [WeiXinRecordedDemo](https://github.com/Zhaoss/WeiXinRecordedDemo)
 
-## 学习资料
+### 学习资料
 
+- [Android 音视频开发打怪升级-系列文章](https://github.com/ChenLittlePing/LearningVideo)
 - [Android 音视频开发学习思路](https://www.cnblogs.com/renhui/p/7452572.html)
 - [FFMPEG视音频编解码零基础学习方法](http://blog.csdn.net/leixiaohua1020/article/details/15811977)
-- [Android 音视频开发打怪升级-系列文章](https://github.com/ChenLittlePing/LearningVideo)
-- [](https://www.ihubin.com/archives/)
+- [基于FFmpeg+SDL的视频播放器的制作](http://blog.csdn.net/leixiaohua1020/article/details/47068015)
+- [音视频入门](https://www.ihubin.com/archives/)
 - [WliveTV](https://github.com/wanliyang1990/WliveTV) 付费视频教程
 - [FFmpeg音视频开发实战5 iOS/Android/windows/Linux](https://edu.csdn.net/course/detail/2314) 付费视频教程
+- [《《音视频开发进阶指南-基于Android/iOS平台的实践》》](http://www.music-video.cn/category/%e9%9f%b3%e8%a7%86%e9%a2%91%e6%9d%83%e5%a8%81%e6%8c%87%e5%8d%97-%e7%9b%ae%e5%bd%95/)

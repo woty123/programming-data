@@ -90,6 +90,10 @@ public class DNPlayer {
         nativeStart();
     }
 
+    public void stop() {
+
+    }
+
     public void destroy() {
         nativeDestroy();
         mHolder.removeCallback(mCallback);

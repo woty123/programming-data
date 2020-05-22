@@ -97,139 +97,29 @@ AVFrame
 4. key_frame：是否为关键帧。
 5. pict_type：帧类型（只针对视频） 。例如 I，P，B。
 
-## 3 音视频基础知识
+---
 
-### 3.1 视频压缩
+## 3 实现视频播放
 
-为什么需要压缩：
+---
 
-1. 未经压缩的数字视频的数据量巨大
-2. 存储困难
-3. 传输困难
+## 4 实现音频播放
 
-为什么可以压缩：
+RGB、YUV 是图像原始格式，而 PCM 是声音的原始格式。Android 播放 PCM 的方式有：
 
-1. 去除冗余信息
-2. 空间冗余：图像相邻像素之间有较强的相关性。
-3. 时间冗余：视频序列的相邻图像之间内容相似。
-4. 编码冗余：不同像素值出现的概率不同。
-5. 视觉冗余：人的视觉系统对某些细节不敏感。
-6. 知识冗余：规律性的结构可由先验知识和背景知识得到。
+1. Java SDK: AudioTrack - （AudioRecord录音pcm)
+2. NDK : OpenSL ES
 
-数据压缩分类：
+>OpenSL ES 是无授权费、跨平台、针对嵌入式系统精心优化的硬件音频加速API。该库都允许使用C或C ++来实现高性能，低延迟的音频操作。关于OpenSL ES的使用可以进入ndk-sample查看native-audio工程：<https://github.com/googlesamples/android-ndk/blob/master/native-audio/app/src/main/cpp/native-audio-jni.c>
 
-1. 无损压缩(Winzip)，特点是：压缩前解压缩后图像完全一致，特点是压缩比低。
-2. 有损压缩(H.264)，特点是：压缩前解压缩后图像不一致，压缩比高，利用人的视觉系统的特性(人眼能见的动画频率和图像细节有限制)。
+这里选择 penSL ES 实现音频播放。
 
-### 3.2 编码格式
+OpenSL ES的开发流程主要有如下7个步骤：
 
-视频编码格式：
-
-| 名称        | 推出机构       | 推出时间 | 目前使用领域 |
-| ----------- | -------------- | -------- | ------------ |
-| HEVC(H.265) | MPEG/ITU-T     | 2013     | 研发中       |
-| H.264       | MPEG/ITU-T     | 2003     | 各个领域     |
-| MPEG4       | MPEG           | 2001     | 不温不火     |
-| MPEG2       | MPEG           | 1994     | 数字电视     |
-| VP9         | Google         | 2013     | 研发中       |
-| VP8         | Google         | 2008     | 不普及       |
-| VC-1        | Microsoft Inc. | 2006     | 微软平台     |
-
-音频编码格式：
-
-| 名称   | 推出机构       | 推出时间 | 目前使用领域   |
-| ------ | -------------- | -------- | -------------- |
-| AAC    | MPEG           | 1997     | 各个领域（新） |
-| AC-3   | Dolby Inc.     | 1992     | 电影           |
-| MP3    | MPEG           | 1993     | 各个领域（旧） |
-| WMA    | Microsoft Inc. | 1999     | 微软平台       |
-
-### 3.3 封装格式
-
-| 名称   | 推出机构           | 流媒体 | 支持的视频编码                 | 支持的音频编码                        | 目前使用领域   |
-| ------ | ------------------ | ------ | ------------------------------ | ------------------------------------- | -------------- |
-| AVI    | Microsoft Inc.     | 不支持 | 几乎所有格式                   | 几乎所有格式                          | BT下载影视     |
-| MP4    | MPEG               | 支持   | MPEG-2, MPEG-4, H.264, H.263等 | AAC, MPEG-1 Layers I, II, III, AC-3等 | 互联网视频网站 |
-| TS     | MPEG               | 支持   | MPEG-1, MPEG-2, MPEG-4, H.264  | MPEG-1 Layers I, II, III, AAC,        | IPTV，数字电视 |
-| FLV    | Adobe Inc.         | 支持   | Sorenson, VP6, H.264           | MP3, ADPCM, Linear PCM, AAC等         | 互联网视频网站 |
-| MKV    | CoreCodec Inc.     | 支持   | 几乎所有格式                   | 几乎所有格式                          | 互联网视频网站 |
-| RMVB   | Real Networks Inc. | 支持   | RealVideo 8, 9, 10             | AAC, Cook Codec, RealAudio Lossless   | BT下载影视     |
-
-### 3.4 流媒体协议
-
-| 名称                  | 推出机构       | 传输层协议 | 客户端   | 目前使用领域    |
-| --------------------- | -------------- | ---------- | -------- | --------------- |
-| RTSP+RTP              | IETF           | TCP+UDP    | VLC, WMP | IPTV            |
-| RTMP                  | Adobe Inc.     | TCP        | Flash    | 互联网直播      |
-| RTMFP                 | Adobe Inc.     | UDP        | Flash    | 互联网直播      |
-| MMS                   | Microsoft Inc. | TCP/UDP    | WMP      | 互联网直播+点播 |
-| HTTP-FLV              | WWW+IETF       | TCP        | Flash    | 互联网直播      |
-| HLS(http live stream) | APPLE          | TCP/UDP    | Flash    | 互联网直播+点播 |
-
-### 3.5 YUV 简介
-
-YUV定义：分为三个分量，“Y”表示明亮度也就是灰度值，而“U”和“V” 表示的则是色度和饱和度，作用是描述影像色彩及饱和度，用于指定像素的颜色。
-
-YUV格式有两大类：(平面格式)planar和(打包格式)packed。
-
-1. planar：先存储Y，然后U，然后 V。
-2. packed：yuv交叉存储。
-
-还有我们常说的 YUV420sp 与 YUV420p。
-
-1. YUV420sp：一种 two-plane 模式，即 Y 和 UV 分为两个平面，U、V交错排列。
-2. YUV420p：先把 U 存放完后，再存放 V。UV 是连续的。
-3. YUV420 的数据大小为： `亮度(行×列) ＋ V(行×列/4) + U(行×列/4)`即：`W\*H\*3/2`
-
-普遍的编码器都以接受 planar 的 I420 数据(YUV420P)
-
-4*4 的 I420 数据排列如下:
-
-```log
-> y1   y2     y3    y4
->
-> y5   y6     y7    y8  
->
-> y9   y10   y11  y12
->
-> y13 y14   y15  y16
->
-> u1   u2    u3   u4
->
-> v1   v2    v3    v4
-```
-
-Android 摄像头一般默认为 NV21(YUV420SP)
-
-```log
->y1   y2     y3    y4
->
->y5   y6     y7    y8  
->
->y9   y10   y11  y12
->
->y13 y14   y15  y16
->
->u1   v1    u2     v2
->
->u3   v3    u4    v4
-```
-
-### H.264 `I, P，B` 帧和 `PTS`, `DTS`
-
-`I, P，B` 帧：
-
-- I frame：帧内编码帧，I 帧通常是每个 GOP（MPEG 所使用的一种视频压缩技术）的第一个帧，经过适度地压缩，做为随机访问的参考点，可以当成图象。I帧可以看成是一个图像经过压缩后的产物。I frame 自身可以通过视频解压算法解压成一张单独的完整的图片。
-- P frame: 前向预测编码帧，通过充分将低于图像序列中前面已编码帧的时间冗余信息来压缩传输数据量的编码图像，也叫预测帧。P frame 需要参考其前面的一个 I frame 或者 B frame 来生成一张完整的图片。
-- B frame: 双向预测内插编码帧，既考虑与源图像序列前面已编码帧，也顾及源图像序列后面已编码帧之间的时间冗余信息来压缩传输数据量的编码图像，也叫双向预测帧。B frame 要参考其前一个 I 或者 P 帧及其后面的一个 P 帧来生成一张完整的图片。
-
-`PTS`, `DTS`：
-
-1. PTS：Presentation Time Stamp。PTS 主要用于度量解码后的视频帧什么时候被显示出来。
-2. DTS：Decode Time Stamp。DTS主要是标识读入内存中的帧数据在什么时候开始送入解码器中进行解码。
-
-在没有 B 帧存在的情况下DTS 的顺序和 PTS 的顺序应该是一样的。DTS 主要用于视频的解码，在解码阶段使用。PTS 主要用于视频的同步和输出，在显示的时候使用。
-
-![dts与pts](images/dts与pts.jpg)
-
-如上图：I frame 的解码不依赖于任何的其它的帧，而 p frame 的解码则依赖于其前面的 I frame 或者 P frame，B frame 的解码则依赖于其前的最近的一个 I frame 或者 P frame 及其后的最近的一个 P frame.
+1. 创建接口对象
+2. 设置混音器
+3. 创建播放器
+4. 设置播放回调函数
+5. 设置播放状态
+6. 启动回调函数
+7. 释放

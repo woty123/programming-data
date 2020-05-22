@@ -28,7 +28,7 @@ public:
     void play();
 
     /**解码*/
-    void decodePacket();
+    void decodeVideoPacket();
 
     /**播放*/
     void renderFrame();
@@ -40,7 +40,6 @@ private:
     pthread_t pid_decode = 0;
     pthread_t pid_render = 0;
     RenderFrameCallback renderFrameCallback = nullptr;
-    SafeQueue<AVFrame *> frames;
     SwsContext *swsContext;
 };
 

@@ -9,14 +9,12 @@ VideoChannel::VideoChannel(
         int videoId,
         AVCodecContext *avCodecContext
 ) : BaseChannel(videoId, avCodecContext) {
-    frames.setReleaseCallback(releaseAVFrame);
 }
 
 VideoChannel::~VideoChannel() {
-    frames.clear();
 }
 
-void *decode_task(void *args);
+void *decode_video_task(void *args);
 
 void *render_task(void *args);
 
@@ -30,16 +28,16 @@ void VideoChannel::play() {
     frames.setWork(1);
     //开启线程，防止阻塞读流线程。
     //解码
-    pthread_create(&pid_decode, nullptr, decode_task, this);
+    pthread_create(&pid_decode, nullptr, decode_video_task, this);
     //播放
     pthread_create(&pid_render, nullptr, render_task, this);
     LOGD("VideoChannel::play completed");
 }
 
 /**解码任务*/
-void *decode_task(void *args) {
+void *decode_video_task(void *args) {
     auto videoChannel = static_cast<VideoChannel *>(args);
-    videoChannel->decodePacket();
+    videoChannel->decodeVideoPacket();
     return nullptr;
 }
 
@@ -51,7 +49,7 @@ void *render_task(void *args) {
 }
 
 /**子线程解码 Packet*/
-void VideoChannel::decodePacket() {
+void VideoChannel::decodeVideoPacket() {
     LOGD("VideoChannel start to decode packet");
     AVPacket *avPacket;
 
@@ -95,7 +93,7 @@ void VideoChannel::decodePacket() {
 
     //对应 isPlaying 判断时，如果 break，会直接到这里，也需要释放一次。
     releaseAVPacket(&avPacket);
-    LOGD("VideoChannel decoding packet end up");
+    LOGD("VideoChannel decoding packet ends up");
 }
 
 /**子线程：渲染视频*/
