@@ -1,6 +1,5 @@
 # 播放器与推流
 
----
 ## 1 第三方SDK
 
 - [Aliyun短视频服务](https://promotion.aliyun.com/ntms/act/shortvideo.html?spm=5176.8810273.766245.1.awEf6j)
@@ -8,13 +7,11 @@
 - [Vitamio VCamera SDK](https://www.vitamio.org/)
 - [七牛短视频服务](https://www.qiniu.com/)
 
----
 ## 2 音频
 
 - [RxAndroidAudio](https://github.com/Piasy/RxAndroidAudio)这可能是目前最鲁棒的Android声音录制和播放封装库了
 - [android-openslmediaplayer](https://github.com/h6ah4i/android-openslmediaplayer)
 
----
 ## 3 视频
 
 - [Google-ExoPlayer](https://github.com/google/ExoPlayer)：ExoPlayer是Android的应用级媒体播放器。它提供了Android的MediaPlayer API的替代品，可以在本地和互联网上播放音频和视频。
@@ -63,7 +60,6 @@
 
 - [Android视频直播、点播播放器哪家强？](https://juejin.im/post/5a1d8f10f265da431523a849)
 
----
 ## 4 直播
 
 - [android音视频点/直播模块开发](http://www.jianshu.com/p/8436c7353296?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io)

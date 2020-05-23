@@ -95,4 +95,4 @@ xml里面都是各种字符，不利于快速遍历。编译成二进制文件�
 ---
 ## 引用
 
-[Android打包流程](https://mp.weixin.qq.com/s?__biz=MjM5NDkxMTgyNw==&mid=2653059035&idx=1&sn=50773de47cfbbf54a4521e141b93125d&chksm=bd5654e78a21ddf11dfde7366de2722a2945d0003d3b413b221c89fc07fd66abd0def480ff5e&mpshare=1&scene=1&srcid=0802VY4KGr2wHrS30pBI1Kme#rd)
+- [Android打包流程](https://mp.weixin.qq.com/s?__biz=MjM5NDkxMTgyNw==&mid=2653059035&idx=1&sn=50773de47cfbbf54a4521e141b93125d&chksm=bd5654e78a21ddf11dfde7366de2722a2945d0003d3b413b221c89fc07fd66abd0def480ff5e&mpshare=1&scene=1&srcid=0802VY4KGr2wHrS30pBI1Kme#rd)

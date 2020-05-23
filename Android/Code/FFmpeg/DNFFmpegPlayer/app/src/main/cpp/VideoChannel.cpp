@@ -1,18 +1,58 @@
 #include "VideoChannel.h"
 #include "macro.h"
+#include <queue>
 
 extern "C" {
 #include <libavutil/imgutils.h>
+#include <libavutil/time.h>
 }
+
+void dropAvFrame(queue<AVFrame *> &queue);
+
+void dropAvPacket(queue<AVPacket *> &queue);
 
 VideoChannel::VideoChannel(
         int videoId,
-        AVCodecContext *avCodecContext
-) : BaseChannel(videoId, avCodecContext) {
+        AVCodecContext *avCodecContext,
+        int fps,
+        AVRational timeBase
+) : fps(fps), BaseChannel(videoId, avCodecContext, timeBase) {
+    frames.setSyncHandle(dropAvFrame);
+    packets.setSyncHandle(dropAvPacket);
 }
 
 VideoChannel::~VideoChannel() {
+
 }
+
+/**
+ * 丢包 直到下一个关键帧（这里实现的同步方案为丢帧，这个翰生只是一个参考）
+ */
+void dropAvPacket(queue<AVPacket *> &q) {
+    while (!q.empty()) {
+        AVPacket *packet = q.front();
+        //如果不属于 I 帧
+        if (packet->flags != AV_PKT_FLAG_KEY) {
+            BaseChannel::releaseAVPacket(&packet);
+            q.pop();
+        } else {
+            break;
+        }
+    }
+}
+
+/**
+ * 丢帧，帧已经解析出来了，不需要关心是什么类型的帧。
+ */
+void dropAvFrame(queue<AVFrame *> &q) {
+    if (!q.empty()) {
+        AVFrame *frame = q.front();
+        LOGE("视频太慢，丢掉一个帧");
+        BaseChannel::releaseAVFrame(&frame);
+        q.pop();
+    }
+}
+
 
 void *decode_video_task(void *args);
 
@@ -99,6 +139,7 @@ void VideoChannel::decodeVideoPacket() {
 /**子线程：渲染视频*/
 void VideoChannel::renderFrame() {
     LOGD("VideoChannel start to render frame");
+
     //tips：下面两个方法这么多参数不懂怎么办？看 doc 中提供的示例。
 
     //颜色空间转换：原始数据 YUV420  --> RGBA
@@ -120,6 +161,9 @@ void VideoChannel::renderFrame() {
     //初始化一个图像
     av_image_alloc(dst_data, dst_linesize, avCodecContext->width, avCodecContext->height, AV_PIX_FMT_RGBA, 1);
 
+    //每一帧要展示的时间（单位秒）
+    double frameDelays = 1.0 / fps;
+
     while (isPlaying) {
         int ret = frames.pop(avFrame);
         if (!isPlaying) {
@@ -139,9 +183,49 @@ void VideoChannel::renderFrame() {
                 dst_linesize//（出参）目标数据容器每一行存放的字节长度
         );
 
+#if 1//音视频同步逻辑 start
+        //获得当前这一个画面播放的相对的时间，视频流使用best_effort_timestamp进行计算
+        clock = avFrame->best_effort_timestamp * av_q2d(timeBase);
+        //额外的间隔时间（由FFmpeg提供 "extra_delay = repeat_pict / (2*fps)"）
+        double extraDelay = avFrame->repeat_pict / (2.0 * fps);
+        // 真实需要的间隔时间
+        double delays = extraDelay + frameDelays;
+
+        if (audioChannel) {
+            if (clock == 0/*第一帧展示时为 0*/) {
+                LOGE("音视频同步良好");
+                //保证每一帧展示足够的时间。
+                av_usleep(delays * 1000000);
+            } else {
+                double diff = clock - audioChannel->clock;
+                //大于0表示视频比较快，小于0则表示音频比较快。
+                if (diff > 0) {
+                    //大于0 表示视频比较快
+                    LOGE("视频快了：%lf", diff);
+                    av_usleep((delays + diff) * 1000000);
+                } else if(diff<0){
+                    //小于0 表示音频比较快
+                    LOGE("音频快了：%lf",diff);
+                    //视频包积压的太多了 （丢掉一些视频包，不能丢I帧，只能丢B帧和P帧）
+                    if (fabs(diff) >= 0.05/*0.05是一个阈值，超过这个值就需要修正*/) {
+                        releaseAVFrame(&avFrame);
+                        //丢包
+                        frames.sync();
+                        continue;
+                    }else{
+                        //不睡了 快点赶上 音频
+                    }
+                }
+            }
+        } else {
+            av_usleep(delays * 1000000);
+        }
+#endif//音视频同步逻辑 end
+
         if (renderFrameCallback) {
             renderFrameCallback(dst_data[0], dst_linesize[0], avCodecContext->width, avCodecContext->height);
         }
+
         releaseAVFrame(&avFrame);
     }
     av_freep(&dst_data[0]);
@@ -152,4 +236,8 @@ void VideoChannel::renderFrame() {
 
 void VideoChannel::setRenderFrameCallback(RenderFrameCallback renderFrameCallback) {
     this->renderFrameCallback = renderFrameCallback;
+}
+
+void VideoChannel::setAudioChannel(AudioChannel *audioChannel) {
+    this->audioChannel = audioChannel;
 }

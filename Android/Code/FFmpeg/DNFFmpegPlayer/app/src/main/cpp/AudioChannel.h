@@ -12,7 +12,7 @@ extern "C" {
 
 class AudioChannel : public BaseChannel {
 public:
-    AudioChannel(int audioId, AVCodecContext *avCodecContext);
+    AudioChannel(int audioId, AVCodecContext *avCodecContext, AVRational timeBase);
 
     ~AudioChannel();
 
@@ -28,10 +28,11 @@ public:
     uint8_t *data = 0;
     /**声道数*/
     int out_channels;
-    /**采样位，比如16位就是两个字节*/
+    /**采样位(字节为单位)，比如16位就是两个字节*/
     int out_samplesize;
     /**采样率*/
     int out_sample_rate;
+
 private:
     pthread_t pid_decode = 0;
     pthread_t pid_sound = 0;
@@ -51,7 +52,7 @@ private:
 
     SLAndroidSimpleBufferQueueItf bqPlayerBufferQueueInterface = 0;
 
-    /**ffmepg 重采样*/
+    /**FFmpeg 重采样*/
     SwrContext *swrContext = nullptr;
 };
 

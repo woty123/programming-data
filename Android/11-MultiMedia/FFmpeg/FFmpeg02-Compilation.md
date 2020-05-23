@@ -8,7 +8,7 @@
 
 - [FFmpeg官方编译指引](https://trac.ffmpeg.org/wiki/CompilationGuide)，务必要先读一遍官方指南。
 - [编译FFmpeg4.1.3并移植到Android app中使用（最详细的FFmpeg-Android编译教程）](https://blog.csdn.net/bobcat_kay/article/details/80889398?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1)
-- [音视频学习 (六) 一键编译 32/64 位 FFmpeg 4.2.2](https://github.com/yangkun19921001/Blog/blob/master/NDK/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%AD%A6%E4%B9%A0%20(%E5%85%AD)%20FFmpeg4.2.2%20%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%8A%A8%E6%80%81%E9%9D%99%E6%80%81%E5%BA%93.md)
+- [一键编译 32/64 位 FFmpeg 4.2.2](https://github.com/yangkun19921001/Blog/blob/master/NDK/%E9%9F%B3%E8%A7%86%E9%A2%91%E5%AD%A6%E4%B9%A0%20(%E5%85%AD)%20FFmpeg4.2.2%20%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%8A%A8%E6%80%81%E9%9D%99%E6%80%81%E5%BA%93.md)
 
 已经编译好的项目：
 

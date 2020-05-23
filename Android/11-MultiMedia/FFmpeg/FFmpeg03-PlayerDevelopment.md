@@ -101,25 +101,36 @@ AVFrame
 
 ## 3 实现视频播放
 
+略
+
 ---
 
 ## 4 实现音频播放
 
 RGB、YUV 是图像原始格式，而 PCM 是声音的原始格式。Android 播放 PCM 的方式有：
 
-1. Java SDK: AudioTrack - （AudioRecord录音pcm)
+1. Java SDK: AudioTrack
 2. NDK : OpenSL ES
 
->OpenSL ES 是无授权费、跨平台、针对嵌入式系统精心优化的硬件音频加速API。该库都允许使用C或C ++来实现高性能，低延迟的音频操作。关于OpenSL ES的使用可以进入ndk-sample查看native-audio工程：<https://github.com/googlesamples/android-ndk/blob/master/native-audio/app/src/main/cpp/native-audio-jni.c>
+>OpenSL ES 是无授权费、跨平台、针对嵌入式系统精心优化的硬件音频加速API。该库都允许使用C或C ++来实现高性能，低延迟的音频操作。关于 OpenSL ES 的使用可以进入ndk-sample查看native-audio工程：<https://github.com/googlesamples/android-ndk/blob/master/native-audio/app/src/main/cpp/native-audio-jni.c>
 
-这里选择 penSL ES 实现音频播放。
+## 5 音视频同步
 
-OpenSL ES的开发流程主要有如下7个步骤：
+使用 FFmpeg 播放音频时遇到的问题：
 
-1. 创建接口对象
-2. 设置混音器
-3. 创建播放器
-4. 设置播放回调函数
-5. 设置播放状态
-6. 启动回调函数
-7. 释放
+1. 视频的卡顿：比如一个视频帧率为 60 FPS，那么每一帧就应该展示 16ms，但我们没有对这个展示时间进行控制，从而导致一帧的展示时间不够，而后面的一帧还么有解析完成，就会造成卡顿。
+2. 音视频不同步。
+
+### 解决视频的卡顿
+
+让每一帧显现足够的时间。
+
+### 音视频同步的三种方式
+
+1. 将视频根据音频同步（以音频为主）
+2. 以视频为主
+3. 以一个外部时间进度为主
+
+音视频不可能完全同步，而是一个动态地修正过程，可以理解为这是一个你追我赶的过程。一般我会选择 `将视频根据音频同步（以音频为主）`的方式，因为这种方式相对比较简单。
+
+使用 PTS：Presentation Time Stamp。PTS 主要用于度量解码后的视频/音频什么时候被显示和播放出来。

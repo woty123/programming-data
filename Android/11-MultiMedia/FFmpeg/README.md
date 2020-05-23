@@ -39,14 +39,28 @@ FFmeng 还提供以下几个工具
 ### 项目
 
 - [WeiXinRecordedDemo](https://github.com/Zhaoss/WeiXinRecordedDemo)
+- [FFmpegAndroid](https://github.com/xufuji456/FFmpegAndroid)
 
 ### 学习资料
 
+- [音视频入门](https://www.ihubin.com/archives/)
 - [Android 音视频开发打怪升级-系列文章](https://github.com/ChenLittlePing/LearningVideo)
 - [Android 音视频开发学习思路](https://www.cnblogs.com/renhui/p/7452572.html)
 - [FFMPEG视音频编解码零基础学习方法](http://blog.csdn.net/leixiaohua1020/article/details/15811977)
 - [基于FFmpeg+SDL的视频播放器的制作](http://blog.csdn.net/leixiaohua1020/article/details/47068015)
-- [音视频入门](https://www.ihubin.com/archives/)
-- [WliveTV](https://github.com/wanliyang1990/WliveTV) 付费视频教程
-- [FFmpeg音视频开发实战5 iOS/Android/windows/Linux](https://edu.csdn.net/course/detail/2314) 付费视频教程
+
+Video（付费视频教程）：
+
+- [WliveTV](https://github.com/wanliyang1990/WliveTV)
+- [FFmpeg音视频开发实战 5 iOS/Android/windows/Linux](https://edu.csdn.net/course/detail/2314)
+
+慕课网视频方向课程：
+
+1. [编程必备基础-音视频小白系统入门课](https://coding.imooc.com/class/415.html)
+2. [FFmpeg音视频核心技术精讲与实战](https://coding.imooc.com/class/chapter/279.html)
+3. [WebRTC实时互动直播技术入门与实战 5G时代必备技能](https://coding.imooc.com/class/chapter/329.html)
+4. [5G时代必备 音视频WebRTC实时互动直播技术入门与实战](https://coding.imooc.com/class/329.html)
+
+Book：
+
 - [《《音视频开发进阶指南-基于Android/iOS平台的实践》》](http://www.music-video.cn/category/%e9%9f%b3%e8%a7%86%e9%a2%91%e6%9d%83%e5%a8%81%e6%8c%87%e5%8d%97-%e7%9b%ae%e5%bd%95/)

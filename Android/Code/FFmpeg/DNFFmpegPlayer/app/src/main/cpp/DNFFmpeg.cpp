@@ -109,11 +109,18 @@ void DNFFmpeg::_prepare() {
             return;
         }
 
+        //PTS 单位
+        AVRational &timeBase = stream->time_base;
+
         //针对音频和视频做不同的处理
         if (avCodecParameters->codec_type == AVMEDIA_TYPE_AUDIO/*音频*/) {
-            audioChannel = new AudioChannel(i, avCodecContext);
+            audioChannel = new AudioChannel(i, avCodecContext, timeBase);
         } else if (avCodecParameters->codec_type == AVMEDIA_TYPE_VIDEO/*视频，一般字幕都和视频和到一起了*/) {
-            videoChannel = new VideoChannel(i, avCodecContext);
+            //获取帧率，确定每一帧要展示多久。
+            AVRational avRational = stream->avg_frame_rate;
+            int fps = (int) av_q2d(avRational);
+            //视频流处理通道
+            videoChannel = new VideoChannel(i, avCodecContext, fps, timeBase);
         }
     }
 
@@ -138,6 +145,7 @@ void DNFFmpeg::start() {
     }
     //准备好视频频道
     if (videoChannel) {
+        videoChannel->setAudioChannel(audioChannel);
         videoChannel->setRenderFrameCallback(renderFrameCallback);
         videoChannel->play();
     }

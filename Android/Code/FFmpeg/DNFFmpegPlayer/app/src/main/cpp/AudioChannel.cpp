@@ -3,9 +3,9 @@
 
 AudioChannel::AudioChannel(
         int audioId,
-        AVCodecContext *avCodecContext
-) : BaseChannel(audioId, avCodecContext) {
-
+        AVCodecContext *avCodecContext,
+        AVRational timeBase
+) : BaseChannel(audioId, avCodecContext, timeBase) {
     /*下面初始化冲采用需要用到的数据*/
     out_channels = av_get_channel_layout_nb_channels(AV_CH_LAYOUT_STEREO);
     out_samplesize = av_get_bytes_per_sample(AV_SAMPLE_FMT_S16);
@@ -35,16 +35,21 @@ void AudioChannel::play() {
     //存帧的
     frames.setWork(1);
 
-    //初始化重采样上下文
+    //初始化 FFmpeg 重采样上下文
     //0+输出声道+输出采样位+输出采样率+  输入的3个参数
     swrContext = swr_alloc_set_opts(
-            0,
-            AV_CH_LAYOUT_STEREO,
-            AV_SAMPLE_FMT_S16,
-            out_sample_rate,
-            avCodecContext->channel_layout,
-            avCodecContext->sample_fmt,
-            avCodecContext->sample_rate, 0, 0);
+            nullptr,//existing Swr context if available, or NULL if not
+
+            AV_CH_LAYOUT_STEREO,//目标通过：左右双声道
+            AV_SAMPLE_FMT_S16,//目标采样位：16 位
+            out_sample_rate,//目标采样率：44100
+
+            avCodecContext->channel_layout,//原声音通道
+            avCodecContext->sample_fmt,//源声音采样格式
+            avCodecContext->sample_rate,//源声音采样率
+            0,//日志参数
+            nullptr//日志参数
+    );
     //初始化
     swr_init(swrContext);
 
@@ -116,6 +121,7 @@ void AudioChannel::decodeAudioPacket() {
 void bqPlayerCallback(SLAndroidSimpleBufferQueueItf bq, void *context);
 
 /*
+ * 很复杂，参考：
  * https://github.com/android/ndk-samples/blob/master/native-audio/app/src/main/cpp/native-audio-jni.c
  * https://www.jianshu.com/p/e94652ee371c
  */
@@ -252,8 +258,12 @@ int AudioChannel::getPcm() {
             (const uint8_t **) avFrame->data,
             avFrame->nb_samples
     );
-    //获得   samples 个   * 2 声道 * 2字节（16位）
+    //samples 个   * 2 声道 * 2字节（16位） = 总的数据量大小
     dataSize = samples * out_samplesize * out_channels;
+
+    //（用于时间同步，提供给 VideoChannel 做时间同步，音频流使用 fps 进行计算）获取 frame 的一个相对播放时间 （相对于开始播放的时间），获得相对播放这一段数据的秒数。
+    clock = avFrame->pts * av_q2d(timeBase);
+
     return dataSize;
 }
 

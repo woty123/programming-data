@@ -2,6 +2,7 @@
 #define DNFFMPEGPLAYER_VIDEOCHANNEL_H
 
 #include "BaseChannel.h"
+#include "AudioChannel.h"
 
 extern "C" {
 #include <libswscale/swscale.h>
@@ -20,7 +21,7 @@ typedef void (*RenderFrameCallback)(uint8_t *, int, int, int);
 class VideoChannel : public BaseChannel {
 
 public:
-    VideoChannel(int videoId, AVCodecContext *avCodecContext);
+    VideoChannel(int videoId, AVCodecContext *avCodecContext, int fps, AVRational timeBase);
 
     ~VideoChannel();
 
@@ -36,11 +37,15 @@ public:
     /**设置回调，用于获取解码后的数据*/
     void setRenderFrameCallback(RenderFrameCallback renderFrameCallback);
 
+    void setAudioChannel(AudioChannel *audioChannel);
+
 private:
     pthread_t pid_decode = 0;
     pthread_t pid_render = 0;
     RenderFrameCallback renderFrameCallback = nullptr;
-    SwsContext *swsContext;
+    SwsContext *swsContext = nullptr;
+    int fps;
+    AudioChannel *audioChannel = nullptr;
 };
 
 #endif
