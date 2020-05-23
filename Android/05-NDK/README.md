@@ -15,22 +15,16 @@
 - [NDK 版本修订记录](https://developer.android.com/ndk/downloads/revision_history)
 - [向您的项目添加 C 和 C++ 代码](https://developer.android.com/studio/projects/add-native-code.html)
 
-### 教程
+### NDK 入门教程
 
 - [JNI/NDK开发指南](https://blog.csdn.net/xyang81/column/info/blogjnindk)
-- [音视频学习 (四) 交叉编译动态库、静态库的入门学习](https://juejin.im/post/5e1ad6806fb9a02ff076e103)
+- [Android NDK——必知必会](https://blog.csdn.net/CrazyMo_/article/details/82345001)
+- [Android NDK 从入门到精通](https://blog.csdn.net/afei__/article/details/81290711)
 
 比较老的教程：
 
 - [Mastering Android NDK Build System - Part 1: Techniques with ndk-build](http://web.guohuiwang.com/technical-notes/androidndk1)
 - [Mastering Android NDK Build System - Part 2: Standalone toolchain](http://web.guohuiwang.com/technical-notes/androidndk2)
-
-菜鸟窝（付费）：
-
-- [Android 音视频高级开发工程师-菜鸟窝](https://www.cniao5.com/class/android/ysp)
-- [JNI与NDK全面剖析与实战-菜鸟窝](https://www.cniao5.com/course/10284)
-- [0基础进阶NDK实战体系化专题-菜鸟窝](https://www.cniao5.com/course/10296#tab_1)
-- NDK 进阶相关课程汇总：[Awesome-Android-NDK](https://github.com/JsonChao/Awesome-Android-NDK)
 
 ### 示例代码
 
@@ -42,8 +36,20 @@
 
 ### 库
 
+- [xHook](https://github.com/iqiyi/xHook/blob/master/README.zh-CN.md)：xHook 是一个针对 Android 平台 ELF (可执行文件和动态库) 的 PLT (Procedure Linkage Table) hook 库。
+- [JNA](https://github.com/java-native-access/jna)：可以帮助 Java 方便快速的访问 native 层代码。
 - [NDK Maping](http://cdn2.jianshu.io/p/bdce346aef85)
-- [JNA](https://github.com/java-native-access/jna) 可以帮助 Java 方便快速的访问 native 层代码。
+
+### 高级教程
+
+菜鸟窝（付费）：
+
+- [Android 音视频高级开发工程师-菜鸟窝](https://www.cniao5.com/class/android/ysp)
+- [JNI与NDK全面剖析与实战-菜鸟窝](https://www.cniao5.com/course/10284)
+
+### NDK应用
+
+- [OpenCV教程](http://c.biancheng.net/opencv/)
 
 ## 2 学习路径
 
