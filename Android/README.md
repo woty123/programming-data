@@ -110,29 +110,7 @@
 
 优化学习资料：
 
-- [优化相关](09-Optimization/README.md)
-
-优化相关笔记：
-
-- [相关资料](09-Optimization/README.md)
-- [01-《Android开发-从小工到专家》-性能优化.md](09-Optimization/01-Optimization/01-《Android开发-从小工到专家》-性能优化.md)
-- [03-Bitmap 优化](09-Optimization/01-Optimization/03-Bitmap.md)
-- [06-Memory 优化](09-Optimization/01-Optimization/06-Memory.md)
-
-[国内Top团队大牛带你玩转Android性能分析与优化](https://coding.imooc.com/class/308.html) 笔记：
-
-- [相关资料](09-Optimization/02-Android性能分析与优化/README.md)
-- [01-App性能概览与平台化实践](09-Optimization/02-Android性能分析与优化/01-App性能概览与平台化实践.md)
-- [02-App启动优化](09-Optimization/02-Android性能分析与优化/02-App启动优化.md)
-- [03-App内存优化](09-Optimization/02-Android性能分析与优化/03-App内存优化.md)
-- [04-App布局优化](09-Optimization/02-Android性能分析与优化/04-App布局优化.md)
-- [05-卡顿优化](09-Optimization/02-Android性能分析与优化/05-卡顿优化.md)
-- [06-App线程优化](09-Optimization/02-Android性能分析与优化/06-App线程优化.md)
-- [07-App网络优化](09-Optimization/02-Android性能分析与优化/07-App网络优化.md)
-- [08-App电量优化](09-Optimization/02-Android性能分析与优化/08-App电量优化.md)
-- [09-App瘦身优化](09-Optimization/02-Android性能分析与优化/09-App瘦身优化.md)
-- [10-App稳定性优化](09-Optimization/02-Android性能分析与优化/10-App稳定性优化.md)
-- [11-App专项技术优化](09-Optimization/02-Android性能分析与优化/11-App专项技术优化.md)
+- [优化相关](09-Performance/README.md)
 
 ## 架构总结
 

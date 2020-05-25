@@ -2,10 +2,19 @@
 
 ## Jetpack-AAC
 
+分析Android原生开发的现状：
+
 - [对Google的吐槽：2019年11月，分析Android原生开发的现状](https://mp.weixin.qq.com/s/4Z_Do6kC8WC5u5qnGgZNKw)
-- [viewmodels-and-livedata-patterns-antipatterns](https://medium.com/androiddevelopers/viewmodels-and-livedata-patterns-antipatterns-21efaef74a54)
+
+AAC work with Dagger2：
+
 - Dagger2 自动注入：[kotlin-architecture-components](https://github.com/satorufujiwara/kotlin-architecture-components)
-- 使用 Dagger2 注入 SavedStateRegistryOwner 到 ViewModel 种：[saving-ui-state-with-viewmodel-savedstate-and-dagger](https://proandroiddev.com/saving-ui-state-with-viewmodel-savedstate-and-dagger-f77bcaeb8b08#7f89)
+
+ViewModel：
+
+- [viewmodels-and-livedata-patterns-antipatterns](https://medium.com/androiddevelopers/viewmodels-and-livedata-patterns-antipatterns-21efaef74a54)
+- 使用 Dagger2 注入 SavedStateRegistryOwner 到 ViewModel 中：[saving-ui-state-with-viewmodel-savedstate-and-dagger](https://proandroiddev.com/saving-ui-state-with-viewmodel-savedstate-and-dagger-f77bcaeb8b08#7f89)
+- [知识点 | ViewModel 四种集成方式](https://mp.weixin.qq.com/s/Hl8Yuf2bkDlVlgdB4M-wrw)
 
 ## 值得研究的项目
 
@@ -14,6 +23,10 @@ Google：
 - [Google-android-architecture](https://github.com/googlesamples/android-architecture)
 - [android-architecture-components](https://github.com/googlesamples/android-architecture-components)
 - [android-sunflower](https://github.com/googlesamples/android-sunflower)
+
+组件化：
+
+- [非常彻底的组件化-auc-frame](https://blankj.com/2019/07/22/auc-frame/)
 
 TDD：
 
@@ -38,13 +51,12 @@ AOP
 Other：
 
 - [AndroidChromium-理清本项目业务逻辑完全可以胜任国内一线公司工程师](https://github.com/JackyAndroid/AndroidChromium)
-- [非常彻底的组件化-auc-frame](https://blankj.com/2019/07/22/auc-frame/)
 
 ## 接口设计
 
 - [从客户端的角度设计后端的接口](http://www.jianshu.com/p/35a7b6f5f92e)
 
-## 软件 UI 框架模式
+## 软件 UI 框架模式研究
 
 UI 架构史：
 
@@ -86,9 +98,9 @@ MVX：
 
 - [Flux 架构入门教程](http://www.ruanyifeng.com/blog/2016/01/flux.html)
 - [Android Fulx](http://androidflux.github.io/)
-- [Redux 入门教程](http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_one_basic_usages.html)
 - [android-flux-architecture](https://github.com/satorufujiwara/android-flux-architecture)
 - [kotlin-android-flux](https://github.com/satorufujiwara/kotlin-android-flux)
+- [Redux 入门教程](http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_one_basic_usages.html)
 
 ## 关于烂代码的那些事
 

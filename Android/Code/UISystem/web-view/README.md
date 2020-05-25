@@ -20,10 +20,11 @@
 ## 性能优化
 
 - [Android WebView：性能优化不得不说的事](http://motalks.cn/2016/09/11/Android-WebView-JavaScript-3/)
+- [WebView加载速度优化](https://www.jianshu.com/p/427600ca2107)
 
 ## 开源项目
 
-- [CustomTabsHelper ](https://github.com/DreaminginCodeZH/CustomTabsHelper)
+- [CustomTabsHelper](https://github.com/DreaminginCodeZH/CustomTabsHelper)
 - [FinestWebView](https://github.com/TheFinestArtist/FinestWebView-Android)
 - [Android-AdvancedWebView](https://github.com/delight-im/Android-AdvancedWebView)
 - [Safe Java-JS WebView Bridge](https://github.com/pedant/safe-java-js-webview-bridge)
@@ -32,7 +33,3 @@
 - [Tencent-VasSonic](https://github.com/Tencent/VasSonic)
 - [VasSonic-让你的H5页面首屏秒开](https://segmentfault.com/a/1190000010711024)
 - [SuperWeb](https://github.com/Victory-Over/SuperWeb)
-
-## 总结
-
-- WebView中可以使用userAgent告知服务器身份
