@@ -26,6 +26,7 @@ java编译器会为虚拟机转换源指令，虚拟机代码存储在以`.class
 除了以上几种情形以外，所有其它使用JAVA类型的方式都是被动使用的，不会导致类的初始化。
 
 ---
+
 ## 1 类加载器分类
 
 java程序拥有至少三种类加载器：
@@ -76,6 +77,7 @@ ClassLoader
 ```
 
 ---
+
 ## 2 双亲委派模式
 
 类加载器有一种**父子关系**，除了引导类加载器之外，其他的类加器去都有一个父类加载器。根据规定：**类加载器会为它的父类加载器提供一个机会，以便加载任何给定的类，并且只有在父类加载器加载失败的时候，它才会加载该类**，这个关系也称为**双亲委派模式**
@@ -111,7 +113,7 @@ java.net.URLClassLoader@6d6f6e28
 null
 ```
 
-![](index_files/6056b62a-0539-44db-8229-88bfcc1d14ac.png)
+![java-class-loader.png](images/java-class-loader.png)
 
 ### 2.1 双亲委派机制的原理
 
@@ -239,6 +241,7 @@ ClassLoader
 - 自定义类加载器，**父类加载器为AppClassLoader**
 
 ---
+
 ## 3 类与类加载器
 
 ### 3.1 类加载器也是命名空间
@@ -251,6 +254,7 @@ ClassLoader
 - 隐式加载属于类的解析过程，即一个被加载的类依赖了另一个类，则被依赖的类也会被加载，这个过程是虚拟机自动进行的
 
 ---
+
 ## 4 线程上下文类加载器
 
 ### 4.3 类的加载倒置
@@ -305,6 +309,7 @@ ClassLoader
 ```
 
 ---
+
 ## 5 编写自己的类加载器
 
 出于特殊的目的我肯可以实现自己的类加载器，比如
@@ -349,6 +354,7 @@ class CustomClassLoader extends ClassLoader {
 ```
 
 ---
+
 ## 6 总结
 
 - Java虚拟机中可以安装多个类加载器，系统默认三个主要类加载器，每个类负责加载特定位置的类：BootStrap、ExtClassLoader、AppClassLoader
@@ -364,7 +370,8 @@ class CustomClassLoader extends ClassLoader {
 每个类加载器加载类时，又先委托给其上级类加载器。当所有祖宗类加载器没有加载到类，回到发起者类加载器，还加载不了，则抛ClassNotFoundException，不是再去找发起者类加载器的儿子，因为没有getChild方法，即使有，那有多个儿子，找哪一个呢？这就可能引发类加载倒置问题。
 
 ---
+
 ## 引用
 
 - [深入理解Java类加载器(ClassLoader)](http://blog.csdn.net/javazejian/article/details/73413292)
-- 《Java核心技术》
+- 《Java核心技术 卷1》
