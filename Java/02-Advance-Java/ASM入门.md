@@ -58,7 +58,7 @@ ASM被用于许多项目，包括：
 
 ![](images/ASM-2.png)
 
->关于类文件结构可以参考《深入理解Java虚拟机》
+>关于类文件结构可以参考《深入理解Java虚拟机》、《Java虚拟机规范》
 
 ---
 
@@ -766,8 +766,14 @@ todo
 
 ## 引用
 
-- [ASM 主页](http://asm.ow2.io/index.html)
+Documents：
+
+- [ASM Website](https://asm.ow2.io/index.html)
+- [ASM 6 Developer Guide](https://asm.ow2.io/developer-guide.html)
+
+Java：
+
 - [AOP 的利器：ASM 3.0 介绍](https://www.ibm.com/developerworks/cn/java/j-lo-asm30/index.html)
-- [使用ASM Core API修改类](https://smallsoho.com/android/2017/08/07/%E8%AF%91-%E4%BD%BF%E7%94%A8ASM-Core-API%E4%BF%AE%E6%94%B9%E7%B1%BB/)
 - [深入字节码--使用 ASM 实现 AOP](https://my.oschina.net/u/1166271/blog/162796)
-- [ASM-clickdebounce](https://github.com/SmartDengg/asm-clickdebounce)
+- [Java字节码(Bytecode)与ASM简单说明](http://blog.hakugyokurou.net/?p=409)
+- [字节码操纵技术探秘](https://www.infoq.cn/article/Living-Matrix-Bytecode-Manipulation)

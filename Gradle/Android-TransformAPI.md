@@ -1,13 +1,15 @@
 # Android Transform API 研究
 
 ---
+
 ## 1 Transform API 介绍
 
 Android项目使用gradle进行构建，具体由`Android gradle plugin`实现，Android gradle plugin 于 1.5.0-beta1 添加了 Transform API， 可以用于在 android 打包过程中加入开发者自定义的打包处理逻辑，现在 Android 打包流程中的  `desugar、multi-dex、jar2dex` 等处理都已经使用 Transform API 来实现了，
 
-**自定义的 Transform 一经注册便会自动添加到 Task 执行序列中，并且正好是项目被打包成 dex 之前。**
+**自定义的 Transform 一经注册便会自动添加到 Task 执行序列中，并且正好是项目被打包成 dex 之前**。
 
 ---
+
 ## 2 Transform 过程
 
 ### 2.1 流程
@@ -228,7 +230,8 @@ public enum Status {
 - **避免文件重复**：如果我们在一次变换中，经过操作生成生成另一种形态的相同的内容(比如把Class打包成jar)，务必要原始的形态的内容删除。
 
 ---
-## 引用
+
+## 5 引用与相关学习资料
 
 官方介绍：
 
