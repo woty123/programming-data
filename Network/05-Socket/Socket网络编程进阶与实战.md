@@ -386,7 +386,7 @@ TCP 能做什么
 
 ![](images/socket_in_action16.png)
 
-关于 NIO API 可以参考[NIO](../../Java/03-IO&Network/05-NIO.md)
+关于 NIO API 可以参考[NIO](../../Java/02-IO&Network/03-NIO.md)
 
 ### 7.3 使用 NIO 重写服务器
 

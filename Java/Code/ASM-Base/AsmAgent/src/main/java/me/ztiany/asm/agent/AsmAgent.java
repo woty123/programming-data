@@ -23,9 +23,8 @@ public class AsmAgent implements ClassFileTransformer {
     }
 
     public static void premain(String agentArgs, Instrumentation inst) {
-        System.out.printf("     I've been called with options: \"%s\"\n", agentArgs);
+        System.out.printf("I've been called with options: \"%s\"\n", agentArgs);
         inst.addTransformer(new AsmAgent(agentArgs));
     }
-
 
 }

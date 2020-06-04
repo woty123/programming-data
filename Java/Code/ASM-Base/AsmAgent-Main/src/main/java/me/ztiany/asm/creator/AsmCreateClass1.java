@@ -28,7 +28,6 @@ public class AsmCreateClass1 {
     }
 
     private static byte[] createClass() {
-
         /*
         package pkg;
         public interface Comparable  {
@@ -71,4 +70,3 @@ public class AsmCreateClass1 {
     }
 
 }
-

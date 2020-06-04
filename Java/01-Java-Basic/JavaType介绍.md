@@ -1,6 +1,6 @@
 # JavaType
 
-![](index_files/JavaType.png)
+![JavaType](index_files/JavaType.png)
 
 - 1 **Type** 是 Java 编程语言中所有类型的公共高级接口。它们包括原始类型(Class)、参数化类型(ParameterizedType)、数组类型(GenericArrayType)、类型变量(TypeVariable)和基本类型(Class)。
 

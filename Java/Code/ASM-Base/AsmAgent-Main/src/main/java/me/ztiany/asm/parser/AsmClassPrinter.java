@@ -6,7 +6,7 @@ import java.io.IOException;
 
 
 /**
- * 类的解析：遍历一个类的结构
+ * Example1 类的解析：遍历一个类的结构
  */
 public class AsmClassPrinter extends ClassVisitor {
 

@@ -11,7 +11,6 @@ import java.lang.reflect.InvocationTargetException;
 public class AsmCreateClass2 extends ClassLoader implements Opcodes {
 
     public static void main(String[] args) throws IOException {
-
         // step1：定义一个类
         ClassWriter classWriter = new ClassWriter(0);
         classWriter.visit(V1_8, ACC_PUBLIC, "Example", null, "java/lang/Object", null);
@@ -38,7 +37,7 @@ public class AsmCreateClass2 extends ClassLoader implements Opcodes {
                 null);
         // 取得一个静态字段将其放入栈，相当于“System.out”。“Ljava/io/PrintStream;”是字段类型的描述，翻译过来相当于：“java.io.PrintStream”类型。在字节码中凡是引用类型均由“L”开头“;”结束表示，中间是类型的完整名称。
         methodVisitor.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-        //将字符串“Hello world!”放入栈，此时栈中第一个元素是“System.out”，第二个元素是“Hello Aop”。
+        //将字符串“Hello world!”放入栈，此时栈中第一个元素是“System.out”，第二个元素是“Hello world”。
         methodVisitor.visitLdcInsn("Hello world!");
         //调用PrintStream类型的“println”方法。签名“(Ljava/lang/String;)V”表示方法需要一个字符串类型的参数，并且无返回值。
         methodVisitor.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
@@ -71,4 +70,5 @@ public class AsmCreateClass2 extends ClassLoader implements Opcodes {
             e.printStackTrace();
         }
     }
-} 
+
+}

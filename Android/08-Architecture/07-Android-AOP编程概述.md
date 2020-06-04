@@ -2,6 +2,14 @@
 
 在 OOP 的实践中，发现有些问题是 OOP 无法解决的，OOP 强调的是封装、继承。但是有一类代码不属于特定的某个模块而又要参与到每个模块当中，这类代码不影响核心业务流程，但是在项目架构中又是必须的，比如日志、统计、性能监控、安全能代码。使用 AOP 可以把这些烦人的代码划分为切面模块，相对于纵向的业务流程来讲，它们横切入业务流程的各个流程之中，而又不影响具体的业务(业务代码对此毫无感知)，这就是 AOP 编程思想。
 
+在 Android 中应用 AOP 技术，我们可以实现以下功能：
+
+- 代码生成与删除：比如业务逻辑跳转时，校验是否已经登录；点击事件防抖；日志代码去除。
+- 无痕埋点
+- 代码质量监控与分析
+- 性能监控
+- 动态权限控制
+
 ## 1 AOP 可选方案
 
 在 Android 平台上，实施 AOP 编程的可选方案：
@@ -9,15 +17,15 @@
 1. 动态（运行时） AOP：
    - Dexposed
    - Xposed
-   - [Epic](https://github.com/tiann/epic) 等
+   - Epic
 2. 静态（编译时） AOP：
    - apt、ast(抽象语法树)
    - aspactJ
    - javassist
    - asm
-   - ByteBuddy
+   - byteBuddy
 
-受限于 Android 平台的虚拟机实现，实施动态（运行时） AOP 是比较复杂的，部分框架需要获取 root 权限，除此之外，客户端系统版本碎片化也比较严重，所以静态（编译时） AOP 是相对靠谱的选择。
+受限于 Android 平台的虚拟机实现，实施动态（运行时） AOP 是比较复杂的，部分框架需要获取 root 权限，除此之外，客户端系统版本碎片化也比较严重，所以生产中我们选择静态（编译时） AOP 是相对靠谱的选择，而类似 Epic 等框架，我们可以在开发版本中使用。
 
 ## 2 AOP 入口
 
@@ -41,7 +49,13 @@ Android 平台的虚拟机运行的是 dex 文件，dex 文件的生成需要下
 
 ![android-aop-timing.png](images/android-aop-timing.png)
 
-## 3 掌握字节码结构
+## 3 掌握Java编译相关技术与字节码结构
+
+### Java编译相关技术
+
+应用 apt 或者 ast 技术，需要对 Java 提供的编译相关 API 有一定的了解。具体可以参考 [Java编译API](../../Java/01-Java-Basic/Java编译API.md)
+
+### 字节码结构
 
 既然涉及到字节码编辑，熟悉字节码结构是必不可少的，而 Java 平台和 Android 平台所运行的字节码又是不同的，具体参考下面链接：
 
@@ -56,15 +70,7 @@ Android：
 - [Dalvik and ART](07-Dalvik%20and%20ART.pdf)
 - [Understanding the Davlik Virtual Machine](07-Understanding%20the%20Davlik%20Virtual%20Machine.pdf)
 
-## 4 AOP 应用
-
-- 代码生成与删除：比如业务逻辑跳转时，校验是否已经登录；点击事件防抖；日志代码去除。
-- 无痕埋点
-- 代码质量监控与分析
-- 性能监控
-- 动态权限控制
-
-## 5 Gradle 插件
+## 4 掌握 Gradle 插件与 APK 构建流程
 
 Android Gradle Plugin 1.5 之后提供了 Transform API，我们可以利用 Transform API 对转换为 dex 之前的 class 做一些处理，但是想要写好一个高效的 Transform 并不是易的事，具体参考 [Gradle-TransformAPI](../../Gradle/Android-TransformAPI.md)。
 
@@ -72,19 +78,29 @@ Android Gradle Plugin 1.5 之后提供了 Transform API，我们可以利用 Tra
 
 ### AOP 入门
 
-- [极客时间《Android开发高手课》编译插桩的三种方法：AspectJ、ASM、ReDex](https://time.geekbang.org/column/article/82761)
+- [字节码操纵技术探秘](https://www.infoq.cn/article/Living-Matrix-Bytecode-Manipulation)
+- [安卓AOP三剑客:APT, AspectJ, Javassist](https://www.jianshu.com/p/dca3e2c8608a)
+- [极客时间《Android开发高手课》编译插桩的三种方法：AspectJ、ASM、ReDex](https://time.geekbang.org/column/article/82761)，及其相关 Demo：
   - [ASM Sample](https://github.com/AndroidAdvanceWithGeektime/Chapter07)
   - [Chapter-ASM](https://github.com/AndroidAdvanceWithGeektime/Chapter-ASM)
   - [AspectJ Sample](https://github.com/AndroidAdvanceWithGeektime/Chapter27)
-- [安卓AOP三剑客:APT, AspectJ, Javassist](https://www.jianshu.com/p/dca3e2c8608a)
 - [Android AOP编程的四种策略探讨：Aspectj，cglib+dexmaker，Javassist，epic+dexposed](https://blog.csdn.net/weelyy/article/details/78987087)
 
 ### AOP 系列博客
+
+来自一位程序媛的系列博客，对 AOP 进行了全面介绍
 
 - [一文读懂 AOP | 你想要的最全面 AOP 方法探讨](https://www.jianshu.com/p/0799aa19ada1)
 - [一文应用 AOP | 最全选型考量 + 边剖析经典开源库边实践，美滋滋](https://www.jianshu.com/p/42ce95450adb)
 - [AOP 最后一块拼图 | AST 抽象语法树 —— 最轻量级的AOP方法](https://juejin.im/post/5c45bce5f265da612c5e2d3f)
 - [会用就行了？你知道 AOP 框架的原理吗？](https://www.jianshu.com/p/cfa16f4cf375)
+
+这个系列的质量不错：
+
+- [深入探索编译插桩技术（一、编译基础）](https://juejin.im/post/5e924273f265da47f079379c)
+- [深入探索编译插桩技术（二、AspectJ）](https://juejin.im/post/5e84384af265da47e1593102)
+- [深入探索编译插桩技术（三、解密 JVM 字节码）](https://juejin.im/post/5e899721518825739f6b0351)
+- [深入探索编译插桩技术（四、ASM 探秘）](https://juejin.im/post/5e8d87c4f265da47ad218e6b#heading-32)
 
 ### AST
 
@@ -93,14 +109,14 @@ Android Gradle Plugin 1.5 之后提供了 Transform API，我们可以利用 Tra
 
 ### ASM
 
-- [一起玩转Android项目中的字节码](https://juejin.im/entry/5c0cc7c15188257d5e39647d)、[Hunter：A fast, incremental, concurrent framework to develop compile plugin for android project to manipulate bytecode](https://github.com/Leaking/Hunter)
-- [字节码插桩--你也可以轻松掌握](https://juejin.im/entry/5c886d786fb9a049f1550d65)
-- [capt 全称 Class Annotation Processor Tool，是作者基于 ASM 和 Android Transform API 打造的 Android 平台的字节码的注解处理工具。](https://mp.weixin.qq.com/s/8_88oUB2MJi27BJJOb-2_Q)
+- [一起玩转Android项目中的字节码](https://juejin.im/entry/5c0cc7c15188257d5e39647d)
+- [Hunter：A fast, incremental, concurrent framework to develop compile plugin for android project to manipulate bytecode](https://github.com/Leaking/Hunter)
+- [lancet](https://github.com/eleme/lancet)
 - [ByteX：字节码插件开发平台](https://github.com/bytedance/ByteX)
-- [hibeaver](https://github.com/BryanSharp/hibeaver)
 - [360线上移动性能检测平台：ArgusAPM](https://github.com/Qihoo360/ArgusAPM)，ArgusAPM 刚开始是基于 AspectJ，后面提供了 ASM 插件。
-- [使用ASM Core API修改类](https://smallsoho.com/android/2017/08/07/%E8%AF%91-%E4%BD%BF%E7%94%A8ASM-Core-API%E4%BF%AE%E6%94%B9%E7%B1%BB/)
-- [ASM-clickdebounce](https://github.com/SmartDengg/asm-clickdebounce)
+- [capt 全称 Class Annotation Processor Tool，是作者基于 ASM 和 Android Transform API 打造的 Android 平台的字节码的注解处理工具。](https://mp.weixin.qq.com/s/8_88oUB2MJi27BJJOb-2_Q)
+- [ASM-clickdebounce](https://github.com/SmartDengg/asm-clickdebounce)，该项目已经很久没有维护，可以参考[注释版本](../Code/AOP/click-debounce/README.md)，其中 TransformAPI 的编写方式值得学习，应用了 NIO 和分治算法等技术。
+- [hibeaver](https://github.com/BryanSharp/hibeaver)，可用于参考，不支持增量编译，不建议使用。
 
 ### Javassist
 
@@ -115,6 +131,10 @@ Android Gradle Plugin 1.5 之后提供了 Transform API，我们可以利用 Tra
 - [Android AOP之字节码插桩](https://www.jianshu.com/p/c202853059b4)
 - [应用于Android无埋点的Gradle插件解析](https://github.com/nailperry-zd/LazierTracker/wiki/%E5%BA%94%E7%94%A8%E4%BA%8EAndroid%E6%97%A0%E5%9F%8B%E7%82%B9%E7%9A%84Gradle%E6%8F%92%E4%BB%B6%E8%A7%A3%E6%9E%90)，基于 ASM
 
+### Dynamic AOP
+
+- [Epic](https://github.com/tiann/epic)
+
 ### 笔记
 
 注解：
@@ -125,13 +145,13 @@ Android Gradle Plugin 1.5 之后提供了 Transform API，我们可以利用 Tra
 
 AspectJ：
 
-- [AspectJ-01](../../Java/02-Advance-Java/AspectJ-01.md)
-- [AspectJ-02](../../Java/02-Advance-Java/AspectJ-02.md)
+- [AspectJ-01](../../Java/03-AdvanceJava/AspectJ-01.md)
+- [AspectJ-02](../../Java/03-AdvanceJava/AspectJ-02.md)
 
 ASM：
 
-- [ASM 入门](../../Java/02-Advance-Java/ASM入门.md)
+- [ASM 入门](../../Java/03-AdvanceJava/ASM入门.md)
 
 Javassist：
 
-- [Javassist 入门](../../Java/02-Advance-Java/Javassist入门.md)
+- [Javassist 入门](../../Java/03-AdvanceJava/Javassist入门.md)

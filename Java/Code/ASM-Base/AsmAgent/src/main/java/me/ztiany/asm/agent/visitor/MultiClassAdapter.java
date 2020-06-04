@@ -21,4 +21,5 @@ public class MultiClassAdapter extends ClassVisitor {
             cv.visit(version, access, name, signature, superName, interfaces);
         }
     }
+
 }

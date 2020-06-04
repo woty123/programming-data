@@ -24,7 +24,7 @@ public class RemoveMethodAdapter extends ClassVisitor {
     @Override
     public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
         System.out.println("access = [" + access + "], name = [" + name + "], desc = [" + desc + "], signature = [" + signature + "], exceptions = [" + Arrays.toString(exceptions) + "]");
-        //不转发到下一个链，就是移除该方法
+        //不转发到下一个链，就是移除该方法。因为类的生成最终是由 ClassWriter 处理的，我们不把这个方法的信息传递给它，自然它就不会生成这个方法。
         if (name.equals(mName) && desc.equals(mDesc)) {
             // do not delegate to next visitor -> this removes the method
             return null;

@@ -23,9 +23,6 @@ public class TryWithResourceSample {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
     }
-
-
 
 }

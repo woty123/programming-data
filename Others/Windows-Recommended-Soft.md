@@ -61,6 +61,7 @@
 ## 开发助手
 
 - WinHex：16进制编辑器
+- 010 Editor：010 Editor 是一款全新概念的十六进制编辑器
 - NodeJs + NVM
 - [Android逆向助手](http://www.dayanzai.me/android-hack.html)
 - MemoryAnalyzer

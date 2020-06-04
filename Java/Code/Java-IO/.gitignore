@@ -1,5 +1,6 @@
 file
+jars
 *.zip
+*.jar
 *.bmp
-env.txt
-
+*.txt
