@@ -74,4 +74,5 @@ public class PrintMatrix {
         spiralArray(12);
         print();
     }
+
 }

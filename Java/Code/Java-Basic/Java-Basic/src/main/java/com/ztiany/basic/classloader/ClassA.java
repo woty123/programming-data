@@ -11,4 +11,5 @@ public class ClassA {
     static {
         System.out.println("ClassA static code1 run");
     }
+
 }

@@ -42,11 +42,11 @@ public class AppContext extends Application {
     private void printClassLoader() {
         Log.d(TAG, "ClassLoader.getSystemClassLoader(): " + ClassLoader.getSystemClassLoader());
 
-        Log.d(TAG, "getClassLoader():                               " + getClassLoader());
+        Log.d(TAG, "getClassLoader(): " + getClassLoader());
 
-        Log.d(TAG, "MainActivity.class.getClassLoader():    " + MainActivity.class.getClassLoader());
+        Log.d(TAG, "MainActivity.class.getClassLoader(): " + MainActivity.class.getClassLoader());
 
-        Log.d(TAG, "String.class.getClassLoader():    " + String.class.getClassLoader());
+        Log.d(TAG, "String.class.getClassLoader(): " + String.class.getClassLoader());
 
         ClassLoader classLoader = MainActivity.class.getClassLoader();
         while (classLoader != null) {

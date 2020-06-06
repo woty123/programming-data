@@ -9,4 +9,5 @@ public class JavaInitMain {
     public static void main(String... args){
         System.out.println(ClassA.NAME);
     }
+
 }

@@ -5,7 +5,7 @@ package com.ztiany.basic.print;
  */
 public class PrintTriangle {
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         print(9);
     }
 
@@ -17,9 +17,7 @@ public class PrintTriangle {
                 System.out.print(" ");
             }
             for (int z = x; z >= 0; z--) {
-
                 if (count >= 3 && count != n) {
-
                     if (z == x)
                         System.out.print("* ");
                     else if (z == 0)
@@ -32,7 +30,6 @@ public class PrintTriangle {
             }
             System.out.println();
         }
-
-
     }
+
 }

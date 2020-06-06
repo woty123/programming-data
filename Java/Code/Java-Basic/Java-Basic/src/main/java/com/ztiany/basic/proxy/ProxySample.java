@@ -1,7 +1,6 @@
 package com.ztiany.basic.proxy;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
@@ -19,8 +18,7 @@ import java.util.List;
  */
 public class ProxySample {
 
-
-    public static void main(String... args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public static void main(String... args) {
 
         Class clazzProxy = Proxy.getProxyClass(Collection.class.getClassLoader(), Collection.class);
         System.out.println(clazzProxy.getName());
@@ -35,6 +33,7 @@ public class ProxySample {
         System.out.println("================================");
 
         List<String> list = new ArrayList<>();
+
         List proxy = (List) getProxy(list, new Advice() {
             @Override
             public void beforeMethod(Method method) {
@@ -46,11 +45,11 @@ public class ProxySample {
                 System.out.println("call after  " + method.getName());
             }
         });
+
         proxy.add(1);
         System.out.println(proxy.hashCode());
         System.out.println(list.size());
         System.out.println(proxy.getClass());
-
     }
 
     private static Object getProxy(final Object target, final Advice advice) {

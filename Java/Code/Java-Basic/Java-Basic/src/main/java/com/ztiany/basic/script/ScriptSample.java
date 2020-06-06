@@ -19,7 +19,6 @@ import javax.script.ScriptException;
 public class ScriptSample {
 
     public static void main(String... args) throws ScriptException {
-
         ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
         List<ScriptEngineFactory> engineFactories = scriptEngineManager.getEngineFactories();
         System.out.println(engineFactories);
@@ -29,6 +28,6 @@ public class ScriptSample {
 
         ScriptEngine javaScript = scriptEngineManager.getEngineByName("JavaScript");
         System.out.println(javaScript);
-
     }
+
 }

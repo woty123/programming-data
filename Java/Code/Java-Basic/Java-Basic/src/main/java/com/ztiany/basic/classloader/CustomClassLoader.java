@@ -34,4 +34,5 @@ class CustomClassLoader extends ClassLoader {
     private byte[] loadClassBytes(String name) throws IOException {
         return Files.readAllBytes(Paths.get(name));
     }
+
 }

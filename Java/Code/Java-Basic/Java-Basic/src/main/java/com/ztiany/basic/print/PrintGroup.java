@@ -22,8 +22,9 @@ public class PrintGroup {
     public static void perm(List<String> list, char[] chs, int k, int len) {
         if (k == chs.length) {
             String string = String.valueOf(chs, 0, len);
-            if (!list.contains(string))
+            if (!list.contains(string)) {
                 list.add(string);
+            }
         } else {
             for (int i = k; i < chs.length; i++) {
                 swap(chs, i, k);
@@ -31,7 +32,6 @@ public class PrintGroup {
                 swap(chs, i, k);
             }
         }
-
     }
 
     public static void swap(char[] chs, int i, int j) {

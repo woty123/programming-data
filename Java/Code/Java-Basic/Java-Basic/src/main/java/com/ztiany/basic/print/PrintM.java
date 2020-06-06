@@ -30,8 +30,8 @@ public class PrintM {
                 x = x - 2;
             }
             y++;
-
         }
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < len; j++) {
                 if (arr[i][j] != 0)
@@ -41,5 +41,7 @@ public class PrintM {
             }
             System.out.println();
         }
+
     }
+
 }

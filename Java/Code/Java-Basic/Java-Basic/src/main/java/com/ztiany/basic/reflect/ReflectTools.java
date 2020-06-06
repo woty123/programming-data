@@ -13,7 +13,6 @@ import java.lang.reflect.Modifier;
  */
 public class ReflectTools {
 
-
     public static void main(String[] args) {
         // read class name from command line args or user input
         String name = String.class.getName();
@@ -104,7 +103,6 @@ public class ReflectTools {
      */
     public static void printFields(Class cl) {
         Field[] fields = cl.getDeclaredFields();
-
         for (Field f : fields) {
             Class type = f.getType();
             String name = f.getName();

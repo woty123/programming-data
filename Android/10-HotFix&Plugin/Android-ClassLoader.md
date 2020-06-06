@@ -1,11 +1,12 @@
 # Android类加载器
 
 ---
-## 1 Android中的类加载器
 
-Java中的ClassLoader机制我们应该已经非常熟悉了，而Android只是在此基础之上添加了扩展了新的ClassLoader，用于加载Dex中的Class。
+## 1 Android 中的类加载器
 
-Android中的类加载器继承关系为：
+Java 中 的类加载机制我们应该已经非常熟悉了，Android 的类加载机制是基于 Java 类加载机制之上的，只是做了一些扩展和修改，用来加载 .dex 中的类。（Android 虚拟机并不直接执行 JAVA 字节码，而是从 .dex 中加载类，`.dex` 文件是将全部 .class 重新处理优化后生产的后缀名为 `.dex` 文件。）
+
+Android 中的类加载器继承关系为：
 
 ```java
     ClassLoader
@@ -14,61 +15,64 @@ Android中的类加载器继承关系为：
              |-->DexClassLoader
 ```
 
-PathClassLoader和DexClassLoader是Android平台的两个主要的ClassLoader，它们都继承自BaseDexClassLoader。
+PathClassLoader 和 DexClassLoader 是 Android 平台的两个主要的 ClassLoader，它们都继承自 BaseDexClassLoader。
 
 ### PathClassLoader
 
 ```java
 public class PathClassLoader extends BaseDexClassLoader {
+
     public PathClassLoader(String dexPath, ClassLoader parent) {
         super(dexPath, null, null, parent);
     }
-    public PathClassLoader(String dexPath, String libraryPath,
-            ClassLoader parent) {
+    public PathClassLoader(String dexPath, String libraryPath, ClassLoader parent) {
         super(dexPath, null, libraryPath, parent);
     }
+
 }
 ```
 
-PathClassLoader用来加载本地文件系统上的文件或目录，但不能从网络上加载，**它被用来加载我们的应用程序中的类**。
+PathClassLoader 可以操作本地文件系统上的文件或目录，但不能从网络上加载，Android 系统将其作为应用程序的类加载器。其构造参数为：
 
-- dexPath表示包含类和资源的jar或 apk文件列表，多个路径使用路径分隔符分开
-- libraryPath表示so路径
+- dexPath：表示包含类和资源的 `jar, apk` 文件列表，多个路径使用路径分隔符分开。
+- libraryPath：表示动态库（.so）的加载路径。
+- parent：父类加载器。
 
 ### DexClassLoader
 
 ```java
 public class DexClassLoader extends BaseDexClassLoader {
 
-    public DexClassLoader(String dexPath, String optimizedDirectory,
-            String libraryPath, ClassLoader parent) {
+    public DexClassLoader(String dexPath, String optimizedDirectory, String libraryPath, ClassLoader parent) {
         super(dexPath, new File(optimizedDirectory), libraryPath, parent);
     }
+
 }
 ```
 
-DexClassLoader只是简单的继承了BaseDexClassLoader，DexClassLoader的类加载路径是在创建DexClassLoader对象时指定的，所以它可以加载任何目录下的Dex文件，其主要用来加载`jar 、apk ，其实还包括 zip 文件或者直接加载dex文件`，它可以被用来执行未安装的代码或者未被应用加载过的代码。
+DexClassLoader 从包含 classes.dex 实体的 jar 或者 apk 文件中加载类，它可以被用来执行那些没有被随着应用一起安装的代码。
 
 参数说明：
 
-- dexPath : 需要被加载的文件地址，可以多个，用路径分隔符分开
-- optimizedDirectory : dex文件被加载后会被编译器优化，优化之后的dex存放路径(即将要用来存放ODEX的路径)，不可以为null。注释中也提到需要一个应用私有的可写的一个路径，以防止应用被注入攻击，并且给出了例子` File dexOutputDir = context.getDir("dex", 0) ;`
-- libraryPath ：包含libraries的目录列表，plugin中有so文件，需要将so拷贝到本地目录，这里传入将要用来存放so目录的路径
-- parent ：父类构造器
+- dexPath: 需要被加载的文件地址，可以多个，用路径分隔符分开。
+- optimizedDirectory: dex 文件被加载后会被编译器优化，optimizedDirectory 就是用来指定优化之后的 dex 存放路径，不可以为 null。注释中也提到需要一个应用私有的可写的一个路径，以防止应用被注入攻击，并且给出了例子`File dexOutputDir = context.getDir("dex", 0);`
+- libraryPath 表示动态库（.so）的加载路径。
+- parent：父类加载器。
 
-PathClassLoader的两个构造函数中调用父类构造器的时候第二个参数传null。即optimizedDirectory为null值，因为Apk在安装过程中其内部的dex已经被提取并且执行过优化了，优化之后放在系统目录` /data/dalvik-cache `(Dalvik模式)下。所以PathClassLoader不直接从APK中加载类，而是从优化过的dex中加载应用程序中的类。
+PathClassLoader 的两个构造函数中调用父类构造器的时候第二个参数传 null。即 optimizedDirectory 为 null 值，因为 Apk 在安装过程中其内部的 dex 已经被提取并且执行过优化了，优化之后放在系统目录`/data/dalvik-cache`(Dalvik模式)下。所以 PathClassLoader 不直接从 APK 中加载类，而是从优化过的 dex 中加载应用程序中的类。
 
 ### BaseDexClassLoader
 
-PathClassLoader和DexClassLoader的并没有具体的实现，只是定义了不同的构造方法，功能全都继承自BaseDexClassLoader，而且BaseDexClassLoader的实现也比较简单，其内部有一个关键字段`private final DexPathList pathList;`，DexPathList代码如下：
+PathClassLoader 和 DexClassLoader 的并没有具体的实现，只是定义了不同的构造方法，功能全都继承自 BaseDexClassLoader，可见它在功能上并没有什么区别，只是在职责划分上用于加载不同位置的类。
+
+BaseDexClassLoader 的实现也比较简单，其内部有一个关键字段`private final DexPathList pathList;`，BaseDexClassLoader 代码如下：
 
 ```java
 public class BaseDexClassLoader extends ClassLoader {
 
     private final DexPathList pathList;
 
-    public BaseDexClassLoader(String dexPath, File optimizedDirectory,
-            String libraryPath, ClassLoader parent) {
+    public BaseDexClassLoader(String dexPath, File optimizedDirectory, String libraryPath, ClassLoader parent) {
         super(parent);
         this.pathList = new DexPathList(this, dexPath, libraryPath, optimizedDirectory);
     }
@@ -134,7 +138,7 @@ public class BaseDexClassLoader extends ClassLoader {
 }
 ```
 
-从源码可以看出，BaseDexClassLoader的方法调用都由DexPathList实现，DexPathList中就保存了ClassLoader对应的dex路径和so路径等。
+从源码可以看出，BaseDexClassLoader 的方法调用都由 DexPathList 实现，DexPathList 中就保存了 ClassLoader 对应的 `.dex，.so` 等路径。
 
 ### DexPathList的分析
 
@@ -528,7 +532,7 @@ final class DexPathList {
 
 ```
 
-### DexFile分析
+### DexFile 分析
 
 ```java
 /** DexFile表示包含类路径或其他资源的文件 */
@@ -671,7 +675,7 @@ public final class DexFile {
     private static native void closeDexFile(Object cookie);
     private static native Class defineClassNative(String name, ClassLoader loader, Object cookie) throws ClassNotFoundException, NoClassDefFoundError;
     private static native String[] getClassNameList(Object cookie);
-   
+
     private static native Object openDexFileNative(String sourceName, String outputName, int flags);
 
     public static native boolean isDexOptNeeded(String fileName) throws FileNotFoundException, IOException;
@@ -689,7 +693,7 @@ public final class DexFile {
 }
 ```
 
-熟悉DexPathList类后，可以总结出BaseDexClassLoader的构建流程
+分析了 DexPathList 类后，可以总结出 BaseDexClassLoader 的构建流程：
 
 1. 在创建BaseDexClassLoader时，需要传入对应的参数，分别是
     - dexPath：需要被加载的文件路径，可以是`.apk .jar .dex .zip`文件
@@ -705,42 +709,43 @@ public final class DexFile {
     - ZipFile是由jar、zip、apk形式的file包装成而来，DexFile使用native方法openDexFile打开了具体的file并输出到优化路径。
 
 ---
+
 ## 2 类加载的流程
 
-首先看一下Android中类加载器的层级结构
-
-在Application类中执行下面代码：
+首先看一下 Android 中类加载器的层级结构，在 Application 类中执行下面代码：
 
 ```java
-        Log.d(TAG, "ClassLoader.getSystemClassLoader():" + ClassLoader.getSystemClassLoader());
-        
-        Log.d(TAG, "getClassLoader():" + getClassLoader());
-        
-        Log.d(TAG, "String.class.getClassLoader():    " + String.class.getClassLoader());
-        
-        Log.d(TAG, "MainActivity.class.getClassLoader():" + MainActivity.class.getClassLoader());
+private void printClassLoader() {
+    Log.d(TAG, "ClassLoader.getSystemClassLoader(): " + ClassLoader.getSystemClassLoader());
 
-        ClassLoader classLoader = MainActivity.class.getClassLoader();
-        while (classLoader != null) {
-            Log.d(TAG, "" + classLoader);
-            classLoader = classLoader.getParent();
-        }
+    Log.d(TAG, "getClassLoader(): " + getClassLoader());
+
+    Log.d(TAG, "MainActivity.class.getClassLoader(): " + MainActivity.class.getClassLoader());
+
+    Log.d(TAG, "String.class.getClassLoader(): " + String.class.getClassLoader());
+
+    ClassLoader classLoader = MainActivity.class.getClassLoader();
+    while (classLoader != null) {
+        Log.d(TAG, "" + classLoader);
+        classLoader = classLoader.getParent();
+    }
+}
 ```
 
 打印的结果为：
 
-```
+```java
 //打印各种方法获取的ClassLoader
- ClassLoader.getSystemClassLoader(): 
+ClassLoader.getSystemClassLoader():
     dalvik.system.PathClassLoader[DexPathList[[directory "."],nativeLibraryDirectories=[/vendor/lib64, /system/lib64]]]
-    
+
 AppContext: getClassLoader():
     dalvik.system.PathClassLoader[DexPathList[[zip file "/data/app/com.ztiany.classloader-1/base.apk"],nativeLibraryDirectories=[/data/app/com.ztiany.classloader-1/lib/arm64, /vendor/lib64, /system/lib64]]]
-    
-String.class.getClassLoader():    
-    java.lang.BootClassLoader@2b0a45f    
-    
-MainActivity.class.getClassLoader():    
+
+String.class.getClassLoader():
+    java.lang.BootClassLoader@2b0a45f
+
+MainActivity.class.getClassLoader():
     dalvik.system.PathClassLoader[DexPathList[[zip file "/data/app/com.ztiany.classloader-1/base.apk"],nativeLibraryDirectories=[/data/app/com.ztiany.classloader-1/lib/arm64, /vendor/lib64, /system/lib64]]]
 
 //往上遍历ClassLoader的层次结构
@@ -748,37 +753,37 @@ MainActivity.class.getClassLoader():
     java.lang.BootClassLoader@2b0a45f
 ```
 
-从结果可以看出，Android中ClassLoader的层级结构与Java是不同的：
+从结果可以看出，Android 中 ClassLoader 的层级结构为：
 
-- BootClassLoader是顶级的类加载器，由它加载系统API和Java标准类库
-- PathClassLoader用于加载APK中的Class
-- Context的getClassLoader()方法返回的就是用于加载APK中的类的ClassLoader
-- `/vendor/lib64, /system/lib64`是创建类加载器时自动添加的系统本地库路径
+- BootClassLoader 是顶级的类加载器，由它加载系统API和Java标准类库。
+- PathClassLoader 用于加载APK中的Class。
+- Context的getClassLoader()方法返回的就是用于加载APK中的类的ClassLoader。
+- `/vendor/lib64, /system/lib64`是创建类加载器时自动添加的系统本地库路径。
 
-所以默认情况下Android中的类加载器层级结构只有两层，采用的依然是双亲委派机制，由BootClassLoader加载标准库中的Class，由PathClassLoader加载APK中的Class。
+所以默认情况下 Android 中的类加载器层级结构只有两层，采用的依然是双亲委派机制，由 BootClassLoader 加载标准库中的 Class，由PathClassLoader 加载APK中的 Class。
 
 ---
+
 ## 3 hook ClassLoader
 
-可以在PathClassLoader和系统的BootClassLoader之间插入我们自己的ClassLoader，这样就可以加载外部的Class了，方法如下：
+可以在 PathClassLoader 和系统的 BootClassLoader 之间插入我们自己的 ClassLoader，这样就可以加载外部的 Class 了，方法如下：
 
 ```java
 public class AppContext extends Application{
-    
+
        @Override
        public void onCreate() {
            super.onCreate();
            hookPluginClassLoader();
        }
-    
+
     private void hookPluginClassLoader() {
         File dexDir = new File(getFilesDir(), "plugins");
         dexDir.mkdir();
         File dexFile = new File(dexDir, "gson.dex");
-
         File dexOpt = getCacheDir();
 
-        //把Assets下的libs.apk写到dlibs目录下
+        //把 Assets下的 libs.apk 写到 dlibs 目录下
         try {
             InputStream ins = getAssets().open("gson.dex");
             if (dexFile.length() != ins.available()) {
@@ -826,6 +831,7 @@ public class AppContext extends Application{
 ```
 
 ---
+
 ## 引用
 
 - [Android 类加载机制](https://mp.weixin.qq.com/s?__biz=MzAwOTIwMDQ3MQ==&mid=2451013689&idx=1&sn=92bd00d6227a7bad33d02d39cface6c2&chksm=8c801601bbf79f178cb9de2be1f260e1259309ecc5e96e1f48dc16bb624aa762046544a2105f&mpshare=1&scene=1&srcid=1025tXXQcHP767luBVthUiTm#rd)
